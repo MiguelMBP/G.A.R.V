@@ -1,0 +1,4 @@
+django==2.2
+mysqlclient==1.1.13
+PyPDF2==1.26.0
+ezsetup==0.9

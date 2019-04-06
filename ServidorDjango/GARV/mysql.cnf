@@ -1,0 +1,6 @@
+[client]
+database = GARV
+host = localhost
+user = miguelmbp
+password = pass
+default-character-set = utf8
