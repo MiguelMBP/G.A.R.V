@@ -17,7 +17,7 @@ expresion_porcentaje_asignatura = '[0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]'
 
 
 def pdf_to_csv(filepath):
-    tabula.convert_into("a.pdf", "output.csv", pages="all", output_format="csv",guess=False, stream=True)
+    tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv",guess=False, stream=True)
     # tabula.convert_into("a.pdf", "outputFormat.csv", pages="all", output_format="csv", stream=True)
 
     leer_csv()
@@ -33,6 +33,8 @@ def leer_csv():
 
     print("\nAsignaturas")
     get_asignaturas(cabecera)
+
+    print('1º')
 
 
 def get_cabecera():
@@ -71,8 +73,7 @@ def get_cabecera():
                     fecha_temp = fecha_temp.split('/')
                     fecha_fin = datetime.datetime(int(fecha_temp[2]), int(fecha_temp[1]), int(fecha_temp[0]))
 
-            # print(row)
-    cabecera = [anno, unidad, fecha_inicio, fecha_fin]
+    cabecera = [anno, unidad.replace('o', 'º'), fecha_inicio, fecha_fin]
 
     csvFile.close()
 
