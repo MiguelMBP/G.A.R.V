@@ -1,26 +1,28 @@
-import tabula
 import csv
 import datetime
 import re
 
+import tabula
 
 literal_fecha_hasta = 'Fecha hasta: '
 literal_fecha_desde = 'Fecha desde: '
 literal_anno_academico = 'Año académico: '
+literal_curso = 'Curso: '
 literal_unidad = 'Unidad: '
 literal_materia = 'Materia: '
 literal_fin_materia = 'Total días período seleccionado: '
-expresion_alumno = "^[a-zA-zÀ-ÿ ]+[,][a-zA-zÀ-ÿ ]+[0-9]{1,2}[:][0-9]{2}[ ][0-9]{1,3}[,]{0,1}[0-9]{0,2}[%][ ][0-9]{1,2}[:][0-9]{2}[ ][0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]"
+expresion_alumno = "^[a-zA-zÀ-ÿ ]+[,][a-zA-zÀ-ÿ ]+[0-9]{1,2}[:][0-9]{2}[ ][0-9]{1,3}[,]{0,1}[0-9]{0,2}[%][ ][0-9]{1,2}[:][0-9]{2}[ ][0-9]{1,3}[,]{0,1}[0-9]{0,2}[%][ ][0-9]{1,2}[:][0-9]{2}"
 expresion_nombre_alumno = '^[a-zA-zÀ-ÿ ]+[,][a-zA-zÀ-ÿ ]+'
 expresion_horas_asignatura = '[0-9]{1,2}[:][0-9]{2}'
 expresion_porcentaje_asignatura = '[0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]'
 
 
 def pdf_to_csv(filepath):
-    tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv",guess=False, stream=True)
+    tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv", guess=False, stream=True)
     # tabula.convert_into("a.pdf", "outputFormat.csv", pages="all", output_format="csv", stream=True)
 
     leer_csv()
+
 
 def leer_csv():
     cabecera = get_cabecera()
@@ -30,15 +32,15 @@ def leer_csv():
     print(cabecera[1])
     print(cabecera[2])
     print(cabecera[3])
+    print(cabecera[4])
 
     print("\nAsignaturas")
     get_asignaturas(cabecera)
 
-    print('1º')
-
 
 def get_cabecera():
     anno = 'nada'
+    curso = 'nada'
     unidad = 'nada'
     fecha_inicio = 'nada'
     fecha_fin = 'nada'
@@ -58,6 +60,12 @@ def get_cabecera():
                 if pos != -1:
                     unidad = line[pos + len(literal_unidad):len(line)]
 
+            if curso == 'nada':
+                pos = line.find(literal_curso)
+                if pos != -1:
+                    pos_fin = line.find(literal_unidad)
+                    curso = line[pos + len(literal_curso):pos_fin]
+
             if fecha_inicio == 'nada':
                 pos = line.find(literal_fecha_desde)
                 if pos != -1:
@@ -73,7 +81,7 @@ def get_cabecera():
                     fecha_temp = fecha_temp.split('/')
                     fecha_fin = datetime.datetime(int(fecha_temp[2]), int(fecha_temp[1]), int(fecha_temp[0]))
 
-    cabecera = [anno, unidad.replace('o', 'º'), fecha_inicio, fecha_fin]
+    cabecera = [anno, curso.replace('o', 'º', 1), unidad.replace('o', 'º', 1), fecha_inicio, fecha_fin]
 
     csvFile.close()
 
@@ -81,7 +89,6 @@ def get_cabecera():
 
 
 def get_asignaturas(cabecera):
-
     with open('output.csv', 'r') as csvFile:
         reader = csv.reader(csvFile)
 
@@ -90,7 +97,7 @@ def get_asignaturas(cabecera):
             pos = line.find(literal_materia)
             if pos != -1:
                 pos_fin = line.find(literal_fin_materia)
-                materia = line[pos + len(literal_materia) : pos_fin]
+                materia = line[pos + len(literal_materia): pos_fin]
                 print(materia)
             else:
                 x = re.search(expresion_alumno, line)
@@ -108,12 +115,11 @@ def persistir_alumno(cabecera, materia, line):
 
     if float(porcentaje_float) > 25:
         print('\t', nombre[0][:-1], ' Horas justificadas:', horas[0], ' Porcentaje justificado:', porcentaje[0],
-              ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1], 'X')
+              ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1], ' Retrasos:', horas[2], 'X')
     else:
         print('\t', nombre[0][:-1], ' Horas justificadas:', horas[0], ' Porcentaje justificado:', porcentaje[0],
-              ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1])
+              ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1], ' Retrasos:', horas[2])
 
 
 if __name__ == '__main__':
     pdf_to_csv("a.pdf")
-

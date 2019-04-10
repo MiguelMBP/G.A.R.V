@@ -16,4 +16,6 @@
         android:name="com.example.android.appprofesor.fragments.VisitDetailFragment"
         android:id="@+id/visitDetailsFragment"
         ></fragment>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
