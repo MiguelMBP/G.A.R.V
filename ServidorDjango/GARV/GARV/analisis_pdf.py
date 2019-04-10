@@ -10,8 +10,8 @@ literal_anno_academico = 'Año académico: '
 literal_unidad = 'Unidad: '
 literal_materia = 'Materia: '
 literal_fin_materia = 'Total días período seleccionado: '
-expresion_alumno = "^[a-zA-zñÑçÇáéíóúÁÉÍÓÚüÜ ]+[,][a-zA-zñÑçÇáéíóúÁÉÍÓÚüÜ ]+[0-9]{1,2}[:][0-9]{2}[ ][0-9]{1,3}[,]{0,1}[0-9]{0,2}[%][ ][0-9]{1,2}[:][0-9]{2}[ ][0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]"
-expresion_nombre_alumno = '^[a-zA-zñÑçÇáéíóúÁÉÍÓÚüÜ ]+[,][a-zA-zñÑçÇáéíóúÁÉÍÓÚüÜ ]+'
+expresion_alumno = "^[a-zA-zÀ-ÿ ]+[,][a-zA-zÀ-ÿ ]+[0-9]{1,2}[:][0-9]{2}[ ][0-9]{1,3}[,]{0,1}[0-9]{0,2}[%][ ][0-9]{1,2}[:][0-9]{2}[ ][0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]"
+expresion_nombre_alumno = '^[a-zA-zÀ-ÿ ]+[,][a-zA-zÀ-ÿ ]+'
 expresion_horas_asignatura = '[0-9]{1,2}[:][0-9]{2}'
 expresion_porcentaje_asignatura = '[0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]'
 
