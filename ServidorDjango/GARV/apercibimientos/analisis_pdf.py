@@ -118,7 +118,7 @@ def persistir_alumno(cabecera, materia, line):
     porcentaje_injust_float = porcentaje[1][:-1]
     porcentaje_injust_float = porcentaje_injust_float.replace(',', '.')
 
-    if float(porcentaje_injust_float) > 25:
+    if float(porcentaje_injust_float) >= 25:
         print('\t', nombre[0][:-1], ' Horas justificadas:', horas[0], ' Porcentaje justificado:', porcentaje[0],
               ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1], ' Retrasos:', horas[2], 'X')
 
