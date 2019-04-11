@@ -7,8 +7,8 @@ from django.urls import reverse
 
 from .models import Document
 from .forms import DocumentForm
-from extraer_zip import extractZip
-from analisis_pdf import pdf_to_csv
+from .extraer_zip import extractZip
+from .analisis_pdf import pdf_to_csv
 
 
 def index(request):
@@ -28,7 +28,7 @@ def list(request):
                 print()
                 pdf_to_csv(newdoc.docfile.path)
             elif file.endswith('.zip'):
-                extractZip(newdoc)
+                extractZip(newdoc.docfile.path)
 
             # Redirect to the document list after POST
             return HttpResponseRedirect(reverse('list'))

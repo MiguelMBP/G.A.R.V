@@ -1,6 +1,6 @@
 import zipfile
 import os
-from analisis_pdf import pdf_to_csv
+from .analisis_pdf import pdf_to_csv
 
 
 def extractZip(filepath):

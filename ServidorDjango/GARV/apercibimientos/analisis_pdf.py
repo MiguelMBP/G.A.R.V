@@ -4,6 +4,8 @@ import re
 
 import tabula
 
+from .models import Apercibimiento
+
 literal_fecha_hasta = 'Fecha hasta: '
 literal_fecha_desde = 'Fecha desde: '
 literal_anno_academico = 'Año académico: '
@@ -71,7 +73,7 @@ def get_cabecera():
                 if pos != -1:
                     fecha_temp = line[pos + len(literal_fecha_desde):pos + len(literal_fecha_desde) + 10]
                     fecha_temp = fecha_temp.split('/')
-                    fecha_inicio = datetime.datetime(int(fecha_temp[2]), int(fecha_temp[1]), int(fecha_temp[0]))
+                    fecha_inicio = datetime.date(int(fecha_temp[2]), int(fecha_temp[1]), int(fecha_temp[0]))
 
             if fecha_fin == 'nada':
                 pos = line.find(literal_fecha_hasta)
@@ -79,7 +81,7 @@ def get_cabecera():
                     fecha_temp = line[len(literal_fecha_hasta) + pos:len(literal_fecha_hasta) + pos + 10]
 
                     fecha_temp = fecha_temp.split('/')
-                    fecha_fin = datetime.datetime(int(fecha_temp[2]), int(fecha_temp[1]), int(fecha_temp[0]))
+                    fecha_fin = datetime.date(int(fecha_temp[2]), int(fecha_temp[1]), int(fecha_temp[0]))
 
     cabecera = [anno, curso.replace('o', 'º', 1), unidad.replace('o', 'º', 1), fecha_inicio, fecha_fin]
 
@@ -110,15 +112,40 @@ def persistir_alumno(cabecera, materia, line):
     horas = re.findall(expresion_horas_asignatura, line)
     porcentaje = re.findall(expresion_porcentaje_asignatura, line)
 
-    porcentaje_float = porcentaje[1][:-1]
-    porcentaje_float = porcentaje_float.replace(',', '.')
+    porcentaje_just_float = porcentaje[0][:-1]
+    porcentaje_just_float = porcentaje_just_float.replace(',', '.')
 
-    if float(porcentaje_float) > 25:
+    porcentaje_injust_float = porcentaje[1][:-1]
+    porcentaje_injust_float = porcentaje_injust_float.replace(',', '.')
+
+    if float(porcentaje_injust_float) > 25:
         print('\t', nombre[0][:-1], ' Horas justificadas:', horas[0], ' Porcentaje justificado:', porcentaje[0],
               ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1], ' Retrasos:', horas[2], 'X')
+
+        apercibimiento = Apercibimiento(alumno=nombre[0][:-1], periodo_academico=cabecera[0], curso=cabecera[1],
+                                        unidad=cabecera[2], materia=materia, fecha_inicio=cabecera[3],
+                                        fecha_fin=cabecera[4],
+                                        horas_justificadas=horas[0], porcentaje_justificado=porcentaje_just_float,
+                                        horas_injustificadas=horas[1], porcentaje_injustificado=porcentaje_injust_float,
+                                        retrasos=horas[2])
+
+        if not comprobar_repetido(apercibimiento):
+            apercibimiento.save()
+
     else:
         print('\t', nombre[0][:-1], ' Horas justificadas:', horas[0], ' Porcentaje justificado:', porcentaje[0],
               ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1], ' Retrasos:', horas[2])
+
+
+def comprobar_repetido(nuevo_apercibimiento):
+    repetido = False
+    apercibimientos = Apercibimiento.objects.all()
+    for apercibimiento in apercibimientos:
+        if apercibimiento == nuevo_apercibimiento:
+            repetido = True
+            break
+
+    return repetido
 
 
 if __name__ == '__main__':
