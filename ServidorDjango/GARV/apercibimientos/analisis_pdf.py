@@ -21,23 +21,13 @@ expresion_porcentaje_asignatura = '[0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]'
 
 def pdf_to_csv(filepath):
     tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv", guess=False, stream=True)
-    # tabula.convert_into("a.pdf", "outputFormat.csv", pages="all", output_format="csv", stream=True)
-
     leer_csv()
 
 
 def leer_csv():
     cabecera = get_cabecera()
-
-    print("\nCabecera")
-    print(cabecera[0])
-    print(cabecera[1])
-    print(cabecera[2])
-    print(cabecera[3])
-    print(cabecera[4])
-
-    print("\nAsignaturas")
-    get_asignaturas(cabecera)
+    if comprobar_cabecera(cabecera):
+        get_asignaturas(cabecera)
 
 
 def get_cabecera():
@@ -90,6 +80,19 @@ def get_cabecera():
     return cabecera
 
 
+def comprobar_cabecera(cabecera):
+    if cabecera[0] == 'nada'  or cabecera[1] == 'nada'  or cabecera[2] == 'nada'  or cabecera[3] == 'nada'  or cabecera[4] == 'nada':
+        return False
+
+    fecha_inicio = cabecera[3]
+    fecha_fin = cabecera[4]
+
+    if fecha_inicio.month != fecha_fin.month:
+        return False
+
+    return True
+
+
 def get_asignaturas(cabecera):
     with open('output.csv', 'r') as csvFile:
         reader = csv.reader(csvFile)
@@ -119,9 +122,6 @@ def persistir_alumno(cabecera, materia, line):
     porcentaje_injust_float = porcentaje_injust_float.replace(',', '.')
 
     if float(porcentaje_injust_float) >= 25:
-        print('\t', nombre[0][:-1], ' Horas justificadas:', horas[0], ' Porcentaje justificado:', porcentaje[0],
-              ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1], ' Retrasos:', horas[2], 'X')
-
         apercibimiento = Apercibimiento(alumno=nombre[0][:-1], periodo_academico=cabecera[0], curso=cabecera[1],
                                         unidad=cabecera[2], materia=materia, fecha_inicio=cabecera[3],
                                         fecha_fin=cabecera[4],
@@ -131,10 +131,6 @@ def persistir_alumno(cabecera, materia, line):
 
         if not comprobar_repetido(apercibimiento):
             apercibimiento.save()
-
-    else:
-        print('\t', nombre[0][:-1], ' Horas justificadas:', horas[0], ' Porcentaje justificado:', porcentaje[0],
-              ' Horas injustificadas:', horas[1], ' Porcentaje injustificado:', porcentaje[1], ' Retrasos:', horas[2])
 
 
 def comprobar_repetido(nuevo_apercibimiento):

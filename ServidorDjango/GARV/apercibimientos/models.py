@@ -18,6 +18,7 @@ class Apercibimiento(models.Model):
     horas_injustificadas = models.CharField(max_length=200)
     porcentaje_injustificado = models.DecimalField(decimal_places=2, max_digits=6)
     retrasos = models.CharField(max_length=200)
+    activo = models.BooleanField(default=True)
 
     def __eq__(self, other):
         if not isinstance(other, Apercibimiento):

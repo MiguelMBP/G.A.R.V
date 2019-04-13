@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apercibimientos',
+    'visitas'
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
