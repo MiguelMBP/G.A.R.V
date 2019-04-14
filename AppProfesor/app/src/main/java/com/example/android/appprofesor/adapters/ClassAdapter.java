@@ -39,8 +39,8 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final ClaseApercibimiento clase = clases.get(position);
 
-        holder.classView.setText(clase.getCurso());
-        holder.subject.setText(clase.getAsignatura());
+        holder.classView.setText(clase.getUnidad());
+        holder.subject.setText(clase.getMateria());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +53,11 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return clases.size();
+    }
+
+    public void addClases(List<ClaseApercibimiento> clases) {
+        this.clases = clases;
+        notifyDataSetChanged();
     }
 
 

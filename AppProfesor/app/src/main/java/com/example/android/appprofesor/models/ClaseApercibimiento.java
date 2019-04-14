@@ -1,33 +1,44 @@
 package com.example.android.appprofesor.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClaseApercibimiento implements Serializable {
 
-    private int id;
+    private String materia;
+    private String unidad;
     private List<AlumnoApercibimiento> alumnos;
-    private String curso;
-    private String asignatura;
 
-    public ClaseApercibimiento(int id, List<AlumnoApercibimiento> alumnos, String curso, String asignatura) {
-        this.id = id;
+    public ClaseApercibimiento(String materia, String unidad, List<AlumnoApercibimiento> alumnos) {
+        super();
+        this.materia = materia;
+        this.unidad = unidad;
         this.alumnos = alumnos;
-        this.curso = curso;
-        this.asignatura = asignatura;
     }
 
     public ClaseApercibimiento() {
+        super();
+        alumnos = new ArrayList<>();
+    }
+
+    public String getMateria() {
+        return materia;
+    }
+
+    public void setMateria(String materia) {
+        this.materia = materia;
+    }
+
+    public String getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
     }
 
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public List<AlumnoApercibimiento> getAlumnos() {
         return alumnos;
@@ -37,19 +48,8 @@ public class ClaseApercibimiento implements Serializable {
         this.alumnos = alumnos;
     }
 
-    public String getCurso() {
-        return curso;
-    }
-
-    public void setCurso(String curso) {
-        this.curso = curso;
-    }
-
-    public String getAsignatura() {
-        return asignatura;
-    }
-
-    public void setAsignatura(String asignatura) {
-        this.asignatura = asignatura;
+    @Override
+    public String toString() {
+        return "Materia [materia=" + materia + ", unidad=" + unidad + ", alumnos=" + alumnos + "]";
     }
 }

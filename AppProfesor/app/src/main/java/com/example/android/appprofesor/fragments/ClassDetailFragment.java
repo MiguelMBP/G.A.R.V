@@ -51,7 +51,7 @@ public class ClassDetailFragment extends Fragment {
     public void renderClass(ClaseApercibimiento clase) {
         alumnos = clase.getAlumnos();
 
-        this.clase.setText(clase.getCurso() + " - " + clase.getAsignatura());
+        this.clase.setText(clase.getUnidad() + " - " + clase.getMateria());
 
         adapter = new ClassStudentAdapter(alumnos, R.layout.class_student_row, getContext());
         recyclerView.setAdapter(adapter);

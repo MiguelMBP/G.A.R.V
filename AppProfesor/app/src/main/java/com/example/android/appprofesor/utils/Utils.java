@@ -20,8 +20,8 @@ public class Utils {
         alumnos.add(new AlumnoApercibimiento("Manuel", new ArrayList<String>(){{add("enero"); add("febrero");}}));
         alumnos.add(new AlumnoApercibimiento("Paco", new ArrayList<String>(){{add("Enero"); add("Febrero"); add("Marzo");}}));
 
-        clases.add(new ClaseApercibimiento(1, alumnos, "2º DAM", "PSP"));
-        clases.add(new ClaseApercibimiento(2, alumnos, "1º DAM", "SSII"));
+        clases.add(new ClaseApercibimiento("PSP", "2º DAM", alumnos));
+        clases.add(new ClaseApercibimiento("SSII", "1º DAM", alumnos));
 
         return clases;
     }

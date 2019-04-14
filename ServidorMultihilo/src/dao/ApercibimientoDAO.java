@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.DBConnection;
+import vo.AlumnoApercibimiento;
 import vo.Apercibimiento;
+import vo.ClaseApercibimiento;
 
 public class ApercibimientoDAO {
 
@@ -14,9 +16,7 @@ public class ApercibimientoDAO {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
 		String sql = "SELECT * FROM apercibimientos_apercibimiento";
-		try (
-				Statement st = conex.getConnection().createStatement(); 
-				ResultSet rs = st.executeQuery(sql);) {
+		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {
 				Apercibimiento a = new Apercibimiento();
@@ -38,8 +38,44 @@ public class ApercibimientoDAO {
 				apercibimientos.add(a);
 			}
 
-			for (Apercibimiento apercibimiento : apercibimientos) {
-				//System.out.println(apercibimiento);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return apercibimientos;
+	}
+
+	public List<ClaseApercibimiento> mostrarMaterias() {
+		List<ClaseApercibimiento> materias = new ArrayList<>();
+		DBConnection conex = new DBConnection();
+		String sql = "select unidad, materia from apercibimientos_apercibimiento group by materia, unidad order by unidad";
+		try (
+				Statement st = conex.getConnection().createStatement(); 
+				ResultSet rs = st.executeQuery(sql);) {
+			ResultSet rsAlumnos = null;
+
+			while (rs.next()) {
+				ClaseApercibimiento m = new ClaseApercibimiento();
+				m.setUnidad(rs.getString(1));
+				m.setMateria(rs.getString(2));
+
+				sql = "select alumno, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento "
+						+ "where materia like '" + m.getMateria() + "' and unidad like '" + m.getUnidad() + "' group by alumno";
+				rsAlumnos = st.executeQuery(sql);
+
+				while (rsAlumnos.next()) {
+					AlumnoApercibimiento alumno = new AlumnoApercibimiento();
+					
+					alumno.setNombre(rsAlumnos.getString(1));
+					String[] meses = rsAlumnos.getString(2).split(",");
+					alumno.setMeses(convertirMeses(meses));
+					
+					m.getAlumnos().add(alumno);
+				}
+
+				materias.add(m);
 			}
 
 		} catch (Exception e) {
@@ -48,6 +84,54 @@ public class ApercibimientoDAO {
 			conex.desconectar();
 		}
 
-		return apercibimientos;
+		return materias;
+	}
+
+	private List<String> convertirMeses(String[] meses) {
+		List<String> mesesString = new ArrayList<>();
+		
+		for (String string : meses) {
+			int mes = Integer.parseInt(string);
+			switch (mes) {
+			case 1:
+				mesesString.add("Enero");
+				break;
+			case 2:
+				mesesString.add("Febrero");
+				break;
+			case 3:
+				mesesString.add("Marzo");
+				break;
+			case 4:
+				mesesString.add("Abril");
+				break;
+			case 5:
+				mesesString.add("Mayo");
+				break;
+			case 6:
+				mesesString.add("Junio");
+				break;
+			case 7:
+				mesesString.add("Julio");
+				break;
+			case 8:
+				mesesString.add("Agosto");
+				break;
+			case 9:
+				mesesString.add("Septiembre");
+				break;
+			case 10:
+				mesesString.add("Octubre");
+				break;
+			case 11:
+				mesesString.add("Noviembre");
+				break;
+			case 12:
+				mesesString.add("Diciembre");
+				break;
+
+			}
+		}
+		return mesesString;
 	}
 }

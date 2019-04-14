@@ -33,12 +33,18 @@ public class AlumnoApercibimiento implements Serializable {
 
     public String getMesesString() {
         String mes = "";
-        for (int i = 0; i < meses.size(); i++){
+        for (int i = 0; i < meses.size(); i++) {
             mes += meses.get(i);
-            if (i < meses.size()-1) {
+            if (i < meses.size() - 1) {
                 mes += ", ";
             }
         }
         return mes;
     }
+
+    @Override
+    public String toString() {
+        return "AlumnoApercibimiento [nombre=" + nombre + ", meses=" + meses + "]";
+    }
+
 }

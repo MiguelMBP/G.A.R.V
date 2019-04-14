@@ -122,8 +122,8 @@ def persistir_alumno(cabecera, materia, line):
     porcentaje_injust_float = porcentaje_injust_float.replace(',', '.')
 
     if float(porcentaje_injust_float) >= 25:
-        apercibimiento = Apercibimiento(alumno=nombre[0][:-1], periodo_academico=cabecera[0], curso=cabecera[1],
-                                        unidad=cabecera[2], materia=materia, fecha_inicio=cabecera[3],
+        apercibimiento = Apercibimiento(alumno=nombre[0][:-1], periodo_academico=cabecera[0], curso=cabecera[1][:-1],
+                                        unidad=cabecera[2], materia=materia[:-1], fecha_inicio=cabecera[3],
                                         fecha_fin=cabecera[4],
                                         horas_justificadas=horas[0], porcentaje_justificado=porcentaje_just_float,
                                         horas_injustificadas=horas[1], porcentaje_injustificado=porcentaje_injust_float,

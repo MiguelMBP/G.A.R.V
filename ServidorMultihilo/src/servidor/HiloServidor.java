@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 
 import dao.ApercibimientoDAO;
 import vo.Apercibimiento;
+import vo.ClaseApercibimiento;
 
 public class HiloServidor extends Thread {
 
@@ -37,10 +38,26 @@ public class HiloServidor extends Thread {
 				getApercibimientos(salida);
 				break;
 
+			case 3:
+				getMaterias(salida);
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
+
+	}
+
+	private void getMaterias(ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			List<ClaseApercibimiento> materias = dao.mostrarMaterias();
+
+			String json = materiasJson(materias);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -49,16 +66,21 @@ public class HiloServidor extends Thread {
 			ApercibimientoDAO dao = new ApercibimientoDAO();
 			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientos();
 
-			String json = convertToJson(apercibimientos);
+			String json = apercibimientosJson(apercibimientos);
 			salida.writeObject(json);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private String convertToJson(List<Apercibimiento> apercibimientos) {
+	private String apercibimientosJson(List<Apercibimiento> apercibimientos) {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		return gson.toJson(apercibimientos);
+	}
+
+	private String materiasJson(List<ClaseApercibimiento> materias) {
+		Gson gson = new Gson();
+		return gson.toJson(materias);
 	}
 
 }
