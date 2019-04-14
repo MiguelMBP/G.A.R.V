@@ -1,7 +1,10 @@
 package servidor;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.List;
@@ -17,31 +20,35 @@ public class ClientePrueba {
 
 	public static void main(String[] args) {
 		Socket socketCliente = null;
-		InputStreamReader entrada = null;
+		ObjectInputStream entrada = null;
+		ObjectOutputStream salida = null;
+
 
 		try {
 			socketCliente = new Socket("localhost", PORT);
-			entrada = new InputStreamReader(socketCliente.getInputStream());
+			salida = new ObjectOutputStream(socketCliente.getOutputStream());
+			entrada = new ObjectInputStream(socketCliente.getInputStream());
 		} catch (IOException e) {
 			System.err.println("No puede establer canales de E/S para la conexión");
 			System.exit(-1);
 		}
 		String linea = "";
-		int i;
 		try {
-			
-			while((i = entrada.read())!=-1) {
-	            linea += (char)i;
-	         }
-		
+			int op = 1;
+			salida.writeInt(op);
+			salida.flush();
+			linea = (String) entrada.readObject();
+
 			List<Apercibimiento> apercibimientos = jsonToList(linea);
-			
+
 			for (Apercibimiento apercibimiento : apercibimientos) {
 				System.out.println(apercibimiento);
 			}
 
 		} catch (IOException e) {
 			System.out.println("IOException: " + e.getMessage());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 
 		try {
@@ -51,9 +58,10 @@ public class ClientePrueba {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static List<Apercibimiento> jsonToList(String json) {
-		Type typeList = new TypeToken<List<Apercibimiento>>() {}.getType();
+		Type typeList = new TypeToken<List<Apercibimiento>>() {
+		}.getType();
 		Gson gson = new Gson();
 		List<Apercibimiento> apercibimientos = gson.fromJson(json, typeList);
 		return apercibimientos;

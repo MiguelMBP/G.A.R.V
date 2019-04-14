@@ -2,6 +2,8 @@ package vo;
 
 import java.util.Date;
 
+
+
 public class Apercibimiento {
 	private int id;
 	private String alumno;

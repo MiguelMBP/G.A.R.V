@@ -39,7 +39,7 @@ public class ApercibimientoDAO {
 			}
 
 			for (Apercibimiento apercibimiento : apercibimientos) {
-				System.out.println(apercibimiento);
+				//System.out.println(apercibimiento);
 			}
 
 		} catch (Exception e) {

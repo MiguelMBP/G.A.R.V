@@ -5,6 +5,22 @@
  */
 package Interfaz;
 
+import Cliente.ConectorServidor;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.List;
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import vo.Apercibimiento;
+
 /**
  *
  * @author miguelmbp
@@ -14,9 +30,14 @@ public class Apercibimientos extends javax.swing.JFrame {
     /**
      * Creates new form Apercibimientos
      */
+    
+    public static final int PORT = 4444;
+    
+    
     public Apercibimientos() {
         initComponents();
         setLocationRelativeTo(null);
+        rellenarTabla();
     }
 
     /**
@@ -43,13 +64,10 @@ public class Apercibimientos extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nombre", "Asignatura", "Curso", "Periodo"
+                "Alumno", "Periodo", "Curso", "Unidad", "Materia", "FechaInicio", "FechaFin", "Justificadas", "Porcentaje", "Injustificadas", "Porcentaje", "Retrasos", "Activo"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -95,14 +113,14 @@ public class Apercibimientos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1541, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -167,4 +185,19 @@ public class Apercibimientos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    
+    private void rellenarTabla() {
+        ConectorServidor cs = new ConectorServidor();
+        List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
+        
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        t.setRowCount(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        for (int i = 0; i < apercibimientos.size(); i++) {
+            Apercibimiento a = apercibimientos.get(i);
+            Object[] elementos = {a.getAlumno(), a.getPeriodoAcademico(), a.getCurso(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.getHorasJustificadas(), a.getPorcentajeJustificado(), a.getHorasInjustificadas(), a.getPorcentajeInjustificado(), a.getRetrasos(), a.isActivo()};
+            t.addRow(elementos);
+        }
+    }
 }
