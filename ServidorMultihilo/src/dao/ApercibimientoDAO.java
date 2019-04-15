@@ -15,7 +15,7 @@ public class ApercibimientoDAO {
 	public List<Apercibimiento> mostrarApercibimientos() {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT * FROM apercibimientos_apercibimiento";
+		String sql = "SELECT * FROM apercibimientos_apercibimiento order by unidad";
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from django.http import HttpResponse
@@ -14,7 +15,9 @@ from .analisis_pdf import pdf_to_csv
 def index(request):
     return HttpResponse("Hello there!")
 
-def list(request):
+
+@login_required
+def subir_pdf(request):
     # Handle file upload
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -40,3 +43,9 @@ def list(request):
 
     # Render list page with the documents and the form
     return render(request, 'list.html', {'documents': documents, 'form': form})
+
+
+def createuser(request):
+    if request.method == "POST":
+        text = request.POST.get("clave")
+        return HttpResponse('success', text)
