@@ -8,14 +8,20 @@ import android.view.ViewGroup;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.adapters.TutorAdapter;
+import com.example.android.appprofesor.models.ClaseApercibimiento;
 import com.example.android.appprofesor.models.TutorAlumno;
 import com.example.android.appprofesor.utils.Utils;
+import com.example.android.appprofesor.viewmodels.ClaseViewModel;
+import com.example.android.appprofesor.viewmodels.TutorAlumnoViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +29,8 @@ public class TutorListFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     TutorAdapter adapter;
-    List<TutorAlumno> alumnos;
+    List<TutorAlumno> alumnos = new ArrayList<>();
+    TutorAlumnoViewModel model;
 
     OnStudentSelected callback;
     public TutorListFragment() {
@@ -39,7 +46,7 @@ public class TutorListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        alumnos = Utils.getDummyStudent();
+        //alumnos = Utils.getDummyStudent();
 
         adapter = new TutorAdapter(alumnos, R.layout.tutor_row, getContext(), new TutorAdapter.OnItemClickListener() {
             @Override
@@ -48,6 +55,15 @@ public class TutorListFragment extends Fragment {
             }});
 
         recyclerView.setAdapter(adapter);
+
+        model = ViewModelProviders.of(this).get(TutorAlumnoViewModel.class);
+        model.getAlumnos().observe(this, new Observer<List<TutorAlumno>>() {
+
+            @Override
+            public void onChanged(List<TutorAlumno> tutorAlumnos) {
+                adapter.addAlumnos(tutorAlumnos);
+            }
+        });
 
         return view;
     }

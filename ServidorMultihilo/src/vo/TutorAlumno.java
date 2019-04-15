@@ -1,11 +1,11 @@
-package com.example.android.appprofesor.models;
+package vo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TutorAlumno implements Serializable {
-    private String nombre;
+public class TutorAlumno implements Serializable{
+	private String nombre;
     private List<TutorAsignatura> asignaturas;
     private String curso;
 
@@ -16,7 +16,7 @@ public class TutorAlumno implements Serializable {
     }
 
     public TutorAlumno() {
-        asignaturas = new ArrayList<>();
+    	asignaturas = new ArrayList<>();
     }
 
     public String getNombre() {

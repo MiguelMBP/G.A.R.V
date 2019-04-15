@@ -1,10 +1,11 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Document
 from .forms import DocumentForm
@@ -49,3 +50,23 @@ def createuser(request):
     if request.method == "POST":
         text = request.POST.get("clave")
         return HttpResponse('success', text)
+
+
+def a_login(request):
+    msg = []
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                msg.append("login successful")
+                return HttpResponse('login')
+            else:
+                msg.append("disabled account")
+                return HttpResponse('disabled')
+        else:
+            msg.append("invalid login")
+            return HttpResponse('invalid')
+    return HttpResponse('nada')

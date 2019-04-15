@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.appprofesor.R;
+import com.example.android.appprofesor.models.ClaseApercibimiento;
 import com.example.android.appprofesor.models.TutorAlumno;
 
 import java.util.List;
@@ -47,6 +48,11 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.ViewHolder> 
                 listener.onItemClick(alumno, position);
             }
         });
+    }
+
+    public void addAlumnos(List<TutorAlumno> alumnos) {
+        this.alumnos = alumnos;
+        notifyDataSetChanged();
     }
 
     @Override

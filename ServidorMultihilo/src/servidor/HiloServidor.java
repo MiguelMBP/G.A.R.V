@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import dao.ApercibimientoDAO;
 import vo.Apercibimiento;
 import vo.ClaseApercibimiento;
+import vo.TutorAlumno;
 
 public class HiloServidor extends Thread {
 
@@ -40,12 +41,32 @@ public class HiloServidor extends Thread {
 
 			case 3:
 				getMaterias(salida);
+				break;
+			case 4:
+				getApercibimientosTutor(salida, entrada);
+				break;
 
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void getApercibimientosTutor(ObjectOutputStream salida, ObjectInputStream entrada) {
+		try {
+			String unidad = (String) entrada.readObject();
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			List<TutorAlumno> alumnos = dao.mostrarAlumnosTutor(unidad);
+
+			String json = alumnosJson(alumnos);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void getMaterias(ObjectOutputStream salida) {
@@ -81,6 +102,11 @@ public class HiloServidor extends Thread {
 	private String materiasJson(List<ClaseApercibimiento> materias) {
 		Gson gson = new Gson();
 		return gson.toJson(materias);
+	}
+	
+	private String alumnosJson(List<TutorAlumno> alumnos) {
+		Gson gson = new Gson();
+		return gson.toJson(alumnos);
 	}
 
 }

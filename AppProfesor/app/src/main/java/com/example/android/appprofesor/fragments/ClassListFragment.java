@@ -1,27 +1,16 @@
 package com.example.android.appprofesor.fragments;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.appprofesor.Connectors.WarningConnector;
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.adapters.ClassAdapter;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
-import com.example.android.appprofesor.utils.Utils;
-import com.example.android.appprofesor.viewmodels.ClassListViewModel;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.android.appprofesor.viewmodels.ClaseViewModel;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Type;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +29,7 @@ public class ClassListFragment extends Fragment {
     private ClassAdapter adapter;
     private List<ClaseApercibimiento> clases = new ArrayList<>();
     private OnClassSelected callback;
-    private ClassListViewModel model;
+    private ClaseViewModel model;
 
     public ClassListFragment() {
     }
@@ -67,7 +55,7 @@ public class ClassListFragment extends Fragment {
         });
         recyclerView.setAdapter(adapter);
 
-        model = ViewModelProviders.of(this).get(ClassListViewModel.class);
+        model = ViewModelProviders.of(this).get(ClaseViewModel.class);
         model.getClases().observe(this, new Observer<List<ClaseApercibimiento>>() {
             @Override
             public void onChanged(List<ClaseApercibimiento> clases) {

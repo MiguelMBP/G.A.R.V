@@ -22,11 +22,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-public class ClassListViewModel extends AndroidViewModel {
+public class ClaseViewModel extends AndroidViewModel {
     private static MutableLiveData<List<ClaseApercibimiento>> clases;
     private Application application;
 
-    public ClassListViewModel(@NonNull Application application) {
+    public ClaseViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
     }
@@ -41,7 +41,7 @@ public class ClassListViewModel extends AndroidViewModel {
     }
 
     private void cargarClases() {
-        clases.setValue(WarningConnector.getMaterias());
+        new ConectarServidor().execute();
     }
 
     private class ConectarServidor extends AsyncTask<Void, Void, List<ClaseApercibimiento>> {
