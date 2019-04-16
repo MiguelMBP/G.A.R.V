@@ -54,9 +54,10 @@ def createuser(request):
 
 def a_login(request):
     msg = []
-    if request.POST:
-        username = request.POST['username']
-        password = request.POST['password']
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(username, password)
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
