@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
 
 from .models import Document
 from .forms import DocumentForm
@@ -46,10 +46,21 @@ def subir_pdf(request):
     return render(request, 'list.html', {'documents': documents, 'form': form})
 
 
+@login_required
 def createuser(request):
     if request.method == "POST":
-        text = request.POST.get("clave")
-        return HttpResponse('success', text)
+        userName = request.REQUEST.get('username', None)
+        userPass = request.REQUEST.get('password', None)
+        userMail = request.REQUEST.get('email', None)
+        if userName and userPass and userMail:
+            user, created = User.objects.create_user(username=userName,
+                                            email=userMail,
+                                            password=userPass)
+            if created:
+                return HttpResponse('success')
+            else:
+                return HttpResponse('failure')
+        return HttpResponse('failure')
 
 
 def a_login(request):
@@ -63,11 +74,9 @@ def a_login(request):
             if user.is_active:
                 login(request, user)
                 msg.append("login successful")
-                return HttpResponse('login')
             else:
                 msg.append("disabled account")
-                return HttpResponse('disabled')
         else:
             msg.append("invalid login")
-            return HttpResponse('invalid')
-    return HttpResponse('nada')
+    return HttpResponse(msg)
+

@@ -14,9 +14,15 @@ public class Visitas extends javax.swing.JFrame {
     /**
      * Creates new form Visitas
      */
-    public Visitas() {
+    
+    private String username;
+    private String password;
+    
+    public Visitas(String username, String password) {
         initComponents();
         setLocationRelativeTo(null);
+        this.username = username;
+        this.password = password;
     }
 
     /**
@@ -101,7 +107,7 @@ public class Visitas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Apercibimientos a = new Apercibimientos();
+        Apercibimientos a = new Apercibimientos(username, password);
         a.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -136,7 +142,7 @@ public class Visitas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Visitas().setVisible(true);
+                new Visitas(null, null).setVisible(true);
             }
         });
     }

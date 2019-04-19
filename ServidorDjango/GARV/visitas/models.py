@@ -1,12 +1,13 @@
+from django.conf import settings
 from django.db import models
 
 
 class Profesor(models.Model):
     dni = models.CharField(max_length=9, unique=True)
-    usuario = models.CharField(max_length=100, unique=True)
-    contrasena = models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
+    cursoTutor = models.CharField(max_length=100)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
 
 
 class Alumno(models.Model):

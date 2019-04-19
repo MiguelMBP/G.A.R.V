@@ -5,41 +5,20 @@
  */
 package Interfaz;
 
-import Cliente.ConectorServidor;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.List;
-import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
-import vo.Apercibimiento;
-
 /**
  *
  * @author miguelmbp
  */
-public class Apercibimientos extends javax.swing.JFrame {
+public class Usuarios extends javax.swing.JFrame {
 
     /**
-     * Creates new form Apercibimientos
+     * Creates new form Usuarios
      */
-    
-    public static final int PORT = 4444;
     private String username;
     private String password;
     
-    
-    public Apercibimientos(String username, String password) {
+    public Usuarios(String username, String password) {
         initComponents();
-        setLocationRelativeTo(null);
-        rellenarTabla();
         this.username = username;
         this.password = password;
     }
@@ -58,44 +37,37 @@ public class Apercibimientos extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Alumno", "Periodo", "Curso", "Unidad", "Materia", "FechaInicio", "FechaFin", "Justificadas", "Porcentaje", "Injustificadas", "Porcentaje", "Retrasos", "Activo"
+                "Usuario", "Correo", "Nombre", "Apellidos", "Curso"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jMenu1.setText("Apercibimientos");
 
-        jMenuItem1.setText("Modificar Apercibimiento");
+        jMenuItem1.setText("Ver Apercibimientos");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setText("Eliminar Apercibimiento");
-        jMenu1.add(jMenuItem2);
-
-        jMenuItem4.setText("Informes");
-        jMenu1.add(jMenuItem4);
-
-        jMenuItem5.setText("Subir Archivos");
-        jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
 
@@ -113,13 +85,19 @@ public class Apercibimientos extends javax.swing.JFrame {
 
         jMenu3.setText("Usuarios");
 
-        jMenuItem6.setText("Ver usuarios");
+        jMenuItem6.setText("Crear ususario");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
             }
         });
         jMenu3.add(jMenuItem6);
+
+        jMenuItem2.setText("Eliminar usuario");
+        jMenu3.add(jMenuItem2);
+
+        jMenuItem4.setText("Editar usuario");
+        jMenu3.add(jMenuItem4);
 
         jMenuBar1.add(jMenu3);
 
@@ -131,14 +109,14 @@ public class Apercibimientos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1541, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -151,16 +129,15 @@ public class Apercibimientos extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        ModificarApercibimiento ma = new ModificarApercibimiento(this, true);
-        ma.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Usuarios usuarios = new Usuarios(username, password);
-        usuarios.setVisible(true);
-        this.setVisible(false);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Apercibimientos a = new Apercibimientos(username, password);
+        a.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,20 +156,20 @@ public class Apercibimientos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Apercibimientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Apercibimientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Apercibimientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Apercibimientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Usuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Apercibimientos(null, null).setVisible(true);
+                new Usuarios(null, null).setVisible(true);
             }
         });
     }
@@ -206,24 +183,8 @@ public class Apercibimientos extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-
-    
-    private void rellenarTabla() {
-        ConectorServidor cs = new ConectorServidor();
-        List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
-        
-        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
-        t.setRowCount(0);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        for (int i = 0; i < apercibimientos.size(); i++) {
-            Apercibimiento a = apercibimientos.get(i);
-            Object[] elementos = {a.getAlumno(), a.getPeriodoAcademico(), a.getCurso(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.getHorasJustificadas(), a.getPorcentajeJustificado(), a.getHorasInjustificadas(), a.getPorcentajeInjustificado(), a.getRetrasos(), a.isActivo()};
-            t.addRow(elementos);
-        }
-    }
 }

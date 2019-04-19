@@ -9,6 +9,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import connection.DjangoConnection;
 import dao.ApercibimientoDAO;
 import vo.Apercibimiento;
 import vo.ClaseApercibimiento;
@@ -45,12 +46,29 @@ public class HiloServidor extends Thread {
 			case 4:
 				getApercibimientosTutor(salida, entrada);
 				break;
+			case 5:
+				inicioSesion(entrada, salida);
 
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void inicioSesion(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			String username = entrada.readUTF();
+			String password = entrada.readUTF();
+			DjangoConnection dc = new DjangoConnection();
+			boolean existe = dc.conectar(username, password);
+
+			salida.writeBoolean(existe);
+			salida.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void getApercibimientosTutor(ObjectOutputStream salida, ObjectInputStream entrada) {
