@@ -5,6 +5,13 @@
  */
 package Interfaz;
 
+import Cliente.ConectorServidor;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import vo.Usuario;
+import vo.Visita;
+
 /**
  *
  * @author miguelmbp
@@ -21,6 +28,8 @@ public class Usuarios extends javax.swing.JFrame {
         initComponents();
         this.username = username;
         this.password = password;
+        setLocationRelativeTo(null);
+        rellenarTabla();
     }
 
     /**
@@ -48,13 +57,13 @@ public class Usuarios extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Usuario", "Correo", "Nombre", "Apellidos", "Curso"
+                "Usuario", "Nombre", "Correo", "Curso"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -130,7 +139,8 @@ public class Usuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
+        CrearUsuario usuario = new CrearUsuario(this, true, username, password);
+        usuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -187,4 +197,17 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void rellenarTabla() {
+        ConectorServidor cs = new ConectorServidor();
+        List<Usuario> usuarios = cs.cargarUsuarios();
+        
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        t.setRowCount(0);
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario u = usuarios.get(i);
+            Object[] elementos = {u.getUsuario(), u.getNombre(), u.getCorreo(), u.getCursoTutor()};
+            t.addRow(elementos);
+        }
+    }
 }

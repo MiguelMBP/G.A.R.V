@@ -6,15 +6,8 @@ class Profesor(models.Model):
     dni = models.CharField(max_length=9, unique=True)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
-    cursoTutor = models.CharField(max_length=100)
+    cursoTutor = models.CharField(max_length=100, null=True)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
-
-
-class Alumno(models.Model):
-    dni = models.CharField(max_length=9, unique=True)
-    nombre = models.CharField(max_length=100)
-    apellidos = models.CharField(max_length=100)
-    curso = models.CharField(max_length=100)
 
 
 class Empresa(models.Model):
@@ -26,11 +19,19 @@ class Empresa(models.Model):
     coordenadaY = models.FloatField()
 
 
+class Alumno(models.Model):
+    dni = models.CharField(max_length=9, unique=True)
+    nombre = models.CharField(max_length=100)
+    apellidos = models.CharField(max_length=100)
+    curso = models.CharField(max_length=100)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default="-1")
+
+
 class Visita(models.Model):
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     fecha = models.DateField()
     distancia = models.FloatField()
-    imagen = models.CharField(max_length=200)
+    imagen = models.ImageField()
+    validada = models.BooleanField(default=False)
 

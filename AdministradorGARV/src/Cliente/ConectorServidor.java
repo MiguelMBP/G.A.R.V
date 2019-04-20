@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vo.Apercibimiento;
+import vo.Usuario;
+import vo.Visita;
 
 /**
  *
@@ -99,10 +101,93 @@ public class ConectorServidor {
 
     }
 
-    private static List<Apercibimiento> jsonToListApercibimientos(String json) {
+    private List<Apercibimiento> jsonToListApercibimientos(String json) {
         java.lang.reflect.Type typeList = new TypeToken<List<Apercibimiento>>() {}.getType();
         Gson gson = new Gson();
         List<Apercibimiento> apercibimientos = gson.fromJson(json, typeList);
         return apercibimientos;
+    }
+    
+    public List<Visita> cargarVisitas() {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<Visita> visitas = new ArrayList<>();
+
+        try {
+            socketCliente = new Socket("localhost", PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            salida.writeInt(2);
+            salida.flush();
+            linea = (String) entrada.readObject();
+            visitas = jsonToListVisita(linea);
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return visitas;
+    }
+
+    private List<Visita> jsonToListVisita(String linea) {
+        java.lang.reflect.Type typeList = new TypeToken<List<Visita>>() {}.getType();
+        Gson gson = new Gson();
+        List<Visita> visitas = gson.fromJson(linea, typeList);
+        return visitas;
+    }
+    
+    public List<Usuario> cargarUsuarios() {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<Usuario> usuarios = new ArrayList<>();
+
+        try {
+            socketCliente = new Socket("localhost", PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            salida.writeInt(6);
+            salida.flush();
+            linea = (String) entrada.readObject();
+            usuarios = jsonToListUsuarios(linea);
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return usuarios;
+
+    }
+
+    private List<Usuario> jsonToListUsuarios(String linea) {
+        java.lang.reflect.Type typeList = new TypeToken<List<Usuario>>() {}.getType();
+        Gson gson = new Gson();
+        List<Usuario> usuarios = gson.fromJson(linea, typeList);
+        return usuarios;
     }
 }

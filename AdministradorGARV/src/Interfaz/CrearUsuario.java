@@ -23,6 +23,7 @@ public class CrearUsuario extends javax.swing.JDialog {
         initComponents();
         this.username = username;
         this.password = password;
+        setLocationRelativeTo(null);
     }
 
     /**
