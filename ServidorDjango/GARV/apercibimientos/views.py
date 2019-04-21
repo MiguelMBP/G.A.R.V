@@ -46,22 +46,6 @@ def subir_pdf(request):
     return render(request, 'list.html', {'documents': documents, 'form': form})
 
 
-@login_required
-def createuser(request):
-    if request.method == "POST":
-        userName = request.REQUEST.get('username', None)
-        userPass = request.REQUEST.get('password', None)
-        userMail = request.REQUEST.get('email', None)
-        if userName and userPass and userMail:
-            user, created = User.objects.create_user(username=userName,
-                                            email=userMail,
-                                            password=userPass)
-            if created:
-                return HttpResponse('success')
-            else:
-                return HttpResponse('failure')
-        return HttpResponse('failure')
-
 
 def a_login(request):
     msg = []

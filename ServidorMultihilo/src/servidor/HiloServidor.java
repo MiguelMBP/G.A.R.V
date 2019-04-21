@@ -58,12 +58,39 @@ public class HiloServidor extends Thread {
 			case 6:
 				getUsuarios(salida);
 				break;
+			case 7:
+				crearUsuario(entrada, salida);
+				break;
 
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void crearUsuario(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			String usuario = entrada.readUTF();
+			String contraseña = entrada.readUTF();
+			
+			String usuarioCrear = entrada.readUTF();
+			String contraseñaCrear = entrada.readUTF();
+			String correo = entrada.readUTF();
+			String dni = entrada.readUTF();
+			String nombre = entrada.readUTF();
+			String apellidos = entrada.readUTF();
+			String curso = entrada.readUTF();
+			
+			DjangoConnection con = new DjangoConnection();
+			boolean creado = con.createUser(usuario, contraseña, usuarioCrear, contraseñaCrear, correo, dni, nombre, apellidos, curso);
+			
+			salida.writeBoolean(creado);
+			salida.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void getUsuarios(ObjectOutputStream salida) {
@@ -74,7 +101,6 @@ public class HiloServidor extends Thread {
 			String json = usuariosJson(usuarios);
 			salida.writeObject(json);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

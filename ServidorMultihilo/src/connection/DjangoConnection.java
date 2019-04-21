@@ -125,37 +125,50 @@ public class DjangoConnection {
 		return existe;
 	}
 	
-	public boolean createUser(String username, String password, String usernameCreate, String passwordCreate, String emailCreate) {
+	public boolean createUser(String usuario, String contraseña, String usuarioCrear, String contraseñaCrear,
+			String correo, String dni, String nombre, String apellidos, String curso) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
 		
 		try {
-			String url = "http://127.0.0.1:8000/apercibimientos/createuser/";
+			String url = "http://127.0.0.1:8000/visitas/createuser/";
 			String charset = "UTF-8";
 			
-			String query = String.format("username=%s&password=%s&email=%s", 
-				     URLEncoder.encode(usernameCreate, charset), 
-				     URLEncoder.encode(passwordCreate, charset),
-				     URLEncoder.encode(emailCreate, charset));
+			String query = String.format("username=%s&password=%s&email=%s&dni=%s&nombre=%s&apellidos=%s&curso=%s", 
+				     URLEncoder.encode(usuarioCrear, charset), 
+				     URLEncoder.encode(contraseñaCrear, charset),
+				     URLEncoder.encode(correo, charset), 
+				     URLEncoder.encode(dni, charset), 
+				     URLEncoder.encode(nombre, charset), 
+				     URLEncoder.encode(apellidos, charset), 
+				     URLEncoder.encode(curso, charset));
 			
 			CookieManager cookieManager = new CookieManager();  
 			CookieHandler.setDefault(cookieManager);
 			
-			conectar(username, password, cookieManager);
+			conectar(usuario, contraseña, cookieManager);
 			
 			connection = (HttpURLConnection) new URL(url).openConnection();
 			
 			if (cookieManager.getCookieStore().getCookies().size() > 0) {
 				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
 					if (cookie.getName().equals("csrftoken")) {
-						connection.setRequestProperty("X-CSRFToken",cookieManager.getCookieStore().getCookies().get(0).getValue());    
+						connection.setRequestProperty("X-CSRFToken",cookie.getValue());    
 					}
 				}
 			}
 			
+			
+			connection.setRequestMethod("POST");
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Accept-Charset", charset);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+
+			
 			try (OutputStream output = connection.getOutputStream()) {
 			    output.write(query.getBytes(charset));
 			}
+			
 			
 			InputStream response = connection.getInputStream();
 			try (Scanner scanner = new Scanner(response)) {

@@ -190,4 +190,54 @@ public class ConectorServidor {
         List<Usuario> usuarios = gson.fromJson(linea, typeList);
         return usuarios;
     }
+
+    public boolean crearUsuario(String username, String password, String usuarioCrear, String contraseñaCrear, String correo, String nombre, String apellidos, String curso, String dni) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<Usuario> usuarios = new ArrayList<>();
+
+        try {
+            socketCliente = new Socket("localhost", PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+            System.exit(-1);
+        }
+        boolean creado = false;
+        try {
+            salida.writeInt(7);
+            salida.flush();
+            salida.writeUTF(username);
+            salida.flush();
+            salida.writeUTF(password);
+            salida.flush();
+            salida.writeUTF(usuarioCrear);
+            salida.flush();
+            salida.writeUTF(contraseñaCrear);
+            salida.flush();
+            salida.writeUTF(correo);
+            salida.flush();
+            salida.writeUTF(dni);
+            salida.flush();
+            salida.writeUTF(nombre);
+            salida.flush();
+            salida.writeUTF(apellidos);
+            salida.flush();
+            salida.writeUTF(curso);
+            salida.flush();
+            
+            creado = entrada.readBoolean();
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+        
+        return creado;
+    }
 }
