@@ -1,15 +1,18 @@
 package com.example.android.appprofesor.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.appprofesor.R;
+import com.example.android.appprofesor.activities.RealizarVisitaActivity;
 import com.example.android.appprofesor.adapters.VisitAdapter;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.utils.Utils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -34,6 +37,17 @@ public class VisitListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visit_list, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_visitas);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity(), RealizarVisitaActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         recyclerView = view.findViewById(R.id.visit_recyclerView);
         layoutManager = new LinearLayoutManager(getActivity());

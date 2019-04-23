@@ -8,8 +8,8 @@ public class Empresa implements Serializable {
     private String nombre;
     private String direccion;
     private String población;
-    private float coordenadaX;
-    private float coordenadaY;
+    private float latitud;
+    private float longitud;
 
     public Empresa(int id, String cif, String nombre, String direccion, String población, float coordinateX, float coordinateY) {
         this.id = id;
@@ -17,8 +17,8 @@ public class Empresa implements Serializable {
         this.nombre = nombre;
         this.direccion = direccion;
         this.población = población;
-        this.coordenadaX = coordinateX;
-        this.coordenadaY = coordinateY;
+        this.latitud = coordinateX;
+        this.longitud = coordinateY;
     }
 
     public Empresa() {
@@ -64,19 +64,19 @@ public class Empresa implements Serializable {
         this.población = población;
     }
 
-    public float getCoordenadaX() {
-        return coordenadaX;
+    public float getLatitud() {
+        return latitud;
     }
 
-    public void setCoordenadaX(float coordenadaX) {
-        this.coordenadaX = coordenadaX;
+    public void setLatitud(float latitud) {
+        this.latitud = latitud;
     }
 
-    public float getCoordenadaY() {
-        return coordenadaY;
+    public float getLongitud() {
+        return longitud;
     }
 
-    public void setCoordenadaY(float coordenadaY) {
-        this.coordenadaY = coordenadaY;
+    public void setLongitud(float longitud) {
+        this.longitud = longitud;
     }
 }
