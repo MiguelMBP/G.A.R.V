@@ -1,6 +1,7 @@
 import csv
 import datetime
 import re
+from collections import Counter
 
 import tabula
 
@@ -20,14 +21,18 @@ expresion_porcentaje_asignatura = '[0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]'
 
 
 def pdf_to_csv(filepath):
-    tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv", guess=False, stream=True)
+    tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv", guess=False, stream=True, silent=True)
     leer_csv()
+
+
+
 
 
 def leer_csv():
     cabecera = get_cabecera()
     if comprobar_cabecera(cabecera):
-        get_asignaturas(cabecera)
+        repetidas = contar_asignaturas()
+        get_asignaturas(cabecera, repetidas)
 
 
 def get_cabecera():
@@ -80,6 +85,24 @@ def get_cabecera():
     return cabecera
 
 
+def contar_asignaturas():
+    with open('output.csv', 'r') as csvFile:
+        reader = csv.reader(csvFile)
+        materias = []
+        for row in reader:
+            line = row[0]
+            pos = line.find(literal_materia)
+            if pos != -1:
+                pos_fin = line.find(literal_fin_materia)
+                materia = line[pos + len(literal_materia): pos_fin]
+                materias.append(materia)
+    contador = Counter(materias)
+    repetidas = [k for k, v in contador.items() if v > 1]
+    global contRepetida
+    contRepetida = [0] * (len(repetidas) + 1)
+    return repetidas
+
+
 def comprobar_cabecera(cabecera):
     if cabecera[0] == 'nada'  or cabecera[1] == 'nada'  or cabecera[2] == 'nada'  or cabecera[3] == 'nada'  or cabecera[4] == 'nada':
         return False
@@ -93,7 +116,7 @@ def comprobar_cabecera(cabecera):
     return True
 
 
-def get_asignaturas(cabecera):
+def get_asignaturas(cabecera, repetidas):
     with open('output.csv', 'r') as csvFile:
         reader = csv.reader(csvFile)
 
@@ -103,7 +126,13 @@ def get_asignaturas(cabecera):
             if pos != -1:
                 pos_fin = line.find(literal_fin_materia)
                 materia = line[pos + len(literal_materia): pos_fin]
-                print(materia)
+
+                for repetida in repetidas:
+                    if materia == repetida:
+                        global contRepetida
+                        contRepetida[repetidas.index(repetida)] += 1
+                        materia = materia[:-1] + str(contRepetida[repetidas.index(repetida)])
+                        print(materia)
             else:
                 x = re.search(expresion_alumno, line)
                 if x:
@@ -123,11 +152,14 @@ def persistir_alumno(cabecera, materia, line):
 
     if float(porcentaje_injust_float) >= 25:
         apercibimiento = Apercibimiento(alumno=nombre[0][:-1], periodo_academico=cabecera[0], curso=cabecera[1][:-1],
-                                        unidad=cabecera[2], materia=materia[:-1], fecha_inicio=cabecera[3],
+                                        unidad=cabecera[2], materia=materia, fecha_inicio=cabecera[3],
                                         fecha_fin=cabecera[4],
                                         horas_justificadas=horas[0], porcentaje_justificado=porcentaje_just_float,
                                         horas_injustificadas=horas[1], porcentaje_injustificado=porcentaje_injust_float,
                                         retrasos=horas[2])
+
+        print(apercibimiento)
+        print(materia)
 
         if not comprobar_repetido(apercibimiento):
             apercibimiento.save()

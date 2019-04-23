@@ -1,13 +1,14 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Document
+from .models import Document, Apercibimiento
 from .forms import DocumentForm
 from .extraer_zip import extractZip
 from .analisis_pdf import pdf_to_csv
@@ -45,6 +46,16 @@ def subir_pdf(request):
     # Render list page with the documents and the form
     return render(request, 'list.html', {'documents': documents, 'form': form})
 
+
+@login_required
+def mostrarApercibimientos(request):
+    apercibimientos = Apercibimiento.objects.all()
+    paginator = Paginator(apercibimientos, 100)
+
+    page = request.GET.get('page')
+    lista = paginator.get_page(page)
+
+    return render(request, 'apercibimientos.html', {'lista': lista})
 
 
 def a_login(request):
