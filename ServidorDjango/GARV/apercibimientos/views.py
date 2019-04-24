@@ -75,3 +75,9 @@ def a_login(request):
             msg.append("invalid login")
     return HttpResponse(msg)
 
+
+def buscarApercibimiento(request):
+    unidad = request.GET.get('unidad')
+    alumno = request.GET.get('alumno')
+    apercibimientos = Apercibimiento.objects.filter(alumno=alumno, unidad=unidad)
+    return render(request, 'buscar_apercibimiento.html', {'apercibimientos': apercibimientos})

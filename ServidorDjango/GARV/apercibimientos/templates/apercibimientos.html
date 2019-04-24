@@ -23,7 +23,7 @@
 
             </tr>
             {% for apercibimiento in lista %}
-            <tr style="border-bottom: 1px solid black">
+            <a><tr style="border-bottom: 1px solid black">
                 <td>{{ apercibimiento.alumno }}</td>
                 <td>{{ apercibimiento.periodo_academico }}</td>
                 <td>{{ apercibimiento.curso }}</td>
@@ -37,9 +37,10 @@
                 <td>{{ apercibimiento.porcentaje_injustificado }}%</td>
                 <td>{{ apercibimiento.retrasos }}</td>
                 <td>{{ apercibimiento.activo }}</td>
-            </tr>
+            </tr></a>
             {% endfor %}
         </table>
+
 
 <div class="pagination" style="margin-top:20px; margin-left:33%;">
     <span class="step-links" >

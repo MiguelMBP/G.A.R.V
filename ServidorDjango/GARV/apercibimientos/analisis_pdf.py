@@ -5,7 +5,7 @@ from collections import Counter
 
 import tabula
 
-from .models import Apercibimiento
+from .models import Apercibimiento, AsignaturasEspeciales
 
 literal_fecha_hasta = 'Fecha hasta: '
 literal_fecha_desde = 'Fecha desde: '
@@ -21,10 +21,8 @@ expresion_porcentaje_asignatura = '[0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]'
 
 
 def pdf_to_csv(filepath):
-    tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv", guess=False, stream=True, silent=True)
+    tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv", guess=False, stream=True)
     leer_csv()
-
-
 
 
 
@@ -127,12 +125,12 @@ def get_asignaturas(cabecera, repetidas):
                 pos_fin = line.find(literal_fin_materia)
                 materia = line[pos + len(literal_materia): pos_fin]
 
-                for repetida in repetidas:
-                    if materia == repetida:
-                        global contRepetida
-                        contRepetida[repetidas.index(repetida)] += 1
-                        materia = materia[:-1] + str(contRepetida[repetidas.index(repetida)])
-                        print(materia)
+                if materia in repetidas:
+                    pos = repetidas.index(materia)
+                    global contRepetida
+                    contRepetida[pos] += 1
+                    materia = materia[:-1] + str(contRepetida[pos]) + " "
+
             else:
                 x = re.search(expresion_alumno, line)
                 if x:
@@ -150,31 +148,29 @@ def persistir_alumno(cabecera, materia, line):
     porcentaje_injust_float = porcentaje[1][:-1]
     porcentaje_injust_float = porcentaje_injust_float.replace(',', '.')
 
-    if float(porcentaje_injust_float) >= 25:
-        apercibimiento = Apercibimiento(alumno=nombre[0][:-1], periodo_academico=cabecera[0], curso=cabecera[1][:-1],
-                                        unidad=cabecera[2], materia=materia, fecha_inicio=cabecera[3],
+    apercibimiento = None
+
+    existe = AsignaturasEspeciales.objects.filter(materia=materia[:-1]).exists()
+
+    if (existe and float(porcentaje_injust_float) >= 50) or (not existe and float(porcentaje_injust_float) >= 25):
+        apercibimiento = Apercibimiento(alumno=nombre[0][:-1], periodo_academico=cabecera[0],
+                                        curso=cabecera[1][:-1],
+                                        unidad=cabecera[2], materia=materia[:-1], fecha_inicio=cabecera[3],
                                         fecha_fin=cabecera[4],
                                         horas_justificadas=horas[0], porcentaje_justificado=porcentaje_just_float,
-                                        horas_injustificadas=horas[1], porcentaje_injustificado=porcentaje_injust_float,
+                                        horas_injustificadas=horas[1],
+                                        porcentaje_injustificado=porcentaje_injust_float,
                                         retrasos=horas[2])
 
-        print(apercibimiento)
-        print(materia)
-
-        if not comprobar_repetido(apercibimiento):
-            apercibimiento.save()
+    if not comprobar_repetido(apercibimiento) and apercibimiento is not None:
+        apercibimiento.save()
 
 
 def comprobar_repetido(nuevo_apercibimiento):
     repetido = False
     apercibimientos = Apercibimiento.objects.all()
-    for apercibimiento in apercibimientos:
-        if apercibimiento == nuevo_apercibimiento:
-            repetido = True
-            break
+
+    if nuevo_apercibimiento in apercibimientos:
+        repetido = True
 
     return repetido
-
-
-if __name__ == '__main__':
-    pdf_to_csv("a.pdf")

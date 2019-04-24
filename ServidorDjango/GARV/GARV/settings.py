@@ -139,4 +139,5 @@ STATICFILES_DIRS = (
      os.path.join(BASE_DIR, 'static'),
 )
 
-LOGIN_REDIRECT_URL = reverse_lazy('subir-pdf')
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+

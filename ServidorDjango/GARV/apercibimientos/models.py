@@ -24,7 +24,7 @@ class Apercibimiento(models.Model):
         if not isinstance(other, Apercibimiento):
             # don't attempt to compare against unrelated types
             return False
-        # Error en porcentaje justificado, porcentaje injustificado
+
         return self.alumno == other.alumno and int(self.periodo_academico) == int(other.periodo_academico) \
                and self.curso == other.curso and self.unidad == other.unidad and self.materia == other.materia \
                and self.fecha_inicio == other.fecha_inicio and self.fecha_fin == other.fecha_fin \
@@ -35,3 +35,17 @@ class Apercibimiento(models.Model):
     def __str__(self):
         return self.alumno + " " + str(self.periodo_academico) + " " + self.curso + " " + self.unidad + " " + self.materia + " " + str(self.fecha_inicio) + " " +\
                str(self.fecha_fin) + " " + self.horas_justificadas + " " + str(self.porcentaje_justificado) + " " + self.horas_injustificadas + " " + str(self.porcentaje_injustificado) + " " + self.retrasos
+
+
+class AsignaturasEspeciales(models.Model):
+    materia = models.CharField(max_length=200)
+
+    def __eq__(self, other):
+        if not isinstance(other, AsignaturasEspeciales):
+            # don't attempt to compare against unrelated types
+            return False
+
+        return self.materia == other.materia
+
+    def __str__(self):
+        return self.materia
