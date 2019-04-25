@@ -1,22 +1,27 @@
 package com.example.android.appprofesor.Connectors;
 
+import com.example.android.appprofesor.utils.Constants;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
-public class LoginConnector {
+public class LoginConnector implements Constants {
 
-    public static final int PORT = 4444;
-
-    public boolean iniciarSesion(String username, String password) {
+    public List<String> iniciarSesion(String username, String password) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
         boolean existe = false;
+        List<String> cookies = new ArrayList<>();
 
         try {
-            socketCliente = new Socket("192.168.1.65", PORT);
+            InetAddress address = InetAddress.getByName(ADDRESS);
+            socketCliente = new Socket(address, PORT);
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");
@@ -34,6 +39,11 @@ public class LoginConnector {
 
             existe = entrada.readBoolean();
 
+            if (existe) {
+                cookies.add(entrada.readUTF());
+                cookies.add(entrada.readUTF());
+            }
+
             entrada.close();
             socketCliente.close();
 
@@ -41,7 +51,7 @@ public class LoginConnector {
             System.out.println("IOException: " + e.getMessage());
         }
 
-        return existe;
+        return cookies;
 
     }
 }

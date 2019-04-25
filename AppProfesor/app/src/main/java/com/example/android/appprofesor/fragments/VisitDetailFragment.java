@@ -62,7 +62,7 @@ public class VisitDetailFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("empresa", alumno);
+                bundle.putSerializable("empresa", alumno.getEmpresa());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

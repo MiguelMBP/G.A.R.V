@@ -15,18 +15,27 @@
     <div class="row">
       <div class="col-md-4">
         <h2>Apercibimientos</h2>
-        <p></p>
-        <p><a class="btn btn-secondary" href="#" role="button">Gestión de Apercibimientos &raquo;</a></p>
+        <div class="list-group" style="padding-top:20px;">
+          <a href="{% url 'apercibimientos' %}" class="list-group-item list-group-item-action">Ver Apercibimientos</a>
+          <a href="{% url 'subir-pdf' %}" class="list-group-item list-group-item-action">Subir Archivos</a>
+          <a href="{% url 'buscarApercibimientos' %}" class="list-group-item list-group-item-action">Buscar Apercibimiento</a>
+          <a href="#" class="list-group-item list-group-item-action">Asignaturas Especiales</a>
+          <a href="#" class="list-group-item list-group-item-action">Informes</a>
+        </div>
       </div>
       <div class="col-md-4">
         <h2>Visitas</h2>
-        <p></p>
-        <p><a class="btn btn-secondary" href="#" role="button">Registro de Visitas &raquo;</a></p>
+         <div class="list-group" style="padding-top:20px;">
+          <a href="#" class="list-group-item list-group-item-action">Ver Visitas</a>
+          <a href="#" class="list-group-item list-group-item-action">Informes</a>
+        </div>
       </div>
       <div class="col-md-4">
         <h2>Usuarios</h2>
-        <p></p>
-        <p><a class="btn btn-secondary" href="#" role="button">Administración de Usuarios &raquo;</a></p>
+         <div class="list-group" style="padding-top:20px;">
+          <a href="#" class="list-group-item list-group-item-action">Ver usuarios</a>
+          <a href="#" class="list-group-item list-group-item-action">Crear usuario</a>
+        </div>
       </div>
     </div>
 

@@ -5,7 +5,7 @@
  */
 package Interfaz;
 
-import Cliente.ConectorServidor;
+import Cliente.ConectorApercibimientos;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.util.List;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -30,18 +31,15 @@ public class Apercibimientos extends javax.swing.JFrame {
     /**
      * Creates new form Apercibimientos
      */
-    
-    public static final int PORT = 4444;
-    private String username;
-    private String password;
+
+    private List<String> cookies;
     
     
-    public Apercibimientos(String username, String password) {
+    public Apercibimientos(List<String> cookies) {
         initComponents();
         setLocationRelativeTo(null);
         rellenarTabla();
-        this.username = username;
-        this.password = password;
+        this.cookies = cookies;
     }
 
     /**
@@ -61,6 +59,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -96,6 +95,14 @@ public class Apercibimientos extends javax.swing.JFrame {
 
         jMenuItem5.setText("Subir Archivos");
         jMenu1.add(jMenuItem5);
+
+        jMenuItem7.setText("Asignaturas Especiales");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
 
         jMenuBar1.add(jMenu1);
 
@@ -146,7 +153,7 @@ public class Apercibimientos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        Visitas v = new Visitas(username, password);
+        Visitas v = new Visitas(cookies);
         v.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -157,10 +164,15 @@ public class Apercibimientos extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Usuarios usuarios = new Usuarios(username, password);
+        Usuarios usuarios = new Usuarios(cookies);
         usuarios.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        AsignaturasEspeciales ae = new AsignaturasEspeciales(this, true);
+        ae.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,7 +204,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Apercibimientos(null, null).setVisible(true);
+                new Apercibimientos(null).setVisible(true);
             }
         });
     }
@@ -208,13 +220,14 @@ public class Apercibimientos extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
     
     private void rellenarTabla() {
-        ConectorServidor cs = new ConectorServidor();
+        ConectorApercibimientos cs = new ConectorApercibimientos();
         List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
         
         DefaultTableModel t = (DefaultTableModel) jTable1.getModel();

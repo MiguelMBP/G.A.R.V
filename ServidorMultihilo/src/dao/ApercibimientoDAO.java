@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -174,4 +175,41 @@ public class ApercibimientoDAO {
 		
 		return alumnos;
 	}
+
+	public List<String> getAsignaturasEspeciales() {
+		List<String> asignaturas = new ArrayList<>();
+		DBConnection conex = new DBConnection();
+		String sql = "SELECT * FROM apercibimientos_asignaturasespeciales";
+
+		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				asignaturas.add(rs.getString(1) + "--" + rs.getString(2));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+		
+		return asignaturas;
+	}
+	
+	public void insertarAsignatura(String asignatura){
+        DBConnection db = new DBConnection();
+        String sql = "insert into apercibimientos_asignaturasespeciales values (0, '" + asignatura + "')";
+        try (Statement st = db.getConnection().createStatement();){
+            
+            st.executeQuery(sql);
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            db.desconectar();
+        }
+    }
+ 
+	
+	
 }

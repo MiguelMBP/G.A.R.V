@@ -5,7 +5,8 @@
  */
 package Interfaz;
 
-import Cliente.ConectorServidor;
+import Cliente.ConectorApercibimientos;
+import Cliente.ConectorVisitas;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -22,14 +23,12 @@ public class Visitas extends javax.swing.JFrame {
      * Creates new form Visitas
      */
     
-    private String username;
-    private String password;
+    private List<String> cookies;
     
-    public Visitas(String username, String password) {
+    public Visitas(List<String> cookies) {
         initComponents();
         setLocationRelativeTo(null);
-        this.username = username;
-        this.password = password;
+        this.cookies = cookies;
         rellenarTabla();
     }
 
@@ -129,13 +128,13 @@ public class Visitas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Apercibimientos a = new Apercibimientos(username, password);
+        Apercibimientos a = new Apercibimientos(cookies);
         a.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Usuarios usuarios = new Usuarios(username, password);
+        Usuarios usuarios = new Usuarios(cookies);
         usuarios.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
@@ -170,7 +169,7 @@ public class Visitas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Visitas(null, null).setVisible(true);
+                new Visitas(null).setVisible(true);
             }
         });
     }
@@ -190,7 +189,7 @@ public class Visitas extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void rellenarTabla() {
-        ConectorServidor cs = new ConectorServidor();
+        ConectorVisitas cs = new ConectorVisitas();
         List<Visita> visitas = cs.cargarVisitas();
         
         DefaultTableModel t = (DefaultTableModel) jTable1.getModel();

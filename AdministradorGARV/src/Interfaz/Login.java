@@ -5,7 +5,9 @@
  */
 package Interfaz;
 
-import Cliente.ConectorServidor;
+import Cliente.ConectorApercibimientos;
+import Cliente.ConectorUsuarios;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -96,11 +98,12 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ConectorServidor cs = new ConectorServidor();
+        ConectorUsuarios cs = new ConectorUsuarios();
         String username = jTextField1.getText();
         String password = String.valueOf(jPasswordField1.getPassword());
-        if (cs.iniciarSesion(username, password)) {
-            Apercibimientos a = new Apercibimientos(username, password);
+        List<String> cookies = cs.iniciarSesion(username, password);
+        if (!cookies.isEmpty()) {
+            Apercibimientos a = new Apercibimientos(cookies);
             a.setVisible(true);
             this.setVisible(false);
         } else {

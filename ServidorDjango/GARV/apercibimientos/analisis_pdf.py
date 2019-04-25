@@ -129,7 +129,7 @@ def get_asignaturas(cabecera, repetidas):
                     pos = repetidas.index(materia)
                     global contRepetida
                     contRepetida[pos] += 1
-                    materia = materia[:-1] + str(contRepetida[pos]) + " "
+                    materia = materia[:-2] + str(contRepetida[pos]) + " "
 
             else:
                 x = re.search(expresion_alumno, line)

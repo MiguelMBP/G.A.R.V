@@ -13,7 +13,7 @@
         tools:listitem="@layout/visit_row" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_teams"
+        android:id="@+id/fab_visitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

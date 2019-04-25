@@ -61,6 +61,15 @@ public class HiloServidor extends Thread {
 			case 7:
 				crearUsuario(entrada, salida);
 				break;
+			case 8:
+				insertarAsignatura(entrada);
+				break;
+			case 9:
+				getAsignaturasEspeciales(salida);
+				break;
+			default: 
+				System.out.println(op);
+				break;
 
 			}
 		} catch (IOException e) {
@@ -69,28 +78,53 @@ public class HiloServidor extends Thread {
 
 	}
 
+	private void insertarAsignatura(ObjectInputStream entrada) {
+		try {
+			String asignatura = entrada.readUTF();
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			dao.insertarAsignatura(asignatura);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void getAsignaturasEspeciales(ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			List<String> asignaturas = dao.getAsignaturasEspeciales();
+
+			String json = new Gson().toJson(asignaturas);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void crearUsuario(ObjectInputStream entrada, ObjectOutputStream salida) {
 		try {
-			String usuario = entrada.readUTF();
-			String contraseña = entrada.readUTF();
-			
+			String csrftoken = entrada.readUTF();
+			String sessionid = entrada.readUTF();
+
 			String usuarioCrear = entrada.readUTF();
-			String contraseñaCrear = entrada.readUTF();
+			String contrasenaCrear = entrada.readUTF();
 			String correo = entrada.readUTF();
 			String dni = entrada.readUTF();
 			String nombre = entrada.readUTF();
 			String apellidos = entrada.readUTF();
 			String curso = entrada.readUTF();
-			
+
 			DjangoConnection con = new DjangoConnection();
-			boolean creado = con.createUser(usuario, contraseña, usuarioCrear, contraseñaCrear, correo, dni, nombre, apellidos, curso);
-			
+			boolean creado = con.createUser(csrftoken, sessionid, usuarioCrear, contrasenaCrear, correo, dni, nombre,
+					apellidos, curso);
+
 			salida.writeBoolean(creado);
 			salida.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void getUsuarios(ObjectOutputStream salida) {
@@ -132,9 +166,25 @@ public class HiloServidor extends Thread {
 			String username = entrada.readUTF();
 			String password = entrada.readUTF();
 			DjangoConnection dc = new DjangoConnection();
-			boolean existe = dc.conectar(username, password);
+			List<String> cookies = dc.conectar(username, password);
+			
+			boolean existe = false;
+			
+			if (!cookies.get(0).equals("") && !cookies.get(1).equals("")) {
+				existe = true;
+			}
 
 			salida.writeBoolean(existe);
+			salida.flush();
+			
+			if (existe) {
+				salida.writeUTF(cookies.get(0));
+				salida.flush();
+				salida.writeUTF(cookies.get(1));
+				salida.flush();
+			}
+			
+			
 			salida.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

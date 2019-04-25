@@ -3,9 +3,9 @@ package servidor;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class Servidor {
+import Util.Constants;
 
-	public static final int PORT = 4444;
+public class Servidor implements Constants{
 
 	public static void main(String[] args) throws IOException {
 		ServerSocket socketServidor = null;

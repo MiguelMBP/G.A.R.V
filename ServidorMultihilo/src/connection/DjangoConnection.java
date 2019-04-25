@@ -8,25 +8,33 @@ import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
-public class DjangoConnection {
+import Util.Constants;
+
+public class DjangoConnection implements Constants{
 	
-	public boolean conectar(String username, String password) {
+	public List<String> conectar(String username, String password) {
 		HttpURLConnection connection = null;
 		boolean existe = false;
+		List<String> cookies = new ArrayList<>();
 		try {
-			String url = "http://127.0.0.1:8000/accounts/login/";
+			String url = "http://" + ADDRESS + ":" + PORT + "/accounts/login/";
 			String charset = "UTF-8";  
 			
 			String query = String.format("username=%s&password=%s", 
 				     URLEncoder.encode(username, charset), 
 				     URLEncoder.encode(password, charset));
 			final String COOKIES_HEADER = "Set-Cookie";
+			
+			String csrftoken = "";
+			String sessionid = "";
 			
 			CookieManager cookieManager = new CookieManager();  
 			CookieHandler.setDefault(cookieManager);
@@ -36,7 +44,7 @@ public class DjangoConnection {
 
 			connection.disconnect();
 
-			connection = (HttpURLConnection) new URL("http://127.0.0.1:8000/apercibimientos/login/").openConnection();
+			connection = (HttpURLConnection) new URL("http://" + ADDRESS + ":" + PORT + "/apercibimientos/login/").openConnection();
 			
 			if (cookieManager.getCookieStore().getCookies().size() > 0) {
 				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
@@ -62,81 +70,41 @@ public class DjangoConnection {
 			    	existe = true;
 			    }
 			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return existe;
-	}
-	
-	public boolean conectar(String username, String password, CookieManager cookieManager) {
-		HttpURLConnection connection = null;
-		boolean existe = false;
-		try {
-			String url = "http://127.0.0.1:8000/accounts/login/";
-			String charset = "UTF-8";  
 			
-			String query = String.format("username=%s&password=%s", 
-				     URLEncoder.encode(username, charset), 
-				     URLEncoder.encode(password, charset));
-			final String COOKIES_HEADER = "Set-Cookie";
-			
-			CookieHandler.setDefault(cookieManager);
-			
-			connection = (HttpURLConnection) new URL(url).openConnection();
-			InputStream response = connection.getInputStream();
-
-			connection.disconnect();
-
-			connection = (HttpURLConnection) new URL("http://127.0.0.1:8000/apercibimientos/login/").openConnection();
-			
-			if (cookieManager.getCookieStore().getCookies().size() > 0) {
+			if (existe) {
 				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
 					if (cookie.getName().equals("csrftoken")) {
-						connection.setRequestProperty("X-CSRFToken",cookieManager.getCookieStore().getCookies().get(0).getValue());    
+						csrftoken = cookie.getValue();    
+					}
+					if (cookie.getName().equals("sessionid")) {
+						sessionid = cookie.getValue();    
 					}
 				}
 			}
 			
-			connection.setRequestMethod("POST");
-			connection.setDoOutput(true);
-			connection.setRequestProperty("Accept-Charset", charset);
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
-
-			try (OutputStream output = connection.getOutputStream()) {
-			    output.write(query.getBytes(charset));
-			}
-			
-			response = connection.getInputStream();
-			try (Scanner scanner = new Scanner(response)) {
-			    String responseBody = scanner.useDelimiter("\\A").next();
-			    if(responseBody.equals("login successful")) {
-			    	existe = true;
-			    }
-			}
+			cookies.add(csrftoken);
+			cookies.add(sessionid);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return existe;
+		return cookies;
 	}
 	
-	public boolean createUser(String usuario, String contraseña, String usuarioCrear, String contraseñaCrear,
+	public boolean createUser(String csrftoken, String sessionid, String usuarioCrear, String contrasenaCrear,
 			String correo, String dni, String nombre, String apellidos, String curso) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
 		
 		try {
-			String url = "http://127.0.0.1:8000/visitas/createuser/";
+			String url = "http://" + ADDRESS + ":" + PORT + "/visitas/createuser/";
 			String charset = "UTF-8";
 			
 			String query = String.format("username=%s&password=%s&email=%s&dni=%s&nombre=%s&apellidos=%s&curso=%s", 
 				     URLEncoder.encode(usuarioCrear, charset), 
-				     URLEncoder.encode(contraseñaCrear, charset),
+				     URLEncoder.encode(contrasenaCrear, charset),
 				     URLEncoder.encode(correo, charset), 
 				     URLEncoder.encode(dni, charset), 
 				     URLEncoder.encode(nombre, charset), 
@@ -146,7 +114,21 @@ public class DjangoConnection {
 			CookieManager cookieManager = new CookieManager();  
 			CookieHandler.setDefault(cookieManager);
 			
-			conectar(usuario, contraseña, cookieManager);
+			//conectar(usuario, contrasena, cookieManager);
+			
+			HttpCookie csrf = new HttpCookie("csrftoken", csrftoken);
+			csrf.setPath("/");
+			csrf.setDomain(ADDRESS);
+			csrf.setHttpOnly(true);
+			HttpCookie session = new HttpCookie("sessionid", sessionid);
+			session.setPath("/");
+			session.setDomain(ADDRESS);
+			session.setHttpOnly(true);
+			
+			cookieManager.getCookieStore().add(new URI("localhost"), csrf);
+			cookieManager.getCookieStore().add(new URI("localhost"), session);
+			
+			
 			
 			connection = (HttpURLConnection) new URL(url).openConnection();
 			
@@ -180,6 +162,8 @@ public class DjangoConnection {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 		return creado;

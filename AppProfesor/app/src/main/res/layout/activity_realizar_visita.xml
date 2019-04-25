@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -169,7 +168,7 @@
             android:text="Confirmar Visita"
 
             android:layout_gravity="center"
-            android:layout_margin_top="80dp"/>
+            android:layout_marginTop="80dp"/>
 
         <com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/button_map"

@@ -2,7 +2,9 @@ package com.example.android.appprofesor.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.android.appprofesor.Connectors.LoginConnector;
 import com.example.android.appprofesor.R;
+
+import java.util.List;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -67,7 +71,17 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... strings) {
             LoginConnector login = new LoginConnector();
-            return login.iniciarSesion(strings[0], strings[1]);
+            List<String> cookies = login.iniciarSesion(strings[0], strings[1]);
+
+            SharedPreferences prefs =
+                    getSharedPreferences("cookies", Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("csrftoken", cookies.get(0));
+            editor.putString("sessionid", cookies.get(1));
+            editor.apply();
+
+            return !cookies.isEmpty();
         }
     }
 

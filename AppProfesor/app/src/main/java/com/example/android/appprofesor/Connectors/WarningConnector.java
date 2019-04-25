@@ -13,12 +13,11 @@ import java.util.List;
 import java.lang.reflect.Type;
 
 import com.example.android.appprofesor.models.TutorAlumno;
+import com.example.android.appprofesor.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class WarningConnector {
-
-    public static final int PORT = 4444;
+public class WarningConnector implements Constants {
 
     private WarningConnector() {
     }
@@ -31,7 +30,7 @@ public class WarningConnector {
 
 
         try {
-            InetAddress address = InetAddress.getByName("192.168.1.65");
+            InetAddress address = InetAddress.getByName(ADDRESS);
             socketCliente = new Socket(address, PORT);
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
@@ -81,7 +80,7 @@ public class WarningConnector {
 
 
         try {
-            InetAddress address = InetAddress.getByName("192.168.1.65");
+            InetAddress address = InetAddress.getByName(ADDRESS);
             socketCliente = new Socket(address, PORT);
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());

@@ -14,10 +14,6 @@ from .extraer_zip import extractZip
 from .analisis_pdf import pdf_to_csv
 
 
-def index(request):
-    return HttpResponse("Hello there!")
-
-
 @login_required
 def subir_pdf(request):
     # Handle file upload

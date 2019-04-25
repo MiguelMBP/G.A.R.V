@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/miguelmbp/Descargas/gson-2.8.5.jar"/>
-	<classpathentry kind="lib" path="/home/miguelmbp/Descargas/mariadb-java-client-2.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mmbernal/Documents/G.A.R.V/ServidorMultihilo/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mmbernal/Documents/G.A.R.V/ServidorMultihilo/mariadb-java-client-2.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
