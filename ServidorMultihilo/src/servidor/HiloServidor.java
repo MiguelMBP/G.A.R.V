@@ -170,7 +170,7 @@ public class HiloServidor extends Thread {
 			
 			boolean existe = false;
 			
-			if (!cookies.get(0).equals("") && !cookies.get(1).equals("")) {
+			if (!cookies.isEmpty() && !cookies.get(0).equals("") && !cookies.get(1).equals("")) {
 				existe = true;
 			}
 

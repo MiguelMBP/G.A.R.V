@@ -25,7 +25,7 @@ public class DjangoConnection implements Constants{
 		boolean existe = false;
 		List<String> cookies = new ArrayList<>();
 		try {
-			String url = "http://" + ADDRESS + ":" + PORT + "/accounts/login/";
+			String url = "http://localhost:8000/accounts/login/";
 			String charset = "UTF-8";  
 			
 			String query = String.format("username=%s&password=%s", 
@@ -44,12 +44,12 @@ public class DjangoConnection implements Constants{
 
 			connection.disconnect();
 
-			connection = (HttpURLConnection) new URL("http://" + ADDRESS + ":" + PORT + "/apercibimientos/login/").openConnection();
+			connection = (HttpURLConnection) new URL("http://" + ADDRESS + ":" + 8000 + "/apercibimientos/login/").openConnection();
 			
 			if (cookieManager.getCookieStore().getCookies().size() > 0) {
 				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
 					if (cookie.getName().equals("csrftoken")) {
-						connection.setRequestProperty("X-CSRFToken",cookieManager.getCookieStore().getCookies().get(0).getValue());    
+						connection.setRequestProperty("X-CSRFToken",cookie.getValue());    
 					}
 				}
 			}
@@ -99,7 +99,7 @@ public class DjangoConnection implements Constants{
 		boolean creado = false;
 		
 		try {
-			String url = "http://" + ADDRESS + ":" + PORT + "/visitas/createuser/";
+			String url = "http://" + ADDRESS + ":" + 8000 + "/visitas/createuser/";
 			String charset = "UTF-8";
 			
 			String query = String.format("username=%s&password=%s&email=%s&dni=%s&nombre=%s&apellidos=%s&curso=%s", 

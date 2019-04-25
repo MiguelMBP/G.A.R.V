@@ -126,7 +126,7 @@ public class ConectorUsuarios implements Constants{
         List<String> cookies = new ArrayList<>();
 
         try {
-            socketCliente = new Socket(ADDRESS, PORT);
+            socketCliente = new Socket("localhost", 4444);
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");

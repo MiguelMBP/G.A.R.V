@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -53,7 +54,7 @@ def mostrarApercibimientos(request):
 
     return render(request, 'apercibimientos.html', {'lista': lista})
 
-
+@csrf_exempt
 def a_login(request):
     msg = []
     if request.method == 'POST':
