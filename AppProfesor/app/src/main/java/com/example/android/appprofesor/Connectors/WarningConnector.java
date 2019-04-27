@@ -1,5 +1,8 @@
 package com.example.android.appprofesor.Connectors;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.example.android.appprofesor.models.AlumnoApercibimiento;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
 
@@ -72,11 +75,13 @@ public class WarningConnector implements Constants {
         return materias;
     }
 
-    public static List<TutorAlumno> getAlumnosTutor() {
+    public static List<TutorAlumno> getAlumnosTutor(Context context) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
         List<TutorAlumno> alumnos = new ArrayList<>();
+        SharedPreferences prefs =
+                context.getSharedPreferences("userData", Context.MODE_PRIVATE);
 
 
         try {
@@ -93,7 +98,7 @@ public class WarningConnector implements Constants {
             int op = 4;
             salida.writeInt(op);
             salida.flush();
-            salida.writeObject("2º DAM B");
+            salida.writeObject(prefs.getString("username", "error"));
             salida.flush();
             linea = (String) entrada.readObject();
 

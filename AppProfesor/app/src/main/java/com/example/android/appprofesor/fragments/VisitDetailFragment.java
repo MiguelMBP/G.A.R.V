@@ -75,8 +75,8 @@ public class VisitDetailFragment extends Fragment {
         this.alumno = alumno;
         this.alumnoView.setText(alumno.getNombre() + " " + alumno.getApellidos());
         empresa.setText(alumno.getEmpresa().getNombre());
-        localizacion.setText(alumno.getEmpresa().getDireccion() + ", " + alumno.getEmpresa().getPoblación());
+        localizacion.setText(alumno.getEmpresa().getDireccion() + ", " + alumno.getEmpresa().getPoblacion());
         coordenadas.setText(alumno.getEmpresa().getLatitud() + ", " + alumno.getEmpresa().getLongitud());
-        //distancia.setText(alumnoView.getEmpresa().);
+        distancia.setText(alumno.getEmpresa().getDistancia() + "");
     }
 }

@@ -1,4 +1,4 @@
-package com.example.android.appprofesor.models;
+package vo;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,17 +10,17 @@ public class Alumno implements Serializable {
     private Empresa empresa;
     private Date fecha;
 
-
+    
 
     public Alumno(String nombre, String apellidos, Empresa empresa, Date fecha) {
-        super();
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.empresa = empresa;
-        this.fecha = fecha;
-    }
+		super();
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.empresa = empresa;
+		this.fecha = fecha;
+	}
 
-    public Alumno() {
+	public Alumno() {
     }
 
     public String getNombre() {
@@ -47,13 +47,13 @@ public class Alumno implements Serializable {
         this.empresa = empresa;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
+	public Date getFecha() {
+		return fecha;
+	}
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+    
+    
 }

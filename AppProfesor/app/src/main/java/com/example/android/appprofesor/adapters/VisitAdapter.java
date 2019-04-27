@@ -1,7 +1,6 @@
 package com.example.android.appprofesor.adapters;
 
 import android.content.Context;
-import android.service.autofill.FieldClassification;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,8 @@ import android.widget.TextView;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.models.Alumno;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -40,8 +41,9 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final Alumno alumno = alumnos.get(position);
 
-        holder.student.setText(alumno.getNombre() + " " + alumno.getApellidos());
-        holder.company.setText(alumno.getEmpresa().getNombre());
+        holder.alumno.setText(alumno.getNombre() + " " + alumno.getApellidos());
+        holder.empresa.setText(alumno.getEmpresa().getNombre());
+        holder.fecha.setText(alumno.getFecha() + "");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,14 +58,21 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         return alumnos.size();
     }
 
+    public void addAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView student;
-        TextView company;
+        TextView alumno;
+        TextView empresa;
+        TextView fecha;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            student = itemView.findViewById(R.id.textViewStudentCompanyName);
-            company = itemView.findViewById(R.id.textViewCompanyListName);
+            alumno = itemView.findViewById(R.id.textViewStudentCompanyName);
+            empresa = itemView.findViewById(R.id.textViewCompanyListName);
+            fecha = itemView.findViewById(R.id.textViewCompanyDate);
         }
     }
 

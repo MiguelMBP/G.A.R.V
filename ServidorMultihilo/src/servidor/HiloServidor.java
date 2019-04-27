@@ -13,6 +13,7 @@ import connection.DjangoConnection;
 import dao.ApercibimientoDAO;
 import dao.UsuariosDAO;
 import dao.VisitasDAO;
+import vo.Alumno;
 import vo.Apercibimiento;
 import vo.ClaseApercibimiento;
 import vo.TutorAlumno;
@@ -67,7 +68,9 @@ public class HiloServidor extends Thread {
 			case 9:
 				getAsignaturasEspeciales(salida);
 				break;
-			default: 
+			case 10:
+				getAlumnoVisitas(entrada, salida);
+			default:
 				System.out.println(op);
 				break;
 
@@ -76,6 +79,26 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void getAlumnoVisitas(ObjectInputStream entrada, ObjectOutputStream salida) {
+
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			String username = entrada.readUTF();
+			List<Alumno> visitas = dao.mostrarAlumnoVisitas(username);
+
+			String json = alumnoVisitasJson(visitas);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private String alumnoVisitasJson(List<Alumno> visitas) {
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		return gson.toJson(visitas);
 	}
 
 	private void insertarAsignatura(ObjectInputStream entrada) {
@@ -87,7 +110,7 @@ public class HiloServidor extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void getAsignaturasEspeciales(ObjectOutputStream salida) {
@@ -167,24 +190,24 @@ public class HiloServidor extends Thread {
 			String password = entrada.readUTF();
 			DjangoConnection dc = new DjangoConnection();
 			List<String> cookies = dc.conectar(username, password);
-			
+
 			boolean existe = false;
-			
+
 			if (!cookies.isEmpty() && !cookies.get(0).equals("") && !cookies.get(1).equals("")) {
 				existe = true;
 			}
 
 			salida.writeBoolean(existe);
 			salida.flush();
-			
+
 			if (existe) {
 				salida.writeUTF(cookies.get(0));
 				salida.flush();
 				salida.writeUTF(cookies.get(1));
 				salida.flush();
+				salida.writeUTF(username);
 			}
-			
-			
+
 			salida.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -194,9 +217,9 @@ public class HiloServidor extends Thread {
 
 	private void getApercibimientosTutor(ObjectOutputStream salida, ObjectInputStream entrada) {
 		try {
-			String unidad = (String) entrada.readObject();
+			String username = (String) entrada.readObject();
 			ApercibimientoDAO dao = new ApercibimientoDAO();
-			List<TutorAlumno> alumnos = dao.mostrarAlumnosTutor(unidad);
+			List<TutorAlumno> alumnos = dao.mostrarAlumnosTutor(username);
 
 			String json = alumnosJson(alumnos);
 			salida.writeObject(json);

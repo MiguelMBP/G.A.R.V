@@ -42,6 +42,7 @@ public class LoginConnector implements Constants {
             if (existe) {
                 cookies.add(entrada.readUTF());
                 cookies.add(entrada.readUTF());
+                cookies.add(entrada.readUTF());
             }
 
             entrada.close();

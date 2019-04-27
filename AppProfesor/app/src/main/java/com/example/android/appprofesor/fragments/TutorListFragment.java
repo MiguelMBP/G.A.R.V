@@ -57,7 +57,7 @@ public class TutorListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         model = ViewModelProviders.of(this).get(TutorAlumnoViewModel.class);
-        model.getAlumnos().observe(this, new Observer<List<TutorAlumno>>() {
+        model.getAlumnos(getContext()).observe(this, new Observer<List<TutorAlumno>>() {
 
             @Override
             public void onChanged(List<TutorAlumno> tutorAlumnos) {

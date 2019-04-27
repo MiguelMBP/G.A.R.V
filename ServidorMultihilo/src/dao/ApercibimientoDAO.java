@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.DBConnection;
+import vo.Alumno;
 import vo.AlumnoApercibimiento;
 import vo.Apercibimiento;
 import vo.ClaseApercibimiento;
+import vo.Empresa;
 import vo.TutorAlumno;
 import vo.TutorAsignatura;
 
@@ -137,11 +139,11 @@ public class ApercibimientoDAO {
 		return mesesString;
 	}
 
-	public List<TutorAlumno> mostrarAlumnosTutor(String unidad) {
+	public List<TutorAlumno> mostrarAlumnosTutor(String username) {
 		List<TutorAlumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "select alumno from apercibimientos_apercibimiento where unidad = '" + unidad
-				+ "' group by alumno";
+		String sql = "select alumno from apercibimientos_apercibimiento where unidad = (select P.cursoTutor from visitas_profesor P, auth_user U "
+				+ "where U.username = '" + username + "' and P.usuario_id = U.id) group by alumno";
 
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 			ResultSet rsAsignatura = null;
@@ -150,7 +152,9 @@ public class ApercibimientoDAO {
 				TutorAlumno t = new TutorAlumno();
 				t.setNombre(rs.getString(1));
 
-				sql = "select materia, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento where alumno like '" + t.getNombre() + "' and unidad like '" + unidad + "' group by materia";
+				sql = "select materia, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento where alumno like '"
+						+ t.getNombre() + "' and unidad like (select P.cursoTutor from visitas_profesor P, auth_user U "
+											+ "where U.username = '" + username + "' and P.usuario_id = U.id) group by materia";
 				rsAsignatura = st.executeQuery(sql);
 				List<TutorAsignatura> asignaturas = new ArrayList<>();
 
@@ -172,7 +176,7 @@ public class ApercibimientoDAO {
 		} finally {
 			conex.desconectar();
 		}
-		
+
 		return alumnos;
 	}
 
@@ -192,24 +196,24 @@ public class ApercibimientoDAO {
 		} finally {
 			conex.desconectar();
 		}
-		
+
 		return asignaturas;
 	}
+
+	public void insertarAsignatura(String asignatura) {
+		DBConnection db = new DBConnection();
+		String sql = "insert into apercibimientos_asignaturasespeciales values (0, '" + asignatura + "')";
+		try (Statement st = db.getConnection().createStatement();) {
+
+			st.executeQuery(sql);
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+	}
 	
-	public void insertarAsignatura(String asignatura){
-        DBConnection db = new DBConnection();
-        String sql = "insert into apercibimientos_asignaturasespeciales values (0, '" + asignatura + "')";
-        try (Statement st = db.getConnection().createStatement();){
-            
-            st.executeQuery(sql);
-            st.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            db.desconectar();
-        }
-    }
- 
 	
-	
+
 }

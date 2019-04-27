@@ -1,4 +1,5 @@
-package com.example.android.appprofesor.models;
+package vo;
+
 
 import java.io.Serializable;
 
@@ -11,16 +12,16 @@ public class Empresa implements Serializable {
     private float distancia;
 
     public Empresa(String nombre, String direccion, String poblacion, float latitud, float longitud, float distancia) {
-        super();
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.poblacion = poblacion;
-        this.latitud = latitud;
-        this.longitud = longitud;
-        this.distancia = distancia;
-    }
+		super();
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.poblacion = poblacion;
+		this.latitud = latitud;
+		this.longitud = longitud;
+		this.distancia = distancia;
+	}
 
-    public Empresa() {
+	public Empresa() {
     }
 
     public String getNombre() {
@@ -63,13 +64,13 @@ public class Empresa implements Serializable {
         this.longitud = longitud;
     }
 
-    public float getDistancia() {
-        return distancia;
-    }
+	public float getDistancia() {
+		return distancia;
+	}
 
-    public void setDistancia(float distancia) {
-        this.distancia = distancia;
-    }
-
-
+	public void setDistancia(float distancia) {
+		this.distancia = distancia;
+	}
+    
+    
 }

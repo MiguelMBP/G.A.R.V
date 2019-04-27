@@ -4,7 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.android.appprofesor.Connectors.VisitConnector;
 import com.example.android.appprofesor.Connectors.WarningConnector;
+import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.TutorAlumno;
 
 import java.util.List;
@@ -14,17 +16,16 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-public class TutorAlumnoViewModel extends AndroidViewModel {
-
-    private static MutableLiveData<List<TutorAlumno>> alumnos;
+public class VisitaViewModel extends AndroidViewModel {
+    private static MutableLiveData<List<Alumno>> alumnos;
     private Application application;
 
-    public TutorAlumnoViewModel(@NonNull Application application) {
+    public VisitaViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
     }
 
-    public LiveData<List<TutorAlumno>> getAlumnos(Context context) {
+    public LiveData<List<Alumno>> getAlumnos(Context context) {
 
         if (alumnos==null){
             alumnos= new MutableLiveData<>();
@@ -33,16 +34,16 @@ public class TutorAlumnoViewModel extends AndroidViewModel {
         return alumnos;
     }
 
-    private class ConectarServidor extends AsyncTask<Context, Void, List<TutorAlumno>> {
+    private class ConectarServidor extends AsyncTask<Context, Void, List<Alumno>> {
 
         @Override
-        protected List<TutorAlumno> doInBackground(Context... contexts) {
-            return WarningConnector.getAlumnosTutor(contexts[0]);
+        protected List<Alumno> doInBackground(Context... contexts) {
+            return VisitConnector.getMaterias(contexts[0]);
         }
 
         @Override
-        protected void onPostExecute(List<TutorAlumno> tutorAlumnos) {
-            alumnos.setValue(tutorAlumnos);
+        protected void onPostExecute(List<Alumno> alumnosVisita) {
+            alumnos.setValue(alumnosVisita);
         }
     }
 }

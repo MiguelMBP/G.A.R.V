@@ -8,6 +8,7 @@ import com.example.android.appprofesor.models.TutorAlumno;
 import com.example.android.appprofesor.models.TutorAsignatura;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Utils {
@@ -44,8 +45,8 @@ public class Utils {
 
     public static List<Alumno> getDummyVisit() {
         ArrayList<Alumno> alumnos = new ArrayList<>();
-        alumnos.add(new Alumno(1, "123", "Antonio", "Garcia", new Empresa(1, "465", "ATComponentes", "Calle Desarrollo, 10", "Jerez", 108.012f, 50.123f)));
-        alumnos.add(new Alumno(2, "321", "Juan", "Sanchez", new Empresa(2, "654", "Empresa 2", "Calle Delirio, 21", "Cadiz", 108.012f, 50.123f)));
+        alumnos.add(new Alumno("Antonio", "Garcia", new Empresa("ATComponentes", "Calle Desarrollo, 10", "Jerez", 108.012f, 50.123f, 4f), new Date()));
+        alumnos.add(new Alumno("Juan", "Sanchez", new Empresa("Empresa 2", "Calle Delirio, 21", "Cadiz", 108.012f, 50.123f, 5f), new Date()));
         return alumnos;
     }
 }

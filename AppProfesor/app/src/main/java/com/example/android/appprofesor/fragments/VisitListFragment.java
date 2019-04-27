@@ -11,14 +11,20 @@ import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.activities.RealizarVisitaActivity;
 import com.example.android.appprofesor.adapters.VisitAdapter;
 import com.example.android.appprofesor.models.Alumno;
+import com.example.android.appprofesor.models.TutorAlumno;
 import com.example.android.appprofesor.utils.Utils;
+import com.example.android.appprofesor.viewmodels.TutorAlumnoViewModel;
+import com.example.android.appprofesor.viewmodels.VisitaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,9 +32,10 @@ public class VisitListFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     VisitAdapter adapter;
-    List<Alumno> alumnos;
+    List<Alumno> alumnos = new ArrayList<>();
 
     OnStudentSelected callback;
+    VisitaViewModel model;
 
     public VisitListFragment() {
     }
@@ -54,7 +61,7 @@ public class VisitListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        alumnos = Utils.getDummyVisit();
+        //alumnos = Utils.getDummyVisit();
 
         adapter = new VisitAdapter(alumnos, R.layout.visit_row, getContext(), new VisitAdapter.OnItemClickListener() {
             @Override
@@ -63,6 +70,16 @@ public class VisitListFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
+
+        model = ViewModelProviders.of(this).get(VisitaViewModel.class);
+        model.getAlumnos(getContext()).observe(this, new Observer<List<Alumno>>() {
+
+
+            @Override
+            public void onChanged(List<Alumno> alumnos) {
+                adapter.addAlumnos(alumnos);
+            }
+        });
 
         return view;
     }

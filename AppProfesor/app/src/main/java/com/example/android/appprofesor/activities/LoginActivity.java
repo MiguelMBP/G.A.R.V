@@ -71,17 +71,18 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... strings) {
             LoginConnector login = new LoginConnector();
-            List<String> cookies = login.iniciarSesion(strings[0], strings[1]);
+            List<String> userData = login.iniciarSesion(strings[0], strings[1]);
 
             SharedPreferences prefs =
-                    getSharedPreferences("cookies", Context.MODE_PRIVATE);
+                    getSharedPreferences("userData", Context.MODE_PRIVATE);
 
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("csrftoken", cookies.get(0));
-            editor.putString("sessionid", cookies.get(1));
+            editor.putString("csrftoken", userData.get(0));
+            editor.putString("sessionid", userData.get(1));
+            editor.putString("username", userData.get(2));
             editor.apply();
 
-            return !cookies.isEmpty();
+            return !userData.isEmpty();
         }
     }
 

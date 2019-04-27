@@ -15,8 +15,9 @@ class Empresa(models.Model):
     nombre = models.CharField(max_length=100)
     poblacion = models.CharField(max_length=100)
     direccion = models.CharField(max_length=100)
-    coordenadaX = models.FloatField()
-    coordenadaY = models.FloatField()
+    latitud = models.FloatField()
+    longitud = models.FloatField()
+    distancia = models.FloatField(default=0)
 
 
 class Alumno(models.Model):
@@ -31,7 +32,6 @@ class Visita(models.Model):
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     fecha = models.DateField()
-    distancia = models.FloatField()
     imagen = models.ImageField()
     validada = models.BooleanField(default=False)
 
