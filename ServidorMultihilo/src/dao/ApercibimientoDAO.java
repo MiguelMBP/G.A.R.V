@@ -142,8 +142,8 @@ public class ApercibimientoDAO {
 	public List<TutorAlumno> mostrarAlumnosTutor(String username) {
 		List<TutorAlumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "select alumno from apercibimientos_apercibimiento where unidad = (select P.cursoTutor from visitas_profesor P, auth_user U "
-				+ "where U.username = '" + username + "' and P.usuario_id = U.id) group by alumno";
+		String sql = "select alumno, unidad from apercibimientos_apercibimiento where unidad = (select P.cursoTutor from visitas_profesor P, auth_user U "
+				+ "where U.username = '" + username + "' and P.usuario_id = U.id) group by alumno, unidad";
 
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 			ResultSet rsAsignatura = null;
@@ -151,6 +151,7 @@ public class ApercibimientoDAO {
 			while (rs.next()) {
 				TutorAlumno t = new TutorAlumno();
 				t.setNombre(rs.getString(1));
+				t.setCurso(rs.getString(2));
 
 				sql = "select materia, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento where alumno like '"
 						+ t.getNombre() + "' and unidad like (select P.cursoTutor from visitas_profesor P, auth_user U "

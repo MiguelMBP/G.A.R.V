@@ -19,7 +19,7 @@ import java.util.List;
 
 public class VisitConnector implements Constants {
     
-    public static List<Alumno> getMaterias(Context context) {
+    public static List<Alumno> getAlumnos(Context context) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -43,6 +43,48 @@ public class VisitConnector implements Constants {
             salida.writeInt(op);
             salida.flush();
             salida.writeUTF(prefs.getString("username", "error"));
+            salida.flush();
+            linea = (String) entrada.readObject();
+
+            materias = jsonToListVisita(linea);
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            entrada.close();
+            socketCliente.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return materias;
+
+    }
+
+    public static List<Alumno> getTodosAlumnos() {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<Alumno> materias = new ArrayList<>();
+
+
+        try {
+            InetAddress address = InetAddress.getByName(ADDRESS);
+            socketCliente = new Socket(address, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión" + e);
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            int op = 11;
+            salida.writeInt(op);
             salida.flush();
             linea = (String) entrada.readObject();
 

@@ -78,4 +78,38 @@ public class VisitasDAO {
 
 		return alumnos;
 	}
+
+	public List<Alumno> mostrarTodosAlumnoVisitas() {
+		List<Alumno> alumnos = new ArrayList<>();
+		DBConnection conex = new DBConnection();
+		String sql = "select A.nombre, A.apellidos, E.nombre, E.direccion, E.poblacion, E.latitud, E.longitud, E.distancia from visitas_alumno A, visitas_empresa E where A.empresa_id = E.id";
+		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				Alumno a = new Alumno();
+				a.setNombre(rs.getString(1));
+				a.setApellidos(rs.getString(2));
+				
+				Empresa e = new Empresa();
+				e.setNombre(rs.getString(3));
+				e.setDireccion(rs.getString(4));
+				e.setPoblacion(rs.getString(5));
+				e.setLatitud(rs.getFloat(6));
+				e.setLongitud(rs.getFloat(7));
+				e.setDistancia(rs.getFloat(8));
+				
+				a.setEmpresa(e);
+
+				
+				alumnos.add(a);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return alumnos;
+	}
 }

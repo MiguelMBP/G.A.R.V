@@ -11,6 +11,7 @@ import com.example.android.appprofesor.models.Alumno;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final Alumno alumno = alumnos.get(position);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         holder.alumno.setText(alumno.getNombre() + " " + alumno.getApellidos());
         holder.empresa.setText(alumno.getEmpresa().getNombre());

@@ -70,6 +70,10 @@ public class HiloServidor extends Thread {
 				break;
 			case 10:
 				getAlumnoVisitas(entrada, salida);
+				break;
+			case 11:
+				getTodosAlumnosVisitas(salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -79,6 +83,19 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void getTodosAlumnosVisitas(ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			List<Alumno> visitas = dao.mostrarTodosAlumnoVisitas();
+
+			String json = alumnoVisitasJson(visitas);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void getAlumnoVisitas(ObjectInputStream entrada, ObjectOutputStream salida) {

@@ -31,7 +31,7 @@
             <androidx.appcompat.widget.AppCompatSpinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewStudentVisitName"
+                android:id="@+id/spinnerStudentVisitName"
                 android:text="Alumno A"
                 android:textStyle="bold"
                 android:layout_gravity="center"
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewCompanyDetailName"
-                android:text="Empresa A "
+                android:text=""
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewCompanyLoc"
-                android:text="Calle del Desarrollo, Jerez"
+                android:text=""
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewCompanyDistance"
-                android:text="10km"
+                android:text="0km"
                 android:textStyle="bold"
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
@@ -168,7 +168,7 @@
             android:text="Confirmar Visita"
 
             android:layout_gravity="center"
-            android:layout_marginTop="80dp"/>
+            android:layout_marginTop="40dp"/>
 
         <com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/button_map"
