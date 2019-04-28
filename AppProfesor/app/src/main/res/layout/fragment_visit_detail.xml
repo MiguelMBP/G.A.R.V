@@ -164,7 +164,7 @@
 
         <com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/button_map"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Ver en mapa"
             android:layout_gravity="center"

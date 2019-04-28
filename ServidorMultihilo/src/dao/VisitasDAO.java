@@ -172,4 +172,31 @@ public class VisitasDAO {
 		}
 		return id;
 	}
+
+	public int insertarAlumno(Alumno alumno) {
+		DBConnection conex = new DBConnection();
+		String sql = "Insert into visitas_alumno values (0, '" + alumno.getDni() + "', '" + alumno.getNombre() + "', '" + alumno.getApellidos() + "', "
+				+ "'" + alumno.getCurso() + "', " + alumno.getEmpresa().getId() + ")";
+		int id = -1;
+		
+		try (Statement st = conex.getConnection().createStatement();) {
+
+			st.executeQuery(sql);
+			
+			sql = "SELECT MAX(id) FROM visitas_alumno";
+			
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			id = rs.getInt(1);
+			
+			st.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			conex.desconectar();
+		}
+		return id;
+	}
 }

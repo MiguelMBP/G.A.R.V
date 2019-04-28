@@ -200,4 +200,41 @@ public class VisitConnector implements Constants {
 
         return id;
     }
+
+    public static int addAlumno(Alumno alumno) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+
+        try {
+            InetAddress address = InetAddress.getByName(ADDRESS);
+            socketCliente = new Socket(address, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión" + e);
+            System.exit(-1);
+        }
+        int id = -1;
+        try {
+            int op = 14;
+            salida.writeInt(op);
+            salida.flush();
+            salida.writeObject(new Gson().toJson(alumno));
+            id = entrada.readInt();
+            System.out.println(id);
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+
+        try {
+            entrada.close();
+            socketCliente.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
 }

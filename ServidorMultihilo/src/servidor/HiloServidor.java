@@ -81,6 +81,8 @@ public class HiloServidor extends Thread {
 			case 13:
 				insertarEmpresa(entrada, salida);
 				break;
+			case 14:
+				insertarAlumno(entrada, salida);
 			default:
 				System.out.println(op);
 				break;
@@ -90,6 +92,28 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void insertarAlumno(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			String json = (String) entrada.readObject();
+			Alumno alumno = alumnoObjetoJson(json);
+			int id = dao.insertarAlumno(alumno);
+			salida.writeInt(id);
+			salida.flush();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private Alumno alumnoObjetoJson(String json) {
+		Gson gson = new Gson();
+		return gson.fromJson(json, Alumno.class);
 	}
 
 	private void insertarEmpresa(ObjectInputStream entrada, ObjectOutputStream salida) {

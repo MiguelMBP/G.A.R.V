@@ -122,8 +122,6 @@ public class RealizarVisitaActivity extends AppCompatActivity {
 
         model = ViewModelProviders.of(this).get(VisitaTodosViewModel.class);
         model.getTodosAlumnos().observe(this, new Observer<List<Alumno>>() {
-
-
             @Override
             public void onChanged(List<Alumno> alumnosList) {
                 String[] nombres = new String[alumnosList.size()];
@@ -209,13 +207,14 @@ public class RealizarVisitaActivity extends AppCompatActivity {
     }
 
     private void añadirAlumno(String nombre, String apellidos, String dni, String curso) {
-        //TODO
         Alumno alumno = new Alumno();
         alumno.setNombre(nombre);
         alumno.setApellidos(apellidos);
         alumno.setCurso(curso);
         alumno.setDni(dni);
         alumno.setEmpresa(empresasSeleccionada);
+
+        model.addAlumno(alumno);
 
         dialogAlumno.dismiss();
     }
@@ -280,7 +279,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
     private void actualizarInterfaz() {
         empresaTextView.setText(alumnoSeleccionado.getEmpresa().getNombre());
         localizacionTextView.setText(alumnoSeleccionado.getEmpresa().getDireccion() + ", " + alumnoSeleccionado.getEmpresa().getPoblacion());
-        coordenadasTextView.setText(alumnoSeleccionado.getEmpresa().getLatitud() + ", " + alumnoSeleccionado.getEmpresa().getLatitud());
+        coordenadasTextView.setText(alumnoSeleccionado.getEmpresa().getLongitud() + ", " + alumnoSeleccionado.getEmpresa().getLatitud());
         distanciaTextView.setText(alumnoSeleccionado.getEmpresa().getDistancia() + "");
     }
 
