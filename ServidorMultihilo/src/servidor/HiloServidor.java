@@ -16,6 +16,7 @@ import dao.VisitasDAO;
 import vo.Alumno;
 import vo.Apercibimiento;
 import vo.ClaseApercibimiento;
+import vo.Empresa;
 import vo.TutorAlumno;
 import vo.Usuario;
 import vo.Visita;
@@ -74,6 +75,12 @@ public class HiloServidor extends Thread {
 			case 11:
 				getTodosAlumnosVisitas(salida);
 				break;
+			case 12:
+				getEmpresas(salida);
+				break;
+			case 13:
+				insertarEmpresa(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -83,6 +90,46 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void insertarEmpresa(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			String json = (String) entrada.readObject();
+			Empresa empresa = empresaObjetoJson(json);
+			int id = dao.insertarEmpresa(empresa);
+			salida.writeInt(id);
+			salida.flush();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private Empresa empresaObjetoJson(String json) {
+		Gson gson = new Gson();
+		return gson.fromJson(json, Empresa.class);
+	}
+
+	private void getEmpresas(ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			List<Empresa> empresas = dao.mostrarEmpresas();
+
+			String json = empresaJson(empresas);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private String empresaJson(List<Empresa> empresas) {
+		Gson gson = new Gson();
+		return gson.toJson(empresas);
 	}
 
 	private void getTodosAlumnosVisitas(ObjectOutputStream salida) {

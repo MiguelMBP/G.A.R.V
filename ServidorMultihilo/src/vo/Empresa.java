@@ -4,6 +4,8 @@ package vo;
 import java.io.Serializable;
 
 public class Empresa implements Serializable {
+	private int id;
+	private String cif;
     private String nombre;
     private String direccion;
     private String poblacion;
@@ -11,17 +13,7 @@ public class Empresa implements Serializable {
     private float longitud;
     private float distancia;
 
-    public Empresa(String nombre, String direccion, String poblacion, float latitud, float longitud, float distancia) {
-		super();
-		this.nombre = nombre;
-		this.direccion = direccion;
-		this.poblacion = poblacion;
-		this.latitud = latitud;
-		this.longitud = longitud;
-		this.distancia = distancia;
-	}
-
-	public Empresa() {
+    public Empresa() {
     }
 
     public String getNombre() {
@@ -64,13 +56,31 @@ public class Empresa implements Serializable {
         this.longitud = longitud;
     }
 
-	public float getDistancia() {
-		return distancia;
+    public float getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(float distancia) {
+        this.distancia = distancia;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+	public String getCif() {
+		return cif;
 	}
 
-	public void setDistancia(float distancia) {
-		this.distancia = distancia;
+	public void setCif(String cif) {
+		this.cif = cif;
 	}
+    
+    
     
     
 }

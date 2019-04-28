@@ -43,10 +43,10 @@ public class Utils {
 
     }
 
-    public static List<Alumno> getDummyVisit() {
+    /*public static List<Alumno> getDummyVisit() {
         ArrayList<Alumno> alumnos = new ArrayList<>();
         alumnos.add(new Alumno("Antonio", "Garcia", new Empresa("ATComponentes", "Calle Desarrollo, 10", "Jerez", 108.012f, 50.123f, 4f), new Date()));
         alumnos.add(new Alumno("Juan", "Sanchez", new Empresa("Empresa 2", "Calle Delirio, 21", "Cadiz", 108.012f, 50.123f, 5f), new Date()));
         return alumnos;
-    }
+    }*/
 }

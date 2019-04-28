@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,5 +112,64 @@ public class VisitasDAO {
 		}
 
 		return alumnos;
+	}
+	
+	public List<Empresa> mostrarEmpresas() {
+		List<Empresa> empresas = new ArrayList<>();
+		DBConnection conex = new DBConnection();
+		String sql = "SELECT * FROM visitas_empresa";
+		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				
+				Empresa e = new Empresa();
+				e.setId(rs.getInt(1));
+				e.setCif(rs.getString(2));
+				e.setNombre(rs.getString(3));
+				e.setDireccion(rs.getString(4));
+				e.setPoblacion(rs.getString(5));
+				e.setLatitud(rs.getFloat(6));
+				e.setLongitud(rs.getFloat(7));
+				e.setDistancia(rs.getFloat(8));
+
+
+				
+				empresas.add(e);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return empresas;
+	}
+
+	public int insertarEmpresa(Empresa empresa) {
+		DBConnection conex = new DBConnection();
+		String sql = "Insert into visitas_empresa values (0, '" + empresa.getCif() + "', '" + empresa.getNombre() + "', '" + empresa.getPoblacion() + "', "
+				+ "'" + empresa.getDireccion() + "', " + empresa.getLatitud() + ", " + empresa.getLongitud() + ", " + empresa.getDistancia() + ")";
+		int id = -1;
+		
+		try (Statement st = conex.getConnection().createStatement();) {
+
+			st.executeQuery(sql);
+			
+			sql = "SELECT MAX(id) FROM visitas_empresa";
+			
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			id = rs.getInt(1);
+			
+			st.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			conex.desconectar();
+		}
+		return id;
 	}
 }

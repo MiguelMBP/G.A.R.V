@@ -2,13 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/debug/res/values/google_maps_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/debug/res/values/google_maps_api.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/VisitConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/VisitConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/RealizarVisitaActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/RealizarVisitaActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/VisitAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/VisitAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/VisitDetailFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/VisitDetailFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Alumno.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Alumno.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Empresa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/utils/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/VisitaViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/VisitaViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/res/layout/activity_realizar_visita.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/res/layout/activity_realizar_visita.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/dao/VisitasDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/dao/VisitasDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/vo/Alumno.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/vo/Alumno.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/vo/Empresa.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/vo/Empresa.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/dao/VisitasDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/dao/VisitasDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/vo/Alumno.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/vo/Alumno.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/vo/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/vo/Empresa.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -102,8 +111,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GARV/visitas/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="25" column="48" lean-forward="true" selection-start-line="25" selection-start-column="48" selection-end-line="25" selection-end-column="48" />
+            <state relative-caret-position="408">
+              <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -292,7 +301,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="387" width="1920" height="987" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1797575" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -509,13 +517,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/GARV/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -526,10 +527,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/visitas/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="25" column="48" lean-forward="true" selection-start-line="25" selection-start-column="48" selection-end-line="25" selection-end-column="48" />
+        <state relative-caret-position="408">
+          <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>

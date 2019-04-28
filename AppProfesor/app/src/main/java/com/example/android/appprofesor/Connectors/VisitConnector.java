@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
+import com.example.android.appprofesor.models.Empresa;
 import com.example.android.appprofesor.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -107,10 +108,96 @@ public class VisitConnector implements Constants {
 
     }
 
+    public static List<Empresa> getEmpresas() {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<Empresa> empresas = new ArrayList<>();
+
+
+        try {
+            InetAddress address = InetAddress.getByName(ADDRESS);
+            socketCliente = new Socket(address, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión" + e);
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            int op = 12;
+            salida.writeInt(op);
+            salida.flush();
+            linea = (String) entrada.readObject();
+
+            empresas = jsonToListEmpresa(linea);
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            entrada.close();
+            socketCliente.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return empresas;
+
+    }
+
+    private static List<Empresa> jsonToListEmpresa(String linea) {
+        java.lang.reflect.Type typeList = new TypeToken<List<Empresa>>() {}.getType();
+        Gson gson = new Gson();
+        List<Empresa> empresas = gson.fromJson(linea, typeList);
+        return empresas;
+    }
+
     private static List<Alumno> jsonToListVisita(String linea) {
         java.lang.reflect.Type typeList = new TypeToken<List<Alumno>>() {}.getType();
         Gson gson = new Gson();
         List<Alumno> alumnos = gson.fromJson(linea, typeList);
         return alumnos;
+    }
+
+    public static int addEmpresa(Empresa empresa) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+
+        try {
+            InetAddress address = InetAddress.getByName(ADDRESS);
+            socketCliente = new Socket(address, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión" + e);
+            System.exit(-1);
+        }
+        int id = -1;
+        try {
+            int op = 13;
+            salida.writeInt(op);
+            salida.flush();
+            salida.writeObject(new Gson().toJson(empresa));
+            id = entrada.readInt();
+            System.out.println(id);
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+
+        try {
+            entrada.close();
+            socketCliente.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return id;
     }
 }

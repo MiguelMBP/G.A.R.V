@@ -1,6 +1,7 @@
 package com.example.android.appprofesor.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
@@ -12,10 +13,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,9 +28,9 @@ import android.widget.Toast;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.models.Alumno;
-import com.example.android.appprofesor.utils.Utils;
+import com.example.android.appprofesor.models.Empresa;
+import com.example.android.appprofesor.viewmodels.EmpresaViewModel;
 import com.example.android.appprofesor.viewmodels.VisitaTodosViewModel;
-import com.example.android.appprofesor.viewmodels.VisitaViewModel;
 
 import java.util.List;
 
@@ -33,17 +38,29 @@ public class RealizarVisitaActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+
+    private AlertDialog.Builder builder;
+    private AlertDialog dialogAlumno;
+    private AlertDialog dialogEmpresa;
+
     VisitaTodosViewModel model;
+
+    List<Alumno> alumnos;
+    Alumno alumnoSeleccionado;
+    EmpresaViewModel empresaModel;
+    List<Empresa> empresas;
+    Empresa empresasSeleccionada;
 
     Button confirmarVisita;
     Button verEnMapa;
+    Button añadirAlumno;
     Spinner spinnerAlumnos;
-    List<Alumno> alumnos;
-    Alumno alumnoSeleccionado;
     TextView empresaTextView;
     TextView localizacionTextView;
     TextView coordenadasTextView;
     TextView distanciaTextView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +68,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_realizar_visita);
         confirmarVisita = findViewById(R.id.button_visit);
         verEnMapa = findViewById(R.id.button_map);
+        añadirAlumno = findViewById(R.id.button_add_student);
         spinnerAlumnos = findViewById(R.id.spinnerStudentVisitName);
         empresaTextView = findViewById(R.id.textViewCompanyDetailName);
         localizacionTextView = findViewById(R.id.textViewCompanyLoc);
@@ -89,10 +107,16 @@ public class RealizarVisitaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RealizarVisitaActivity.this, MapsActivity.class);
                 Bundle bundle = new Bundle();
-                //TODO
                 bundle.putSerializable("empresa", alumnoSeleccionado.getEmpresa());
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+
+        añadirAlumno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPopUpAlumno();
             }
         });
 
@@ -115,6 +139,142 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void createPopUpAlumno() {
+        builder = new AlertDialog.Builder(RealizarVisitaActivity.this);
+        View view = LayoutInflater.from(RealizarVisitaActivity.this).inflate(R.layout.popup_student, null);
+
+        builder.setView(view);
+
+        dialogAlumno = builder.create();
+        dialogAlumno.show();
+
+        final EditText nombre = view.findViewById(R.id.popupStudentName);
+        final EditText apellidos= view.findViewById(R.id.popupStudentLastName);
+        final EditText dni = view.findViewById(R.id.popupStudentID);
+        final EditText curso= view.findViewById(R.id.popupStudentGrade);
+        final Spinner empresa = view.findViewById(R.id.spinnerCompany);
+        Button saveButton = view.findViewById(R.id.popupSavePlayerButton);
+        Button añadirEmpresa = view.findViewById(R.id.popupCreateCompanyButton);
+
+        empresa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                empresasSeleccionada = empresas.get(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!TextUtils.isEmpty(nombre.getText()) && !TextUtils.isEmpty(apellidos.getText()) && !TextUtils.isEmpty(dni.getText()) && !TextUtils.isEmpty(curso.getText())) {
+
+                    añadirAlumno(nombre.getText().toString(), apellidos.getText().toString(), dni.getText().toString(), curso.getText().toString());
+
+                }
+
+            }
+        });
+
+        empresaModel = ViewModelProviders.of(this).get(EmpresaViewModel.class);
+        empresaModel.getEmpresas().observe(this, new Observer<List<Empresa>>() {
+            @Override
+            public void onChanged(List<Empresa> empresasList) {
+                String[] nombres = new String[empresasList.size()];
+                for (int i = 0; i < empresasList.size(); i++) {
+                    nombres[i] = empresasList.get(i).getNombre();
+                }
+
+                ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
+                aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                empresa.setAdapter(aa);
+                empresas = empresasList;
+            }
+        });
+
+        añadirEmpresa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPopUpEmpresa();
+            }
+        });
+    }
+
+    private void añadirAlumno(String nombre, String apellidos, String dni, String curso) {
+        //TODO
+        Alumno alumno = new Alumno();
+        alumno.setNombre(nombre);
+        alumno.setApellidos(apellidos);
+        alumno.setCurso(curso);
+        alumno.setDni(dni);
+        alumno.setEmpresa(empresasSeleccionada);
+
+        dialogAlumno.dismiss();
+    }
+
+
+    private void createPopUpEmpresa() {
+        View view = LayoutInflater.from(RealizarVisitaActivity.this).inflate(R.layout.popup_company, null);
+        builder.setView(view);
+        dialogEmpresa = builder.create();
+        dialogEmpresa.show();
+
+        final EditText nombre = view.findViewById(R.id.popupCompanyName);
+        final EditText cif= view.findViewById(R.id.popupCompanyID);
+        final EditText direccion = view.findViewById(R.id.popupCompanyLoc);
+        final EditText poblacion= view.findViewById(R.id.popupCompanyPob);
+        final EditText longitud= view.findViewById(R.id.popupCompanyLong);
+        final EditText latitud= view.findViewById(R.id.popupCompanyLat);
+        Button guardar = view.findViewById(R.id.popupSaveCompanyButton);
+        Button mapa = view.findViewById(R.id.popupCompanyMapButton);
+
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (!TextUtils.isEmpty(nombre.getText()) && !TextUtils.isEmpty(cif.getText()) && !TextUtils.isEmpty(direccion.getText()) && !TextUtils.isEmpty(poblacion.getText())
+                            && !TextUtils.isEmpty(longitud.getText()) && !TextUtils.isEmpty(latitud.getText())) {
+                        añadirEmpresa(nombre.getText().toString(), cif.getText().toString(), direccion.getText().toString(), poblacion.getText().toString(), longitud.getText().toString(), latitud.getText().toString());
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(RealizarVisitaActivity.this, "Error Añadiendo empresa", Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+            }
+        });
+
+        mapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO sacar localizacion desde mapa
+            }
+        });
+
+    }
+
+    private void añadirEmpresa(String nombre, String cif, String direccion, String poblacion, String longitud, String latitud) {
+        Empresa empresa = new Empresa();
+        empresa.setNombre(nombre);
+        empresa.setCif(cif);
+        empresa.setDireccion(direccion);
+        empresa.setPoblacion(poblacion);
+        empresa.setLongitud(Float.parseFloat(longitud));
+        empresa.setLatitud(Float.parseFloat(latitud));
+        empresa.setDistancia(0);
+
+        empresaModel.addEmpresa(empresa);
+
+        dialogEmpresa.dismiss();
+        dialogAlumno.show();
     }
 
     private void actualizarInterfaz() {

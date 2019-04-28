@@ -32,15 +32,6 @@ public class VisitaViewModel extends AndroidViewModel {
         return alumnos;
     }
 
-    public LiveData<List<Alumno>> getTodosAlumnos() {
-
-        if (alumnos==null){
-            alumnos= new MutableLiveData<>();
-            new ConectarServidorTodosAlumnos().execute();
-        }
-        return alumnos;
-    }
-
     private class ConectarServidorAlumnos extends AsyncTask<Context, Void, List<Alumno>> {
 
         @Override
@@ -54,11 +45,11 @@ public class VisitaViewModel extends AndroidViewModel {
         }
     }
 
-    private class ConectarServidorTodosAlumnos extends AsyncTask<Void, Void, List<Alumno>> {
+    private class ConectarServidorAñadirAlumno extends AsyncTask<Context, Void, List<Alumno>> {
 
         @Override
-        protected List<Alumno> doInBackground(Void... voids) {
-            return VisitConnector.getTodosAlumnos();
+        protected List<Alumno> doInBackground(Context... contexts) {
+            return VisitConnector.getAlumnos(contexts[0]);
         }
 
         @Override
