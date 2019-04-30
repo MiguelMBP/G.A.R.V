@@ -83,6 +83,7 @@ public class HiloServidor extends Thread {
 				break;
 			case 14:
 				insertarAlumno(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;

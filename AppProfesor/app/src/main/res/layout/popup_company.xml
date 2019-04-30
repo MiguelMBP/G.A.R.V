@@ -55,33 +55,21 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_below="@id/popupCompanyPob"
-        android:id="@+id/popupCompanyLong"
-        android:hint="Longitud">
+        android:id="@+id/popupCompanyLat"
+        android:hint="Latitud">
     </EditText>
     <EditText
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@id/popupCompanyLong"
-        android:id="@+id/popupCompanyLat"
-        android:hint="Latitud">
+        android:layout_below="@id/popupCompanyLat"
+        android:id="@+id/popupCompanyLong"
+        android:hint="Longitud">
     </EditText>
 
-
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/popupCompanyLat"
-        android:id="@+id/popupCompanyMapButton"
-        android:text="Seleccionar En Mapa"
-        android:textColor="@android:color/white"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="10dp"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/popupCompanyMapButton"
+        android:layout_below="@id/popupCompanyLong"
         android:id="@+id/popupSaveCompanyButton"
         android:text="Añadir Empresa"
         android:textColor="@android:color/white"

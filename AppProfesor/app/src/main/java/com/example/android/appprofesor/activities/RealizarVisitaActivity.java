@@ -61,7 +61,6 @@ public class RealizarVisitaActivity extends AppCompatActivity {
     TextView distanciaTextView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,11 +104,13 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         verEnMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RealizarVisitaActivity.this, MapsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("empresa", alumnoSeleccionado.getEmpresa());
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if (alumnoSeleccionado != null) {
+                    Intent intent = new Intent(RealizarVisitaActivity.this, MapsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("empresa", alumnoSeleccionado.getEmpresa());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -149,9 +150,9 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         dialogAlumno.show();
 
         final EditText nombre = view.findViewById(R.id.popupStudentName);
-        final EditText apellidos= view.findViewById(R.id.popupStudentLastName);
+        final EditText apellidos = view.findViewById(R.id.popupStudentLastName);
         final EditText dni = view.findViewById(R.id.popupStudentID);
-        final EditText curso= view.findViewById(R.id.popupStudentGrade);
+        final EditText curso = view.findViewById(R.id.popupStudentGrade);
         final Spinner empresa = view.findViewById(R.id.spinnerCompany);
         Button saveButton = view.findViewById(R.id.popupSavePlayerButton);
         Button añadirEmpresa = view.findViewById(R.id.popupCreateCompanyButton);
@@ -201,7 +202,8 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         añadirEmpresa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createPopUpEmpresa();
+                Intent intent = new Intent(RealizarVisitaActivity.this, SelectMapActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -219,67 +221,10 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         dialogAlumno.dismiss();
     }
 
-
-    private void createPopUpEmpresa() {
-        View view = LayoutInflater.from(RealizarVisitaActivity.this).inflate(R.layout.popup_company, null);
-        builder.setView(view);
-        dialogEmpresa = builder.create();
-        dialogEmpresa.show();
-
-        final EditText nombre = view.findViewById(R.id.popupCompanyName);
-        final EditText cif= view.findViewById(R.id.popupCompanyID);
-        final EditText direccion = view.findViewById(R.id.popupCompanyLoc);
-        final EditText poblacion= view.findViewById(R.id.popupCompanyPob);
-        final EditText longitud= view.findViewById(R.id.popupCompanyLong);
-        final EditText latitud= view.findViewById(R.id.popupCompanyLat);
-        Button guardar = view.findViewById(R.id.popupSaveCompanyButton);
-        Button mapa = view.findViewById(R.id.popupCompanyMapButton);
-
-        guardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    if (!TextUtils.isEmpty(nombre.getText()) && !TextUtils.isEmpty(cif.getText()) && !TextUtils.isEmpty(direccion.getText()) && !TextUtils.isEmpty(poblacion.getText())
-                            && !TextUtils.isEmpty(longitud.getText()) && !TextUtils.isEmpty(latitud.getText())) {
-                        añadirEmpresa(nombre.getText().toString(), cif.getText().toString(), direccion.getText().toString(), poblacion.getText().toString(), longitud.getText().toString(), latitud.getText().toString());
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(RealizarVisitaActivity.this, "Error Añadiendo empresa", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-            }
-        });
-
-        mapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO sacar localizacion desde mapa
-            }
-        });
-
-    }
-
-    private void añadirEmpresa(String nombre, String cif, String direccion, String poblacion, String longitud, String latitud) {
-        Empresa empresa = new Empresa();
-        empresa.setNombre(nombre);
-        empresa.setCif(cif);
-        empresa.setDireccion(direccion);
-        empresa.setPoblacion(poblacion);
-        empresa.setLongitud(Float.parseFloat(longitud));
-        empresa.setLatitud(Float.parseFloat(latitud));
-        empresa.setDistancia(0);
-
-        empresaModel.addEmpresa(empresa);
-
-        dialogEmpresa.dismiss();
-        dialogAlumno.show();
-    }
-
     private void actualizarInterfaz() {
         empresaTextView.setText(alumnoSeleccionado.getEmpresa().getNombre());
         localizacionTextView.setText(alumnoSeleccionado.getEmpresa().getDireccion() + ", " + alumnoSeleccionado.getEmpresa().getPoblacion());
-        coordenadasTextView.setText(alumnoSeleccionado.getEmpresa().getLongitud() + ", " + alumnoSeleccionado.getEmpresa().getLatitud());
+        coordenadasTextView.setText(alumnoSeleccionado.getEmpresa().getLatitud() + ", " + alumnoSeleccionado.getEmpresa().getLongitud());
         distanciaTextView.setText(alumnoSeleccionado.getEmpresa().getDistancia() + "");
     }
 
@@ -296,9 +241,10 @@ public class RealizarVisitaActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
-    public void onActivityResult (int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode,data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
