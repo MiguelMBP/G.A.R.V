@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.models.Empresa;
+import com.example.android.appprofesor.utils.Constants;
 import com.example.android.appprofesor.viewmodels.EmpresaViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,16 +26,29 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
-public class SelectMapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class SelectMapActivity extends FragmentActivity implements OnMapReadyCallback, Constants {
 
     private GoogleMap mMap;
     private AlertDialog.Builder builder;
     private AlertDialog dialogEmpresa;
     EmpresaViewModel empresaModel;
+    String parsedDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +78,9 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng instituto = new LatLng(SCHOOLAT, SCHOOLON);
+        mMap.addMarker(new MarkerOptions().position(instituto).title("IES Fernando Aguilar Quignon"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(instituto));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -126,10 +141,73 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
         empresa.setPoblacion(poblacion);
         empresa.setLongitud(Float.parseFloat(longitud));
         empresa.setLatitud(Float.parseFloat(latitud));
-        empresa.setDistancia(0);
+        empresa.setDistancia(getDistance(Double.parseDouble(latitud), Double.parseDouble(longitud)));
 
         empresaModel.addEmpresa(empresa);
 
         dialogEmpresa.dismiss();
+    }
+
+    public float getDistance(final double lat1, final double lon1){
+
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    URL url = new URL("https://maps.googleapis.com/maps/api/directions/json?origin=" + lat1 + "," + lon1 + "&destination=" + SCHOOLAT + "," + SCHOOLON + "&sensor=false&units=metric&mode=driving&key=" + getResources().getString(R.string.google_maps_key));
+                    final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    InputStream in = new BufferedInputStream(conn.getInputStream());
+                    String response = iStreamToString(in);
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray array = jsonObject.getJSONArray("routes");
+                    JSONObject routes = array.getJSONObject(0);
+                    JSONArray legs = routes.getJSONArray("legs");
+                    JSONObject steps = legs.getJSONObject(0);
+                    JSONObject distance = steps.getJSONObject("distance");
+                    parsedDistance=distance.getString("value");
+
+                    Log.v("Distsnce","Distance>>"+parsedDistance);
+
+                } catch (ProtocolException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return Float.parseFloat(parsedDistance)/1000f;
+    }
+
+
+    public String iStreamToString(InputStream is1)
+    {
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is1), 4096);
+        String line;
+        StringBuilder sb =  new StringBuilder();
+        try {
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+            rd.close();
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        String contentOfMyInputStream = sb.toString();
+        return contentOfMyInputStream;
     }
 }

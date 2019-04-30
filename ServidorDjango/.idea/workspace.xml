@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/RealizarVisitaActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/RealizarVisitaActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/debug/res/values/google_maps_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/debug/res/values/google_maps_api.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/SelectMapActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/SelectMapActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/utils/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/res/layout/popup_company.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/res/layout/popup_company.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ServidorDjango.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ServidorDjango.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/.classpath" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/connection/DBConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/connection/DBConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/ClientePrueba.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/ClientePrueba.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
