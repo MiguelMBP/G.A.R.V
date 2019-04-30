@@ -9,17 +9,24 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -29,10 +36,17 @@ import android.widget.Toast;
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.Empresa;
+import com.example.android.appprofesor.models.RegistroVisita;
 import com.example.android.appprofesor.viewmodels.EmpresaViewModel;
 import com.example.android.appprofesor.viewmodels.VisitaTodosViewModel;
+import com.google.android.material.picker.MaterialDatePickerDialog;
 
+import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class RealizarVisitaActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
@@ -41,7 +55,6 @@ public class RealizarVisitaActivity extends AppCompatActivity {
 
     private AlertDialog.Builder builder;
     private AlertDialog dialogAlumno;
-    private AlertDialog dialogEmpresa;
 
     VisitaTodosViewModel model;
 
@@ -59,6 +72,10 @@ public class RealizarVisitaActivity extends AppCompatActivity {
     TextView localizacionTextView;
     TextView coordenadasTextView;
     TextView distanciaTextView;
+    EditText fechaVisita;
+    int mYear;
+    int mMonth;
+    int mDay;
 
 
     @Override
@@ -74,6 +91,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         coordenadasTextView = findViewById(R.id.textViewCompanyCoordinate);
         distanciaTextView = findViewById(R.id.textViewCompanyDistance);
         this.imageView = findViewById(R.id.textViewStudentVisitIcon);
+        fechaVisita = findViewById(R.id.visitDate);
 
         spinnerAlumnos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -95,6 +113,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(RealizarVisitaActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
+                    registrarVisita();
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
@@ -137,7 +156,39 @@ public class RealizarVisitaActivity extends AppCompatActivity {
             }
         });
 
+        fechaVisita.setFocusable(false);
+        fechaVisita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
+                DatePickerDialog mDatePicker = new DatePickerDialog(RealizarVisitaActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        Calendar myCalendar = Calendar.getInstance();
+                        myCalendar.set(Calendar.YEAR, selectedyear);
+                        myCalendar.set(Calendar.MONTH, selectedmonth);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
+                        String myFormat = "dd/MM/yy"; //Change as you need
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+                        fechaVisita.setText(sdf.format(myCalendar.getTime()));
+
+                        mDay = selectedday;
+                        mMonth = selectedmonth;
+                        mYear = selectedyear;
+                    }
+                }, mYear, mMonth, mDay);
+                //mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
+
+
+    }
+
+    private void registrarVisita() {
     }
 
     private void createPopUpAlumno() {
@@ -245,9 +296,36 @@ public class RealizarVisitaActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(photo);
+        try {
+            if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+                SharedPreferences prefs =
+                        this.getSharedPreferences("userData", Context.MODE_PRIVATE);
+
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                imageView.setImageBitmap(photo);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+
+                String base64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+
+                Date fecha = sdf.parse(fechaVisita.getText().toString());
+
+
+                RegistroVisita visita = new RegistroVisita();
+                visita.setDocente(prefs.getString("username", "error"));
+                visita.setAlumno(alumnoSeleccionado);
+                visita.setImagen(byteArray);
+                visita.setImagen64(base64);
+                visita.setFecha(fecha);
+
+                model.addVisita(visita);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

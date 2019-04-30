@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/debug/res/values/google_maps_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/debug/res/values/google_maps_api.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/SelectMapActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/SelectMapActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/utils/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/VisitConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/VisitConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/RealizarVisitaActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/RealizarVisitaActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/VisitaTodosViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/VisitaTodosViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/dao/VisitasDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/dao/VisitasDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/dao/VisitasDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/dao/VisitasDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

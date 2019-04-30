@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
 import com.example.android.appprofesor.models.Empresa;
+import com.example.android.appprofesor.models.RegistroVisita;
 import com.example.android.appprofesor.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -221,6 +222,44 @@ public class VisitConnector implements Constants {
             salida.writeInt(op);
             salida.flush();
             salida.writeObject(new Gson().toJson(alumno));
+            id = entrada.readInt();
+            System.out.println(id);
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+
+        try {
+            entrada.close();
+            socketCliente.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
+    public static int addVisita(RegistroVisita visita) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+
+        try {
+            InetAddress address = InetAddress.getByName(ADDRESS);
+            socketCliente = new Socket(address, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión" + e);
+            System.exit(-1);
+        }
+        int id = -1;
+        try {
+            int op = 15;
+            salida.writeInt(op);
+            salida.flush();
+            salida.writeObject(new Gson().toJson(visita));
+            salida.flush();
             id = entrada.readInt();
             System.out.println(id);
 

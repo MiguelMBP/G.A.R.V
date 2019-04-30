@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.example.android.appprofesor.Connectors.VisitConnector;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.Empresa;
+import com.example.android.appprofesor.models.RegistroVisita;
 
 import java.util.List;
 
@@ -37,6 +38,12 @@ public class VisitaTodosViewModel extends AndroidViewModel {
     public void addAlumno(Alumno alumno) {
 
         new ConectarServidorAñadirAlumno().execute(alumno);
+        //new ConectarServidorTodosAlumnos().execute();
+    }
+
+    public void addVisita(RegistroVisita visita) {
+
+        new ConectarServidorRegistrarVisita().execute(visita);
     }
 
     private class ConectarServidorTodosAlumnos extends AsyncTask<Void, Void, List<Alumno>> {
@@ -65,6 +72,34 @@ public class VisitaTodosViewModel extends AndroidViewModel {
                 id = VisitConnector.addAlumno(alumno);
 
                 alumno.setId(id);
+            }
+
+            return id;
+        }
+
+        @Override
+        protected void onPostExecute(Integer updatedRows) {
+            if (updatedRows == -1) {
+                Toast.makeText(getApplication(), "Error añadiendo Alumno", Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                Toast.makeText(getApplication(), "Alumno añadido", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+    private class ConectarServidorRegistrarVisita extends AsyncTask<RegistroVisita, Void, Integer> {
+
+        RegistroVisita visita;
+
+        @Override
+        protected Integer doInBackground(RegistroVisita... visitas) {
+            int id = -1;
+
+            if (visitas.length != 0) {
+                visita = visitas[0];
+                id = VisitConnector.addVisita(visita);
             }
 
             return id;

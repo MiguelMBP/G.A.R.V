@@ -40,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/popupCompanyID"
         android:id="@+id/popupCompanyLoc"
+        android:editable="false"
         android:hint="Dirección">
 
     </EditText>
@@ -48,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/popupCompanyLoc"
         android:id="@+id/popupCompanyPob"
+        android:editable="false"
         android:hint="Poblacion">
 
     </EditText>
@@ -56,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/popupCompanyPob"
         android:id="@+id/popupCompanyLat"
+        android:editable="false"
         android:hint="Latitud">
     </EditText>
     <EditText
@@ -63,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/popupCompanyLat"
         android:id="@+id/popupCompanyLong"
+        android:editable="false"
         android:hint="Longitud">
     </EditText>
 

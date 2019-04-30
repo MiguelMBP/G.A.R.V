@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true" android:focusableInTouchMode="true"
     tools:context=".fragments.VisitDetailFragment">
 
     <LinearLayout
@@ -160,6 +161,34 @@
                 android:layout_marginRight="4dp"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de la visita: "
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:textSize="16sp"
+                android:layout_marginRight="4dp"/>
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/visitDate"
+                android:hint="Fecha de la visita"
+                android:inputType="date"/>
+
+        </LinearLayout>
+
+
 
         <com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/button_add_student"

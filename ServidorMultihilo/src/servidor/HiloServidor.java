@@ -1,5 +1,6 @@
 package servidor;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,6 +18,7 @@ import vo.Alumno;
 import vo.Apercibimiento;
 import vo.ClaseApercibimiento;
 import vo.Empresa;
+import vo.RegistroVisita;
 import vo.TutorAlumno;
 import vo.Usuario;
 import vo.Visita;
@@ -84,6 +86,9 @@ public class HiloServidor extends Thread {
 			case 14:
 				insertarAlumno(entrada, salida);
 				break;
+			case 15:
+				registrarVisita(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -93,6 +98,28 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void registrarVisita(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			String json = (String) entrada.readObject();
+			RegistroVisita visita = VisitaObjetoJson(json);
+			int id = dao.insertarVisita(visita);
+			salida.writeInt(id);
+			salida.flush();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private RegistroVisita VisitaObjetoJson(String json) {
+		Gson gson = new Gson();
+		return gson.fromJson(json, RegistroVisita.class);
 	}
 
 	private void insertarAlumno(ObjectInputStream entrada, ObjectOutputStream salida) {

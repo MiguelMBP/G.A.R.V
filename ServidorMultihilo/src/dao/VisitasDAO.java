@@ -1,9 +1,12 @@
 package dao;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import connection.DBConnection;
@@ -11,6 +14,7 @@ import vo.Alumno;
 import vo.AlumnoApercibimiento;
 import vo.ClaseApercibimiento;
 import vo.Empresa;
+import vo.RegistroVisita;
 import vo.Visita;
 
 public class VisitasDAO {
@@ -83,21 +87,23 @@ public class VisitasDAO {
 	public List<Alumno> mostrarTodosAlumnoVisitas() {
 		List<Alumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "select A.nombre, A.apellidos, E.nombre, E.direccion, E.poblacion, E.latitud, E.longitud, E.distancia from visitas_alumno A, visitas_empresa E where A.empresa_id = E.id";
+		String sql = "select A.id, A.nombre, A.apellidos, E.id, E.nombre, E.direccion, E.poblacion, E.latitud, E.longitud, E.distancia from visitas_alumno A, visitas_empresa E where A.empresa_id = E.id";
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {
 				Alumno a = new Alumno();
-				a.setNombre(rs.getString(1));
-				a.setApellidos(rs.getString(2));
+				a.setId(rs.getInt(1));
+				a.setNombre(rs.getString(2));
+				a.setApellidos(rs.getString(3));
 				
 				Empresa e = new Empresa();
-				e.setNombre(rs.getString(3));
-				e.setDireccion(rs.getString(4));
-				e.setPoblacion(rs.getString(5));
-				e.setLatitud(rs.getFloat(6));
-				e.setLongitud(rs.getFloat(7));
-				e.setDistancia(rs.getFloat(8));
+				e.setId(rs.getInt(4));
+				e.setNombre(rs.getString(5));
+				e.setDireccion(rs.getString(6));
+				e.setPoblacion(rs.getString(7));
+				e.setLatitud(rs.getFloat(8));
+				e.setLongitud(rs.getFloat(9));
+				e.setDistancia(rs.getFloat(10));
 				
 				a.setEmpresa(e);
 
@@ -198,5 +204,20 @@ public class VisitasDAO {
 			conex.desconectar();
 		}
 		return id;
+	}
+	
+	//TODO
+	public int insertarVisita(RegistroVisita visita) {
+		try {
+			byte[] byteArray = visita.getImagen();
+			FileOutputStream fileOuputStream = 
+		              new FileOutputStream("testing2.jpeg", false); 
+		    fileOuputStream.write(byteArray);
+		    fileOuputStream.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }
