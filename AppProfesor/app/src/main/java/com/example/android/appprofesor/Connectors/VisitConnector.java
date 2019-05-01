@@ -259,7 +259,7 @@ public class VisitConnector implements Constants {
             int op = 15;
             salida.writeInt(op);
             salida.flush();
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
             salida.writeObject(gson.toJson(visita));
             salida.flush();
             id = entrada.readInt();

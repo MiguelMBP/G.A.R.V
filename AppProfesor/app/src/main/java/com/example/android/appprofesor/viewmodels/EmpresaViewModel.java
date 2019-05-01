@@ -36,6 +36,7 @@ public class EmpresaViewModel extends AndroidViewModel {
     public void addEmpresa(Empresa empresa) {
 
         new ConectarServidorAñadirEmpresa().execute(empresa);
+        new ConectarServidorEmpresas().execute();
     }
 
     private class ConectarServidorEmpresas extends AsyncTask<Void, Void, List<Empresa>> {

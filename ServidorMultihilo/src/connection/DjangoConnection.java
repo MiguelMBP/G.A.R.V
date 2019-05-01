@@ -164,11 +164,10 @@ public class DjangoConnection implements Constants {
 		return creado;
 	}
 
-	// TODO
 	public int insertarVisita(RegistroVisita visita, int id) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
 			String url = "http://" + ADDRESS + ":" + 8000 + "/visitas/registervisit/";

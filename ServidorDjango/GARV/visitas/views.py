@@ -40,14 +40,15 @@ def registervisit(request):
     if request.method == "POST":
         userId = request.POST.get('userId', None)
         date = request.POST.get('date', None)
+        print(date)
         img = request.POST.get('img', None)
         studentId = request.POST.get('studentId', None)
 
         if userId and date and img and studentId:
-            imgFile = ContentFile(b64decode(img), name=userId + '_' + studentId + '_' + date + '.png')
+            imgFile = ContentFile(b64decode(img), name=userId + '_' + studentId + '_' + date + '.jpg')
             visita = Visita(fecha=date, imagen=imgFile, alumno_id=studentId, profesor_id=userId)
             visita.save()
 
-            print("guardar")
+            return HttpResponse('success')
 
         return HttpResponse('failure')

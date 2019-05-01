@@ -32,6 +32,6 @@ class Visita(models.Model):
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     fecha = models.DateField()
-    imagen = models.ImageField()
+    imagen = models.ImageField(upload_to='images/%Y/%m/%d')
     validada = models.BooleanField(default=False)
 
