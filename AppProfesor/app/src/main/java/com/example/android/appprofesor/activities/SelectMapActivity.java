@@ -19,12 +19,20 @@ import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.models.Empresa;
 import com.example.android.appprofesor.utils.Constants;
 import com.example.android.appprofesor.viewmodels.EmpresaViewModel;
+import com.google.android.gms.common.api.Status;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,12 +47,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 public class SelectMapActivity extends FragmentActivity implements OnMapReadyCallback, Constants {
 
     private GoogleMap mMap;
+    AutocompleteFragment autocompleteFragment;
     private AlertDialog.Builder builder;
     private AlertDialog dialogEmpresa;
     EmpresaViewModel empresaModel;
@@ -53,9 +63,28 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        empresaModel = ViewModelProviders.of(this).get(EmpresaViewModel.class);
         setContentView(R.layout.activity_select_map);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        Places.initialize(getApplicationContext(), getResources().getString(R.string.google_maps_key));
+
+        autocompleteFragment = (AutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete);
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+
+                LatLng position = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                mMap.addMarker(new MarkerOptions().position(position).title(place.getName()));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14.0f));
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                Log.d("Maps", "An error occurred: " + status);
+            }
+        });
+        empresaModel = ViewModelProviders.of(this).get(EmpresaViewModel.class);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -80,7 +109,7 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
         // Add a marker in Sydney and move the camera
         LatLng instituto = new LatLng(SCHOOLAT, SCHOOLON);
         mMap.addMarker(new MarkerOptions().position(instituto).title("IES Fernando Aguilar Quignon"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(instituto));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(instituto, 10.0f));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -148,9 +177,9 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
         dialogEmpresa.dismiss();
     }
 
-    public float getDistance(final double lat1, final double lon1){
+    public float getDistance(final double lat1, final double lon1) {
 
-        Thread thread=new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -167,9 +196,7 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
                     JSONArray legs = routes.getJSONArray("legs");
                     JSONObject steps = legs.getJSONObject(0);
                     JSONObject distance = steps.getJSONObject("distance");
-                    parsedDistance=distance.getString("value");
-
-                    Log.v("Distsnce","Distance>>"+parsedDistance);
+                    parsedDistance = distance.getString("value");
 
                 } catch (ProtocolException e) {
                     e.printStackTrace();
@@ -188,15 +215,14 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return Float.parseFloat(parsedDistance)/1000f;
+        return Float.parseFloat(parsedDistance) / 1000f;
     }
 
 
-    public String iStreamToString(InputStream is1)
-    {
+    public String iStreamToString(InputStream is1) {
         BufferedReader rd = new BufferedReader(new InputStreamReader(is1), 4096);
         String line;
-        StringBuilder sb =  new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         try {
             while ((line = rd.readLine()) != null) {
                 sb.append(line);
@@ -204,7 +230,6 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
             rd.close();
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         String contentOfMyInputStream = sb.toString();
