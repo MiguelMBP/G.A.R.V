@@ -206,18 +206,29 @@ public class VisitasDAO {
 		return id;
 	}
 	
-	//TODO
-	public int insertarVisita(RegistroVisita visita) {
-		try {
-			byte[] byteArray = visita.getImagen();
-			FileOutputStream fileOuputStream = 
-		              new FileOutputStream("testing2.jpeg", false); 
-		    fileOuputStream.write(byteArray);
-		    fileOuputStream.close();
+	public int idUsuario(String usuario) {
+		DBConnection conex = new DBConnection();
+		String sql = "SELECT id FROM GARV.auth_user where username='" + usuario + "'";
+		int id = -1;
+		
+		try (Statement st = conex.getConnection().createStatement();) {
 
-		} catch (IOException e) {
+			st.executeQuery(sql);
+			
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			id = rs.getInt(1);
+			
+			st.close();
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
+			return -1;
+		} finally {
+			conex.desconectar();
 		}
-		return -1;
+		return id;
 	}
+	
+	
 }

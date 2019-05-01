@@ -7,18 +7,9 @@ public class RegistroVisita {
 	private Alumno alumno;
 	private Date fecha;
 	private boolean validada;
-	private byte[] imagen;
 	private String imagen64;
-
-	public RegistroVisita(String docente, Alumno alumno, Date fecha, boolean validada, byte[] imagen, String imagen64) {
-		super();
-		this.docente = docente;
-		this.alumno = alumno;
-		this.fecha = fecha;
-		this.validada = validada;
-		this.imagen = imagen;
-		this.imagen64 = imagen64;
-	}
+	private String csrfToken;
+	private String sessionId;
 
 	public RegistroVisita() {
 	}
@@ -55,19 +46,27 @@ public class RegistroVisita {
 		this.validada = validada;
 	}
 
-	public byte[] getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
-	}
-
 	public String getImagen64() {
 		return imagen64;
 	}
 
 	public void setImagen64(String imagen64) {
 		this.imagen64 = imagen64;
+	}
+
+	public String getCsrfToken() {
+		return csrfToken;
+	}
+
+	public void setCsrfToken(String csrfToken) {
+		this.csrfToken = csrfToken;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

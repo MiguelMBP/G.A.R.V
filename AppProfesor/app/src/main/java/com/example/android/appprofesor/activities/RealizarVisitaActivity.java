@@ -41,7 +41,9 @@ import com.example.android.appprofesor.viewmodels.EmpresaViewModel;
 import com.example.android.appprofesor.viewmodels.VisitaTodosViewModel;
 import com.google.android.material.picker.MaterialDatePickerDialog;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -171,7 +173,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
                         myCalendar.set(Calendar.YEAR, selectedyear);
                         myCalendar.set(Calendar.MONTH, selectedmonth);
                         myCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
-                        String myFormat = "dd/MM/yy"; //Change as you need
+                        String myFormat = "dd/MM/yyyy"; //Change as you need
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
                         fechaVisita.setText(sdf.format(myCalendar.getTime()));
 
@@ -305,7 +307,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
                 imageView.setImageBitmap(photo);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
 
                 String base64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
@@ -314,13 +316,13 @@ public class RealizarVisitaActivity extends AppCompatActivity {
 
                 Date fecha = sdf.parse(fechaVisita.getText().toString());
 
-
                 RegistroVisita visita = new RegistroVisita();
                 visita.setDocente(prefs.getString("username", "error"));
                 visita.setAlumno(alumnoSeleccionado);
-                visita.setImagen(byteArray);
                 visita.setImagen64(base64);
                 visita.setFecha(fecha);
+                visita.setCsrfToken(prefs.getString("csrftoken", "error"));
+                visita.setSessionId(prefs.getString("sessionid", "error"));
 
                 model.addVisita(visita);
             }

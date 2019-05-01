@@ -9,6 +9,7 @@ import com.example.android.appprofesor.models.Empresa;
 import com.example.android.appprofesor.models.RegistroVisita;
 import com.example.android.appprofesor.utils.Constants;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -258,7 +259,8 @@ public class VisitConnector implements Constants {
             int op = 15;
             salida.writeInt(op);
             salida.flush();
-            salida.writeObject(new Gson().toJson(visita));
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            salida.writeObject(gson.toJson(visita));
             salida.flush();
             id = entrada.readInt();
             System.out.println(id);

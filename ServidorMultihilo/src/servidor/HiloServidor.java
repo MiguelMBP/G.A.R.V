@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -102,10 +103,14 @@ public class HiloServidor extends Thread {
 
 	private void registrarVisita(ObjectInputStream entrada, ObjectOutputStream salida) {
 		try {
+			DjangoConnection dc = new DjangoConnection();
 			VisitasDAO dao = new VisitasDAO();
 			String json = (String) entrada.readObject();
 			RegistroVisita visita = VisitaObjetoJson(json);
-			int id = dao.insertarVisita(visita);
+
+			
+			int id = dao.idUsuario(visita.getDocente());
+			dc.insertarVisita(visita, id);
 			salida.writeInt(id);
 			salida.flush();
 
