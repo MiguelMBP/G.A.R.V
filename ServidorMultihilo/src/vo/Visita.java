@@ -3,6 +3,7 @@ package vo;
 import java.util.Date;
 
 public class Visita {
+	private int id;
 	private String docente;
 	private String alumno;
 	private String empresa;
@@ -83,6 +84,14 @@ public class Visita {
 
 	public void setPoblacion(String poblacion) {
 		this.poblacion = poblacion;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

@@ -215,6 +215,16 @@ public class ApercibimientoDAO {
 		}
 	}
 	
-	
+	public void desActivarApercibimiento(int id, boolean activo) {
+		DBConnection db = new DBConnection();
+		String sql = "update apercibimientos_apercibimiento set activo = " + activo + " where id = " + id;
+		try (Statement st = db.getConnection().createStatement();) {
 
+			st.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+	}
 }

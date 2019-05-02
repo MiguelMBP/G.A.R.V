@@ -90,6 +90,11 @@ public class HiloServidor extends Thread {
 			case 15:
 				registrarVisita(entrada, salida);
 				break;
+			case 16:
+				desActivarApercibimiento(entrada, salida);
+				break;
+			case 17:
+				inValidarVisita(entrada);
 			default:
 				System.out.println(op);
 				break;
@@ -99,6 +104,32 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void inValidarVisita(ObjectInputStream entrada) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			int id = entrada.readInt();
+			boolean activo = entrada.readBoolean();
+			dao.inValidarVisita(id, activo);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void desActivarApercibimiento(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			int id = entrada.readInt();
+			boolean activo = entrada.readBoolean();
+			dao.desActivarApercibimiento(id, activo);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void registrarVisita(ObjectInputStream entrada, ObjectOutputStream salida) {

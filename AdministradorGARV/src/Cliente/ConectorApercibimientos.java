@@ -139,5 +139,37 @@ public class ConectorApercibimientos implements Constants{
         }
 
     }
+    
+    public void desActivarApercibimiento(int id, boolean activo) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+
+        try {
+            socketCliente = new Socket(ADDRESS, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            salida.writeInt(16);
+            salida.flush();
+            salida.writeInt(id);
+            salida.flush();
+            salida.writeBoolean(activo);
+            salida.flush();
+            
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+
+    }
 
 }

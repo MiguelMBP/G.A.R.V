@@ -23,18 +23,19 @@ public class VisitasDAO {
 	public List<Visita> mostrarVisitas() {
 		List<Visita> visitas = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "select CONCAT(A3.nombre, ' ', A3.apellidos) Docente, CONCAT(A1.nombre, ' ', A1.apellidos) Alumno, A2.nombre, A2.poblacion, A4.fecha, A2.distancia, A4.validada from visitas_alumno A1, visitas_empresa A2, visitas_profesor A3, visitas_visita A4 where A1.id = A4.alumno_id and A2.id = A1.empresa_id and A3.id = A4.profesor_id";
+		String sql = "select A1.id, CONCAT(A3.nombre, ' ', A3.apellidos) Docente, CONCAT(A1.nombre, ' ', A1.apellidos) Alumno, A2.nombre, A2.poblacion, A4.fecha, A2.distancia, A4.validada from visitas_alumno A1, visitas_empresa A2, visitas_profesor A3, visitas_visita A4 where A1.id = A4.alumno_id and A2.id = A1.empresa_id and A3.id = A4.profesor_id";
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {
 				Visita v = new Visita();
-				v.setDocente(rs.getString(1));
-				v.setAlumno(rs.getString(2));
-				v.setEmpresa(rs.getString(3));
-				v.setPoblacion(rs.getString(4));
-				v.setFecha(rs.getDate(5));
-				v.setDistancia(rs.getDouble(6));
-				v.setValidada(rs.getBoolean(7));
+				v.setId(rs.getInt(1));
+				v.setDocente(rs.getString(2));
+				v.setAlumno(rs.getString(3));
+				v.setEmpresa(rs.getString(4));
+				v.setPoblacion(rs.getString(5));
+				v.setFecha(rs.getDate(6));
+				v.setDistancia(rs.getDouble(7));
+				v.setValidada(rs.getBoolean(8));
 
 				visitas.add(v);
 			}
@@ -230,5 +231,17 @@ public class VisitasDAO {
 		return id;
 	}
 	
+	public void inValidarVisita(int id, boolean activo) {
+		DBConnection db = new DBConnection();
+		String sql = "update visitas_visita set validada = " + activo + " where id = " + id;
+		try (Statement st = db.getConnection().createStatement();) {
+
+			st.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+	}
 	
 }

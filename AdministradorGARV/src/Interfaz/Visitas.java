@@ -9,6 +9,7 @@ import Cliente.ConectorApercibimientos;
 import Cliente.ConectorVisitas;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import vo.Apercibimiento;
 import vo.Visita;
@@ -57,16 +58,20 @@ public class Visitas extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Docente", "Alumno", "Empresa", "Población", "Fecha", "Distancia", "Validada"
+                "id", "Docente", "Alumno", "Empresa", "Población", "Fecha", "Distancia", "Validada"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         jMenu1.setText("Apercibimientos");
 
@@ -82,7 +87,12 @@ public class Visitas extends javax.swing.JFrame {
 
         jMenu2.setText("Visitas");
 
-        jMenuItem2.setText("Validar visita");
+        jMenuItem2.setText("Validar/Invalidar visita");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Ver Documento");
@@ -138,6 +148,21 @@ public class Visitas extends javax.swing.JFrame {
         usuarios.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        int pos = jTable1.getSelectedRow();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
+        } else{
+            int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
+            String activoS = t.getValueAt(pos, 7).toString();
+            boolean activo = (activoS.equals("true")) ? true : false;
+            ConectorVisitas cs = new ConectorVisitas();
+            cs.inValidarVisita(id, !activo);
+            rellenarTabla();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,7 +222,7 @@ public class Visitas extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         for (int i = 0; i < visitas.size(); i++) {
             Visita v = visitas.get(i);
-            Object[] elementos = {v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), v.isValidada()};
+            Object[] elementos = {v.getId(), v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), v.isValidada()};
             t.addRow(elementos);
         }
     }
