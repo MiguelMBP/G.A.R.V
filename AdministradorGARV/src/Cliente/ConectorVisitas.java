@@ -96,5 +96,44 @@ public class ConectorVisitas implements Constants{
 
     }
 
+    public String getImagen(int id, List<String> cookies) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        String base64 = null;
+
+        try {
+            socketCliente = new Socket(ADDRESS, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            salida.writeInt(18);
+            salida.flush();
+            salida.writeInt(id);
+            salida.flush();
+            salida.writeUTF(cookies.get(0));
+            salida.flush();
+            salida.writeUTF(cookies.get(1));
+            salida.flush();
+            
+            base64 = (String) entrada.readObject();
+            
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorVisitas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return base64;
+    }
 
 }

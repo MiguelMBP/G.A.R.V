@@ -227,4 +227,68 @@ public class DjangoConnection implements Constants {
 		}
 		return -1;
 	}
+	
+	public String getImagen(int id, String crsftoken, String sessionId) {
+		HttpURLConnection connection = null;
+		boolean creado = false;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String responseBody  = null;
+
+		try {
+			String url = "http://" + ADDRESS + ":" + 8000 + "/visitas/sendimage/";
+			String charset = "UTF-8";
+
+			String query = String.format("id=%s",
+					URLEncoder.encode(id+"", charset));
+
+			CookieManager cookieManager = new CookieManager();
+			CookieHandler.setDefault(cookieManager);
+
+			HttpCookie csrf = new HttpCookie("csrftoken", crsftoken);
+			csrf.setPath("/");
+			csrf.setDomain(ADDRESS);
+			csrf.setHttpOnly(true);
+			HttpCookie session = new HttpCookie("sessionid", sessionId);
+			session.setPath("/");
+			session.setDomain(ADDRESS);
+			session.setHttpOnly(true);
+
+			cookieManager.getCookieStore().add(new URI(ADDRESS), csrf);
+			cookieManager.getCookieStore().add(new URI(ADDRESS), session);
+
+			connection = (HttpURLConnection) new URL(url).openConnection();
+
+			if (cookieManager.getCookieStore().getCookies().size() > 0) {
+				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
+					if (cookie.getName().equals("csrftoken")) {
+						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
+					}
+				}
+			}
+
+			connection.setRequestMethod("POST");
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Accept-Charset", charset);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+
+			try (OutputStream output = connection.getOutputStream()) {
+				output.write(query.getBytes(charset));
+			}
+
+			InputStream response = connection.getInputStream();
+			try (Scanner scanner = new Scanner(response)) {
+				responseBody = scanner.useDelimiter("\\A").next();
+				if (responseBody.equals("success")) {
+					creado = true;
+				}
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return responseBody;
+	}
 }

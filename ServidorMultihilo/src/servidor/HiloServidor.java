@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.swing.text.html.CSS;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -95,6 +97,10 @@ public class HiloServidor extends Thread {
 				break;
 			case 17:
 				inValidarVisita(entrada);
+				break;
+			case 18:
+				getImagen(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -104,6 +110,23 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void getImagen(ObjectInputStream entrada, ObjectOutputStream salida) {
+		DjangoConnection dc = new DjangoConnection();
+		try {
+			int id = entrada.readInt();
+			String crsf = entrada.readUTF();
+			String session = entrada.readUTF();
+			
+			String base64 = dc.getImagen(id, crsf, session);
+			
+			salida.writeObject(base64);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void inValidarVisita(ObjectInputStream entrada) {
@@ -116,7 +139,7 @@ public class HiloServidor extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void desActivarApercibimiento(ObjectInputStream entrada, ObjectOutputStream salida) {
@@ -129,7 +152,7 @@ public class HiloServidor extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void registrarVisita(ObjectInputStream entrada, ObjectOutputStream salida) {
@@ -139,7 +162,6 @@ public class HiloServidor extends Thread {
 			String json = (String) entrada.readObject();
 			RegistroVisita visita = VisitaObjetoJson(json);
 
-			
 			int id = dao.idUsuario(visita.getDocente());
 			dc.insertarVisita(visita, id);
 			salida.writeInt(id);
@@ -150,7 +172,7 @@ public class HiloServidor extends Thread {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private RegistroVisita VisitaObjetoJson(String json) {
@@ -172,7 +194,7 @@ public class HiloServidor extends Thread {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private Alumno alumnoObjetoJson(String json) {
@@ -194,7 +216,7 @@ public class HiloServidor extends Thread {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private Empresa empresaObjetoJson(String json) {
@@ -212,7 +234,7 @@ public class HiloServidor extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private String empresaJson(List<Empresa> empresas) {
@@ -230,7 +252,7 @@ public class HiloServidor extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void getAlumnoVisitas(ObjectInputStream entrada, ObjectOutputStream salida) {

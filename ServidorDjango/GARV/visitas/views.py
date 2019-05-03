@@ -1,9 +1,8 @@
-from base64 import decodestring, b64decode
+from base64 import b64decode, b64encode
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
-from django.core.files.images import ImageFile
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -50,5 +49,20 @@ def registervisit(request):
             visita.save()
 
             return HttpResponse('success')
+
+        return HttpResponse('failure')
+
+
+@login_required
+def sendimage(request):
+    if request.method == "POST":
+        id = request.POST.get('id', None)
+
+        if id:
+            visita = Visita.objects.get(id=id)
+            with open(visita.imagen.path, "rb") as image_file:
+                encoded_string = b64encode(image_file.read())
+
+                return HttpResponse(encoded_string)
 
         return HttpResponse('failure')
