@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', views.a_login, name="login"),
     path('apercibimientos/', views.mostrarApercibimientos, name="apercibimientos"),
     path('buscar/', views.buscarApercibimiento, name="buscarApercibimientos"),
+    path('informe/informeNumeroApercibimiento/<int:anno>/<int:mes>/<str:unidad>/<int:minimo>', views.informeNumeroApercibimiento, name="informeNumeroApercibimiento"),
 ]

@@ -5,10 +5,11 @@
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[select A.alumno, A.unidad, A.materia, count(*) as apercibimientos,
-(select sum(B.horas_injustificadas) from apercibimientos_apercibimiento B where month(B.fecha_fin) = month('2018-11-30') and A.alumno = B.alumno and A.materia = B.materia) as horas
+(select B.porcentaje_injustificado from apercibimientos_apercibimiento B where month(B.fecha_fin) = 11 and A.alumno = B.alumno and A.materia = B.materia) as porcentaje,
+(select B.horas_injustificadas from apercibimientos_apercibimiento B where month(B.fecha_fin) = 11 and A.alumno = B.alumno and A.materia = B.materia) as horas
 from apercibimientos_apercibimiento A
- where A.fecha_fin <= '2018-11-31' and month(A.fecha_fin) = month('2018-11-30')
- group by A.alumno, A.materia]]>
+ where month(A.fecha_fin) <= 11 and (select B.horas_injustificadas from apercibimientos_apercibimiento B where month(B.fecha_fin) = 11 and A.alumno = B.alumno and A.materia = B.materia) > 0
+ group by A.alumno, A.materia, A.unidad]]>
 	</queryString>
 	<field name="alumno" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>

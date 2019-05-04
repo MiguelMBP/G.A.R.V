@@ -3,8 +3,12 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="mes" class="java.lang.Integer"/>
+	<parameter name="año" class="java.lang.Integer"/>
+	<parameter name="numero" class="java.lang.Integer"/>
+	<parameter name="curso" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select alumno, unidad, materia, count(*) from apercibimientos_apercibimiento group by alumno, materia having count(*) > 1 order by unidad, materia ]]>
+		<![CDATA[select alumno, unidad, materia, count(*) from apercibimientos_apercibimiento where unidad like $P{curso} group by alumno, unidad, materia having count(*) >= $P{numero} order by unidad, materia]]>
 	</queryString>
 	<field name="alumno" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
