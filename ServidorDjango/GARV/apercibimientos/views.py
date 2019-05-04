@@ -87,13 +87,13 @@ def buscarApercibimiento(request):
 @login_required
 def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
     if 9 <= mes <= 12:
-        fecha = datetime.datetime(anno, mes, 31)
+        fecha = datetime.datetime(anno, mes, 28)
     else:
-        fecha = datetime.datetime(anno+1, mes, 31)
+        fecha = datetime.datetime(anno+1, mes, 28)
 
     fechacurso = datetime.datetime(anno, 9, 1)
 
-    apercibimientos = Apercibimiento.objects.only("alumno", "unidad", "materia", "fecha_inicio").filter(periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha], unidad=unidad).order_by("unidad", "alumno", "materia")
+    apercibimientos = Apercibimiento.objects.only("alumno", "unidad", "materia").filter(periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha], unidad=unidad).order_by("unidad", "alumno", "materia")
     lista = []
     for apercibimiento in apercibimientos:
         resultado = Apercibimiento.objects.filter(alumno=apercibimiento.alumno, unidad=apercibimiento.unidad, materia=apercibimiento.materia, periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha]).count()
@@ -103,7 +103,7 @@ def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
             if apercibimiento not in lista:
                 lista.append(apercibimiento)
 
-    html_string = render_to_string('informeNumeroApercibimiento.html', {'apercibimientos': lista})
+    html_string = render_to_string('informeNumeroApercibimiento.html', {'numero': minimo, 'fecha': sacarFecha(anno, mes), 'apercibimientos': lista})
     html = HTML(string=html_string)
     result = html.write_pdf()
 
@@ -118,6 +118,80 @@ def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
         response.write(output.read())
 
     return response
+
+
+@login_required
+def informeApercibimientoIndividual(request, anno, mes, unidad):
+    if 9 <= mes <= 12:
+        fecha = datetime.datetime(anno, mes, 28)
+        fechainicio = datetime.datetime(anno, mes, 1)
+    else:
+        fecha = datetime.datetime(anno + 1, mes, 28)
+        fechainicio = datetime.datetime(anno+1, mes, 1)
+
+    fechacurso = datetime.datetime(anno, 9, 1)
+
+    apercibimientos = Apercibimiento.objects.values("alumno", "unidad").distinct().filter(periodo_academico=anno, fecha_inicio__range=[fechainicio, fecha], unidad=unidad).order_by("unidad", "alumno") #todos los alumnos
+    lista = []
+    for apercibimiento in apercibimientos:
+        resultados = Apercibimiento.objects.filter(alumno=apercibimiento['alumno'], unidad=apercibimiento['unidad'], periodo_academico=anno, fecha_inicio__range=[fechainicio, fecha]) #todas las asignaturas de un alumno con apercibimiento en ese mes
+
+        listaAp = []
+        for resultado in resultados:
+            resultados2 = Apercibimiento.objects.filter(alumno=resultado.alumno, unidad=resultado.unidad, materia=resultado.materia, periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha])
+            numero = len(resultados2)
+            materia = resultado.materia
+            faltas = resultado.horas_injustificadas
+            porcentaje = resultado.porcentaje_injustificado
+
+            alumno = ApercibimientoIndividual(numero=numero, materia=materia, faltas=faltas, porcentaje=porcentaje)
+            if alumno not in listaAp:
+                listaAp.append(alumno)
+
+        lista.append(InformeIndividual(alumno=apercibimiento['alumno'], unidad=apercibimiento['unidad'], fecha=sacarFecha(anno, mes), apercibimientos=listaAp))
+
+    html_string = render_to_string('informeApercibimientoIndividual.html', {'lista': lista})
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+
+    response = HttpResponse(content_type='application/pdf;')
+    response['Content-Disposition'] = 'inline; filename=informeApercibimientoIndividual.pdf'
+    response['Content-Transfer-Encoding'] = 'binary'
+
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        output = open(output.name, 'rb')
+        response.write(output.read())
+
+    return response
+
+
+def sacarFecha(anno, mes):
+    if mes == 9:
+        return 'Septiembre de ' + str(anno)
+    if mes == 10:
+        return 'Octubre de ' + str(anno)
+    if mes == 11:
+        return 'Noviembre de ' + str(anno)
+    if mes == 12:
+        return 'Diciembre de ' + str(anno)
+    if mes == 1:
+        return 'Enero de ' + str(anno+1)
+    if mes == 2:
+        return 'Febrero de ' + str(anno+1)
+    if mes == 3:
+        return 'Marzo de ' + str(anno+1)
+    if mes == 4:
+        return 'Abril de ' + str(anno+1)
+    if mes == 5:
+        return 'Mayo de ' + str(anno+1)
+    if mes == 6:
+        return 'Junio de ' + str(anno+1)
+    if mes == 7:
+        return 'Julio de ' + str(anno+1)
+    if mes == 8:
+        return 'Agosto de ' + str(anno+1)
 
 
 class InformeNumero:
@@ -138,4 +212,32 @@ class InformeNumero:
         return self.alumno == other.alumno  and self.unidad == other.unidad and self.materia == other.materia \
                and self.numero == other.numero
 
+class InformeIndividual:
+    def __init__(self, alumno, unidad, fecha, apercibimientos):
+        self.alumno = alumno
+        self.fecha = fecha
+        self.unidad = unidad
+        self.apercibimientos = apercibimientos
 
+    def __eq__(self, other):
+        if not isinstance(other, InformeIndividual):
+            # don't attempt to compare against unrelated types
+            return False
+
+        return self.alumno == other.alumno and self.unidad == other.unidad and str(self.fecha) == str(other.fecha) \
+               and self.apercibimientos == other.apercibimientos
+
+class ApercibimientoIndividual:
+    def __init__(self, numero, materia, faltas, porcentaje):
+        self.numero = numero
+        self.materia = materia
+        self.faltas = faltas
+        self.porcentaje = porcentaje
+
+    def __eq__(self, other):
+        if not isinstance(other, ApercibimientoIndividual):
+            # don't attempt to compare against unrelated types
+            return False
+
+        return str(self.numero) == str(other.numero) and self.materia == other.materia and str(self.faltas) == str(other.faltas) \
+               and str(self.porcentaje) == str(other.porcentaje)

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+     h1 {
+        text-align: center;
+        margin-bottom: 18px;
+        font-size: 15px;
+     }
+
+     h3 {
+        font-size: 13px;
+        text-align: center;
+     }
+
+     table {
+
+        width: 100%;
+        border-spacing: 0 2em;
+
+     }
+
+     td, th {
+       text-align: center;
+     }
+     td {
+        padding: 0.5em 0 1em 0;
+     }
+     th {
+        padding: 0.5em 0 0em 0;
+     }
+     body {
+        font-size: 11px;
+     }
+     hr {
+        margin: 4em 0 1em 0;
+     }
+
+     table {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      tr.border_bottom td {
+        border-bottom:1pt solid black;
+      }
+
+      p.pie {
+        font-size: 8px;
+      }
+
+      div {
+        border:1pt solid black;
+        padding: 1em;
+      }
+
+   </style>
+</head>
+
+<body>
+{% for i in lista %}
+    <h1>APERCIBIMIENTOS</h1>
+    <h3>I.E.S FERNANDO AGUILAR QUIGNON</h3>
+    <h3>JEFATURA DE ESTUDIOS</h3>
+    <h3><u>APERCIBIMIENTO POR FALTAS DE ASISTENCIA INJUSTIFICADAS</u></h3>
+
+    <p><b>ALUMNO/A :</b> {{ i.alumno }}</p>
+    <p><b>CURSO:</b>  {{ i.unidad }}</p>
+
+    <h4>Apercibido durante el mes de {{i.fecha}} en los siguientes modulos/asignaturas:</h4>
+
+    <table >
+
+        {% for apercibimiento in i.apercibimientos %}
+        <tr>
+            <th>APERCIBIMIENTO</th>
+            <th>ASIGNATURA/MODULO</th>
+            <th>FALTAS INJ</th>
+            <th>PORCENTAJE</th>
+        </tr>
+        <a><tr class="border_bottom">
+            <td>{{ apercibimiento.numero }}</td>
+            <td>{{ apercibimiento.materia }}</td>
+            <td>{{ apercibimiento.faltas }}</td>
+            <td>{{ apercibimiento.porcentaje }}</td>
+        </tr></a>
+        {% endfor %}
+    </table>
+
+    <hr>
+
+    <p class="pie">CORTAR POR AQUI. Extracto del ROF: El control en la Educacion Post-Obligatoria.</p>
+        <p class="pie"><b>Primer apercibimiento:</b> Cuando el/la alumno/a falta sin justificación el 25% de las horas de una materia en mes o el 20% en un trimestre: La Jefatura de Estudios notificara por escrito al
+    alumno/a como al tutor/a la citada circunstancia. (Si el alumno es menor de edad tambien se notificara a la familia). Excepcionalmente, en las asignaturas de una hora semanal, el
+        apercibimiento se cursará con el 50% de las faltas injustificadas.</p>
+        <p class="pie"><b>Segundo apercibimiento:</b> Cuando el/la alumno/a incurre por segunda vez en las circustancias descritas anteriormente pierde el derecho a la evaluación continua. Será evaluado en la sesión
+        extraodinaria (Septiembre) en el caso de Bachillerato y en la evaluación final en el caso de la Formación Profesional</p>
+
+    <div>
+        <b>RECIBÍ APERCIBIMIENTO. FIRMA Y FECHA</b>
+        <br><br><br>
+        <b>{{i.fecha}}</b>
+        <br><br><br>
+        <b>Alumno/a: {{i.alumno}}</b>
+    </div>
+
+    <p style="page-break-before: always" ></p>
+{% endfor %}
+</body>
+
+</html>
