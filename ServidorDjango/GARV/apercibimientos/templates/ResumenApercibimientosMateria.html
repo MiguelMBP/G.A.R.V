@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+     h1 {
+        font-size: 14px;
+        margin-bottom: 15px;
+     }
+
+     h3 {
+        font-size: 10px;
+     }
+
+     table {
+
+        width: 100%;
+        border-spacing: 0 2em;
+        border-collapse: collapse;
+        margin-bottom: 3em;
+
+     }
+
+     td, th {
+       text-align: left;
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 0.3em 0 1em 0.7em;
+        width: 50%
+
+     }
+     body {
+        font-size: 10px;
+     }
+     hr {
+        margin: 4em 0 3em 0;
+     }
+     td.materia {
+        background-color: #ddd;
+         padding: 0.6em 0 1em 0.7em;
+         width: 100%
+     }
+
+   </style>
+
+</head>
+<body>
+    {% for i in lista %}
+        <h1>IES FERNANDO AGUILAR QUIGNON</h1>
+        <h3>RESUMEN DE APERCIBIMIENTOS POR MATERIA</h3>
+        <h3>Fecha de generación del informe: {{i.fecha}}</h3>
+        <br>
+        <h3>Curso: {{i.unidad}}</h3>
+        <br>
+        {% for materia in i.materias %}
+           <table >
+                <tr>
+                    <td class="materia" colspan="2">MATERIA: {{materia.materia}}</td>
+                </tr>
+               <tr>
+                    <td>ALUMNO</td>
+                    <td>NUMERO DE APERCIBIMIENTOS</td>
+               </tr>
+
+               {% for alumno in materia.alumnos %}
+                  <tr>
+                    <td>{{alumno.alumno}}</td>
+                    <td>{{alumno.numero}} / Apercibido los meses: {{alumno.meses}}</td>
+                  </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+        <p style="page-break-before: always" ></p>
+    {% endfor %}
+</body>
+
+</html>
