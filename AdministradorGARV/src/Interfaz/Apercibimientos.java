@@ -8,6 +8,8 @@ package Interfaz;
 import Cliente.ConectorApercibimientos;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sun.jndi.toolkit.url.Uri;
+import java.awt.Desktop;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -15,6 +17,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -32,10 +38,8 @@ public class Apercibimientos extends javax.swing.JFrame {
     /**
      * Creates new form Apercibimientos
      */
-
     private List<String> cookies;
-    
-    
+
     public Apercibimientos(List<String> cookies) {
         initComponents();
         setLocationRelativeTo(null);
@@ -92,6 +96,11 @@ public class Apercibimientos extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem4.setText("Informes");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setText("Subir Archivos");
@@ -164,7 +173,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         int pos = jTable1.getSelectedRow();
         if (pos == -1) {
             JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
-        } else{
+        } else {
             int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
             String activoS = t.getValueAt(pos, 13).toString();
             boolean activo = (activoS.equals("true")) ? true : false;
@@ -184,6 +193,11 @@ public class Apercibimientos extends javax.swing.JFrame {
         AsignaturasEspeciales ae = new AsignaturasEspeciales(this, true);
         ae.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        InformesApercibimientos ia = new InformesApercibimientos(this, true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -235,11 +249,10 @@ public class Apercibimientos extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-    
     private void rellenarTabla() {
         ConectorApercibimientos cs = new ConectorApercibimientos();
         List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
-        
+
         DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
         t.setRowCount(0);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");

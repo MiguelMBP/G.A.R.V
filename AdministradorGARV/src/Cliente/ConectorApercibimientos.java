@@ -22,11 +22,11 @@ import vo.Apercibimiento;
  *
  * @author miguelmbp
  */
-public class ConectorApercibimientos implements Constants{
+public class ConectorApercibimientos implements Constants {
 
     public ConectorApercibimientos() {
     }
-    
+
     public List<Apercibimiento> cargarApercibimientos() {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -57,13 +57,14 @@ public class ConectorApercibimientos implements Constants{
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return apercibimientos;
 
     }
-    
+
     private List<Apercibimiento> jsonToListApercibimientos(String json) {
-        java.lang.reflect.Type typeList = new TypeToken<List<Apercibimiento>>() {}.getType();
+        java.lang.reflect.Type typeList = new TypeToken<List<Apercibimiento>>() {
+        }.getType();
         Gson gson = new Gson();
         List<Apercibimiento> apercibimientos = gson.fromJson(json, typeList);
         return apercibimientos;
@@ -89,7 +90,7 @@ public class ConectorApercibimientos implements Constants{
             salida.writeInt(9);
             salida.flush();
             linea = (String) entrada.readObject();
-            asignaturas = jsonToListAsignaturas(linea);
+            asignaturas = jsonToListString(linea);
 
             entrada.close();
             socketCliente.close();
@@ -99,13 +100,14 @@ public class ConectorApercibimientos implements Constants{
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return asignaturas;
 
     }
-    
-    private List<String> jsonToListAsignaturas(String linea) {
-        java.lang.reflect.Type typeList = new TypeToken<List<String>>() {}.getType();
+
+    private List<String> jsonToListString(String linea) {
+        java.lang.reflect.Type typeList = new TypeToken<List<String>>() {
+        }.getType();
         Gson gson = new Gson();
         List<String> asignaturas = gson.fromJson(linea, typeList);
         return asignaturas;
@@ -130,7 +132,7 @@ public class ConectorApercibimientos implements Constants{
             salida.flush();
             salida.writeUTF(materia);
             salida.flush();
-            
+
             entrada.close();
             socketCliente.close();
 
@@ -139,7 +141,7 @@ public class ConectorApercibimientos implements Constants{
         }
 
     }
-    
+
     public void desActivarApercibimiento(int id, boolean activo) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -162,7 +164,7 @@ public class ConectorApercibimientos implements Constants{
             salida.flush();
             salida.writeBoolean(activo);
             salida.flush();
-            
+
             entrada.close();
             socketCliente.close();
 
@@ -170,6 +172,115 @@ public class ConectorApercibimientos implements Constants{
             System.out.println("IOException: " + e.getMessage());
         }
 
+    }
+
+    public List<String> cargarAño() {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<String> año = new ArrayList<>();
+
+        try {
+            socketCliente = new Socket(ADDRESS, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            salida.writeInt(19);
+            salida.flush();
+            linea = (String) entrada.readObject();
+            año = jsonToListString(linea);
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return año;
+
+    }
+
+    public List<String> cargarMeses(String año) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<String> meses = new ArrayList<>();
+
+        try {
+            socketCliente = new Socket(ADDRESS, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            salida.writeInt(20);
+            salida.flush();
+            salida.writeUTF(año);
+            salida.flush();
+            linea = (String) entrada.readObject();
+            meses = jsonToListString(linea);
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return meses;
+    }
+
+    public List<String> cargarCursos(String año, String mes) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<String> meses = new ArrayList<>();
+
+        try {
+            socketCliente = new Socket(ADDRESS, PORT);
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+            System.exit(-1);
+        }
+        String linea = "";
+        try {
+            salida.writeInt(21);
+            salida.flush();
+            salida.writeUTF(año);
+            salida.flush();
+            salida.writeUTF(mes);
+            salida.flush();
+            linea = (String) entrada.readObject();
+            meses = jsonToListString(linea);
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return meses;
     }
 
 }

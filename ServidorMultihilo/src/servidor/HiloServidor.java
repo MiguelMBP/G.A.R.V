@@ -101,6 +101,15 @@ public class HiloServidor extends Thread {
 			case 18:
 				getImagen(entrada, salida);
 				break;
+			case 19:
+				getAnnoAcademico(salida);
+				break;
+			case 20:
+				getMeses(entrada, salida);
+				break;
+			case 21:
+				getCursos(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -110,6 +119,48 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void getCursos(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			String anno = entrada.readUTF();
+			String mes = entrada.readUTF();
+
+			List<String> lista = dao.getCursos(anno, mes);
+			salida.writeObject(new Gson().toJson(lista));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void getMeses(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			String anno = entrada.readUTF();
+
+			List<String> lista = dao.getMeses(anno);
+			salida.writeObject(new Gson().toJson(lista));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void getAnnoAcademico(ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+
+			List<String> lista = dao.getAnnoAcademico();
+			salida.writeObject(new Gson().toJson(lista));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void getImagen(ObjectInputStream entrada, ObjectOutputStream salida) {

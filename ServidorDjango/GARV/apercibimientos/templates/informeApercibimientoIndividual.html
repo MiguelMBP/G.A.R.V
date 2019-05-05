@@ -106,7 +106,7 @@
         <b>Alumno/a: {{i.alumno}}</b>
     </div>
 
-    <p style="page-break-before: always" ></p>
+    {% if forloop.last %}{%else%}<p style="page-break-before: always" ></p> {% endif %}
 {% endfor %}
 </body>
 

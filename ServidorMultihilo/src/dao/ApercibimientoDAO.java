@@ -227,4 +227,62 @@ public class ApercibimientoDAO {
 			db.desconectar();
 		}
 	}
+
+	public List<String> getAnnoAcademico() {
+		DBConnection db = new DBConnection();
+		String sql = "SELECT distinct(periodo_academico) FROM GARV.apercibimientos_apercibimiento order by periodo_academico";
+		List<String> lista = new ArrayList<>();
+		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				lista.add(rs.getString(1));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+
+		return lista;
+		
+	}
+
+	public List<String> getMeses(String anno) {
+		DBConnection db = new DBConnection();
+		String sql = "SELECT distinct(month(fecha_inicio)) FROM GARV.apercibimientos_apercibimiento where periodo_academico = " + anno;
+		List<String> lista = new ArrayList<>();
+		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				lista.add(rs.getString(1));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+
+		return lista;
+	}
+
+	public List<String> getCursos(String anno, String mes) {
+		DBConnection db = new DBConnection();
+		String sql = "SELECT distinct(unidad) FROM GARV.apercibimientos_apercibimiento where periodo_academico = " + anno + " and month(fecha_inicio) = " + mes + " order by unidad";
+		List<String> lista = new ArrayList<>();
+		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				lista.add(rs.getString(1));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+
+		return lista;
+	}
 }

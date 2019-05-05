@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorApercibimientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorApercibimientos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Apercibimientos.form" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Apercibimientos.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Apercibimientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Apercibimientos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/templates/ResumenApercibimientosMateria.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/templates/ResumenApercibimientosMateria.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/templates/informeApercibimientoIndividual.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/templates/informeApercibimientoIndividual.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/dao/ApercibimientoDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/dao/ApercibimientoDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/dao/ApercibimientoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/dao/ApercibimientoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,14 +23,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="558">
-              <caret line="248" column="25" selection-start-line="248" selection-start-column="25" selection-end-line="248" selection-end-column="25" />
+            <state relative-caret-position="564">
+              <caret line="113" column="35" lean-forward="true" selection-start-line="113" selection-start-column="35" selection-end-line="113" selection-end-column="35" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <element signature="e#8597#9300#0" />
+                <element signature="e#10048#10182#0" />
                 <element signature="e#9328#9936#0" />
                 <element signature="e#9967#10512#0" />
                 <element signature="e#10550#11107#0" />
@@ -33,11 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/ResumenApercibimientosMateria.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
+            <state relative-caret-position="763">
+              <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="91" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -58,7 +68,7 @@
         <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/informeNumeroApercibimiento.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="420">
-              <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
+              <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -67,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/informeApercibimientoIndividual.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="763">
-              <caret line="108" column="4" lean-forward="true" selection-start-line="108" selection-start-column="4" selection-end-line="108" selection-end-column="46" />
+              <caret line="108" column="87" selection-start-line="108" selection-start-column="87" selection-end-line="108" selection-end-column="87" />
               <folding>
                 <element signature="n#style#0;n#p#5;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -113,7 +123,7 @@
         <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
-              <caret line="13" column="1" lean-forward="true" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+              <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -125,7 +135,7 @@
         <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="354">
-              <caret line="94" column="28" lean-forward="true" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
+              <caret line="94" column="28" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -183,9 +193,9 @@
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/NOMasApercibimientos.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/informeNumeroApercibimiento.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/urls.py" />
+        <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/ResumenApercibimientosMateria.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/informeApercibimientoIndividual.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/views.py" />
-        <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/ResumenApercibimientosMateria.html" />
       </list>
     </option>
   </component>
@@ -532,7 +542,7 @@
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
-          <caret line="13" column="1" lean-forward="true" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
@@ -542,53 +552,54 @@
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/informeNumeroApercibimiento.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
-          <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/informeApercibimientoIndividual.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="763">
-          <caret line="108" column="4" lean-forward="true" selection-start-line="108" selection-start-column="4" selection-end-line="108" selection-end-column="46" />
-          <folding>
-            <element signature="n#style#0;n#p#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+          <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="354">
-          <caret line="94" column="28" lean-forward="true" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
+          <caret line="94" column="28" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/ResumenApercibimientosMateria.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="763">
+          <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="91" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/informeApercibimientoIndividual.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="763">
+          <caret line="108" column="87" selection-start-line="108" selection-start-column="87" selection-end-line="108" selection-end-column="87" />
+          <folding>
+            <element signature="n#style#0;n#p#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="248" column="25" selection-start-line="248" selection-start-column="25" selection-end-line="248" selection-end-column="25" />
+        <state relative-caret-position="564">
+          <caret line="113" column="35" lean-forward="true" selection-start-line="113" selection-start-column="35" selection-end-line="113" selection-end-column="35" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#8597#9300#0" />
+            <element signature="e#10048#10182#0" />
             <element signature="e#9328#9936#0" />
             <element signature="e#9967#10512#0" />
             <element signature="e#10550#11107#0" />
             <element signature="e#11746#11845#0" />
             <element signature="e#11877#12010#0" />
             <element signature="e#11303#11430#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/ResumenApercibimientosMateria.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

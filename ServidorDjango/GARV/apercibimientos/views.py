@@ -93,8 +93,14 @@ def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
         fecha = datetime.datetime(anno+1, mes, 28)
 
     fechacurso = datetime.datetime(anno, 9, 1)
+    unidad = unidad.replace("_", " ")
 
-    apercibimientos = Apercibimiento.objects.only("alumno", "unidad", "materia").filter(periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha], unidad=unidad).order_by("unidad", "alumno", "materia")
+    if unidad == 'todos':
+        apercibimientos = Apercibimiento.objects.only("alumno", "unidad", "materia").filter(periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha]).order_by("unidad", "alumno", "materia")
+
+    else:
+        apercibimientos = Apercibimiento.objects.only("alumno", "unidad", "materia").filter(periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha], unidad=unidad).order_by("unidad", "alumno", "materia")
+
     lista = []
     for apercibimiento in apercibimientos:
         resultado = Apercibimiento.objects.filter(alumno=apercibimiento.alumno, unidad=apercibimiento.unidad, materia=apercibimiento.materia, periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha], activo=True).count() #recorre la lista de apercibimientos por cada alumno y materia
@@ -131,8 +137,14 @@ def informeApercibimientoIndividual(request, anno, mes, unidad):
         fechainicio = datetime.datetime(anno+1, mes, 1)
 
     fechacurso = datetime.datetime(anno, 9, 1)
+    unidad = unidad.replace("_", " ")
 
-    apercibimientos = Apercibimiento.objects.values("alumno", "unidad").distinct().filter(periodo_academico=anno, fecha_inicio__range=[fechainicio, fecha], unidad=unidad).order_by("unidad", "alumno") #todos los alumnos
+    if unidad == 'todos':
+        apercibimientos = Apercibimiento.objects.values("alumno", "unidad").distinct().filter(periodo_academico=anno, fecha_inicio__range=[fechainicio, fecha]).order_by("unidad", "alumno") #todos los alumnos
+
+    else:
+        apercibimientos = Apercibimiento.objects.values("alumno", "unidad").distinct().filter(periodo_academico=anno, fecha_inicio__range=[fechainicio, fecha], unidad=unidad).order_by("unidad", "alumno") #todos los alumnos
+
     lista = []
     for apercibimiento in apercibimientos:
         resultados = Apercibimiento.objects.filter(alumno=apercibimiento['alumno'], unidad=apercibimiento['unidad'], periodo_academico=anno, fecha_inicio__range=[fechainicio, fecha], activo=True) #todas las asignaturas de un alumno con apercibimiento en ese mes
@@ -168,6 +180,7 @@ def informeApercibimientoIndividual(request, anno, mes, unidad):
     return response
 
 
+@login_required
 def informeResumenApercibimiento(request, anno, mes, unidad):
     if 9 <= mes <= 12:
         fecha = datetime.datetime(anno, mes, 28)
@@ -175,6 +188,7 @@ def informeResumenApercibimiento(request, anno, mes, unidad):
         fecha = datetime.datetime(anno + 1, mes, 28)
 
     fechacurso = datetime.datetime(anno, 9, 1)
+    unidad = unidad.replace("_", " ")
     listacursos = []
     if unidad == 'todos':
         cursos = Apercibimiento.objects.values("unidad").distinct().filter(periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha]).order_by("unidad") #todos los cursos
@@ -191,6 +205,7 @@ def informeResumenApercibimiento(request, anno, mes, unidad):
             alumnos = Apercibimiento.objects.values("alumno").distinct().filter(materia=materia['materia'], unidad=materia['unidad'], periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha], activo=True) #todos los alumnos con apercibimiento en una asignatura
 
             for alumno in alumnos:
+                #meses en los que ha faltado cada alumno por asignatura
                 resultado = Apercibimiento.objects.annotate(month=TruncMonth('fecha_inicio')).values('month').filter(alumno=alumno["alumno"], materia=materia['materia'], unidad=materia['unidad'], periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha], activo=True).order_by('month')
                 listamat.append(ApercibimientoMateria(alumno=alumno["alumno"], numero=len(resultado), meses=listarMeses(resultado)))
 
@@ -249,7 +264,6 @@ def listarMeses(resultados):
         meses += str(mes) + ', '
 
     return meses[:-2]
-
 
 
 #Clases para informe para 2 o mas apercibientos
