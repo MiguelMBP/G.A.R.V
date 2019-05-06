@@ -1,0 +1,4 @@
+address:localhost
+port:4444
+django_address:localhost
+django_port:8000

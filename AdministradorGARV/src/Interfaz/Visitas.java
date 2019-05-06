@@ -5,11 +5,12 @@
  */
 package Interfaz;
 
-import Cliente.ConectorApercibimientos;
 import Cliente.ConectorVisitas;
+import Util.ConfigurationFileException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -20,7 +21,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.codec.binary.Base64;
-import vo.Apercibimiento;
 import vo.Visita;
 
 /**
@@ -168,12 +168,18 @@ public class Visitas extends javax.swing.JFrame {
         if (pos == -1) {
             JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
-            String activoS = t.getValueAt(pos, 7).toString();
-            boolean activo = (activoS.equals("true")) ? true : false;
-            ConectorVisitas cs = new ConectorVisitas();
-            cs.inValidarVisita(id, !activo);
-            rellenarTabla();
+            try {
+                int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
+                String activoS = t.getValueAt(pos, 7).toString();
+                boolean activo = (activoS.equals("true")) ? true : false;
+                ConectorVisitas cs = new ConectorVisitas();
+                cs.inValidarVisita(id, !activo);
+                rellenarTabla();
+            } catch (ConfigurationFileException ex) {
+                JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+            }
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -198,8 +204,10 @@ public class Visitas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "", "Image",
                         JOptionPane.INFORMATION_MESSAGE,
                         new ImageIcon(dimg));
+            } catch (ConfigurationFileException ex) {
+                JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
             } catch (IOException ex) {
-                Logger.getLogger(Visitas.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
             }
         }
 
@@ -256,16 +264,22 @@ public class Visitas extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void rellenarTabla() {
-        ConectorVisitas cs = new ConectorVisitas();
-        List<Visita> visitas = cs.cargarVisitas();
-
-        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
-        t.setRowCount(0);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        for (int i = 0; i < visitas.size(); i++) {
-            Visita v = visitas.get(i);
-            Object[] elementos = {v.getId(), v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), v.isValidada()};
-            t.addRow(elementos);
+        try {
+            ConectorVisitas cs = new ConectorVisitas();
+            List<Visita> visitas = cs.cargarVisitas();
+            
+            DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+            t.setRowCount(0);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            for (int i = 0; i < visitas.size(); i++) {
+                Visita v = visitas.get(i);
+                Object[] elementos = {v.getId(), v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), v.isValidada()};
+                t.addRow(elementos);
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
     }
 }

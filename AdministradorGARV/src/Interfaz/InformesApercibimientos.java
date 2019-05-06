@@ -6,7 +6,11 @@
 package Interfaz;
 
 import Cliente.ConectorApercibimientos;
+import Util.ConfigurationFileException;
 import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -215,12 +220,14 @@ public class InformesApercibimientos extends javax.swing.JDialog {
         int posAño = jComboBoxAño.getSelectedIndex();
         int posMes = jComboBoxMes.getSelectedIndex();
         int posCurso = jComboBoxCurso.getSelectedIndex();
+        
+        String[] parametros = leerConfiguración();
 
         if (posTipo == -1 || posAño == -1 || posMes == -1 || posCurso == -1) {
 
         } else {
             try {
-                String url = "http://localhost:8000/apercibimientos/informe/";
+                String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/informe/";
                 String año = jComboBoxAño.getItemAt(posAño);
                 String mes = mesANumero(jComboBoxMes.getItemAt(posMes));
                 String curso = "";
@@ -312,37 +319,55 @@ public class InformesApercibimientos extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void rellenarAño() {
-        ConectorApercibimientos cs = new ConectorApercibimientos();
-        List<String> año = cs.cargarAño();
-
-        for (int i = 0; i < año.size(); i++) {
-            jComboBoxAño.addItem(año.get(i));
+        try {
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            List<String> año = cs.cargarAño();
+            
+            for (int i = 0; i < año.size(); i++) {
+                jComboBoxAño.addItem(año.get(i));
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
 
     }
 
     private void rellenarMes() {
-        jComboBoxMes.removeAllItems();
-        int pos = jComboBoxAño.getSelectedIndex();
-        ConectorApercibimientos cs = new ConectorApercibimientos();
-        List<String> meses = cs.cargarMeses(jComboBoxAño.getItemAt(pos));
-        meses = numeroAMes(meses);
-
-        for (int i = 0; i < meses.size(); i++) {
-            jComboBoxMes.addItem(meses.get(i));
+        try {
+            jComboBoxMes.removeAllItems();
+            int pos = jComboBoxAño.getSelectedIndex();
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            List<String> meses = cs.cargarMeses(jComboBoxAño.getItemAt(pos));
+            meses = numeroAMes(meses);
+            
+            for (int i = 0; i < meses.size(); i++) {
+                jComboBoxMes.addItem(meses.get(i));
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
 
     }
 
     private void rellenarCurso() {
-        jComboBoxCurso.removeAllItems();
-        int posAño = jComboBoxAño.getSelectedIndex();
-        int posMes = jComboBoxMes.getSelectedIndex();
-        ConectorApercibimientos cs = new ConectorApercibimientos();
-        List<String> cursos = cs.cargarCursos(jComboBoxAño.getItemAt(posAño), mesANumero(jComboBoxMes.getItemAt(posMes)));
-
-        for (int i = 0; i < cursos.size(); i++) {
-            jComboBoxCurso.addItem(cursos.get(i));
+        try {
+            jComboBoxCurso.removeAllItems();
+            int posAño = jComboBoxAño.getSelectedIndex();
+            int posMes = jComboBoxMes.getSelectedIndex();
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            List<String> cursos = cs.cargarCursos(jComboBoxAño.getItemAt(posAño), mesANumero(jComboBoxMes.getItemAt(posMes)));
+            
+            for (int i = 0; i < cursos.size(); i++) {
+                jComboBoxCurso.addItem(cursos.get(i));
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
 
     }
@@ -420,5 +445,27 @@ public class InformesApercibimientos extends javax.swing.JDialog {
                 return "12";
         }
         return "0";
+    }
+    
+    private String[] leerConfiguración(){
+        String[] parametros = new String[2];
+
+        try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parametro = line.split(":");
+                if (parametro[0].equalsIgnoreCase("django_address")) {
+                    parametros[0] = parametro[1];
+                } else if (parametro[0].equalsIgnoreCase("django_port")) {
+                    parametros[1] = parametro[1];
+                }
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
+        return parametros;
     }
 }

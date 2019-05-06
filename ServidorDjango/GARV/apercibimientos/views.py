@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from weasyprint import HTML
 
 from .models import Document, Apercibimiento
@@ -59,6 +60,7 @@ def mostrarApercibimientos(request):
     return render(request, 'apercibimientos.html', {'lista': lista})
 
 
+@csrf_exempt
 def a_login(request):
     msg = []
     if request.method == 'POST':

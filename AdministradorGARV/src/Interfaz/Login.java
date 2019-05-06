@@ -5,9 +5,12 @@
  */
 package Interfaz;
 
-import Cliente.ConectorApercibimientos;
 import Cliente.ConectorUsuarios;
+import Util.ConfigurationFileException;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +25,6 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
-        
     }
 
     /**
@@ -101,13 +103,20 @@ public class Login extends javax.swing.JFrame {
         ConectorUsuarios cs = new ConectorUsuarios();
         String username = jTextField1.getText();
         String password = String.valueOf(jPasswordField1.getPassword());
-        List<String> cookies = cs.iniciarSesion(username, password);
-        if (!cookies.isEmpty()) {
-            Apercibimientos a = new Apercibimientos(cookies);
-            a.setVisible(true);
-            this.setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(this, "Error de incio de sesión");
+        try {
+            List<String> cookies = cs.iniciarSesion(username, password);
+            if (!cookies.isEmpty()) {
+                Apercibimientos a = new Apercibimientos(cookies);
+                a.setVisible(true);
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error de incio de sesión");
+            }
+
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -5,9 +5,13 @@
  */
 package Cliente;
 
+import Util.ConfigurationFileException;
 import Util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,20 +27,27 @@ import vo.Visita;
  * @author mmbernal
  */
 public class ConectorVisitas implements Constants{
-    public List<Visita> cargarVisitas() {
+    public List<Visita> cargarVisitas() throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
         List<Visita> visitas = new ArrayList<>();
 
         try {
-            socketCliente = new Socket(ADDRESS, PORT);
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
         } catch (IOException e) {
-            System.err.println("No puede establer canales de E/S para la conexión");
-            System.exit(-1);
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
         }
         String linea = "";
         try {
@@ -64,19 +75,26 @@ public class ConectorVisitas implements Constants{
         return visitas;
     }
     
-    public void inValidarVisita(int id, boolean activo) {
+    public void inValidarVisita(int id, boolean activo) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
 
         try {
-            socketCliente = new Socket(ADDRESS, PORT);
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
         } catch (IOException e) {
-            System.err.println("No puede establer canales de E/S para la conexión");
-            System.exit(-1);
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
         }
         String linea = "";
         try {
@@ -96,20 +114,27 @@ public class ConectorVisitas implements Constants{
 
     }
 
-    public String getImagen(int id, List<String> cookies) {
+    public String getImagen(int id, List<String> cookies) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
         String base64 = null;
 
         try {
-            socketCliente = new Socket(ADDRESS, PORT);
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
         } catch (IOException e) {
-            System.err.println("No puede establer canales de E/S para la conexión");
-            System.exit(-1);
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
         }
         String linea = "";
         try {
@@ -136,4 +161,25 @@ public class ConectorVisitas implements Constants{
         return base64;
     }
 
+    private String[] leerConfiguración() throws FileNotFoundException, IOException {
+        String[] parametros = new String[2];
+
+        try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parametro = line.split(":");
+                if (parametro[0].equalsIgnoreCase("address")) {
+                    parametros[0] = parametro[1];
+                } else if (parametro[0].equalsIgnoreCase("port")) {
+                    parametros[1] = parametro[1];
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
+        } catch (IOException ex) {
+            throw new IOException();
+        }
+        return parametros;
+    }
 }

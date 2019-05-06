@@ -5,9 +5,12 @@
  */
 package Interfaz;
 
-import Cliente.ConectorApercibimientos;
 import Cliente.ConectorUsuarios;
+import Util.ConfigurationFileException;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -222,12 +225,18 @@ public class CrearUsuario extends javax.swing.JDialog {
         ConectorUsuarios cs = new ConectorUsuarios();
         if (cookies != null) {
 
-            boolean creado = cs.crearUsuario(cookies, usuarioCrear, contraseña1, correo, nombre, apellidos, curso, dni);
+            try {
+                boolean creado = cs.crearUsuario(cookies, usuarioCrear, contraseña1, correo, nombre, apellidos, curso, dni);
 
-            if (creado) {
-                this.setVisible(false);
-            } else {
-                JOptionPane.showMessageDialog(this, "Error");
+                if (creado) {
+                    this.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error");
+                }
+            } catch (ConfigurationFileException ex) {
+                JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed

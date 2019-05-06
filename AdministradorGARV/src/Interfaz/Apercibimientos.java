@@ -6,23 +6,10 @@
 package Interfaz;
 
 import Cliente.ConectorApercibimientos;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.sun.jndi.toolkit.url.Uri;
-import java.awt.Desktop;
+import Util.ConfigurationFileException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.List;
-import java.lang.reflect.Type;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -174,12 +161,18 @@ public class Apercibimientos extends javax.swing.JFrame {
         if (pos == -1) {
             JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
-            String activoS = t.getValueAt(pos, 13).toString();
-            boolean activo = (activoS.equals("true")) ? true : false;
-            ConectorApercibimientos cs = new ConectorApercibimientos();
-            cs.desActivarApercibimiento(id, !activo);
-            rellenarTabla();
+            try {
+                int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
+                String activoS = t.getValueAt(pos, 13).toString();
+                boolean activo = (activoS.equals("true")) ? true : false;
+                ConectorApercibimientos cs = new ConectorApercibimientos();
+                cs.desActivarApercibimiento(id, !activo);
+                rellenarTabla();
+            } catch (ConfigurationFileException ex) {
+                JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+            }
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -196,8 +189,8 @@ public class Apercibimientos extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         InformesApercibimientos ia = new InformesApercibimientos(this, true);
+        ia.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
 
     /**
      * @param args the command line arguments
@@ -250,16 +243,22 @@ public class Apercibimientos extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void rellenarTabla() {
-        ConectorApercibimientos cs = new ConectorApercibimientos();
-        List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
-
-        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
-        t.setRowCount(0);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        for (int i = 0; i < apercibimientos.size(); i++) {
-            Apercibimiento a = apercibimientos.get(i);
-            Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getCurso(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.getHorasJustificadas(), a.getPorcentajeJustificado(), a.getHorasInjustificadas(), a.getPorcentajeInjustificado(), a.getRetrasos(), a.isActivo()};
-            t.addRow(elementos);
+        try {
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
+            
+            DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+            t.setRowCount(0);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            for (int i = 0; i < apercibimientos.size(); i++) {
+                Apercibimiento a = apercibimientos.get(i);
+                Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getCurso(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.getHorasJustificadas(), a.getPorcentajeJustificado(), a.getHorasInjustificadas(), a.getPorcentajeInjustificado(), a.getRetrasos(), a.isActivo()};
+                t.addRow(elementos);
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
     }
 }

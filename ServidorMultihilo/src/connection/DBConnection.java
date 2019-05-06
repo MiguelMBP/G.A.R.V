@@ -1,5 +1,10 @@
 package connection;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,15 +22,20 @@ import java.sql.SQLException;
 public class DBConnection {
     
     /**Parametros de conexion*/
-   static String bd = "GARV";
+   /*static String bd = "GARV";
    static String login = "miguelmbp";
    static String password = "pass";
-   static String url = "jdbc:mysql://localhost/"+bd;
+   static String url = "jdbc:mysql://localhost/"+bd;*/
    
    Connection connection = null;
  
    /** Constructor de DbConnection */
    public DBConnection() {
+	  String[] parametros = leerConfiguración();
+	  String bd = parametros[0];
+	  String login = parametros[1];
+	  String password = parametros[2];
+	  String url = "jdbc:mysql://" + parametros[3] + "/"+bd;
       try{
          //obtenemos el driver de para mysql
          Class.forName("org.mariadb.jdbc.Driver");
@@ -51,5 +61,31 @@ public class DBConnection {
  
    public void desconectar(){
       connection = null;
+   }
+   
+   private String[] leerConfiguración() {
+       String[] parametros = new String[4];
+
+       try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
+           String line;
+
+           while ((line = br.readLine()) != null) {
+               String[] parametro = line.split(":");
+               if (parametro[0].equalsIgnoreCase("db_name")) {
+                   parametros[0] = parametro[1];
+               } else if (parametro[0].equalsIgnoreCase("db_user")) {
+                   parametros[1] = parametro[1];
+               } else if (parametro[0].equalsIgnoreCase("db_password")) {
+                   parametros[2] = parametro[1];
+               } else if (parametro[0].equalsIgnoreCase("db_address")) {
+                   parametros[3] = parametro[1];
+               }
+           }
+       } catch (FileNotFoundException ex) {
+       	ex.printStackTrace();
+       } catch (IOException ex) {
+       	ex.printStackTrace();
+       }
+       return parametros;
    }
 }

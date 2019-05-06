@@ -5,13 +5,15 @@
  */
 package Interfaz;
 
-import Cliente.ConectorApercibimientos;
 import Cliente.ConectorUsuarios;
-import java.text.SimpleDateFormat;
+import Util.ConfigurationFileException;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import vo.Usuario;
-import vo.Visita;
 
 /**
  *
@@ -199,15 +201,21 @@ public class Usuarios extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void rellenarTabla() {
-        ConectorUsuarios cs = new ConectorUsuarios();
-        List<Usuario> usuarios = cs.cargarUsuarios();
-        
-        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
-        t.setRowCount(0);
-        for (int i = 0; i < usuarios.size(); i++) {
-            Usuario u = usuarios.get(i);
-            Object[] elementos = {u.getUsuario(), u.getNombre(), u.getCorreo(), u.getCursoTutor()};
-            t.addRow(elementos);
+        try {
+            ConectorUsuarios cs = new ConectorUsuarios();
+            List<Usuario> usuarios = cs.cargarUsuarios();
+            
+            DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+            t.setRowCount(0);
+            for (int i = 0; i < usuarios.size(); i++) {
+                Usuario u = usuarios.get(i);
+                Object[] elementos = {u.getUsuario(), u.getNombre(), u.getCorreo(), u.getCursoTutor()};
+                t.addRow(elementos);
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
     }
 }

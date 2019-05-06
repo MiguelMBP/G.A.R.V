@@ -5,9 +5,13 @@
  */
 package Cliente;
 
+import Util.ConfigurationFileException;
 import Util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -22,21 +26,29 @@ import vo.Usuario;
  *
  * @author mmbernal
  */
-public class ConectorUsuarios implements Constants{
-    public boolean crearUsuario(List<String> cookies, String usuarioCrear, String contraseñaCrear, String correo, String nombre, String apellidos, String curso, String dni) {
+public class ConectorUsuarios implements Constants {
+
+    public boolean crearUsuario(List<String> cookies, String usuarioCrear, String contraseñaCrear, String correo, String nombre, String apellidos, String curso, String dni) throws FileNotFoundException, IOException, ConfigurationFileException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
         List<Usuario> usuarios = new ArrayList<>();
 
         try {
-            socketCliente = new Socket(ADDRESS, PORT);
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
         } catch (IOException e) {
-            System.err.println("No puede establer canales de E/S para la conexión");
-            System.exit(-1);
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
         }
         boolean creado = false;
         try {
@@ -60,7 +72,7 @@ public class ConectorUsuarios implements Constants{
             salida.flush();
             salida.writeUTF(curso);
             salida.flush();
-            
+
             creado = entrada.readBoolean();
 
             entrada.close();
@@ -69,32 +81,39 @@ public class ConectorUsuarios implements Constants{
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         }
-        
+
         return creado;
     }
-    
-    
+
     private List<Usuario> jsonToListUsuarios(String linea) {
-        java.lang.reflect.Type typeList = new TypeToken<List<Usuario>>() {}.getType();
+        java.lang.reflect.Type typeList = new TypeToken<List<Usuario>>() {
+        }.getType();
         Gson gson = new Gson();
         List<Usuario> usuarios = gson.fromJson(linea, typeList);
         return usuarios;
     }
 
-    public List<Usuario> cargarUsuarios() {
+    public List<Usuario> cargarUsuarios() throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
         List<Usuario> usuarios = new ArrayList<>();
 
         try {
-            socketCliente = new Socket(ADDRESS, PORT);
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
         } catch (IOException e) {
-            System.err.println("No puede establer canales de E/S para la conexión");
-            System.exit(-1);
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
         }
         String linea = "";
         try {
@@ -111,14 +130,12 @@ public class ConectorUsuarios implements Constants{
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConectorUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return usuarios;
 
     }
-    
-        
-    
-    public List<String> iniciarSesion(String username, String password) {
+
+    public List<String> iniciarSesion(String username, String password) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -126,13 +143,20 @@ public class ConectorUsuarios implements Constants{
         List<String> cookies = new ArrayList<>();
 
         try {
-            socketCliente = new Socket("localhost", 4444);
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
         } catch (IOException e) {
-            System.err.println("No puede establer canales de E/S para la conexión");
-            System.exit(-1);
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
         }
         try {
             salida.writeInt(5);
@@ -141,9 +165,9 @@ public class ConectorUsuarios implements Constants{
             salida.flush();
             salida.writeUTF(password);
             salida.flush();
-            
+
             existe = entrada.readBoolean();
-            
+
             if (existe) {
                 cookies.add(entrada.readUTF());
                 cookies.add(entrada.readUTF());
@@ -154,9 +178,31 @@ public class ConectorUsuarios implements Constants{
 
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
-        } 
-        
+        }
+
         return cookies;
 
+    }
+
+    private String[] leerConfiguración() throws FileNotFoundException, IOException {
+        String[] parametros = new String[2];
+
+        try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parametro = line.split(":");
+                if (parametro[0].equalsIgnoreCase("address")) {
+                    parametros[0] = parametro[1];
+                } else if (parametro[0].equalsIgnoreCase("port")) {
+                    parametros[1] = parametro[1];
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
+        } catch (IOException ex) {
+            throw new IOException();
+        }
+        return parametros;
     }
 }

@@ -6,7 +6,11 @@
 package Interfaz;
 
 import Cliente.ConectorApercibimientos;
+import Util.ConfigurationFileException;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -103,9 +107,15 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        String materia = JOptionPane.showInputDialog("Nombre de la asignatura");
-        ConectorApercibimientos cs = new ConectorApercibimientos();
-        cs.crearAsignatura(materia);
+        try {
+            String materia = JOptionPane.showInputDialog("Nombre de la asignatura");
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            cs.crearAsignatura(materia);
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -166,15 +176,21 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void rellenarTabla() {
-        ConectorApercibimientos cs = new ConectorApercibimientos();
-        List<String> asignaturas = cs.cargarAsignaturas();
-        
-        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
-        t.setRowCount(0);
-        for (int i = 0; i < asignaturas.size(); i++) {
-            String[] ae = asignaturas.get(i).split("--");
-            Object[] elementos = {ae[0], ae[1]};
-            t.addRow(elementos);
+        try {
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            List<String> asignaturas = cs.cargarAsignaturas();
+            
+            DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+            t.setRowCount(0);
+            for (int i = 0; i < asignaturas.size(); i++) {
+                String[] ae = asignaturas.get(i).split("--");
+                Object[] elementos = {ae[0], ae[1]};
+                t.addRow(elementos);
+            }
+       } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
     }
 }

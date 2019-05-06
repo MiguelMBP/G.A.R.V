@@ -1,6 +1,9 @@
 package connection;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,14 +24,15 @@ import java.util.Scanner;
 import Util.Constants;
 import vo.RegistroVisita;
 
-public class DjangoConnection implements Constants {
+public class DjangoConnection {
 
 	public List<String> conectar(String username, String password) {
 		HttpURLConnection connection = null;
 		boolean existe = false;
 		List<String> cookies = new ArrayList<>();
+		String[] parametros = leerConfiguración();
 		try {
-			String url = "http://localhost:8000/accounts/login/";
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/accounts/login/";
 			String charset = "UTF-8";
 
 			String query = String.format("username=%s&password=%s", URLEncoder.encode(username, charset),
@@ -46,7 +50,7 @@ public class DjangoConnection implements Constants {
 
 			connection.disconnect();
 
-			connection = (HttpURLConnection) new URL("http://" + ADDRESS + ":" + 8000 + "/apercibimientos/login/")
+			connection = (HttpURLConnection) new URL("http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/login/")
 					.openConnection();
 
 			if (cookieManager.getCookieStore().getCookies().size() > 0) {
@@ -100,9 +104,10 @@ public class DjangoConnection implements Constants {
 			String correo, String dni, String nombre, String apellidos, String curso) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
+		String[] parametros = leerConfiguración();
 
 		try {
-			String url = "http://" + ADDRESS + ":" + 8000 + "/visitas/createuser/";
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/createuser/";
 			String charset = "UTF-8";
 
 			String query = String.format("username=%s&password=%s&email=%s&dni=%s&nombre=%s&apellidos=%s&curso=%s",
@@ -118,15 +123,15 @@ public class DjangoConnection implements Constants {
 
 			HttpCookie csrf = new HttpCookie("csrftoken", csrftoken);
 			csrf.setPath("/");
-			csrf.setDomain(ADDRESS);
+			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", sessionid);
 			session.setPath("/");
-			session.setDomain(ADDRESS);
+			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
-			cookieManager.getCookieStore().add(new URI("localhost"), csrf);
-			cookieManager.getCookieStore().add(new URI("localhost"), session);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), csrf);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), session);
 
 			connection = (HttpURLConnection) new URL(url).openConnection();
 
@@ -168,9 +173,10 @@ public class DjangoConnection implements Constants {
 		HttpURLConnection connection = null;
 		boolean creado = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String[] parametros = leerConfiguración();
 
 		try {
-			String url = "http://" + ADDRESS + ":" + 8000 + "/visitas/registervisit/";
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/registervisit/";
 			String charset = "UTF-8";
 
 			String query = String.format("userId=%s&date=%s&img=%s&studentId=%s",
@@ -182,15 +188,15 @@ public class DjangoConnection implements Constants {
 
 			HttpCookie csrf = new HttpCookie("csrftoken", visita.getCsrfToken());
 			csrf.setPath("/");
-			csrf.setDomain(ADDRESS);
+			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", visita.getSessionId());
 			session.setPath("/");
-			session.setDomain(ADDRESS);
+			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
-			cookieManager.getCookieStore().add(new URI(ADDRESS), csrf);
-			cookieManager.getCookieStore().add(new URI(ADDRESS), session);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), csrf);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), session);
 
 			connection = (HttpURLConnection) new URL(url).openConnection();
 
@@ -233,9 +239,10 @@ public class DjangoConnection implements Constants {
 		boolean creado = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String responseBody  = null;
+		String[] parametros = leerConfiguración();
 
 		try {
-			String url = "http://" + ADDRESS + ":" + 8000 + "/visitas/sendimage/";
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/sendimage/";
 			String charset = "UTF-8";
 
 			String query = String.format("id=%s",
@@ -246,15 +253,15 @@ public class DjangoConnection implements Constants {
 
 			HttpCookie csrf = new HttpCookie("csrftoken", crsftoken);
 			csrf.setPath("/");
-			csrf.setDomain(ADDRESS);
+			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", sessionId);
 			session.setPath("/");
-			session.setDomain(ADDRESS);
+			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
-			cookieManager.getCookieStore().add(new URI(ADDRESS), csrf);
-			cookieManager.getCookieStore().add(new URI(ADDRESS), session);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), csrf);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), session);
 
 			connection = (HttpURLConnection) new URL(url).openConnection();
 
@@ -291,4 +298,26 @@ public class DjangoConnection implements Constants {
 		}
 		return responseBody;
 	}
+	
+	private String[] leerConfiguración() {
+        String[] parametros = new String[2];
+
+        try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parametro = line.split(":");
+                if (parametro[0].equalsIgnoreCase("django_address")) {
+                    parametros[0] = parametro[1];
+                } else if (parametro[0].equalsIgnoreCase("django_port")) {
+                    parametros[1] = parametro[1];
+                }
+            }
+        } catch (FileNotFoundException ex) {
+        	ex.printStackTrace();
+        } catch (IOException ex) {
+        	ex.printStackTrace();
+        }
+        return parametros;
+    }
 }
