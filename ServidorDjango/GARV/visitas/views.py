@@ -7,6 +7,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import Profesor, Visita
 
 
@@ -34,7 +36,7 @@ def createuser(request):
 
         return HttpResponse('failure')
 
-@login_required
+@csrf_exempt
 def registervisit(request):
     if request.method == "POST":
         userId = request.POST.get('userId', None)

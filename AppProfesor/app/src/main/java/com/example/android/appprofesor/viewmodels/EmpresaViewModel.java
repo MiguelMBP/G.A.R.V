@@ -28,8 +28,9 @@ public class EmpresaViewModel extends AndroidViewModel {
 
         if (empresas==null){
             empresas= new MutableLiveData<>();
-            new ConectarServidorEmpresas().execute();
+
         }
+        new ConectarServidorEmpresas().execute();
         return empresas;
     }
 

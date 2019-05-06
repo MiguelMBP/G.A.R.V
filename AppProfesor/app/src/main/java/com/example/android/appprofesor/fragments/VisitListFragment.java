@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -52,6 +54,23 @@ public class VisitListFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), RealizarVisitaActivity.class);
                 startActivity(intent);
+
+            }
+        });
+
+        FloatingActionButton fabAct = (FloatingActionButton) view.findViewById(R.id.fab_act_visitas);
+        fabAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                model = ViewModelProviders.of(VisitListFragment.this).get(VisitaViewModel.class);
+                model.getAlumnos(getContext()).observe(VisitListFragment.this, new Observer<List<Alumno>>() {
+
+
+                    @Override
+                    public void onChanged(List<Alumno> alumnos) {
+                        adapter.addAlumnos(alumnos);
+                    }
+                });
 
             }
         });

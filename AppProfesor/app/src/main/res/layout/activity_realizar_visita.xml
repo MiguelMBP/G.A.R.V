@@ -195,6 +195,7 @@
             android:layout_height="wrap_content"
             android:text="Confirmar Visita"
             android:layout_gravity="center"
+            android:background="@color/colorAccent"
             android:layout_marginTop="40dp"/>
 
         <com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
@@ -202,6 +203,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Añadir Alumno"
+            android:background="@color/colorAccent"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"/>
 
@@ -212,6 +214,7 @@
             android:layout_height="wrap_content"
             android:text="Ver en mapa"
             android:layout_gravity="center"
+            android:background="@color/colorAccent"
             android:layout_marginTop="20dp"
             />
 

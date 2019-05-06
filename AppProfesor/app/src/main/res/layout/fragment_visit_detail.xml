@@ -169,6 +169,7 @@
             android:text="Ver en mapa"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
+            android:background="@color/colorAccent"
             />
 
     </LinearLayout>

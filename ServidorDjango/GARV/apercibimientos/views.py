@@ -60,7 +60,7 @@ def mostrarApercibimientos(request):
     return render(request, 'apercibimientos.html', {'lista': lista})
 
 
-@csrf_exempt
+
 def a_login(request):
     msg = []
     if request.method == 'POST':

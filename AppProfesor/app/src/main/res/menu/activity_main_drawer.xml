@@ -4,19 +4,34 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
-            android:id="@+id/nav_apercibimientos"
+            android:id="@+id/nav_cuenta"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Apercibimientos" />
-        <item
-            android:id="@+id/nav_tutoria"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Tutoría" />
-        <item
-            android:id="@+id/nav_visitas"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Visitas FCT" />
+            android:title="Modificar cuenta" />
 
     </group>
+
+    <item android:title="Apercibimientos">
+        <menu>
+            <item
+                android:id="@+id/nav_apercibimientos"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Lista Apercibimientos" />
+            <item
+                android:id="@+id/nav_tutoria"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Tutoría" />
+        </menu>
+    </item>
+
+    <item android:title="Visitas">
+        <menu>
+            <item
+                android:id="@+id/nav_visitas"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Visitas FCT" />
+        </menu>
+    </item>
 
 </menu>
