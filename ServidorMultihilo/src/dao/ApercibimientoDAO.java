@@ -318,4 +318,148 @@ public class ApercibimientoDAO {
 		}
 		
 	}
+
+	public List<String> getCursosfiltro(String anno) {
+		DBConnection db = new DBConnection();
+		String sql = "SELECT distinct(unidad) FROM apercibimientos_apercibimiento where periodo_academico = "
+				+ anno + " order by unidad";
+		List<String> lista = new ArrayList<>();
+		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				lista.add(rs.getString(1));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+
+		return lista;
+	}
+
+	public List<String> getAlumnosFiltro(String anno, String curso) {
+		DBConnection db = new DBConnection();
+		String sql = "SELECT distinct(alumno) FROM apercibimientos_apercibimiento where periodo_academico = " + anno + " and unidad like '" + curso + "' order by alumno;";
+		List<String> lista = new ArrayList<>();
+		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				lista.add(rs.getString(1));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+
+		return lista;
+	}
+	
+	public List<Apercibimiento> mostrarApercibimientosFiltroAño(String año) {
+		List<Apercibimiento> apercibimientos = new ArrayList<>();
+		DBConnection conex = new DBConnection();
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + año;
+		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				Apercibimiento a = new Apercibimiento();
+				a.setId(rs.getInt(1));
+				a.setAlumno(rs.getString(2));
+				a.setPeriodoAcademico(rs.getInt(3));
+				a.setCurso(rs.getString(4));
+				a.setUnidad(rs.getString(5));
+				a.setMateria(rs.getString(6));
+				a.setFechaInicio(rs.getDate(7));
+				a.setFechaFin(rs.getDate(8));
+				a.setHorasJustificadas(rs.getString(9));
+				a.setPorcentajeJustificado(rs.getFloat(10));
+				a.setHorasInjustificadas(rs.getString(11));
+				a.setPorcentajeInjustificado(rs.getFloat(12));
+				a.setRetrasos(rs.getString(13));
+				a.setActivo(rs.getBoolean(14));
+
+				apercibimientos.add(a);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return apercibimientos;
+	}
+	
+	public List<Apercibimiento> mostrarApercibimientosFiltroCurso(String año, String curso) {
+		List<Apercibimiento> apercibimientos = new ArrayList<>();
+		DBConnection conex = new DBConnection();
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + año + " and unidad like '" + curso + "'";
+		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				Apercibimiento a = new Apercibimiento();
+				a.setId(rs.getInt(1));
+				a.setAlumno(rs.getString(2));
+				a.setPeriodoAcademico(rs.getInt(3));
+				a.setCurso(rs.getString(4));
+				a.setUnidad(rs.getString(5));
+				a.setMateria(rs.getString(6));
+				a.setFechaInicio(rs.getDate(7));
+				a.setFechaFin(rs.getDate(8));
+				a.setHorasJustificadas(rs.getString(9));
+				a.setPorcentajeJustificado(rs.getFloat(10));
+				a.setHorasInjustificadas(rs.getString(11));
+				a.setPorcentajeInjustificado(rs.getFloat(12));
+				a.setRetrasos(rs.getString(13));
+				a.setActivo(rs.getBoolean(14));
+
+				apercibimientos.add(a);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return apercibimientos;
+	}
+	
+	public List<Apercibimiento> mostrarApercibimientosFiltroAlumno(String año, String curso, String alumno) {
+		List<Apercibimiento> apercibimientos = new ArrayList<>();
+		DBConnection conex = new DBConnection();
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + año + " and unidad like '" + curso + "' and alumno like '" + alumno + "'";
+		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				Apercibimiento a = new Apercibimiento();
+				a.setId(rs.getInt(1));
+				a.setAlumno(rs.getString(2));
+				a.setPeriodoAcademico(rs.getInt(3));
+				a.setCurso(rs.getString(4));
+				a.setUnidad(rs.getString(5));
+				a.setMateria(rs.getString(6));
+				a.setFechaInicio(rs.getDate(7));
+				a.setFechaFin(rs.getDate(8));
+				a.setHorasJustificadas(rs.getString(9));
+				a.setPorcentajeJustificado(rs.getFloat(10));
+				a.setHorasInjustificadas(rs.getString(11));
+				a.setPorcentajeInjustificado(rs.getFloat(12));
+				a.setRetrasos(rs.getString(13));
+				a.setActivo(rs.getBoolean(14));
+
+				apercibimientos.add(a);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return apercibimientos;
+	}
 }

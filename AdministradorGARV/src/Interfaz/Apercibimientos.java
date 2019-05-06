@@ -32,6 +32,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         rellenarTabla();
         this.cookies = cookies;
+        rellenarAño();
     }
 
     /**
@@ -45,6 +46,12 @@ public class Apercibimientos extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jComboBoxCurso = new javax.swing.JComboBox<>();
+        jComboBoxAlumno = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxAño = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -63,7 +70,7 @@ public class Apercibimientos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Alumno", "Periodo", "Curso", "Unidad", "Materia", "FechaInicio", "FechaFin", "Justificadas", "Porcentaje", "Injustificadas", "Porcentaje", "Retrasos", "Activo"
+                "id", "Alumno", "Periodo", "Unidad", "Materia", "FechaInicio", "FechaFin", "Activo"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -71,6 +78,38 @@ public class Apercibimientos extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setMinWidth(0);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         }
+
+        jComboBoxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        jComboBoxCurso.setEnabled(false);
+        jComboBoxCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCursoActionPerformed(evt);
+            }
+        });
+
+        jComboBoxAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        jComboBoxAlumno.setEnabled(false);
+        jComboBoxAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxAlumnoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Curso");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Alumno");
+
+        jComboBoxAño.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        jComboBoxAño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxAñoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Año");
 
         jMenu1.setText("Apercibimientos");
 
@@ -135,14 +174,39 @@ public class Apercibimientos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1541, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1139, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(76, 76, 76)
+                        .addComponent(jComboBoxAño, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79)
+                        .addComponent(jLabel1)
+                        .addGap(76, 76, 76)
+                        .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel2)
+                        .addGap(85, 85, 85)
+                        .addComponent(jComboBoxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBoxAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -192,6 +256,97 @@ public class Apercibimientos extends javax.swing.JFrame {
         ia.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jComboBoxAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAñoActionPerformed
+        int posAño = jComboBoxAño.getSelectedIndex();
+        String año = jComboBoxAño.getItemAt(posAño);
+        if (posAño != -1) {
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            if (año.equalsIgnoreCase("todos")) {
+                jComboBoxCurso.removeAllItems();
+                jComboBoxCurso.addItem("Todos");
+                jComboBoxCurso.setEnabled(false);
+
+                jComboBoxAlumno.removeAllItems();
+                jComboBoxAlumno.addItem("Todos");
+                jComboBoxAlumno.setEnabled(false);
+
+                rellenarTabla();
+            } else {
+                try {
+                    jComboBoxCurso.setEnabled(true);
+                    rellenarCurso();
+                    List<Apercibimiento> lista = cs.apercibimientosPorAño(año);
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_jComboBoxAñoActionPerformed
+
+    private void jComboBoxCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCursoActionPerformed
+        int posAño = jComboBoxAño.getSelectedIndex();
+        int posCurso = jComboBoxCurso.getSelectedIndex();
+        String año = jComboBoxAño.getItemAt(posAño);
+        String curso = jComboBoxCurso.getItemAt(posCurso);
+
+        if (posAño != -1 && posCurso != -1) {
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            if (curso.equalsIgnoreCase("todos")) {
+                try {
+                    jComboBoxAlumno.removeAllItems();
+                    jComboBoxAlumno.addItem("Todos");
+                    jComboBoxAlumno.setEnabled(false);
+
+                    List<Apercibimiento> lista = cs.apercibimientosPorAño(año);
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    jComboBoxAlumno.setEnabled(true);
+                    rellenarAlumno();
+                    List<Apercibimiento> lista = cs.apercibimientosPorCurso(año, curso);
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+
+    }//GEN-LAST:event_jComboBoxCursoActionPerformed
+
+    private void jComboBoxAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAlumnoActionPerformed
+        int posAño = jComboBoxAño.getSelectedIndex();
+        int posCurso = jComboBoxCurso.getSelectedIndex();
+        int posAlumno = jComboBoxAlumno.getSelectedIndex();
+        String año = jComboBoxAño.getItemAt(posAño);
+        String curso = jComboBoxCurso.getItemAt(posCurso);
+        String alumno = jComboBoxAlumno.getItemAt(posAlumno);
+
+        if (posAño != -1 && posCurso != -1 && posAlumno != -1) {
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            if (alumno.equalsIgnoreCase("todos")) {
+                try {
+                    List<Apercibimiento> lista = cs.apercibimientosPorCurso(año, curso);
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    List<Apercibimiento> lista = cs.apercibimientosPorAlumno(año, curso, alumno);
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jComboBoxAlumnoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -228,6 +383,12 @@ public class Apercibimientos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBoxAlumno;
+    private javax.swing.JComboBox<String> jComboBoxAño;
+    private javax.swing.JComboBox<String> jComboBoxCurso;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -252,7 +413,7 @@ public class Apercibimientos extends javax.swing.JFrame {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             for (int i = 0; i < apercibimientos.size(); i++) {
                 Apercibimiento a = apercibimientos.get(i);
-                Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getCurso(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.getHorasJustificadas(), a.getPorcentajeJustificado(), a.getHorasInjustificadas(), a.getPorcentajeInjustificado(), a.getRetrasos(), a.isActivo()};
+                Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.isActivo()};
                 t.addRow(elementos);
             }
         } catch (ConfigurationFileException ex) {
@@ -269,9 +430,59 @@ public class Apercibimientos extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         for (int i = 0; i < apercibimientos.size(); i++) {
             Apercibimiento a = apercibimientos.get(i);
-            Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getCurso(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.getHorasJustificadas(), a.getPorcentajeJustificado(), a.getHorasInjustificadas(), a.getPorcentajeInjustificado(), a.getRetrasos(), a.isActivo()};
+            Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.isActivo()};
             t.addRow(elementos);
         }
 
+    }
+
+    private void rellenarAño() {
+        try {
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            List<String> año = cs.cargarAño();
+
+            for (int i = 0; i < año.size(); i++) {
+                jComboBoxAño.addItem(año.get(i));
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
+
+    }
+
+    private void rellenarCurso() {
+        try {
+            int posAño = jComboBoxAño.getSelectedIndex();
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            List<String> cursos = cs.cargarCursosFiltro(jComboBoxAño.getItemAt(posAño));
+
+            for (int i = 0; i < cursos.size(); i++) {
+                jComboBoxCurso.addItem(cursos.get(i));
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
+
+    }
+
+    private void rellenarAlumno() {
+        try {
+            int posAño = jComboBoxAño.getSelectedIndex();
+            int posCurso = jComboBoxCurso.getSelectedIndex();
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            List<String> alumnos = cs.cargarAlumnoFiltro(jComboBoxAño.getItemAt(posAño), jComboBoxCurso.getItemAt(posCurso));
+
+            for (int i = 0; i < alumnos.size(); i++) {
+                jComboBoxAlumno.addItem(alumnos.get(i));
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
     }
 }

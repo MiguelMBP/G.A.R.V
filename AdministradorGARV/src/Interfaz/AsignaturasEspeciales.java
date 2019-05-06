@@ -110,9 +110,11 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
             String materia = JOptionPane.showInputDialog("Nombre de la asignatura");
-            ConectorApercibimientos cs = new ConectorApercibimientos();
-            List<String> lista = cs.crearAsignatura(materia);
-            rellenarTabla(lista);
+            if ((materia != null) && (materia.length() > 0)) {
+                ConectorApercibimientos cs = new ConectorApercibimientos();
+                List<String> lista = cs.crearAsignatura(materia);
+                rellenarTabla(lista);
+            }
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
@@ -128,9 +130,11 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         } else {
             try {
                 String materia = JOptionPane.showInputDialog(this, "Nombre de la asignatura", jTable1.getValueAt(pos, 1));
-                ConectorApercibimientos cs = new ConectorApercibimientos();
-                List<String> lista = cs.modificarAsignatura(Integer.parseInt(jTable1.getValueAt(pos, 0).toString()), materia);
-                rellenarTabla(lista);
+                if ((materia != null) && (materia.length() > 0)) {
+                    ConectorApercibimientos cs = new ConectorApercibimientos();
+                    List<String> lista = cs.modificarAsignatura(Integer.parseInt(jTable1.getValueAt(pos, 0).toString()), materia);
+                    rellenarTabla(lista);
+                }
             } catch (ConfigurationFileException ex) {
                 JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
             } catch (IOException ex) {

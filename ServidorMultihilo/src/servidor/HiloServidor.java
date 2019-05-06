@@ -116,6 +116,21 @@ public class HiloServidor extends Thread {
 			case 23:
 				eliminarAsignatura(entrada, salida);
 				break;
+			case 24:
+				getCursosFiltro(entrada, salida);
+				break;
+			case 25:
+				getAlumnosFiltro(entrada, salida);
+				break;
+			case 26: 
+				getApercibimientosPorAño(entrada, salida);
+				break;
+			case 27:
+				getApercibimientoPorCurso(entrada, salida);
+				break;
+			case 28:
+				getApercibimientoPorAlumno(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -125,6 +140,83 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void getApercibimientoPorAlumno(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			String año = entrada.readUTF();
+			String curso = entrada.readUTF();
+			String alumno = entrada.readUTF();
+			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroAlumno(año, curso, alumno);
+			
+
+			String json = apercibimientosJson(apercibimientos);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void getApercibimientoPorCurso(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			String año = entrada.readUTF();
+			String curso = entrada.readUTF();
+			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroCurso(año, curso);
+			
+
+			String json = apercibimientosJson(apercibimientos);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void getApercibimientosPorAño(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			String año = entrada.readUTF();
+			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroAño(año);
+			
+
+			String json = apercibimientosJson(apercibimientos);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void getAlumnosFiltro(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			String anno = entrada.readUTF();
+			String curso = entrada.readUTF();
+
+			List<String> lista = dao.getAlumnosFiltro(anno, curso);
+			salida.writeObject(new Gson().toJson(lista));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void getCursosFiltro(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+			String anno = entrada.readUTF();
+
+			List<String> lista = dao.getCursosfiltro(anno);
+			salida.writeObject(new Gson().toJson(lista));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void eliminarAsignatura(ObjectInputStream entrada, ObjectOutputStream salida) {
@@ -215,7 +307,6 @@ public class HiloServidor extends Thread {
 			
 			salida.writeObject(base64);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
