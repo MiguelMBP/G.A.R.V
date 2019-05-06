@@ -166,8 +166,8 @@ public class Apercibimientos extends javax.swing.JFrame {
                 String activoS = t.getValueAt(pos, 13).toString();
                 boolean activo = (activoS.equals("true")) ? true : false;
                 ConectorApercibimientos cs = new ConectorApercibimientos();
-                cs.desActivarApercibimiento(id, !activo);
-                rellenarTabla();
+                List<Apercibimiento> apercibimientos = cs.desActivarApercibimiento(id, !activo);
+                rellenarTabla(apercibimientos);
             } catch (ConfigurationFileException ex) {
                 JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
             } catch (IOException ex) {
@@ -246,7 +246,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         try {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
-            
+
             DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
             t.setRowCount(0);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -260,5 +260,18 @@ public class Apercibimientos extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
+    }
+
+    private void rellenarTabla(List<Apercibimiento> apercibimientos) {
+
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        t.setRowCount(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        for (int i = 0; i < apercibimientos.size(); i++) {
+            Apercibimiento a = apercibimientos.get(i);
+            Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getCurso(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.getHorasJustificadas(), a.getPorcentajeJustificado(), a.getHorasInjustificadas(), a.getPorcentajeInjustificado(), a.getRetrasos(), a.isActivo()};
+            t.addRow(elementos);
+        }
+
     }
 }

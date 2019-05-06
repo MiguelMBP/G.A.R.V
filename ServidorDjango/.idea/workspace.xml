@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorApercibimientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorApercibimientos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorUsuarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorVisitas.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorVisitas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Apercibimientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Apercibimientos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/CrearUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/CrearUsuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Usuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Usuarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Visitas.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Visitas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ServidorDjango.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ServidorDjango.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/templates/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/templates/navbar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/.gitignore" afterDir="false" />
-    </list>
+    <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="61" selection-start-line="61" selection-end-line="62" />
+            <state relative-caret-position="335">
+              <caret line="74" column="17" lean-forward="true" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -187,7 +170,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="240" />
     <option name="y" value="130" />
     <option name="width" value="1440" />
@@ -308,7 +291,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17123288" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -570,8 +553,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="61" selection-start-line="61" selection-end-line="62" />
+        <state relative-caret-position="335">
+          <caret line="74" column="17" lean-forward="true" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
         </state>
       </provider>
     </entry>

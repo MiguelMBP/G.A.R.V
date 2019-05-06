@@ -46,7 +46,6 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,18 +74,20 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Modificar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Eliminar");
-        jMenu1.add(jMenuItem3);
-
-        jMenuItem4.setText("Actualizar Tabla");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
 
@@ -110,7 +111,8 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         try {
             String materia = JOptionPane.showInputDialog("Nombre de la asignatura");
             ConectorApercibimientos cs = new ConectorApercibimientos();
-            cs.crearAsignatura(materia);
+            List<String> lista = cs.crearAsignatura(materia);
+            rellenarTabla(lista);
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
@@ -118,9 +120,42 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        rellenarTabla();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        int pos = jTable1.getSelectedRow();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                String materia = JOptionPane.showInputDialog(this, "Nombre de la asignatura", jTable1.getValueAt(pos, 1));
+                ConectorApercibimientos cs = new ConectorApercibimientos();
+                List<String> lista = cs.modificarAsignatura(Integer.parseInt(jTable1.getValueAt(pos, 0).toString()), materia);
+                rellenarTabla(lista);
+            } catch (ConfigurationFileException ex) {
+                JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+            }
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        int pos = jTable1.getSelectedRow();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                ConectorApercibimientos cs = new ConectorApercibimientos();
+                List<String> lista = cs.eliminarAsignatura(Integer.parseInt(jTable1.getValueAt(pos, 0).toString()));
+                rellenarTabla(lista);
+            } catch (ConfigurationFileException ex) {
+                JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+            }
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,7 +205,6 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
@@ -179,7 +213,7 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         try {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<String> asignaturas = cs.cargarAsignaturas();
-            
+
             DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
             t.setRowCount(0);
             for (int i = 0; i < asignaturas.size(); i++) {
@@ -187,10 +221,22 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
                 Object[] elementos = {ae[0], ae[1]};
                 t.addRow(elementos);
             }
-       } catch (ConfigurationFileException ex) {
+        } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
+    }
+
+    private void rellenarTabla(List<String> asignaturas) {
+
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        t.setRowCount(0);
+        for (int i = 0; i < asignaturas.size(); i++) {
+            String[] ae = asignaturas.get(i).split("--");
+            Object[] elementos = {ae[0], ae[1]};
+            t.addRow(elementos);
+        }
+
     }
 }

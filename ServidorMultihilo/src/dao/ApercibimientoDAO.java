@@ -155,7 +155,7 @@ public class ApercibimientoDAO {
 
 				sql = "select materia, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento where alumno like '"
 						+ t.getNombre() + "' and unidad like (select P.cursoTutor from visitas_profesor P, auth_user U "
-											+ "where U.username = '" + username + "' and P.usuario_id = U.id) group by materia";
+						+ "where U.username = '" + username + "' and P.usuario_id = U.id) group by materia";
 				rsAsignatura = st.executeQuery(sql);
 				List<TutorAsignatura> asignaturas = new ArrayList<>();
 
@@ -214,7 +214,7 @@ public class ApercibimientoDAO {
 			db.desconectar();
 		}
 	}
-	
+
 	public void desActivarApercibimiento(int id, boolean activo) {
 		DBConnection db = new DBConnection();
 		String sql = "update apercibimientos_apercibimiento set activo = " + activo + " where id = " + id;
@@ -245,12 +245,13 @@ public class ApercibimientoDAO {
 		}
 
 		return lista;
-		
+
 	}
 
 	public List<String> getMeses(String anno) {
 		DBConnection db = new DBConnection();
-		String sql = "SELECT distinct(month(fecha_inicio)) FROM GARV.apercibimientos_apercibimiento where periodo_academico = " + anno;
+		String sql = "SELECT distinct(month(fecha_inicio)) FROM GARV.apercibimientos_apercibimiento where periodo_academico = "
+				+ anno;
 		List<String> lista = new ArrayList<>();
 		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
@@ -269,7 +270,8 @@ public class ApercibimientoDAO {
 
 	public List<String> getCursos(String anno, String mes) {
 		DBConnection db = new DBConnection();
-		String sql = "SELECT distinct(unidad) FROM GARV.apercibimientos_apercibimiento where periodo_academico = " + anno + " and month(fecha_inicio) = " + mes + " order by unidad";
+		String sql = "SELECT distinct(unidad) FROM GARV.apercibimientos_apercibimiento where periodo_academico = "
+				+ anno + " and month(fecha_inicio) = " + mes + " order by unidad";
 		List<String> lista = new ArrayList<>();
 		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
@@ -284,5 +286,36 @@ public class ApercibimientoDAO {
 		}
 
 		return lista;
+	}
+
+	public void modificarAsignatura(int id, String asignatura) {
+
+		DBConnection db = new DBConnection();
+		String sql = "update apercibimientos_asignaturasespeciales set materia = '" + asignatura + "' where id = " + id;
+		try (Statement st = db.getConnection().createStatement();) {
+
+			st.executeQuery(sql);
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+
+	}
+
+	public void eliminarAsignatura(int id) {
+		DBConnection db = new DBConnection();
+		String sql = "delete from apercibimientos_asignaturasespeciales where id =" + id;
+		try (Statement st = db.getConnection().createStatement();) {
+
+			st.executeQuery(sql);
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			db.desconectar();
+		}
+		
 	}
 }

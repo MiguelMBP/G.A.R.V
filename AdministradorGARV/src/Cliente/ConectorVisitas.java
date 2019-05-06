@@ -75,11 +75,11 @@ public class ConectorVisitas implements Constants{
         return visitas;
     }
     
-    public void inValidarVisita(int id, boolean activo) throws ConfigurationFileException, FileNotFoundException, IOException {
+    public List<Visita> inValidarVisita(int id, boolean activo) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
-
+        List<Visita> visitas = new ArrayList<>();
         try {
             String[] parametros = leerConfiguración();
             if (parametros[0] == null || parametros[1] == null) {
@@ -104,14 +104,18 @@ public class ConectorVisitas implements Constants{
             salida.flush();
             salida.writeBoolean(activo);
             salida.flush();
+            linea = (String) entrada.readObject();
+            visitas = jsonToListVisita(linea);
             
             entrada.close();
             socketCliente.close();
 
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorVisitas.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return visitas;
     }
 
     public String getImagen(int id, List<String> cookies) throws ConfigurationFileException, FileNotFoundException, IOException {

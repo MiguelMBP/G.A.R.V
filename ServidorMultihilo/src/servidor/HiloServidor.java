@@ -69,7 +69,7 @@ public class HiloServidor extends Thread {
 				crearUsuario(entrada, salida);
 				break;
 			case 8:
-				insertarAsignatura(entrada);
+				insertarAsignatura(entrada, salida);
 				break;
 			case 9:
 				getAsignaturasEspeciales(salida);
@@ -96,7 +96,7 @@ public class HiloServidor extends Thread {
 				desActivarApercibimiento(entrada, salida);
 				break;
 			case 17:
-				inValidarVisita(entrada);
+				inValidarVisita(entrada, salida);
 				break;
 			case 18:
 				getImagen(entrada, salida);
@@ -110,6 +110,12 @@ public class HiloServidor extends Thread {
 			case 21:
 				getCursos(entrada, salida);
 				break;
+			case 22:
+				modificarAsignatura(entrada, salida);
+				break;
+			case 23:
+				eliminarAsignatura(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -119,6 +125,41 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void eliminarAsignatura(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			int id = entrada.readInt();
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+
+			dao.eliminarAsignatura(id);
+			List<String> asignaturas = dao.getAsignaturasEspeciales();
+
+			String json = new Gson().toJson(asignaturas);
+			salida.writeObject(json);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void modificarAsignatura(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			int id = entrada.readInt();
+			String asignatura = entrada.readUTF();
+			ApercibimientoDAO dao = new ApercibimientoDAO();
+
+			dao.modificarAsignatura(id, asignatura);
+			List<String> asignaturas = dao.getAsignaturasEspeciales();
+
+			String json = new Gson().toJson(asignaturas);
+			salida.writeObject(json);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void getCursos(ObjectInputStream entrada, ObjectOutputStream salida) {
@@ -180,12 +221,16 @@ public class HiloServidor extends Thread {
 		
 	}
 
-	private void inValidarVisita(ObjectInputStream entrada) {
+	private void inValidarVisita(ObjectInputStream entrada, ObjectOutputStream salida) {
 		try {
 			VisitasDAO dao = new VisitasDAO();
 			int id = entrada.readInt();
 			boolean activo = entrada.readBoolean();
 			dao.inValidarVisita(id, activo);
+			List<Visita> visitas = dao.mostrarVisitas();
+
+			String json = visitasJson(visitas);
+			salida.writeObject(json);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -199,6 +244,10 @@ public class HiloServidor extends Thread {
 			int id = entrada.readInt();
 			boolean activo = entrada.readBoolean();
 			dao.desActivarApercibimiento(id, activo);
+			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientos();
+
+			String json = apercibimientosJson(apercibimientos);
+			salida.writeObject(json);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -326,11 +375,15 @@ public class HiloServidor extends Thread {
 		return gson.toJson(visitas);
 	}
 
-	private void insertarAsignatura(ObjectInputStream entrada) {
+	private void insertarAsignatura(ObjectInputStream entrada, ObjectOutputStream salida) {
 		try {
 			String asignatura = entrada.readUTF();
 			ApercibimientoDAO dao = new ApercibimientoDAO();
 			dao.insertarAsignatura(asignatura);
+			List<String> asignaturas = dao.getAsignaturasEspeciales();
+
+			String json = new Gson().toJson(asignaturas);
+			salida.writeObject(json);
 
 		} catch (IOException e) {
 			e.printStackTrace();

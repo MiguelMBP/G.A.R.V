@@ -131,11 +131,11 @@ public class ConectorApercibimientos implements Constants {
         return asignaturas;
     }
 
-    public void crearAsignatura(String materia) throws ConfigurationFileException, FileNotFoundException, IOException {
+    public List<String> crearAsignatura(String materia) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
-
+        List<String> asignaturas = new ArrayList<>();
         try {
             String[] parametros = leerConfiguración();
             if (parametros[0] == null || parametros[1] == null) {
@@ -152,25 +152,32 @@ public class ConectorApercibimientos implements Constants {
         } catch (NumberFormatException e) {
             throw new ConfigurationFileException();
         }
+        String linea = "";
         try {
             salida.writeInt(8);
             salida.flush();
             salida.writeUTF(materia);
             salida.flush();
+            linea = (String) entrada.readObject();
+            asignaturas = jsonToListString(linea);
 
             entrada.close();
             socketCliente.close();
 
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        return asignaturas;
     }
 
-    public void desActivarApercibimiento(int id, boolean activo) throws ConfigurationFileException, FileNotFoundException, IOException {
+    public List<Apercibimiento> desActivarApercibimiento(int id, boolean activo) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
+        List<Apercibimiento> apercibimientos = new ArrayList<>();
 
         try {
             String[] parametros = leerConfiguración();
@@ -196,13 +203,18 @@ public class ConectorApercibimientos implements Constants {
             salida.flush();
             salida.writeBoolean(activo);
             salida.flush();
+            linea = (String) entrada.readObject();
+            apercibimientos = jsonToListApercibimientos(linea);
 
             entrada.close();
             socketCliente.close();
 
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return apercibimientos;
 
     }
 
@@ -356,6 +368,92 @@ public class ConectorApercibimientos implements Constants {
             throw new IOException();
         }
         return parametros;
+    }
+
+    public List<String> modificarAsignatura(int id, String materia) throws FileNotFoundException, IOException {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<String> asignaturas = new ArrayList<>();
+        try {
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
+        } catch (IOException e) {
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
+        }
+        String linea = "";
+        try {
+            salida.writeInt(22);
+            salida.flush();
+            salida.writeInt(id);
+            salida.flush();
+            salida.writeUTF(materia);
+            salida.flush();
+            linea = (String) entrada.readObject();
+            asignaturas = jsonToListString(linea);
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return asignaturas;
+    }
+
+    public List<String> eliminarAsignatura(int id) throws FileNotFoundException, IOException {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        List<String> asignaturas = new ArrayList<>();
+        try {
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
+        } catch (IOException e) {
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
+        }
+        String linea = "";
+        try {
+            salida.writeInt(23);
+            salida.flush();
+            salida.writeInt(id);
+            salida.flush();
+            linea = (String) entrada.readObject();
+            asignaturas = jsonToListString(linea);
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorApercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return asignaturas;
     }
 
 }

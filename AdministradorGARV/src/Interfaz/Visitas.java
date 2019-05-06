@@ -173,8 +173,8 @@ public class Visitas extends javax.swing.JFrame {
                 String activoS = t.getValueAt(pos, 7).toString();
                 boolean activo = (activoS.equals("true")) ? true : false;
                 ConectorVisitas cs = new ConectorVisitas();
-                cs.inValidarVisita(id, !activo);
-                rellenarTabla();
+                List<Visita> visitas = cs.inValidarVisita(id, !activo);
+                rellenarTabla(visitas);
             } catch (ConfigurationFileException ex) {
                 JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
             } catch (IOException ex) {
@@ -267,7 +267,7 @@ public class Visitas extends javax.swing.JFrame {
         try {
             ConectorVisitas cs = new ConectorVisitas();
             List<Visita> visitas = cs.cargarVisitas();
-            
+
             DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
             t.setRowCount(0);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -281,5 +281,18 @@ public class Visitas extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
+    }
+
+    private void rellenarTabla(List<Visita> visitas) {
+
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        t.setRowCount(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        for (int i = 0; i < visitas.size(); i++) {
+            Visita v = visitas.get(i);
+            Object[] elementos = {v.getId(), v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), v.isValidada()};
+            t.addRow(elementos);
+        }
+
     }
 }
