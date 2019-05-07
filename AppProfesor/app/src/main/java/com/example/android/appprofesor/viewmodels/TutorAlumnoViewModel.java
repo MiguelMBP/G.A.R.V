@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.android.appprofesor.Connectors.WarningConnector;
+import com.example.android.appprofesor.models.Empresa;
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.models.TutorAlumno;
 
 import java.util.List;
@@ -24,20 +26,27 @@ public class TutorAlumnoViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public LiveData<List<TutorAlumno>> getAlumnos(Context context) {
+    public LiveData<List<TutorAlumno>> getAlumnos(Context context, Settings settings) {
 
         if (alumnos==null){
             alumnos= new MutableLiveData<>();
-            new ConectarServidor().execute(context);
+            new ConectarServidor(settings).execute(context);
         }
         return alumnos;
     }
 
     private class ConectarServidor extends AsyncTask<Context, Void, List<TutorAlumno>> {
 
+        Empresa empresa;
+        Settings settings;
+
+        public ConectarServidor(Settings settings) {
+            this.settings = settings;
+        }
+
         @Override
         protected List<TutorAlumno> doInBackground(Context... contexts) {
-            return WarningConnector.getAlumnosTutor(contexts[0]);
+            return WarningConnector.getAlumnosTutor(contexts[0], settings);
         }
 
         @Override

@@ -42,7 +42,9 @@ import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.Empresa;
 import com.example.android.appprofesor.models.RegistroVisita;
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.viewmodels.EmpresaViewModel;
+import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 import com.example.android.appprofesor.viewmodels.VisitaTodosViewModel;
 import com.google.android.material.picker.MaterialDatePickerDialog;
 
@@ -91,7 +93,6 @@ public class RealizarVisitaActivity extends AppCompatActivity {
     String currentPhotoPath;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +107,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         distanciaTextView = findViewById(R.id.textViewCompanyDistance);
         this.imageView = findViewById(R.id.textViewStudentVisitIcon);
         fechaVisita = findViewById(R.id.visitDate);
+
 
         spinnerAlumnos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -153,20 +155,35 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         });
 
         model = ViewModelProviders.of(this).get(VisitaTodosViewModel.class);
-        model.getTodosAlumnos().observe(this, new Observer<List<Alumno>>() {
-            @Override
-            public void onChanged(List<Alumno> alumnosList) {
-                String[] nombres = new String[alumnosList.size()];
-                for (int i = 0; i < alumnosList.size(); i++) {
-                    nombres[i] = alumnosList.get(i).getNombre() + " " + alumnosList.get(i).getApellidos();
-                }
+        try {
+            SharedPreferences prefs =
+                    this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings();
+                model.getTodosAlumnos(settings).observe(this, new Observer<List<Alumno>>() {
+                    @Override
+                    public void onChanged(List<Alumno> alumnosList) {
+                        String[] nombres = new String[alumnosList.size()];
+                        for (int i = 0; i < alumnosList.size(); i++) {
+                            nombres[i] = alumnosList.get(i).getNombre() + " " + alumnosList.get(i).getApellidos();
+                        }
 
-                ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
-                aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                spinnerAlumnos.setAdapter(aa);
-                alumnos = alumnosList;
+                        ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
+                        aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                        spinnerAlumnos.setAdapter(aa);
+                        alumnos = alumnosList;
+                    }
+                });
+            } else {
+                throw new NullPointerException();
             }
-        });
+
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
 
         fechaVisita.setFocusable(false);
         fechaVisita.setOnClickListener(new View.OnClickListener() {
@@ -244,20 +261,34 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         });
 
         empresaModel = ViewModelProviders.of(this).get(EmpresaViewModel.class);
-        empresaModel.getEmpresas().observe(this, new Observer<List<Empresa>>() {
-            @Override
-            public void onChanged(List<Empresa> empresasList) {
-                String[] nombres = new String[empresasList.size()];
-                for (int i = 0; i < empresasList.size(); i++) {
-                    nombres[i] = empresasList.get(i).getNombre();
-                }
+        try {
+            SharedPreferences prefs =
+                    this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings(address, port);
+                empresaModel.getEmpresas(settings).observe(this, new Observer<List<Empresa>>() {
+                    @Override
+                    public void onChanged(List<Empresa> empresasList) {
+                        String[] nombres = new String[empresasList.size()];
+                        for (int i = 0; i < empresasList.size(); i++) {
+                            nombres[i] = empresasList.get(i).getNombre();
+                        }
 
-                ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
-                aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                empresa.setAdapter(aa);
-                empresas = empresasList;
+                        ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
+                        aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                        empresa.setAdapter(aa);
+                        empresas = empresasList;
+                    }
+                });
+            } else {
+                throw new NullPointerException();
             }
-        });
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
 
         añadirEmpresa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,7 +307,17 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         alumno.setDni(dni);
         alumno.setEmpresa(empresasSeleccionada);
 
-        model.addAlumno(alumno);
+        SharedPreferences prefs =
+                this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+        String address = prefs.getString("address", null);
+        int port = prefs.getInt("port", -1);
+        if (address != null && port != -1) {
+            Settings settings = new Settings(address, port);
+            model.addAlumno(alumno, settings);
+        } else {
+            Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
 
         dialogAlumno.dismiss();
     }
@@ -336,7 +377,16 @@ public class RealizarVisitaActivity extends AppCompatActivity {
                 visita.setCsrfToken(prefs.getString("csrftoken", "error"));
                 visita.setSessionId(prefs.getString("sessionid", "error"));
 
-                model.addVisita(visita);
+                prefs = this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+                String address = prefs.getString("address", null);
+                int port = prefs.getInt("port", -1);
+                if (address != null && port != -1) {
+                    Settings settings = new Settings(address, port);
+                    model.addVisita(visita, settings);
+                } else {
+                    Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -348,7 +398,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName,".jpg", storageDir);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();

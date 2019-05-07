@@ -1,17 +1,21 @@
 package com.example.android.appprofesor.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.adapters.TutorAdapter;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.models.TutorAlumno;
 import com.example.android.appprofesor.utils.Utils;
 import com.example.android.appprofesor.viewmodels.ClaseViewModel;
+import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 import com.example.android.appprofesor.viewmodels.TutorAlumnoViewModel;
 
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ public class TutorListFragment extends Fragment {
     TutorAlumnoViewModel model;
 
     OnStudentSelected callback;
+
     public TutorListFragment() {
     }
 
@@ -52,18 +57,33 @@ public class TutorListFragment extends Fragment {
             @Override
             public void onItemClick(TutorAlumno alumno, int position) {
                 callback.onChange(alumno);
-            }});
+            }
+        });
 
         recyclerView.setAdapter(adapter);
 
         model = ViewModelProviders.of(this).get(TutorAlumnoViewModel.class);
-        model.getAlumnos(getContext()).observe(this, new Observer<List<TutorAlumno>>() {
+        try {
+            SharedPreferences prefs =
+                    getContext().getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings(address, port);
+                model.getAlumnos(getContext(), settings).observe(this, new Observer<List<TutorAlumno>>() {
 
-            @Override
-            public void onChanged(List<TutorAlumno> tutorAlumnos) {
-                adapter.addAlumnos(tutorAlumnos);
+                    @Override
+                    public void onChanged(List<TutorAlumno> tutorAlumnos) {
+                        adapter.addAlumnos(tutorAlumnos);
+                    }
+                });
+            } else {
+                throw new NullPointerException();
             }
-        });
+        } catch (NullPointerException e) {
+            Toast.makeText(getContext(), "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
 
         return view;
     }
@@ -71,14 +91,14 @@ public class TutorListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try{
+        try {
             callback = (OnStudentSelected) context;
-        }catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
         }
     }
 
-    public interface OnStudentSelected{
+    public interface OnStudentSelected {
         public void onChange(TutorAlumno alumno);
     }
 }

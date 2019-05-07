@@ -1,5 +1,6 @@
 package com.example.android.appprofesor.Connectors;
 
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.utils.Constants;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class LoginConnector implements Constants {
 
-    public List<String> iniciarSesion(String username, String password) {
+    public List<String> iniciarSesion(String username, String password, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -20,8 +21,8 @@ public class LoginConnector implements Constants {
         List<String> cookies = new ArrayList<>();
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
             System.out.println("Conectado");

@@ -1,15 +1,19 @@
 package com.example.android.appprofesor.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.adapters.ClassAdapter;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.viewmodels.ClaseViewModel;
+import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +60,27 @@ public class ClassListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         model = ViewModelProviders.of(this).get(ClaseViewModel.class);
-        model.getClases().observe(this, new Observer<List<ClaseApercibimiento>>() {
-            @Override
-            public void onChanged(List<ClaseApercibimiento> clases) {
-                adapter.addClases(clases);
+        try {
+            SharedPreferences prefs =
+                    getContext().getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings(address, port);
+                model.getClases(settings).observe(this, new Observer<List<ClaseApercibimiento>>() {
+                    @Override
+                    public void onChanged(List<ClaseApercibimiento> clases) {
+                        adapter.addClases(clases);
+                    }
+                });
+            } else {
+                throw new NullPointerException();
             }
-        });
+
+        } catch (NullPointerException e) {
+            Toast.makeText(getContext(), "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
 
         return view;
     }
@@ -69,14 +88,14 @@ public class ClassListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try{
+        try {
             callback = (OnClassSelected) context;
-        }catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
         }
     }
 
-    public interface OnClassSelected{
+    public interface OnClassSelected {
         public void onChange(ClaseApercibimiento clase);
     }
 

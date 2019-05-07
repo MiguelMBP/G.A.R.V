@@ -2,8 +2,11 @@ package com.example.android.appprofesor.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -17,8 +20,10 @@ import android.widget.Toast;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.models.Empresa;
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.utils.Constants;
 import com.example.android.appprofesor.viewmodels.EmpresaViewModel;
+import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 import com.google.android.gms.common.api.Status;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -172,8 +177,17 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
         empresa.setLatitud(Float.parseFloat(latitud));
         empresa.setDistancia(getDistance(Double.parseDouble(latitud), Double.parseDouble(longitud)));
 
-        empresaModel.addEmpresa(empresa);
-
+        SharedPreferences prefs =
+                this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+        String address = prefs.getString("address", null);
+        int port = prefs.getInt("port", -1);
+        if (address != null && port != -1) {
+            Settings settings = new Settings(address, port);
+            empresaModel.addEmpresa(empresa, settings);
+        } else {
+            Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
         dialogEmpresa.dismiss();
     }
 

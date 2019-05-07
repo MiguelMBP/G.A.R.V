@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        navigationView.getMenu().getItem(0).setChecked(true);
+        navigationView.getMenu().getItem(1).setChecked(true);
         drawerOptionId = R.id.nav_apercibimientos;
 
         changeFragment();
@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new TutorListFragment();
         } else if (drawerOptionId == R.id.nav_visitas) {
             fragment = new VisitListFragment();
+        } else if (drawerOptionId == R.id.nav_cuenta) {
+            fragment = new ClassListFragment();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

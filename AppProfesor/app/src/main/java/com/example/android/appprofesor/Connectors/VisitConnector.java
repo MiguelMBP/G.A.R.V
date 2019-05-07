@@ -7,6 +7,7 @@ import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
 import com.example.android.appprofesor.models.Empresa;
 import com.example.android.appprofesor.models.RegistroVisita;
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class VisitConnector implements Constants {
     
-    public static List<Alumno> getAlumnos(Context context) {
+    public static List<Alumno> getAlumnos(Context context, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -32,8 +33,8 @@ public class VisitConnector implements Constants {
 
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
@@ -68,7 +69,7 @@ public class VisitConnector implements Constants {
 
     }
 
-    public static List<Alumno> getTodosAlumnos() {
+    public static List<Alumno> getTodosAlumnos(Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -76,8 +77,8 @@ public class VisitConnector implements Constants {
 
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
@@ -110,7 +111,7 @@ public class VisitConnector implements Constants {
 
     }
 
-    public static List<Empresa> getEmpresas() {
+    public static List<Empresa> getEmpresas(Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -118,8 +119,8 @@ public class VisitConnector implements Constants {
 
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
@@ -166,14 +167,14 @@ public class VisitConnector implements Constants {
         return alumnos;
     }
 
-    public static int addEmpresa(Empresa empresa) {
+    public static int addEmpresa(Empresa empresa, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
@@ -203,14 +204,14 @@ public class VisitConnector implements Constants {
         return id;
     }
 
-    public static int addAlumno(Alumno alumno) {
+    public static int addAlumno(Alumno alumno, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
@@ -240,14 +241,14 @@ public class VisitConnector implements Constants {
         return id;
     }
 
-    public static int addVisita(RegistroVisita visita) {
+    public static int addVisita(RegistroVisita visita, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {

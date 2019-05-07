@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.example.android.appprofesor.Connectors.VisitConnector;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.Empresa;
+import com.example.android.appprofesor.models.Settings;
 
 import java.util.List;
 
@@ -24,27 +25,32 @@ public class EmpresaViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public LiveData<List<Empresa>> getEmpresas() {
+    public LiveData<List<Empresa>> getEmpresas(Settings settings) {
 
         if (empresas==null){
             empresas= new MutableLiveData<>();
 
         }
-        new ConectarServidorEmpresas().execute();
+        new ConectarServidorEmpresas(settings).execute();
         return empresas;
     }
 
-    public void addEmpresa(Empresa empresa) {
+    public void addEmpresa(Empresa empresa, Settings settings) {
 
-        new ConectarServidorAñadirEmpresa().execute(empresa);
-        new ConectarServidorEmpresas().execute();
+        new ConectarServidorAñadirEmpresa(settings).execute(empresa);
+        new ConectarServidorEmpresas(settings).execute();
     }
 
     private class ConectarServidorEmpresas extends AsyncTask<Void, Void, List<Empresa>> {
 
+        Settings settings;
+
+        public ConectarServidorEmpresas(Settings settings) {
+            this.settings = settings;
+        }
         @Override
         protected List<Empresa> doInBackground(Void... voids) {
-            return VisitConnector.getEmpresas();
+            return VisitConnector.getEmpresas(settings);
         }
 
         @Override
@@ -56,6 +62,12 @@ public class EmpresaViewModel extends AndroidViewModel {
     private class ConectarServidorAñadirEmpresa extends AsyncTask<Empresa, Void, Integer> {
 
         Empresa empresa;
+        Settings settings;
+
+        public ConectarServidorAñadirEmpresa(Settings settings) {
+            this.settings = settings;
+        }
+
 
         @Override
         protected Integer doInBackground(Empresa... empresas) {
@@ -63,7 +75,7 @@ public class EmpresaViewModel extends AndroidViewModel {
 
             if (empresas.length != 0) {
                 empresa = empresas[0];
-                id = VisitConnector.addEmpresa(empresa);
+                id = VisitConnector.addEmpresa(empresa, settings);
 
                 empresa.setId(id);
             }

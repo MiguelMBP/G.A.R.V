@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.example.android.appprofesor.Connectors.VisitConnector;
 import com.example.android.appprofesor.models.Alumno;
+import com.example.android.appprofesor.models.Settings;
 
 import java.util.List;
 
@@ -23,20 +24,25 @@ public class VisitaViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public LiveData<List<Alumno>> getAlumnos(Context context) {
+    public LiveData<List<Alumno>> getAlumnos(Context context, Settings settings) {
 
-        if (alumnos==null){
-            alumnos= new MutableLiveData<>();
-            new ConectarServidorAlumnos().execute(context);
+        if (alumnos == null) {
+            alumnos = new MutableLiveData<>();
+            new ConectarServidorAlumnos(settings).execute(context);
         }
         return alumnos;
     }
 
     private class ConectarServidorAlumnos extends AsyncTask<Context, Void, List<Alumno>> {
+        Settings settings;
+
+        public ConectarServidorAlumnos(Settings settings) {
+            this.settings = settings;
+        }
 
         @Override
         protected List<Alumno> doInBackground(Context... contexts) {
-            return VisitConnector.getAlumnos(contexts[0]);
+            return VisitConnector.getAlumnos(contexts[0], settings);
         }
 
         @Override
@@ -47,9 +53,14 @@ public class VisitaViewModel extends AndroidViewModel {
 
     private class ConectarServidorAñadirAlumno extends AsyncTask<Context, Void, List<Alumno>> {
 
+        Settings settings;
+
+        public ConectarServidorAñadirAlumno(Settings settings) {
+            this.settings = settings;
+        }
         @Override
         protected List<Alumno> doInBackground(Context... contexts) {
-            return VisitConnector.getAlumnos(contexts[0]);
+            return VisitConnector.getAlumnos(contexts[0], settings);
         }
 
         @Override

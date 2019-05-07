@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import com.example.android.appprofesor.Connectors.WarningConnector;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
+import com.example.android.appprofesor.models.Settings;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,6 +17,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -31,24 +33,25 @@ public class ClaseViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public LiveData<List<ClaseApercibimiento>> getClases() {
+    public LiveData<List<ClaseApercibimiento>> getClases(Settings settings) {
 
         if (clases==null){
             clases= new MutableLiveData<>();
-            new ConectarServidor().execute();
+            new ConectarServidor(settings).execute();
         }
         return clases;
     }
 
-    private void cargarClases() {
-        new ConectarServidor().execute();
-    }
-
     private class ConectarServidor extends AsyncTask<Void, Void, List<ClaseApercibimiento>> {
+
+        Settings settings;
+        public ConectarServidor(Settings settings) {
+            this.settings = settings;
+        }
 
         @Override
         protected List<ClaseApercibimiento> doInBackground(Void... voids) {
-            return WarningConnector.getMaterias();
+            return WarningConnector.getMaterias(settings);
         }
 
         @Override

@@ -2,6 +2,8 @@ package com.example.android.appprofesor.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +24,9 @@ import android.widget.Toast;
 
 import com.example.android.appprofesor.Connectors.LoginConnector;
 import com.example.android.appprofesor.R;
+import com.example.android.appprofesor.data.SettingsDAO;
+import com.example.android.appprofesor.models.Settings;
+import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 
 import java.util.List;
 
@@ -36,11 +41,31 @@ public class LoginActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private AlertDialog dialogAlumno;
 
+    private SettingsViewModel model;
+    private List<Settings> settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        model = ViewModelProviders.of(this).get(SettingsViewModel.class);
+        model.getSettings().observe(this, new Observer<List<Settings>>() {
+            @Override
+            public void onChanged(List<Settings> settingsList) {
+                settings = settingsList;
+                if (!settings.isEmpty()) {
+                    SharedPreferences prefs =
+                            getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("address", settings.get(0).getAddress());
+                    editor.putInt("port", settings.get(0).getPort());
+                    editor.apply();
+                }
+
+            }
+        });
 
         emailText = findViewById(R.id.input_email);
         passText = findViewById(R.id.input_password);
@@ -97,6 +122,11 @@ public class LoginActivity extends AppCompatActivity {
 
         final EditText direccion = view.findViewById(R.id.popupAddress);
         final EditText puerto = view.findViewById(R.id.popupPort);
+
+        if (!settings.isEmpty()) {
+            direccion.setText(settings.get(0).getAddress());
+            puerto.setText(settings.get(0).getPort() + "");
+        }
         Button saveButton = view.findViewById(R.id.popupSaveSettings);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +135,30 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!TextUtils.isEmpty(direccion.getText()) && !TextUtils.isEmpty(puerto.getText())) {
 
-                    //TODO room
+                    if (settings.isEmpty()) {
+                        try {
+                            Settings set = new Settings(direccion.getText().toString(), Integer.parseInt(puerto.getText().toString()));
+                            model.addSettings(set);
+                            dialogAlumno.dismiss();
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(getApplication(), "El puerto debe de ser un número", Toast.LENGTH_SHORT)
+                                    .show();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplication(), "Error modificando ajustes", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    } else {
+                        try {
+                            Settings set = settings.get(0);
+                            set.setAddress(direccion.getText().toString());
+                            set.setPort(Integer.parseInt(puerto.getText().toString()));
+                            model.updateSettings(set);
+                            dialogAlumno.dismiss();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplication(), "Error modificando ajustes", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
 
                 }
 
@@ -133,18 +186,25 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... strings) {
             LoginConnector login = new LoginConnector();
-            List<String> userData = login.iniciarSesion(strings[0], strings[1]);
+            if (!settings.isEmpty()) {
+                List<String> userData = login.iniciarSesion(strings[0], strings[1], settings.get(0));
 
-            SharedPreferences prefs =
-                    getSharedPreferences("userData", Context.MODE_PRIVATE);
 
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("csrftoken", userData.get(0));
-            editor.putString("sessionid", userData.get(1));
-            editor.putString("username", userData.get(2));
-            editor.apply();
+                SharedPreferences prefs =
+                        getSharedPreferences("userData", Context.MODE_PRIVATE);
 
-            return !userData.isEmpty();
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("csrftoken", userData.get(0));
+                editor.putString("sessionid", userData.get(1));
+                editor.putString("username", userData.get(2));
+                editor.apply();
+
+                return !userData.isEmpty();
+            } else {
+                Toast.makeText(getApplicationContext(), "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                        .show();
+            }
+            return false;
         }
     }
 

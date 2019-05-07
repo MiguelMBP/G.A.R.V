@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.reflect.Type;
 
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.models.TutorAlumno;
 import com.example.android.appprofesor.utils.Constants;
 import com.google.gson.Gson;
@@ -25,7 +26,7 @@ public class WarningConnector implements Constants {
     private WarningConnector() {
     }
 
-    public static List<ClaseApercibimiento> getMaterias() {
+    public static List<ClaseApercibimiento> getMaterias(Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -33,8 +34,8 @@ public class WarningConnector implements Constants {
 
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
@@ -75,7 +76,7 @@ public class WarningConnector implements Constants {
         return materias;
     }
 
-    public static List<TutorAlumno> getAlumnosTutor(Context context) {
+    public static List<TutorAlumno> getAlumnosTutor(Context context, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -85,8 +86,8 @@ public class WarningConnector implements Constants {
 
 
         try {
-            InetAddress address = InetAddress.getByName(ADDRESS);
-            socketCliente = new Socket(address, PORT);
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
             salida = new ObjectOutputStream(socketCliente.getOutputStream());
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {

@@ -2,23 +2,28 @@ package com.example.android.appprofesor.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.activities.RealizarVisitaActivity;
 import com.example.android.appprofesor.adapters.VisitAdapter;
 import com.example.android.appprofesor.models.Alumno;
+import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.models.TutorAlumno;
 import com.example.android.appprofesor.utils.Utils;
+import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 import com.example.android.appprofesor.viewmodels.TutorAlumnoViewModel;
 import com.example.android.appprofesor.viewmodels.VisitaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +43,8 @@ public class VisitListFragment extends Fragment {
 
     OnStudentSelected callback;
     VisitaViewModel model;
+    private List<String> myData;
+
 
     public VisitListFragment() {
     }
@@ -62,15 +69,29 @@ public class VisitListFragment extends Fragment {
         fabAct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                model = ViewModelProviders.of(VisitListFragment.this).get(VisitaViewModel.class);
-                model.getAlumnos(getContext()).observe(VisitListFragment.this, new Observer<List<Alumno>>() {
+                try {
+                    SharedPreferences prefs =
+                            getContext().getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+                    String address = prefs.getString("address", null);
+                    int port = prefs.getInt("port", -1);
+                    if (address != null && port != -1) {
+                        Settings settings = new Settings(address, port);
+                        model = ViewModelProviders.of(VisitListFragment.this).get(VisitaViewModel.class);
+                        model.getAlumnos(getContext(), settings).observe(VisitListFragment.this, new Observer<List<Alumno>>() {
 
 
-                    @Override
-                    public void onChanged(List<Alumno> alumnos) {
-                        adapter.addAlumnos(alumnos);
+                            @Override
+                            public void onChanged(List<Alumno> alumnos) {
+                                adapter.addAlumnos(alumnos);
+                            }
+                        });
+                    } else {
+                        throw new NullPointerException();
                     }
-                });
+                } catch (NullPointerException e) {
+                    Toast.makeText(getContext(), "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                            .show();
+                }
 
             }
         });
@@ -91,14 +112,28 @@ public class VisitListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         model = ViewModelProviders.of(this).get(VisitaViewModel.class);
-        model.getAlumnos(getContext()).observe(this, new Observer<List<Alumno>>() {
+        try {
+            SharedPreferences prefs =
+                    getContext().getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings(address, port);
+                model.getAlumnos(getContext(), settings).observe(this, new Observer<List<Alumno>>() {
 
 
-            @Override
-            public void onChanged(List<Alumno> alumnos) {
-                adapter.addAlumnos(alumnos);
+                    @Override
+                    public void onChanged(List<Alumno> alumnos) {
+                        adapter.addAlumnos(alumnos);
+                    }
+                });
+            }else {
+                throw new NullPointerException();
             }
-        });
+        } catch (NullPointerException e) {
+            Toast.makeText(getContext(), "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
 
         return view;
     }
@@ -106,14 +141,15 @@ public class VisitListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try{
+        try {
             callback = (OnStudentSelected) context;
-        }catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnArticleSelectedListener");
         }
     }
 
-    public interface OnStudentSelected{
+    public interface OnStudentSelected {
         public void onChange(Alumno alumno);
     }
+    
 }

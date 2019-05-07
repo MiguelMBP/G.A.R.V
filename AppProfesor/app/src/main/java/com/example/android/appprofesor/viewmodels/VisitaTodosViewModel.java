@@ -9,6 +9,7 @@ import com.example.android.appprofesor.Connectors.VisitConnector;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.Empresa;
 import com.example.android.appprofesor.models.RegistroVisita;
+import com.example.android.appprofesor.models.Settings;
 
 import java.util.List;
 
@@ -26,31 +27,39 @@ public class VisitaTodosViewModel extends AndroidViewModel {
         this.application = application;
     }
 
-    public LiveData<List<Alumno>> getTodosAlumnos() {
+    public LiveData<List<Alumno>> getTodosAlumnos(Settings settings) {
 
         if (alumnos==null){
             alumnos= new MutableLiveData<>();
-            new ConectarServidorTodosAlumnos().execute();
+            new ConectarServidorTodosAlumnos(settings).execute();
         }
         return alumnos;
     }
 
-    public void addAlumno(Alumno alumno) {
+    public void addAlumno(Alumno alumno, Settings settings) {
 
-        new ConectarServidorAñadirAlumno().execute(alumno);
+        new ConectarServidorAñadirAlumno(settings).execute(alumno);
         //new ConectarServidorTodosAlumnos().execute();
     }
 
-    public void addVisita(RegistroVisita visita) {
+    public void addVisita(RegistroVisita visita, Settings settings) {
 
-        new ConectarServidorRegistrarVisita().execute(visita);
+        new ConectarServidorRegistrarVisita(settings).execute(visita);
     }
 
     private class ConectarServidorTodosAlumnos extends AsyncTask<Void, Void, List<Alumno>> {
 
+        Alumno alumno;
+        Settings settings;
+
+        public ConectarServidorTodosAlumnos(Settings settings) {
+            this.settings = settings;
+        }
+
+
         @Override
         protected List<Alumno> doInBackground(Void... voids) {
-            return VisitConnector.getTodosAlumnos();
+            return VisitConnector.getTodosAlumnos(settings);
         }
 
         @Override
@@ -62,6 +71,11 @@ public class VisitaTodosViewModel extends AndroidViewModel {
     private class ConectarServidorAñadirAlumno extends AsyncTask<Alumno, Void, Integer> {
 
         Alumno alumno;
+        Settings settings;
+
+        public ConectarServidorAñadirAlumno(Settings settings) {
+            this.settings = settings;
+        }
 
         @Override
         protected Integer doInBackground(Alumno... alumnos) {
@@ -69,7 +83,7 @@ public class VisitaTodosViewModel extends AndroidViewModel {
 
             if (alumnos.length != 0) {
                 alumno = alumnos[0];
-                id = VisitConnector.addAlumno(alumno);
+                id = VisitConnector.addAlumno(alumno, settings);
 
                 alumno.setId(id);
             }
@@ -92,6 +106,11 @@ public class VisitaTodosViewModel extends AndroidViewModel {
     private class ConectarServidorRegistrarVisita extends AsyncTask<RegistroVisita, Void, Integer> {
 
         RegistroVisita visita;
+        Settings settings;
+
+        public ConectarServidorRegistrarVisita(Settings settings) {
+            this.settings = settings;
+        }
 
         @Override
         protected Integer doInBackground(RegistroVisita... visitas) {
@@ -99,7 +118,7 @@ public class VisitaTodosViewModel extends AndroidViewModel {
 
             if (visitas.length != 0) {
                 visita = visitas[0];
-                id = VisitConnector.addVisita(visita);
+                id = VisitConnector.addVisita(visita, settings);
             }
 
             return id;
