@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.android.appprofesor.R;
+import com.example.android.appprofesor.fragments.ChangePassFragment;
 import com.example.android.appprofesor.fragments.ClassListFragment;
 import com.example.android.appprofesor.fragments.TutorListFragment;
 import com.example.android.appprofesor.fragments.VisitListFragment;
@@ -46,10 +47,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        navigationView.getMenu().getItem(1).setChecked(true);
         drawerOptionId = R.id.nav_apercibimientos;
 
         changeFragment();
+        drawer.openDrawer(GravityCompat.START);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         } else if (drawerOptionId == R.id.nav_visitas) {
             fragment = new VisitListFragment();
         } else if (drawerOptionId == R.id.nav_cuenta) {
-            fragment = new ClassListFragment();
+            fragment = new ChangePassFragment();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -28,7 +28,6 @@ public class LoginConnector implements Constants {
             System.out.println("Conectado");
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión");
-            System.exit(-1);
         }
         try {
             salida.writeInt(5);
@@ -49,11 +48,52 @@ public class LoginConnector implements Constants {
             entrada.close();
             socketCliente.close();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("IOException: " + e.getMessage());
         }
 
         return cookies;
+
+    }
+
+    public boolean cambiarContraseña(String username, String password, String csrftoken, String sessionId, Settings settings) {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        boolean cambiado = false;
+        List<String> cookies = new ArrayList<>();
+
+        try {
+            InetAddress address = InetAddress.getByName(settings.getAddress());
+            socketCliente = new Socket(address, settings.getPort());
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (IOException e) {
+            System.err.println("No puede establer canales de E/S para la conexión");
+        }
+        try {
+            salida.writeInt(29);
+            salida.flush();
+            salida.writeUTF(username);
+            salida.flush();
+            salida.writeUTF(password);
+            salida.flush();
+            salida.writeUTF(csrftoken);
+            salida.flush();
+            salida.writeUTF(sessionId);
+            salida.flush();
+
+            cambiado = entrada.readBoolean();
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (Exception e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+
+        return cambiado;
 
     }
 }

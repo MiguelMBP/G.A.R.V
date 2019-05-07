@@ -40,7 +40,6 @@ public class WarningConnector implements Constants {
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión" + e);
-            System.exit(-1);
         }
         String linea = "";
         try {
@@ -92,7 +91,6 @@ public class WarningConnector implements Constants {
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión" + e);
-            System.exit(-1);
         }
         String linea = "";
         try {

@@ -75,7 +75,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                login();
+                if (settings.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    login();
+                }
             }
         });
     }
@@ -186,25 +191,23 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... strings) {
             LoginConnector login = new LoginConnector();
-            if (!settings.isEmpty()) {
-                List<String> userData = login.iniciarSesion(strings[0], strings[1], settings.get(0));
+            List<String> userData = login.iniciarSesion(strings[0], strings[1], settings.get(0));
 
 
-                SharedPreferences prefs =
-                        getSharedPreferences("userData", Context.MODE_PRIVATE);
+            SharedPreferences prefs =
+                    getSharedPreferences("userData", Context.MODE_PRIVATE);
 
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("csrftoken", userData.get(0));
-                editor.putString("sessionid", userData.get(1));
-                editor.putString("username", userData.get(2));
-                editor.apply();
-
-                return !userData.isEmpty();
-            } else {
-                Toast.makeText(getApplicationContext(), "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
-                        .show();
+            SharedPreferences.Editor editor = prefs.edit();
+            if (userData.size() != 3) {
+                return false;
             }
-            return false;
+            editor.putString("csrftoken", userData.get(0));
+            editor.putString("sessionid", userData.get(1));
+            editor.putString("username", userData.get(2));
+            editor.apply();
+
+            return !userData.isEmpty();
+
         }
     }
 

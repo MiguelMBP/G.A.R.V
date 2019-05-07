@@ -3,35 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_cuenta"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Modificar cuenta" />
-
-    </group>
-
     <item android:title="Apercibimientos">
         <menu>
-            <item
-                android:id="@+id/nav_apercibimientos"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="Lista Apercibimientos" />
-            <item
-                android:id="@+id/nav_tutoria"
-                android:icon="@drawable/ic_menu_gallery"
-                android:title="Tutoría" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_apercibimientos"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="Lista Apercibimientos" />
+                <item
+                    android:id="@+id/nav_tutoria"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="Tutoría" />
+            </group>
         </menu>
     </item>
 
     <item android:title="Visitas">
         <menu>
-            <item
-                android:id="@+id/nav_visitas"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="Visitas FCT" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_visitas"
+                    android:icon="@drawable/ic_menu_slideshow"
+                    android:title="Visitas FCT" />
+            </group>
         </menu>
     </item>
 
+    <item android:title="Cuenta">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_cuenta"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="Cambiar Contraseña" />
+            </group>
+        </menu>
+    </item>
 </menu>

@@ -36,7 +36,7 @@ def createuser(request):
 
         return HttpResponse('failure')
 
-@csrf_exempt
+@login_required()
 def registervisit(request):
     if request.method == "POST":
         userId = request.POST.get('userId', None)
@@ -66,5 +66,21 @@ def sendimage(request):
                 encoded_string = b64encode(image_file.read())
 
                 return HttpResponse(encoded_string)
+
+        return HttpResponse('failure')
+
+
+login_required
+def changePass(request):
+    if request.method == "POST":
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+
+        if username and password:
+            u = User.objects.get(username=username)
+            u.set_password(password)
+            u.save()
+
+            return HttpResponse('success')
 
         return HttpResponse('failure')

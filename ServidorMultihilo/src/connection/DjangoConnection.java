@@ -50,8 +50,8 @@ public class DjangoConnection {
 
 			connection.disconnect();
 
-			connection = (HttpURLConnection) new URL("http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/login/")
-					.openConnection();
+			connection = (HttpURLConnection) new URL(
+					"http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/login/").openConnection();
 
 			if (cookieManager.getCookieStore().getCookies().size() > 0) {
 				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
@@ -121,12 +121,12 @@ public class DjangoConnection {
 
 			// conectar(usuario, contrasena, cookieManager);
 
-			HttpCookie csrf = new HttpCookie("csrftoken", csrftoken);
-			csrf.setPath("/");
+			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
+			csrf.setPath("/visitas/createuser/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", sessionid);
-			session.setPath("/");
+			session.setPath("/visitas/createuser/");
 			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
@@ -179,19 +179,20 @@ public class DjangoConnection {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/registervisit/";
 			String charset = "UTF-8";
 
-			String query = String.format("userId=%s&date=%s&img=%s&studentId=%s",
-					URLEncoder.encode(id+"", charset), URLEncoder.encode(sdf.format(visita.getFecha()), charset),
-					URLEncoder.encode(visita.getImagen64(), charset), URLEncoder.encode(visita.getAlumno().getId()+"", charset));
+			String query = String.format("userId=%s&date=%s&img=%s&studentId=%s", URLEncoder.encode(id + "", charset),
+					URLEncoder.encode(sdf.format(visita.getFecha()), charset),
+					URLEncoder.encode(visita.getImagen64(), charset),
+					URLEncoder.encode(visita.getAlumno().getId() + "", charset));
 
 			CookieManager cookieManager = new CookieManager();
 			CookieHandler.setDefault(cookieManager);
 
-			HttpCookie csrf = new HttpCookie("csrftoken", visita.getCsrfToken());
-			csrf.setPath("/");
+			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
+			csrf.setPath("/visitas/registervisit/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", visita.getSessionId());
-			session.setPath("/");
+			session.setPath("/visitas/registervisit/");
 			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
@@ -233,30 +234,29 @@ public class DjangoConnection {
 		}
 		return -1;
 	}
-	
+
 	public String getImagen(int id, String crsftoken, String sessionId) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String responseBody  = null;
+		String responseBody = null;
 		String[] parametros = leerConfiguración();
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/sendimage/";
 			String charset = "UTF-8";
 
-			String query = String.format("id=%s",
-					URLEncoder.encode(id+"", charset));
+			String query = String.format("id=%s", URLEncoder.encode(id + "", charset));
 
 			CookieManager cookieManager = new CookieManager();
 			CookieHandler.setDefault(cookieManager);
 
-			HttpCookie csrf = new HttpCookie("csrftoken", crsftoken);
-			csrf.setPath("/");
+			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
+			csrf.setPath("/visitas/sendimage/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", sessionId);
-			session.setPath("/");
+			session.setPath("/visitas/sendimage/");
 			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
@@ -298,26 +298,129 @@ public class DjangoConnection {
 		}
 		return responseBody;
 	}
-	
+
 	private String[] leerConfiguración() {
-        String[] parametros = new String[2];
+		String[] parametros = new String[2];
 
-        try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
-            String line;
+		try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
+			String line;
 
-            while ((line = br.readLine()) != null) {
-                String[] parametro = line.split(":");
-                if (parametro[0].equalsIgnoreCase("django_address")) {
-                    parametros[0] = parametro[1];
-                } else if (parametro[0].equalsIgnoreCase("django_port")) {
-                    parametros[1] = parametro[1];
-                }
-            }
-        } catch (FileNotFoundException ex) {
-        	ex.printStackTrace();
-        } catch (IOException ex) {
-        	ex.printStackTrace();
-        }
-        return parametros;
-    }
+			while ((line = br.readLine()) != null) {
+				String[] parametro = line.split(":");
+				if (parametro[0].equalsIgnoreCase("django_address")) {
+					parametros[0] = parametro[1];
+				} else if (parametro[0].equalsIgnoreCase("django_port")) {
+					parametros[1] = parametro[1];
+				}
+			}
+		} catch (FileNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return parametros;
+	}
+
+	public boolean changePass(String username, String password, String crsftoken, String sessionId) {
+		HttpURLConnection connection = null;
+		boolean creado = false;
+		String[] parametros = leerConfiguración();
+
+		try {
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/changePassword/";
+			String charset = "UTF-8";
+
+			String query = String.format("username=%s&password=%s", URLEncoder.encode(username + "", charset),
+					URLEncoder.encode(password, charset));
+
+			CookieManager cookieManager = new CookieManager();
+			CookieHandler.setDefault(cookieManager);
+
+			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
+			csrf.setPath("/");
+			csrf.setDomain(parametros[0]);
+			csrf.setHttpOnly(true);
+			HttpCookie session = new HttpCookie("sessionid", sessionId);
+			session.setPath("/");
+			session.setDomain(parametros[0]);
+			session.setHttpOnly(true);
+
+			cookieManager.getCookieStore().add(new URI(parametros[0]), csrf);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), session);
+
+			connection = (HttpURLConnection) new URL(url).openConnection();
+
+			if (cookieManager.getCookieStore().getCookies().size() > 0) {
+				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
+					if (cookie.getName().equals("csrftoken")) {
+						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
+					}
+				}
+			}
+
+			connection.setRequestMethod("POST");
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Accept-Charset", charset);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+
+			try (OutputStream output = connection.getOutputStream()) {
+				output.write(query.getBytes(charset));
+			}
+
+			InputStream response = connection.getInputStream();
+			try (Scanner scanner = new Scanner(response)) {
+				String responseBody = scanner.useDelimiter("\\A").next();
+				if (responseBody.equals("success")) {
+					creado = true;
+				}
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return creado;
+	}
+
+	public String getCsrf() {
+		HttpURLConnection connection = null;
+		boolean existe = false;
+		List<String> cookies = new ArrayList<>();
+		String[] parametros = leerConfiguración();
+		try {
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/accounts/login/";
+			String charset = "UTF-8";
+
+			final String COOKIES_HEADER = "Set-Cookie";
+
+			String csrftoken = "";
+			String sessionid = "";
+
+			CookieManager cookieManager = new CookieManager();
+			CookieHandler.setDefault(cookieManager);
+
+			connection = (HttpURLConnection) new URL(url).openConnection();
+			InputStream response = connection.getInputStream();
+
+			connection.disconnect();
+
+			connection = (HttpURLConnection) new URL("http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/login/")
+					.openConnection();
+
+			if (cookieManager.getCookieStore().getCookies().size() > 0) {
+				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
+					if (cookie.getName().equals("csrftoken")) {
+						return cookie.getValue();
+					}
+				}
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+		return "";
+	}
 }

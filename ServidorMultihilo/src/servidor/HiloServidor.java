@@ -131,6 +131,9 @@ public class HiloServidor extends Thread {
 			case 28:
 				getApercibimientoPorAlumno(entrada, salida);
 				break;
+			case 29:
+				cambiarContraseña(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -140,6 +143,24 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void cambiarContraseña(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			DjangoConnection dc = new DjangoConnection();
+			String username = entrada.readUTF();
+			String password = entrada.readUTF();
+			String crsftoken = entrada.readUTF();
+			String sessionId = entrada.readUTF();
+
+			boolean cambiado = dc.changePass(username, password, crsftoken, sessionId);
+			salida.writeBoolean(cambiado);
+			salida.flush();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void getApercibimientoPorAlumno(ObjectInputStream entrada, ObjectOutputStream salida) {

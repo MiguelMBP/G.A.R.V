@@ -39,7 +39,6 @@ public class VisitConnector implements Constants {
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión" + e);
-            System.exit(-1);
         }
         String linea = "";
         try {
@@ -83,7 +82,6 @@ public class VisitConnector implements Constants {
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión" + e);
-            System.exit(-1);
         }
         String linea = "";
         try {
@@ -125,7 +123,6 @@ public class VisitConnector implements Constants {
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión" + e);
-            System.exit(-1);
         }
         String linea = "";
         try {
@@ -179,7 +176,6 @@ public class VisitConnector implements Constants {
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión" + e);
-            System.exit(-1);
         }
         int id = -1;
         try {
@@ -216,7 +212,6 @@ public class VisitConnector implements Constants {
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión" + e);
-            System.exit(-1);
         }
         int id = -1;
         try {
@@ -253,7 +248,6 @@ public class VisitConnector implements Constants {
             entrada = new ObjectInputStream(socketCliente.getInputStream());
         } catch (IOException e) {
             System.err.println("No puede establer canales de E/S para la conexión" + e);
-            System.exit(-1);
         }
         int id = -1;
         try {

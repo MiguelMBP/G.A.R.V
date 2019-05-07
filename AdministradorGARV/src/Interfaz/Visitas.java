@@ -208,6 +208,8 @@ public class Visitas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+            } catch (Exception e) {
+                
             }
         }
 

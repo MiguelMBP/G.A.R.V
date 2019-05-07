@@ -209,7 +209,7 @@ public class VisitasDAO {
 	
 	public int idUsuario(String usuario) {
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT id FROM GARV.auth_user where username='" + usuario + "'";
+		String sql = "SELECT B.id FROM auth_user A, visitas_profesor B where username='" + usuario + "' and A.id = B.usuario_id";
 		int id = -1;
 		
 		try (Statement st = conex.getConnection().createStatement();) {
