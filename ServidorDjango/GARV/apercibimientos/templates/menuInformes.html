@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<form class="form-signin" id="informes" style="text-align: left;">
+    <h1 class="h3 mb-3 font-weight-normal" style="width: 150%;">Generación de Informes</h1>
+
+    <div class="form-group" style="text-align: left;">
+        <label for="tipoSelect">Informe</label>
+        <select class="form-control" id="tipoSelect">
+            <option value="" selected disabled hidden>Tipo de informe</option>
+            <option value="1">Resumen de apercibimientos por materia</option>
+            <option value="2">Alumnos con N o más apercibimientos</option>
+            <option value="3">Apercibimientos Individuales</option>
+        </select>
+        <p id="descripcion" style="font-size: 11px; margin-top: 10px"></p>
+    </div>
+
+    <div class="form-group" style="text-align: left;">
+        <label for="periodoSelect">Periodo Academico</label>
+        <select class="form-control" id="periodoSelect" onclick="">
+            <option value="" selected disabled hidden>Elegir Periodo</option>
+            {% for year in years %}
+            <option value="{{ year.periodo_academico }}">{{ year.periodo_academico }}/{{ year.periodo_academico|add:1}}
+            </option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <div class="form-group" style="text-align: left;">
+        <label for="mesSelect">Mes</label>
+        <select class="form-control" id="mesSelect">
+            <option value="" selected disabled hidden>Elegir Mes</option>
+        </select>
+    </div>
+
+    <div class="form-group" style="text-align: left;">
+        <label for="minimoApercibimientos">Filtrar por número de apercibimientos</label>
+        <input class="form-control" type="number" value="2" min="0" id="minimoApercibimientos" disabled>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="cursos" id="todosCursos" value="todosCursos" checked>
+        <label class="form-check-label" for="todosCursos">
+            Generar informe de todos los cursos
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="cursos" id="porCurso" value="porCurso">
+        <label class="form-check-label" for="porCurso">
+            Generar informe de un curso
+        </label>
+    </div>
+
+    <div class="form-group" style="text-align: left;">
+        <label for="cursoSelect">Curso</label>
+        <select class="form-control" id="cursoSelect" disabled>
+            <option value="" selected disabled hidden>Elegir Curso</option>
+        </select>
+    </div>
+
+
+    <button class="btn btn-lg btn-primary btn-block" id="botonInformes" type="button" onclick="">Generar Informe
+    </button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'js/informes.js' %}"></script>
+{% endblock %}

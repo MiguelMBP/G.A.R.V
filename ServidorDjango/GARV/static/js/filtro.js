@@ -1,3 +1,9 @@
+$( document ).ready(function() {
+    $('#periodoSelect').val("");
+     $('#alumnoSelect').find('option').remove().end().append('<option value="" selected disabled hidden>Elegir Alumno</option>');
+     $('#cursoSelect').find('option').remove().end().append('<option value="" selected disabled hidden>Elegir Curso</option>');
+});
+
 document.getElementById('filtro').periodoSelect.onchange = function () {
     var periodo = $("#periodoSelect").val(),
     url = '/apercibimientos/getCursos'

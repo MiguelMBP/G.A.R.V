@@ -1,5 +1,6 @@
 import datetime
 import tempfile
+from calendar import month
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -32,7 +33,6 @@ def subir_pdf(request):
             file = request.FILES['docfile'].name
 
             if file.endswith('.pdf'):
-                print()
                 pdf_to_csv(newdoc.docfile.path)
             elif file.endswith('.zip'):
                 extractZip(newdoc.docfile.path)
@@ -65,7 +65,6 @@ def a_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username, password)
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
@@ -82,6 +81,11 @@ def a_login(request):
 def buscarApercibimiento(request):
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'buscar_apercibimiento.html', {'years': periodo})
+
+@login_required
+def informeApercibimientos(request):
+    periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
+    return render(request, 'menuInformes.html', {'years': periodo})
 
 
 @login_required
@@ -116,6 +120,25 @@ def sacarApercibimientos(request):
         return JsonResponse(lista, safe=False)
 
     return HttpResponse('error')
+
+
+@login_required
+def sacarMeses(request):
+    if request.GET and request.is_ajax():
+        periodo = request.GET['periodo']
+        lista = list(Apercibimiento.objects.annotate(month=TruncMonth('fecha_inicio')).values('month').distinct().filter(periodo_academico=periodo).order_by('month'))
+
+        return JsonResponse(lista, safe=False)
+
+
+@login_required
+def sacarCursoInformes(request):
+    if request.GET and request.is_ajax():
+        periodo = request.GET['periodo']
+        mes = request.GET['mes']
+        lista = list(Apercibimiento.objects.values('unidad').distinct().filter(periodo_academico=periodo, fecha_inicio__month=mes).order_by('unidad'))
+
+        return JsonResponse(lista, safe=False)
 
 
 @login_required

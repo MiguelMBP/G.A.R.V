@@ -27,10 +27,10 @@
             <option value="" selected disabled hidden>Elegir Alumno</option>
         </select>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" id="botonFiltrarApercibimiento" type="button" onclick="">Buscar</button>
+    <button class="btn btn-lg btn-primary btn-block" style="margin-top: 1em;" id="botonFiltrarApercibimiento" type="button">Buscar</button>
 </form>
 
-<table class="table" id="tabla_apercibimientos">
+<table class="table" id="tabla_apercibimientos" style="margin-top: 2em;">
     <thead>
         <tr>
             <th>Alumno</th>
@@ -49,5 +49,6 @@
     </tbody>
 </table>
 
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="{% static 'js/filtro.js' %}"></script>
 {% endblock %}
