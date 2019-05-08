@@ -69,6 +69,8 @@ public class ChangePassFragment extends Fragment {
         SharedPreferences prefs =
                 getContext().getSharedPreferences("userData", Context.MODE_PRIVATE);
         String username = prefs.getString("username", null);
+        String csrf = prefs.getString("csrftoken", "error");
+        String sessionId = prefs.getString("sessionid", "error");
 
         prefs = getContext().getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
         String address = prefs.getString("address", null);
@@ -78,8 +80,7 @@ public class ChangePassFragment extends Fragment {
             settings = new Settings(address, port);
             if (logged) {
                 if (contraseñaNuevaText.getText().toString().equals(contraseñaNueva2Text.getText().toString())) {
-                    String csrf = prefs.getString("csrftoken", "error");
-                    String sessionId = prefs.getString("sessionid", "error");
+
 
 
                     new ConectarServidorContraseña(username, csrf, sessionId).execute(contraseñaNuevaText.getText().toString());

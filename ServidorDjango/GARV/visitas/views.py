@@ -36,7 +36,7 @@ def createuser(request):
 
         return HttpResponse('failure')
 
-@login_required()
+#@login_required
 def registervisit(request):
     if request.method == "POST":
         userId = request.POST.get('userId', None)
@@ -55,7 +55,7 @@ def registervisit(request):
         return HttpResponse('failure')
 
 
-@login_required
+#@login_required
 def sendimage(request):
     if request.method == "POST":
         id = request.POST.get('id', None)
@@ -70,7 +70,7 @@ def sendimage(request):
         return HttpResponse('failure')
 
 
-login_required
+#@login_required
 def changePass(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
@@ -84,3 +84,4 @@ def changePass(request):
             return HttpResponse('success')
 
         return HttpResponse('failure')
+

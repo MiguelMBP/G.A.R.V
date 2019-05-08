@@ -122,11 +122,11 @@ public class DjangoConnection {
 			// conectar(usuario, contrasena, cookieManager);
 
 			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
-			csrf.setPath("/visitas/createuser/");
+			csrf.setPath("/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", sessionid);
-			session.setPath("/visitas/createuser/");
+			session.setPath("/");
 			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
@@ -188,11 +188,11 @@ public class DjangoConnection {
 			CookieHandler.setDefault(cookieManager);
 
 			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
-			csrf.setPath("/visitas/registervisit/");
+			csrf.setPath("/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", visita.getSessionId());
-			session.setPath("/visitas/registervisit/");
+			session.setPath("/");
 			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
@@ -252,11 +252,11 @@ public class DjangoConnection {
 			CookieHandler.setDefault(cookieManager);
 
 			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
-			csrf.setPath("/visitas/sendimage/");
+			csrf.setPath("/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
 			HttpCookie session = new HttpCookie("sessionid", sessionId);
-			session.setPath("/visitas/sendimage/");
+			session.setPath("/");
 			session.setDomain(parametros[0]);
 			session.setHttpOnly(true);
 
@@ -336,7 +336,7 @@ public class DjangoConnection {
 			CookieManager cookieManager = new CookieManager();
 			CookieHandler.setDefault(cookieManager);
 
-			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
+			HttpCookie csrf = new HttpCookie("csrftoken", crsftoken);
 			csrf.setPath("/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);

@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.db.models.functions import TruncMonth
 from django.shortcuts import render
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -60,7 +60,6 @@ def mostrarApercibimientos(request):
     return render(request, 'apercibimientos.html', {'lista': lista})
 
 
-
 def a_login(request):
     msg = []
     if request.method == 'POST':
@@ -81,11 +80,61 @@ def a_login(request):
 
 @login_required
 def buscarApercibimiento(request):
-    unidad = request.GET.get('unidad')
-    alumno = request.GET.get('alumno')
-    apercibimientos = Apercibimiento.objects.filter(alumno=alumno, unidad=unidad)
-    return render(request, 'buscar_apercibimiento.html', {'apercibimientos': apercibimientos})
+    periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
+    return render(request, 'buscar_apercibimiento.html', {'years': periodo})
 
+
+@login_required
+def sacarCursos(request):
+    if request.GET and request.is_ajax():
+        periodo = request.GET['periodo']
+        lista = list(Apercibimiento.objects.values("unidad").distinct().filter(periodo_academico=periodo).order_by('unidad'))
+        return JsonResponse(lista, safe=False)
+    else:
+        return HttpResponse('error')
+
+
+@login_required
+def sacarAlumnos(request):
+    if request.GET and request.is_ajax():
+        periodo = request.GET['periodo']
+        curso = request.GET['curso']
+        lista = list(Apercibimiento.objects.values("alumno").distinct().filter(periodo_academico=periodo, unidad=curso).order_by('alumno'))
+        return JsonResponse(lista, safe=False)
+    else:
+        return HttpResponse('error')
+
+
+@login_required
+def sacarApercibimientos(request):
+    if request.GET and request.is_ajax():
+        periodo = request.GET['periodo']
+        curso = request.GET['curso']
+        alumno = request.GET['alumno']
+        lista = list(Apercibimiento.objects.values("id", "alumno", "periodo_academico", "unidad", "materia", "fecha_inicio", "fecha_fin", "activo").distinct().filter(periodo_academico=periodo,
+                                                                               unidad=curso, alumno=alumno).order_by('fecha_inicio', 'materia'))
+        return JsonResponse(lista, safe=False)
+
+    return HttpResponse('error')
+
+
+@login_required
+def actualizarApercibimiento(request):
+    if request.GET and request.is_ajax():
+        id = request.GET['id']
+        apercibimiento = Apercibimiento.objects.filter(id=id).first()
+        apercibimiento.activo = not apercibimiento.activo
+        apercibimiento.save()
+
+        periodo = request.GET['periodo']
+        curso = request.GET['curso']
+        alumno = request.GET['alumno']
+        if (id and periodo and curso and alumno):
+            lista = list(Apercibimiento.objects.values("id", "alumno", "periodo_academico", "unidad", "materia", "fecha_inicio", "fecha_fin", "activo").distinct().filter(periodo_academico=periodo,
+                                                                               unidad=curso, alumno=alumno).order_by('fecha_inicio', 'materia'))
+            return JsonResponse(lista, safe=False)
+
+    return HttpResponse('error')
 
 @login_required
 def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):

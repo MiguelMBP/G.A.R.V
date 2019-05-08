@@ -22,3 +22,7 @@ def iterate_pdf(extracted):
 
     for file in files:
         pdf_to_csv(os.path.join(extracted, file))
+
+    subfolders = [f.path for f in os.scandir(extracted) if f.is_dir()]
+    for folder in subfolders:
+        iterate_pdf(folder)

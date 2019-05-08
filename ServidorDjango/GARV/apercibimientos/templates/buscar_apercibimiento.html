@@ -3,49 +3,51 @@
 {% load static %}
 
 {% block content %}
-<form class="form-signin">
-    <h1 class="h3 mb-3 font-weight-normal">Buscar Apercibimientos</h1>
-    <label for="inputUnidad" class="sr-only">Unidad</label>
-    <input type="text" id="inputUnidad" class="form-control" placeholder="Unidad" required autofocus>
-    <label for="inputAlumno" class="sr-only">Password</label>
-    <input id="inputAlumno" class="form-control" placeholder="Alumno" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Buscar</button>
+<form class="form-signin" id="filtro" >
+    <h1 class="h3 mb-3 font-weight-normal" style="width: 150%; margin-left: -20%;">Modificación de Apercibimientos</h1>
+    <div class="form-group" style="text-align: left;">
+        <label for="periodoSelect">Periodo Academico</label>
+        <select class="form-control" id="periodoSelect" onclick="">
+            <option value="" selected disabled hidden>Elegir Periodo</option>
+            {% for year in years %}
+                <option value="{{ year.periodo_academico }}">{{ year.periodo_academico }}/{{ year.periodo_academico|add:1 }}</option>
+            {% endfor %}
+
+        </select>
+    </div>
+    <div class="form-group" style="text-align: left;">
+        <label for="cursoSelect">Curso</label>
+        <select class="form-control" id="cursoSelect">
+            <option value="" selected disabled hidden>Elegir Curso</option>
+        </select>
+    </div>
+    <div class="form-group" style="text-align: left;">
+        <label for="alumnoSelect">Alumno</label>
+        <select class="form-control" id="alumnoSelect">
+            <option value="" selected disabled hidden>Elegir Alumno</option>
+        </select>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" id="botonFiltrarApercibimiento" type="button" onclick="">Buscar</button>
 </form>
 
-<table class="tabla-apercibimientos">
+<table class="table" id="tabla_apercibimientos">
+    <thead>
+        <tr>
+            <th>Alumno</th>
+            <th>Periodo Academico</th>
+            <th>Curso</th>
+            <th>Materia</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th colspan="2">Estado</th>
 
-    <tr style="border-bottom: 1px solid black">
-        <th>Alumno</th>
-        <th>Periodo Academico</th>
-        <th>Curso</th>
-        <th>Unidad</th>
-        <th>Materia</th>
-        <th>Fecha Inicio</th>
-        <th>Fecha Fin</th>
-        <th>H. Justificadas</th>
-        <th>% Justificado</th>
-        <th>H. Injustificadas</th>
-        <th>% Injustificado</th>
-        <th>Retrasos</th>
-        <th>Activo</th>
+        </tr>
+    </thead>
 
-    </tr>
-    {% for apercibimiento in apercibimientos %}
-    <a><tr style="border-bottom: 1px solid black">
-        <td>{{ apercibimiento.alumno }}</td>
-        <td>{{ apercibimiento.periodo_academico }}</td>
-        <td>{{ apercibimiento.curso }}</td>
-        <td>{{ apercibimiento.unidad }}</td>
-        <td>{{ apercibimiento.materia }}</td>
-        <td>{{ apercibimiento.fecha_inicio }}</td>
-        <td>{{ apercibimiento.fecha_fin }}</td>
-        <td>{{ apercibimiento.horas_justificadas }}</td>
-        <td>{{ apercibimiento.porcentaje_justificado }}%</td>
-        <td>{{ apercibimiento.horas_injustificadas }}</td>
-        <td>{{ apercibimiento.porcentaje_injustificado }}%</td>
-        <td>{{ apercibimiento.retrasos }}</td>
-        <td>{{ apercibimiento.activo }}</td>
-    </tr></a>
-    {% endfor %}
+    <tbody>
+
+    </tbody>
 </table>
+
+<script src="{% static 'js/filtro.js' %}"></script>
 {% endblock %}
