@@ -49,17 +49,6 @@ def subir_pdf(request):
     return render(request, 'list.html', {'documents': documents, 'form': form})
 
 
-@login_required
-def mostrarApercibimientos(request):
-    apercibimientos = Apercibimiento.objects.all()
-    paginator = Paginator(apercibimientos, 100)
-
-    page = request.GET.get('page')
-    lista = paginator.get_page(page)
-
-    return render(request, 'apercibimientos.html', {'lista': lista})
-
-
 def a_login(request):
     msg = []
     if request.method == 'POST':
@@ -126,8 +115,11 @@ def sacarApercibimientos(request):
 def sacarMeses(request):
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
-        lista = list(Apercibimiento.objects.annotate(month=TruncMonth('fecha_inicio')).values('month').distinct().filter(periodo_academico=periodo).order_by('month'))
-
+        resultados = list(Apercibimiento.objects.values('fecha_inicio').distinct().filter(periodo_academico=periodo))
+        lista = []
+        for resultado in resultados:
+            lista.append(resultado['fecha_inicio'].month)
+        print(lista)
         return JsonResponse(lista, safe=False)
 
 

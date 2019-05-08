@@ -27,9 +27,8 @@ document.getElementById('informes').periodoSelect.onchange = function () {
             $('#mesSelect').find('option').remove().end().append('<option value="" selected disabled hidden>Elegir Mes</option>');
 
             for (var i = 0, len = respuesta.length; i<len; i++) {
-                var unidad = respuesta[i];
-                var nombre = unidad['month']
-                $('#mesSelect').append(new Option(nombre, numeroAMes(nombre)));
+                var mes = respuesta[i];
+                $('#mesSelect').append(new Option(numeroAMes(mes), mes));
             }
 
         },
@@ -48,6 +47,7 @@ document.getElementById('informes').mesSelect.onchange = function () {
         success: function(respuesta) {
             $('#cursoSelect').find('option').remove().end().append('<option value="" selected disabled hidden>Elegir Curso</option>');
             for (var i = 0, len = respuesta.length; i<len; i++) {
+
                 var curso = respuesta[i];
                 var nombre = curso['unidad']
                 $('#cursoSelect').append(new Option(nombre, nombre));
@@ -82,27 +82,21 @@ document.getElementById('botonInformes').onclick = function () {
     mes = $("#mesSelect").val(),
     tipo = $("#tipoSelect").val();
 
-    if (tipo == 1) {
-        window.location.replace("informeResumenApercibimiento/" + periodo + "/" + mes + "/" + curso);
+    if (periodo != null && curso != null && mes != null && tipo != null) {
+        if (tipo == 1) {
+            window.open("informeResumenApercibimiento/" + periodo + "/" + mes + "/" + curso);
 
-    } else if (tipo == 2) {
-        minimo = $("#minimoApercibimientos").val()
-        window.location.replace("informeNumeroApercibimiento" + periodo + "/" + mes + "/" + curso + "/" + minimo);
+        } else if (tipo == 2) {
+            minimo = $("#minimoApercibimientos").val()
+            if (minimo != null) {
+                window.open("informeNumeroApercibimiento/" + periodo + "/" + mes + "/" + curso + "/" + minimo, '_blank');
+            }
+        } else if (tipo == 3) {
+            window.open("informeApercibimientoIndividual/" + periodo + "/" + mes + "/" + curso);
 
-    } else if (tipo == 3) {
-        window.location.replace("informeApercibimientoIndividual" + periodo + "/" + mes + "/" + curso);
-
-    }
-    url = '/apercibimientos/getApercibimientos'
-    $.ajax({
-        url: url + '?periodo=' + periodo + '&curso=' + curso + '&alumno=' + alumno,
-        success: function(respuesta) {
-           rellenarTabla(respuesta)
-        },
-        error: function() {
-            console.log("No se ha podido obtener la información");
         }
-    });
+    }
+
 }
 
 
@@ -122,8 +116,8 @@ function numeroAMes(mes) {
     month_name[10] = "Noviembre";
     month_name[11] = "Deciembre";
 
-    console.log(month_name[mes])
-    return month_name[mes]
+    console.log(month_name[mes-1])
+    return month_name[mes-1]
     //return mes
 }
 
