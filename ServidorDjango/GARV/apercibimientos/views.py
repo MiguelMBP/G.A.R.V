@@ -15,7 +15,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from weasyprint import HTML
 
-from .models import Document, Apercibimiento
+from .models import Document, Apercibimiento, AsignaturasEspeciales
 from .forms import DocumentForm
 from .extraer_zip import extractZip
 from .analisis_pdf import pdf_to_csv
@@ -71,10 +71,63 @@ def buscarApercibimiento(request):
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'buscar_apercibimiento.html', {'years': periodo})
 
+
 @login_required
 def informeApercibimientos(request):
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'menuInformes.html', {'years': periodo})
+
+
+@login_required
+def asignaturasEspeciales(request):
+    lista = AsignaturasEspeciales.objects.all()
+    return render(request, 'asignaturasEspeciales.html', {'lista': lista})
+
+
+@login_required
+def sacarAsignaturas(request):
+    if request.is_ajax():
+        lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
+        return JsonResponse(lista, safe=False)
+    else:
+        return HttpResponse('error')
+
+
+@login_required
+def añadirAsignaturas(request):
+    if request.GET and request.is_ajax():
+        materia = request.GET['materia']
+        asignatura = AsignaturasEspeciales(materia=materia)
+        asignatura.save()
+        lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
+        return JsonResponse(lista, safe=False)
+    else:
+        return HttpResponse('error')
+
+
+@login_required
+def modificarAsignaturas(request):
+    if request.GET and request.is_ajax():
+        id = request.GET['id']
+        materia = request.GET['materia']
+        asignatura = AsignaturasEspeciales.objects.filter(id=id).first()
+        asignatura.materia = materia
+        asignatura.save()
+        lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
+        return JsonResponse(lista, safe=False)
+    else:
+        return HttpResponse('error')
+
+
+@login_required
+def eliminarAsignaturas(request):
+    if request.GET and request.is_ajax():
+        id = request.GET['id']
+        asignatura = AsignaturasEspeciales.objects.filter(id=id).delete()
+        lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
+        return JsonResponse(lista, safe=False)
+    else:
+        return HttpResponse('error')
 
 
 @login_required

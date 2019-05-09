@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<form class="form-signin" id="informes" style="text-align: left;">
+    <h1 class="h3 mb-3 font-weight-normal" style="width: 150%;">Asignaturas Especiales</h1>
+    <p>Asignaturas que requieren de un 50% de faltas injustificadas para que
+        se asigne un apercibimiento</p>
+
+    <h2 class="h4 mb-3 font-weight-normal" style="padding-top: 1em">Añadir Asignatura</h2>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Nombre de la asignatura"
+               aria-label="Nombre de la asignatura"
+               aria-describedby="basic-addon2" id="add">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="add_asignatura">Añadir</button>
+        </div>
+    </div>
+
+    <h2 class="h4 mb-3 font-weight-normal" style="padding-top: 1em">Lista de Asignaturas</h2>
+    <section id="lista">
+    {% for i in lista %}
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Nombre de la asignatura" aria-label="Nombre de la asignatura"
+                   aria-describedby="basic-addon2" value="{{ i.materia }}" id="materia{{ i.id }}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="modificar_{{ i.id }}" onclick="modificar(this)">Modificar</button>
+                <button class="btn btn-outline-secondary" type="button" id="eliminar_{{ i.id }}" onclick="eliminar(this)">Eliminar</button>
+            </div>
+        </div>
+    {% endfor %}
+        </section>
+
+</form>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'js/asignaturas.js' %}"></script>
+{% endblock %}
