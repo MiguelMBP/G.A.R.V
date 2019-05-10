@@ -5,6 +5,7 @@ from calendar import month
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Count
 from django.db.models.functions import TruncMonth
 from django.shortcuts import render
 
@@ -327,8 +328,8 @@ def informeResumenApercibimiento(request, anno, mes, unidad):
                 #meses en los que ha faltado cada alumno por asignatura
                 resultado = Apercibimiento.objects.annotate(month=TruncMonth('fecha_inicio')).values('month').filter(alumno=alumno["alumno"], materia=materia['materia'], unidad=materia['unidad'], periodo_academico=anno, fecha_inicio__range=[fechacurso, fecha], activo=True).order_by('month')
                 listamat.append(ApercibimientoMateria(alumno=alumno["alumno"], numero=len(resultado), meses=listarMeses(resultado)))
-
-            lista.append(InformeResumen(materia=materia['materia'], alumnos=listamat))
+            if len(listamat) > 0:
+                lista.append(InformeResumen(materia=materia['materia'], alumnos=listamat))
 
         listacursos.append(InformeResumenCurso(unidad=curso['unidad'], fecha=sacarFecha(anno, mes), materias=lista))
 
@@ -347,6 +348,22 @@ def informeResumenApercibimiento(request, anno, mes, unidad):
         response.write(output.read())
 
     return response
+
+
+@login_required
+def estadisticasApercibimientos(request, periodo, inicio, fin):
+    if 9 <= inicio <= 12:
+        fechainicio = datetime.datetime(periodo, inicio, 1)
+    else:
+        fechainicio = datetime.datetime(periodo + 1, inicio, 1)
+
+    if 9 <= fin <= 12:
+        fechafin = datetime.datetime(periodo, fin, 28)
+    else:
+        fechafin = datetime.datetime(periodo + 1, fin, 28)
+
+    cursos = Apercibimiento.objects.values('unidad').annotate(count=Count('id')).filter(periodo_academico=periodo, fecha_inicio__range=[fechainicio, fechafin], activo=True).order_by("unidad")
+    print(cursos)
 
 
 def sacarFecha(anno, mes):

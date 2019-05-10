@@ -1,3 +1,4 @@
+import csv
 from base64 import b64decode, b64encode
 
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Profesor, Visita
+from .models import Profesor, Visita, Empresa, Alumno
 
 
 @login_required
@@ -36,7 +37,8 @@ def createuser(request):
 
         return HttpResponse('failure')
 
-#@login_required
+
+@login_required
 def registervisit(request):
     if request.method == "POST":
         userId = request.POST.get('userId', None)
@@ -55,7 +57,7 @@ def registervisit(request):
         return HttpResponse('failure')
 
 
-#@login_required
+@login_required
 def sendimage(request):
     if request.method == "POST":
         id = request.POST.get('id', None)
@@ -70,7 +72,7 @@ def sendimage(request):
         return HttpResponse('failure')
 
 
-#@login_required
+@login_required
 def changePass(request):
     if request.method == "POST":
         username = request.POST.get('username', None)
@@ -85,3 +87,27 @@ def changePass(request):
 
         return HttpResponse('failure')
 
+
+@login_required
+def resumenVisitas(request):
+    if request.GET and 'valor' in request.GET:
+        valor = request.GET['valor']
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="visitas.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(["Nombre", "Distancia Total", "Importe"])
+        profesores = Visita.objects.values('profesor').distinct()
+
+        for profesor in profesores:
+            visitas = Visita.objects.all().filter(profesor=profesor['profesor'])
+            profesorObj = Profesor.objects.all().filter(id=profesor['profesor'])
+            distanciaTotal = 0
+            for visita in visitas:
+                empresa = Alumno.objects.values('id').filter(id=visita.alumno.id)
+                distancia = Empresa.objects.values('distancia').filter(id=empresa[0]['id'])
+                distanciaTotal += distancia[0]['distancia']
+            importe = distanciaTotal * float(valor)
+            writer.writerow([profesorObj[0].nombre, distanciaTotal, importe])
+
+        return response

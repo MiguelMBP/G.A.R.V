@@ -22,4 +22,5 @@ urlpatterns = [
     path('informe/informeNumeroApercibimiento/<int:anno>/<int:mes>/<str:unidad>/<int:minimo>', views.informeNumeroApercibimiento, name="informeNumeroApercibimiento"),
     path('informe/informeApercibimientoIndividual/<int:anno>/<int:mes>/<str:unidad>', views.informeApercibimientoIndividual, name="informeApercibimientoIndividual"),
     path('informe/informeResumenApercibimiento/<int:anno>/<int:mes>/<str:unidad>', views.informeResumenApercibimiento, name="informeResumenApercibimiento"),
+    path('estadisticasApercibimiento/<int:periodo>/<int:inicio>/<int:fin>', views.estadisticasApercibimientos, name="estadisticasApercibimiento"),
 ]
