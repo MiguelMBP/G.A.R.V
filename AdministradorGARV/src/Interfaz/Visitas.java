@@ -5,13 +5,20 @@
  */
 package Interfaz;
 
+import Cliente.ConectorApercibimientos;
 import Cliente.ConectorVisitas;
 import Util.ConfigurationFileException;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
@@ -112,6 +119,11 @@ public class Visitas extends javax.swing.JFrame {
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Informe");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -209,12 +221,31 @@ public class Visitas extends javax.swing.JFrame {
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
             } catch (Exception e) {
-                
+
             }
         }
 
 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            String[] parametros = leerConfiguración();
+            double importe = Double.parseDouble(JOptionPane.showInputDialog("Importe por kilometro"));
+            String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/resumenVisitas?valor="+importe;
+
+            Desktop.getDesktop().browse(new URL(url).toURI());
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El importe debe de ser un número");
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,5 +327,27 @@ public class Visitas extends javax.swing.JFrame {
             t.addRow(elementos);
         }
 
+    }
+    
+    private String[] leerConfiguración(){
+        String[] parametros = new String[2];
+
+        try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parametro = line.split(":");
+                if (parametro[0].equalsIgnoreCase("django_address")) {
+                    parametros[0] = parametro[1];
+                } else if (parametro[0].equalsIgnoreCase("django_port")) {
+                    parametros[1] = parametro[1];
+                }
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
+        return parametros;
     }
 }

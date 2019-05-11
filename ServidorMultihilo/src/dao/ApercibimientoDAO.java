@@ -358,10 +358,10 @@ public class ApercibimientoDAO {
 		return lista;
 	}
 	
-	public List<Apercibimiento> mostrarApercibimientosFiltroAño(String año) {
+	public List<Apercibimiento> mostrarApercibimientosFiltroAno(String ano) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + año;
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + ano;
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {
@@ -393,10 +393,10 @@ public class ApercibimientoDAO {
 		return apercibimientos;
 	}
 	
-	public List<Apercibimiento> mostrarApercibimientosFiltroCurso(String año, String curso) {
+	public List<Apercibimiento> mostrarApercibimientosFiltroCurso(String ano, String curso) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + año + " and unidad like '" + curso + "'";
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + ano + " and unidad like '" + curso + "'";
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {
@@ -428,10 +428,10 @@ public class ApercibimientoDAO {
 		return apercibimientos;
 	}
 	
-	public List<Apercibimiento> mostrarApercibimientosFiltroAlumno(String año, String curso, String alumno) {
+	public List<Apercibimiento> mostrarApercibimientosFiltroAlumno(String ano, String curso, String alumno) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + año + " and unidad like '" + curso + "' and alumno like '" + alumno + "'";
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + ano + " and unidad like '" + curso + "' and alumno like '" + alumno + "'";
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {

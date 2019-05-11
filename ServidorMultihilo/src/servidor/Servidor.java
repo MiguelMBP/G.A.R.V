@@ -13,7 +13,7 @@ public class Servidor {
 	public static void main(String[] args) throws IOException {
 		ServerSocket socketServidor = null;
 		boolean seguir = true;
-		String[] parametros = leerConfiguración();
+		String[] parametros = leerConfiguracion();
 		try {
 			socketServidor = new ServerSocket(Integer.parseInt(parametros[0]));
 		} catch (IOException e) {
@@ -35,7 +35,7 @@ public class Servidor {
 
 	}
 	
-	private static String[] leerConfiguración() {
+	private static String[] leerConfiguracion() {
         String[] parametros = new String[1];
 
         try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {

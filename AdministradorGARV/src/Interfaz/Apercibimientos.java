@@ -9,6 +9,7 @@ import Cliente.ConectorApercibimientos;
 import Util.ConfigurationFileException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ public class Apercibimientos extends javax.swing.JFrame {
      * Creates new form Apercibimientos
      */
     private List<String> cookies;
-
+    
     public Apercibimientos(List<String> cookies) {
         initComponents();
         setLocationRelativeTo(null);
@@ -196,15 +197,16 @@ public class Apercibimientos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jComboBoxAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBoxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -227,8 +229,8 @@ public class Apercibimientos extends javax.swing.JFrame {
         } else {
             try {
                 int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
-                String activoS = t.getValueAt(pos, 13).toString();
-                boolean activo = (activoS.equals("true")) ? true : false;
+                String activoS = t.getValueAt(pos, 7).toString();
+                boolean activo = (activoS.equals("true"));
                 ConectorApercibimientos cs = new ConectorApercibimientos();
                 List<Apercibimiento> apercibimientos = cs.desActivarApercibimiento(id, !activo);
                 rellenarTabla(apercibimientos);
@@ -265,11 +267,11 @@ public class Apercibimientos extends javax.swing.JFrame {
                 jComboBoxCurso.removeAllItems();
                 jComboBoxCurso.addItem("Todos");
                 jComboBoxCurso.setEnabled(false);
-
+                
                 jComboBoxAlumno.removeAllItems();
                 jComboBoxAlumno.addItem("Todos");
                 jComboBoxAlumno.setEnabled(false);
-
+                
                 rellenarTabla();
             } else {
                 try {
@@ -290,7 +292,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         int posCurso = jComboBoxCurso.getSelectedIndex();
         String año = jComboBoxAño.getItemAt(posAño);
         String curso = jComboBoxCurso.getItemAt(posCurso);
-
+        
         if (posAño != -1 && posCurso != -1) {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             if (curso.equalsIgnoreCase("todos")) {
@@ -298,7 +300,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                     jComboBoxAlumno.removeAllItems();
                     jComboBoxAlumno.addItem("Todos");
                     jComboBoxAlumno.setEnabled(false);
-
+                    
                     List<Apercibimiento> lista = cs.apercibimientosPorAño(año);
                     rellenarTabla(lista);
                 } catch (IOException ex) {
@@ -315,7 +317,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                 }
             }
         }
-
+        
 
     }//GEN-LAST:event_jComboBoxCursoActionPerformed
 
@@ -326,7 +328,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         String año = jComboBoxAño.getItemAt(posAño);
         String curso = jComboBoxCurso.getItemAt(posCurso);
         String alumno = jComboBoxAlumno.getItemAt(posAlumno);
-
+        
         if (posAño != -1 && posCurso != -1 && posAlumno != -1) {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             if (alumno.equalsIgnoreCase("todos")) {
@@ -407,7 +409,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         try {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
-
+            
             DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
             t.setRowCount(0);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -422,9 +424,8 @@ public class Apercibimientos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
     }
-
+    
     private void rellenarTabla(List<Apercibimiento> apercibimientos) {
-
         DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
         t.setRowCount(0);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -433,51 +434,58 @@ public class Apercibimientos extends javax.swing.JFrame {
             Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.isActivo()};
             t.addRow(elementos);
         }
-
+        
     }
-
+    
     private void rellenarAño() {
         try {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<String> año = cs.cargarAño();
-
+            jComboBoxAño.removeAllItems();
             for (int i = 0; i < año.size(); i++) {
                 jComboBoxAño.addItem(año.get(i));
             }
+            jComboBoxAño.setSelectedIndex(-1);
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
-
+        
     }
-
+    
     private void rellenarCurso() {
         try {
             int posAño = jComboBoxAño.getSelectedIndex();
-            ConectorApercibimientos cs = new ConectorApercibimientos();
-            List<String> cursos = cs.cargarCursosFiltro(jComboBoxAño.getItemAt(posAño));
-
-            for (int i = 0; i < cursos.size(); i++) {
-                jComboBoxCurso.addItem(cursos.get(i));
+            if (posAño != -1) {
+                ConectorApercibimientos cs = new ConectorApercibimientos();
+                List<String> cursos = cs.cargarCursosFiltro(jComboBoxAño.getItemAt(posAño));
+                jComboBoxCurso.removeAllItems();
+                for (int i = 0; i < cursos.size(); i++) {
+                    jComboBoxCurso.addItem(cursos.get(i));
+                }
+                jComboBoxCurso.setSelectedIndex(-1);
             }
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
-
+        
     }
-
+    
     private void rellenarAlumno() {
         try {
             int posAño = jComboBoxAño.getSelectedIndex();
             int posCurso = jComboBoxCurso.getSelectedIndex();
-            ConectorApercibimientos cs = new ConectorApercibimientos();
-            List<String> alumnos = cs.cargarAlumnoFiltro(jComboBoxAño.getItemAt(posAño), jComboBoxCurso.getItemAt(posCurso));
-
-            for (int i = 0; i < alumnos.size(); i++) {
-                jComboBoxAlumno.addItem(alumnos.get(i));
+            if (posAño != -1 && posCurso != -1) {
+                ConectorApercibimientos cs = new ConectorApercibimientos();
+                List<String> alumnos = cs.cargarAlumnoFiltro(jComboBoxAño.getItemAt(posAño), jComboBoxCurso.getItemAt(posCurso));
+                jComboBoxAlumno.removeAllItems();
+                for (int i = 0; i < alumnos.size(); i++) {
+                    jComboBoxAlumno.addItem(alumnos.get(i));
+                }
+                jComboBoxAlumno.setSelectedIndex(-1);
             }
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");

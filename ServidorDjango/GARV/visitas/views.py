@@ -100,13 +100,13 @@ def resumenVisitas(request):
         profesores = Visita.objects.values('profesor').distinct()
 
         for profesor in profesores:
-            visitas = Visita.objects.all().filter(profesor=profesor['profesor'])
+            visitas = Visita.objects.all().filter(profesor=profesor['profesor'], validada=True)
             profesorObj = Profesor.objects.all().filter(id=profesor['profesor'])
-            distanciaTotal = 0
+            distanciaTotal = 0.0
             for visita in visitas:
-                empresa = Alumno.objects.values('id').filter(id=visita.alumno.id)
-                distancia = Empresa.objects.values('distancia').filter(id=empresa[0]['id'])
-                distanciaTotal += distancia[0]['distancia']
+                empresa = Empresa.objects.all().filter(id=visita.alumno.empresa.id)
+                distancia = empresa[0].distancia
+                distanciaTotal += float(distancia)
             importe = distanciaTotal * float(valor)
             writer.writerow([profesorObj[0].nombre, distanciaTotal, importe])
 

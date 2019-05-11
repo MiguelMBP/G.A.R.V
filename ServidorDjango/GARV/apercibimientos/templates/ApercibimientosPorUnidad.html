@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+     h1 {
+        text-align: center;
+        margin-bottom: 18px;
+        font-size: 15px;
+     }
+
+     h3 {
+        font-size: 13px;
+        text-align: center;
+     }
+table {
+
+        width: 100%;
+        border-spacing: 0 2em;
+        text-align: center;
+
+     }
+
+     td, th {
+       text-align: left;
+
+     }
+     tr {
+
+     }
+     body {
+        font-size: 10px;
+     }
+     hr {
+        margin: 4em 0 3em 0;
+     }
+
+
+    </style>
+</head>
+<body>
+
+<h1>APERCIBIMIENTOS</h1>
+<h3>I.E.S FERNANDO AGUILAR QUIGNON</h3>
+<h3>JEFATURA DE ESTUDIOS</h3>
+<h3><u>NÚMERO DE APERCIBIMIENTOS POR CURSO</u></h3>
+<h3>PERIODO DE FECHAS: {{ inicio }} - {{ fin }}</h3>
+<hr>
+
+<table>
+    <tr>
+        <th>Curso</th>
+        <th>Num Apercibimientos</th>
+    </tr>
+    {% for curso in lista %}
+    <a>
+        <tr>
+            <td>{{ curso.unidad }}</td>
+            <td>{{ curso.count }}</td>
+        </tr>
+    </a>
+    {% endfor %}
+</body>
+</html>

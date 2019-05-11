@@ -31,7 +31,7 @@ public class DBConnection {
  
    /** Constructor de DbConnection */
    public DBConnection() {
-	  String[] parametros = leerConfiguración();
+	  String[] parametros = leerConfiguracion();
 	  String bd = parametros[0];
 	  String login = parametros[1];
 	  String password = parametros[2];
@@ -63,7 +63,7 @@ public class DBConnection {
       connection = null;
    }
    
-   private String[] leerConfiguración() {
+   private String[] leerConfiguracion() {
        String[] parametros = new String[4];
 
        try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {

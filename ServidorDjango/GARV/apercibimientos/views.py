@@ -205,6 +205,7 @@ def actualizarApercibimiento(request):
 
     return HttpResponse('error')
 
+
 @login_required
 def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
     if 9 <= mes <= 12:
@@ -355,15 +356,30 @@ def estadisticasApercibimientos(request, periodo, inicio, fin):
     if 9 <= inicio <= 12:
         fechainicio = datetime.datetime(periodo, inicio, 1)
     else:
-        fechainicio = datetime.datetime(periodo + 1, inicio, 1)
+        fechainicio = datetime.datetime(periodo+1, inicio, 1)
 
     if 9 <= fin <= 12:
         fechafin = datetime.datetime(periodo, fin, 28)
     else:
-        fechafin = datetime.datetime(periodo + 1, fin, 28)
+        fechafin = datetime.datetime(periodo+1, fin, 28)
 
     cursos = Apercibimiento.objects.values('unidad').annotate(count=Count('id')).filter(periodo_academico=periodo, fecha_inicio__range=[fechainicio, fechafin], activo=True).order_by("unidad")
-    print(cursos)
+
+    html_string = render_to_string('ApercibimientosPorUnidad.html', {'lista': cursos, 'inicio': sacarFecha(periodo, inicio), 'fin': sacarFecha(periodo, fin)})
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+
+    response = HttpResponse(content_type='application/pdf;')
+    response['Content-Disposition'] = 'inline; filename=ApercibimientosPorUnidad.pdf'
+    response['Content-Transfer-Encoding'] = 'binary'
+
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        output = open(output.name, 'rb')
+        response.write(output.read())
+
+    return response
 
 
 def sacarFecha(anno, mes):

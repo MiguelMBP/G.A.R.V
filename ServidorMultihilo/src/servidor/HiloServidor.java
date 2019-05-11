@@ -123,7 +123,7 @@ public class HiloServidor extends Thread {
 				getAlumnosFiltro(entrada, salida);
 				break;
 			case 26: 
-				getApercibimientosPorAño(entrada, salida);
+				getApercibimientosPorAno(entrada, salida);
 				break;
 			case 27:
 				getApercibimientoPorCurso(entrada, salida);
@@ -132,7 +132,7 @@ public class HiloServidor extends Thread {
 				getApercibimientoPorAlumno(entrada, salida);
 				break;
 			case 29:
-				cambiarContraseña(entrada, salida);
+				cambiarContrasena(entrada, salida);
 				break;
 			default:
 				System.out.println(op);
@@ -145,7 +145,7 @@ public class HiloServidor extends Thread {
 
 	}
 
-	private void cambiarContraseña(ObjectInputStream entrada, ObjectOutputStream salida) {
+	private void cambiarContrasena(ObjectInputStream entrada, ObjectOutputStream salida) {
 		try {
 			DjangoConnection dc = new DjangoConnection();
 			String username = entrada.readUTF();
@@ -166,10 +166,10 @@ public class HiloServidor extends Thread {
 	private void getApercibimientoPorAlumno(ObjectInputStream entrada, ObjectOutputStream salida) {
 		try {
 			ApercibimientoDAO dao = new ApercibimientoDAO();
-			String año = entrada.readUTF();
+			String ano = entrada.readUTF();
 			String curso = entrada.readUTF();
 			String alumno = entrada.readUTF();
-			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroAlumno(año, curso, alumno);
+			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroAlumno(ano, curso, alumno);
 			
 
 			String json = apercibimientosJson(apercibimientos);
@@ -183,9 +183,9 @@ public class HiloServidor extends Thread {
 	private void getApercibimientoPorCurso(ObjectInputStream entrada, ObjectOutputStream salida) {
 		try {
 			ApercibimientoDAO dao = new ApercibimientoDAO();
-			String año = entrada.readUTF();
+			String ano = entrada.readUTF();
 			String curso = entrada.readUTF();
-			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroCurso(año, curso);
+			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroCurso(ano, curso);
 			
 
 			String json = apercibimientosJson(apercibimientos);
@@ -196,11 +196,11 @@ public class HiloServidor extends Thread {
 		
 	}
 
-	private void getApercibimientosPorAño(ObjectInputStream entrada, ObjectOutputStream salida) {
+	private void getApercibimientosPorAno(ObjectInputStream entrada, ObjectOutputStream salida) {
 		try {
 			ApercibimientoDAO dao = new ApercibimientoDAO();
-			String año = entrada.readUTF();
-			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroAño(año);
+			String ano = entrada.readUTF();
+			List<Apercibimiento> apercibimientos = dao.mostrarApercibimientosFiltroAno(ano);
 			
 
 			String json = apercibimientosJson(apercibimientos);

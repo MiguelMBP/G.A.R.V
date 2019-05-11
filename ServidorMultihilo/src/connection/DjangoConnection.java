@@ -30,7 +30,7 @@ public class DjangoConnection {
 		HttpURLConnection connection = null;
 		boolean existe = false;
 		List<String> cookies = new ArrayList<>();
-		String[] parametros = leerConfiguración();
+		String[] parametros = leerConfiguracion();
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/accounts/login/";
 			String charset = "UTF-8";
@@ -104,7 +104,7 @@ public class DjangoConnection {
 			String correo, String dni, String nombre, String apellidos, String curso) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
-		String[] parametros = leerConfiguración();
+		String[] parametros = leerConfiguracion();
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/createuser/";
@@ -173,7 +173,7 @@ public class DjangoConnection {
 		HttpURLConnection connection = null;
 		boolean creado = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String[] parametros = leerConfiguración();
+		String[] parametros = leerConfiguracion();
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/registervisit/";
@@ -240,7 +240,7 @@ public class DjangoConnection {
 		boolean creado = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String responseBody = null;
-		String[] parametros = leerConfiguración();
+		String[] parametros = leerConfiguracion();
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/sendimage/";
@@ -299,7 +299,7 @@ public class DjangoConnection {
 		return responseBody;
 	}
 
-	private String[] leerConfiguración() {
+	private String[] leerConfiguracion() {
 		String[] parametros = new String[2];
 
 		try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
@@ -324,7 +324,7 @@ public class DjangoConnection {
 	public boolean changePass(String username, String password, String crsftoken, String sessionId) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
-		String[] parametros = leerConfiguración();
+		String[] parametros = leerConfiguracion();
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/changePassword/";
@@ -388,7 +388,7 @@ public class DjangoConnection {
 		HttpURLConnection connection = null;
 		boolean existe = false;
 		List<String> cookies = new ArrayList<>();
-		String[] parametros = leerConfiguración();
+		String[] parametros = leerConfiguracion();
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/accounts/login/";
 			String charset = "UTF-8";

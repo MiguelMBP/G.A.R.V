@@ -82,18 +82,36 @@ document.getElementById('botonInformes').onclick = function () {
     mes = $("#mesSelect").val(),
     tipo = $("#tipoSelect").val();
 
-    if (periodo != null && curso != null && mes != null && tipo != null) {
-        if (tipo == 1) {
-            window.open("informeResumenApercibimiento/" + periodo + "/" + mes + "/" + curso);
+    if($('#todosCursos').is(':checked')) {
+        if (periodo != null && mes != null && tipo != null) {
+            if (tipo == 1) {
+                window.open("informeResumenApercibimiento/" + periodo + "/" + mes + "/todos");
 
-        } else if (tipo == 2) {
-            minimo = $("#minimoApercibimientos").val()
-            if (minimo != null) {
-                window.open("informeNumeroApercibimiento/" + periodo + "/" + mes + "/" + curso + "/" + minimo, '_blank');
+            } else if (tipo == 2) {
+                minimo = $("#minimoApercibimientos").val()
+                if (minimo != null) {
+                    window.open("informeNumeroApercibimiento/" + periodo + "/" + mes + "/todos/" + minimo, '_blank');
+                }
+            } else if (tipo == 3) {
+                window.open("informeApercibimientoIndividual/" + periodo + "/" + mes + "/todos");
+
             }
-        } else if (tipo == 3) {
-            window.open("informeApercibimientoIndividual/" + periodo + "/" + mes + "/" + curso);
+        }
 
+    } else{
+        if (periodo != null && curso != null && mes != null && tipo != null) {
+            if (tipo == 1) {
+                window.open("informeResumenApercibimiento/" + periodo + "/" + mes + "/" + curso);
+
+            } else if (tipo == 2) {
+                minimo = $("#minimoApercibimientos").val()
+                if (minimo != null) {
+                    window.open("informeNumeroApercibimiento/" + periodo + "/" + mes + "/" + curso + "/" + minimo, '_blank');
+                }
+            } else if (tipo == 3) {
+                window.open("informeApercibimientoIndividual/" + periodo + "/" + mes + "/" + curso);
+
+            }
         }
     }
 
