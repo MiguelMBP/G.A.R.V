@@ -205,4 +205,50 @@ public class ConectorUsuarios implements Constants {
         }
         return parametros;
     }
+
+    public boolean cambiarContraseña(List<String> cookies, String usuario, String contraseña)  throws ConfigurationFileException, FileNotFoundException, IOException {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        boolean cambiado = false;
+
+        try {
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
+        } catch (IOException e) {
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
+        }
+        try {
+            salida.writeInt(29);
+            salida.flush();
+            salida.writeUTF(usuario);
+            salida.flush();
+            salida.writeUTF(contraseña);
+            salida.flush();
+            salida.writeUTF(cookies.get(0));
+            salida.flush();
+            salida.writeUTF(cookies.get(1));
+            salida.flush();
+
+            cambiado = entrada.readBoolean();
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+
+        return cambiado;
+    }
 }

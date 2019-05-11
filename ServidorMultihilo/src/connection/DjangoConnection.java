@@ -31,6 +31,8 @@ public class DjangoConnection {
 		boolean existe = false;
 		List<String> cookies = new ArrayList<>();
 		String[] parametros = leerConfiguracion();
+		String cookiesString="";
+		
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/accounts/login/";
 			String charset = "UTF-8";
@@ -58,6 +60,7 @@ public class DjangoConnection {
 					if (cookie.getName().equals("csrftoken")) {
 						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
 					}
+					cookiesString+=cookie.getName()+"="+cookie.getValue()+";";
 				}
 			}
 
@@ -65,6 +68,7 @@ public class DjangoConnection {
 			connection.setDoOutput(true);
 			connection.setRequestProperty("Accept-Charset", charset);
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+			connection.setRequestProperty("Cookie", cookiesString); 
 
 			try (OutputStream output = connection.getOutputStream()) {
 				output.write(query.getBytes(charset));
@@ -95,6 +99,8 @@ public class DjangoConnection {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			connection.disconnect();
 		}
 
 		return cookies;
@@ -105,6 +111,7 @@ public class DjangoConnection {
 		HttpURLConnection connection = null;
 		boolean creado = false;
 		String[] parametros = leerConfiguracion();
+		String cookies="";
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/createuser/";
@@ -121,7 +128,7 @@ public class DjangoConnection {
 
 			// conectar(usuario, contrasena, cookieManager);
 
-			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
+			HttpCookie csrf = new HttpCookie("csrftoken", csrftoken);
 			csrf.setPath("/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
@@ -140,6 +147,7 @@ public class DjangoConnection {
 					if (cookie.getName().equals("csrftoken")) {
 						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
 					}
+					cookies+=cookie.getName()+"="+cookie.getValue()+";";
 				}
 			}
 
@@ -147,6 +155,7 @@ public class DjangoConnection {
 			connection.setDoOutput(true);
 			connection.setRequestProperty("Accept-Charset", charset);
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+			connection.setRequestProperty("Cookie", cookies); 
 
 			try (OutputStream output = connection.getOutputStream()) {
 				output.write(query.getBytes(charset));
@@ -174,6 +183,7 @@ public class DjangoConnection {
 		boolean creado = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String[] parametros = leerConfiguracion();
+		String cookies = "";
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/registervisit/";
@@ -187,7 +197,7 @@ public class DjangoConnection {
 			CookieManager cookieManager = new CookieManager();
 			CookieHandler.setDefault(cookieManager);
 
-			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
+			HttpCookie csrf = new HttpCookie("csrftoken", visita.getCsrfToken());
 			csrf.setPath("/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
@@ -206,6 +216,7 @@ public class DjangoConnection {
 					if (cookie.getName().equals("csrftoken")) {
 						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
 					}
+					cookies+=cookie.getName()+"="+cookie.getValue()+";";
 				}
 			}
 
@@ -213,6 +224,7 @@ public class DjangoConnection {
 			connection.setDoOutput(true);
 			connection.setRequestProperty("Accept-Charset", charset);
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+			connection.setRequestProperty("Cookie", cookies); 
 
 			try (OutputStream output = connection.getOutputStream()) {
 				output.write(query.getBytes(charset));
@@ -241,6 +253,7 @@ public class DjangoConnection {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String responseBody = null;
 		String[] parametros = leerConfiguracion();
+		String cookies = "";
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/sendimage/";
@@ -251,7 +264,7 @@ public class DjangoConnection {
 			CookieManager cookieManager = new CookieManager();
 			CookieHandler.setDefault(cookieManager);
 
-			HttpCookie csrf = new HttpCookie("csrftoken", getCsrf());
+			HttpCookie csrf = new HttpCookie("csrftoken", crsftoken);
 			csrf.setPath("/");
 			csrf.setDomain(parametros[0]);
 			csrf.setHttpOnly(true);
@@ -270,6 +283,7 @@ public class DjangoConnection {
 					if (cookie.getName().equals("csrftoken")) {
 						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
 					}
+					cookies+=cookie.getName()+"="+cookie.getValue()+";";
 				}
 			}
 
@@ -277,6 +291,7 @@ public class DjangoConnection {
 			connection.setDoOutput(true);
 			connection.setRequestProperty("Accept-Charset", charset);
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+			connection.setRequestProperty("Cookie", cookies);
 
 			try (OutputStream output = connection.getOutputStream()) {
 				output.write(query.getBytes(charset));
@@ -329,6 +344,7 @@ public class DjangoConnection {
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/changePassword/";
 			String charset = "UTF-8";
+			String cookies="";
 
 			String query = String.format("username=%s&password=%s", URLEncoder.encode(username + "", charset),
 					URLEncoder.encode(password, charset));
@@ -355,6 +371,7 @@ public class DjangoConnection {
 					if (cookie.getName().equals("csrftoken")) {
 						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
 					}
+					cookies+=cookie.getName()+"="+cookie.getValue()+";";
 				}
 			}
 
@@ -362,6 +379,7 @@ public class DjangoConnection {
 			connection.setDoOutput(true);
 			connection.setRequestProperty("Accept-Charset", charset);
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+			connection.setRequestProperty("Cookie", cookies); 
 
 			try (OutputStream output = connection.getOutputStream()) {
 				output.write(query.getBytes(charset));
@@ -382,45 +400,5 @@ public class DjangoConnection {
 			e.printStackTrace();
 		}
 		return creado;
-	}
-
-	public String getCsrf() {
-		HttpURLConnection connection = null;
-		boolean existe = false;
-		List<String> cookies = new ArrayList<>();
-		String[] parametros = leerConfiguracion();
-		try {
-			String url = "http://" + parametros[0] + ":" + parametros[1] + "/accounts/login/";
-			String charset = "UTF-8";
-
-			final String COOKIES_HEADER = "Set-Cookie";
-
-			String csrftoken = "";
-			String sessionid = "";
-
-			CookieManager cookieManager = new CookieManager();
-			CookieHandler.setDefault(cookieManager);
-
-			connection = (HttpURLConnection) new URL(url).openConnection();
-			InputStream response = connection.getInputStream();
-
-			connection.disconnect();
-
-			connection = (HttpURLConnection) new URL("http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/login/")
-					.openConnection();
-
-			if (cookieManager.getCookieStore().getCookies().size() > 0) {
-				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
-					if (cookie.getName().equals("csrftoken")) {
-						return cookie.getValue();
-					}
-				}
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
-		return "";
 	}
 }

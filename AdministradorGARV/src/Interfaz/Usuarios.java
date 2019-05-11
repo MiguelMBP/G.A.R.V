@@ -25,7 +25,7 @@ public class Usuarios extends javax.swing.JFrame {
      * Creates new form Usuarios
      */
     private List<String> cookies;
-    
+
     public Usuarios(List<String> cookies) {
         initComponents();
         this.cookies = cookies;
@@ -103,10 +103,20 @@ public class Usuarios extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem6);
 
-        jMenuItem2.setText("Eliminar usuario");
+        jMenuItem2.setText("Cambiar contraseña");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuItem4.setText("Editar usuario");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
         jMenuBar1.add(jMenu3);
@@ -150,6 +160,23 @@ public class Usuarios extends javax.swing.JFrame {
         a.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        int pos = jTable1.getSelectedRow();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String usuario = t.getValueAt(pos, 0).toString();
+            CambiarContraseña cc = new CambiarContraseña(this, true, usuario, cookies);
+            cc.setVisible(true);
+        }
+
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,7 +231,7 @@ public class Usuarios extends javax.swing.JFrame {
         try {
             ConectorUsuarios cs = new ConectorUsuarios();
             List<Usuario> usuarios = cs.cargarUsuarios();
-            
+
             DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
             t.setRowCount(0);
             for (int i = 0; i < usuarios.size(); i++) {
