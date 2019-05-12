@@ -31,7 +31,10 @@ def createuser(request):
             curso = request.POST.get('curso', None)
 
             if dni and nombre and apellidos and curso:
-                p = Profesor(dni=dni, nombre=nombre, apellidos=apellidos, cursoTutor=curso, usuario=user)
+                user.first_name = nombre
+                user.last_name = apellidos
+                user.save()
+                p = Profesor(dni=dni, cursoTutor=curso, usuario=user)
                 p.save()
                 return HttpResponse('success')
 

@@ -33,7 +33,7 @@ public class InformesApercibimientos extends javax.swing.JDialog {
     public InformesApercibimientos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         rellenarAño();
         jSpinner1.setValue(Integer.valueOf("2"));
     }

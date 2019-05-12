@@ -28,7 +28,7 @@ public class CrearUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.cookies = cookies;
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
     }
 
     /**

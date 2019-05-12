@@ -206,7 +206,7 @@ public class ConectorUsuarios implements Constants {
         return parametros;
     }
 
-    public boolean cambiarContraseña(List<String> cookies, String usuario, String contraseña)  throws ConfigurationFileException, FileNotFoundException, IOException {
+    public boolean cambiarContraseña(List<String> cookies, String usuario, String contraseña) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
@@ -250,5 +250,94 @@ public class ConectorUsuarios implements Constants {
         }
 
         return cambiado;
+    }
+
+    public void modificarUsuario(Usuario usuario) throws ConfigurationFileException, FileNotFoundException, IOException {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+
+        try {
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
+        } catch (IOException e) {
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
+        }
+        String linea = "";
+        try {
+            salida.writeInt(31);
+            salida.flush();
+            salida.writeObject(new Gson().toJson(usuario));
+            salida.flush();
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+
+    }
+    
+    public Usuario cargarUsuario(String usuario) throws ConfigurationFileException, FileNotFoundException, IOException {
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+        Usuario u = new Usuario();
+
+        try {
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
+        } catch (IOException e) {
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
+        }
+        String linea = "";
+        try {
+            salida.writeInt(30);
+            salida.flush();
+            salida.writeUTF(usuario);
+            salida.flush();
+            linea = (String) entrada.readObject();
+            u = jsonToUsuarios(linea);
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConectorUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return u;
+
+    }
+    
+    private Usuario jsonToUsuarios(String linea) {
+        java.lang.reflect.Type typeList = new TypeToken<Usuario>() {
+        }.getType();
+        Gson gson = new Gson();
+        Usuario usuario = gson.fromJson(linea, typeList);
+        return usuario;
     }
 }

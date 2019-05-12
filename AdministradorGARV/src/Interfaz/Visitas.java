@@ -43,7 +43,7 @@ public class Visitas extends javax.swing.JFrame {
 
     public Visitas(List<String> cookies) {
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         this.cookies = cookies;
         rellenarTabla();
     }
@@ -183,7 +183,7 @@ public class Visitas extends javax.swing.JFrame {
             try {
                 int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
                 String activoS = t.getValueAt(pos, 7).toString();
-                boolean activo = (activoS.equals("true")) ? true : false;
+                boolean activo = (activoS.equals("true"));
                 ConectorVisitas cs = new ConectorVisitas();
                 List<Visita> visitas = cs.inValidarVisita(id, !activo);
                 rellenarTabla(visitas);

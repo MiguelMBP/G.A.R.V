@@ -33,7 +33,7 @@ public class EstadisticasApercibimientos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         rellenarAño();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
     }
 
     /**

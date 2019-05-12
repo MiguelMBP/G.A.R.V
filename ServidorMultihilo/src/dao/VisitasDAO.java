@@ -23,7 +23,7 @@ public class VisitasDAO {
 	public List<Visita> mostrarVisitas() {
 		List<Visita> visitas = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "select A1.id, CONCAT(A3.nombre, ' ', A3.apellidos) Docente, CONCAT(A1.nombre, ' ', A1.apellidos) Alumno, A2.nombre, A2.poblacion, A4.fecha, A2.distancia, A4.validada from visitas_alumno A1, visitas_empresa A2, visitas_profesor A3, visitas_visita A4 where A1.id = A4.alumno_id and A2.id = A1.empresa_id and A3.id = A4.profesor_id";
+		String sql = "select A4.id, CONCAT(A5.first_name, ' ', A5.last_name) Docente, CONCAT(A1.nombre, ' ', A1.apellidos) Alumno, A2.nombre, A2.poblacion, A4.fecha, A2.distancia, A4.validada from visitas_alumno A1, visitas_empresa A2, visitas_profesor A3, visitas_visita A4, auth_user A5 where A1.id = A4.alumno_id and A2.id = A1.empresa_id and A3.id = A4.profesor_id and A3.usuario_id = A5.id";
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {

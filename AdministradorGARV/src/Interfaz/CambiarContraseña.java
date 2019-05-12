@@ -26,7 +26,7 @@ public class CambiarContraseña extends javax.swing.JDialog {
     public CambiarContraseña(java.awt.Frame parent, boolean modal, String usuario, List<String> cookies) {
         super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         this.usuario = usuario;
         jTextField1.setText(usuario);
         this.cookies = cookies;

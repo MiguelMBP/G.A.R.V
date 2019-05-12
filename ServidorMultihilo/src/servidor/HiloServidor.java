@@ -25,6 +25,7 @@ import vo.RegistroVisita;
 import vo.TutorAlumno;
 import vo.Usuario;
 import vo.Visita;
+import com.google.gson.reflect.TypeToken;
 
 public class HiloServidor extends Thread {
 
@@ -134,6 +135,12 @@ public class HiloServidor extends Thread {
 			case 29:
 				cambiarContrasena(entrada, salida);
 				break;
+			case 30:
+				getUsuario(entrada, salida);
+				break;
+			case 31:
+				modificarUsuario(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -143,6 +150,42 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void modificarUsuario(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			UsuariosDAO dao = new UsuariosDAO();
+			String json = (String) entrada.readObject();
+			Usuario usuario = jsonToUsuarios(json);
+			dao.modificarUsuario(usuario);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private Usuario jsonToUsuarios(String linea) {
+        java.lang.reflect.Type typeList = new TypeToken<Usuario>() {
+        }.getType();
+        Gson gson = new Gson();
+        Usuario usuario = gson.fromJson(linea, typeList);
+        return usuario;
+    }
+
+	private void getUsuario(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			UsuariosDAO dao = new UsuariosDAO();
+			String id = entrada.readUTF();
+			Usuario usuario = dao.mostrarUsuario(id);
+
+			String json = new Gson().toJson(usuario);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void cambiarContrasena(ObjectInputStream entrada, ObjectOutputStream salida) {

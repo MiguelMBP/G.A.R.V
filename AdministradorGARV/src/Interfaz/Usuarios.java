@@ -29,7 +29,7 @@ public class Usuarios extends javax.swing.JFrame {
     public Usuarios(List<String> cookies) {
         initComponents();
         this.cookies = cookies;
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parent);
         rellenarTabla();
     }
 
@@ -175,7 +175,16 @@ public class Usuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        int pos = jTable1.getSelectedRow();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String usuario = t.getValueAt(pos, 0).toString();
+            EditarUsuario eu = new EditarUsuario(this, true, cookies, usuario);
+            eu.setVisible(true);
+            rellenarTabla();
+        }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
@@ -236,7 +245,7 @@ public class Usuarios extends javax.swing.JFrame {
             t.setRowCount(0);
             for (int i = 0; i < usuarios.size(); i++) {
                 Usuario u = usuarios.get(i);
-                Object[] elementos = {u.getUsuario(), u.getNombre(), u.getCorreo(), u.getCursoTutor()};
+                Object[] elementos = {u.getUsuario(), u.getNombre() + " " + u.getApellidos(), u.getCorreo(), u.getCursoTutor()};
                 t.addRow(elementos);
             }
         } catch (ConfigurationFileException ex) {
