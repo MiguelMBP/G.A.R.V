@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 style="margin-top: -5%;">{{ visita.profesor.usuario.first_name }} {{ visita.profesor.usuario.last_name }}</h1>
+<h2 >{{ visita.alumno.empresa.nombre }}</h2>
+<h2 >{{ visita.alumno.nombre }} {{ visita.alumno.apellidos }}</h2>
+<h2 >{{ visita.fecha }}, Distancia: {{ visita.alumno.empresa.distancia }}</h2>
+<img src="{{ visita.imagen.url }}" width="60%" >
+
+{% endblock %}

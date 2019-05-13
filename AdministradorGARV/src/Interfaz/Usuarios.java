@@ -29,7 +29,7 @@ public class Usuarios extends javax.swing.JFrame {
     public Usuarios(List<String> cookies) {
         initComponents();
         this.cookies = cookies;
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(null);
         rellenarTabla();
     }
 

@@ -30,7 +30,7 @@ public class Apercibimientos extends javax.swing.JFrame {
     
     public Apercibimientos(List<String> cookies) {
         initComponents();
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(null);
         rellenarTabla();
         this.cookies = cookies;
         rellenarAño();

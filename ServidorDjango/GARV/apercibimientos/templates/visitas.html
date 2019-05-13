@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<form class="form-signin" id="filtro">
+    <h1 class="h3 mb-3 font-weight-normal" style="width: 150%; margin-left: -20%;">Modificación de Apercibimientos</h1>
+    <div class="form-group" style="text-align: left;">
+        <label for="importe">Importe</label>
+        <input type="text" class="form-control" id="importe" placeholder="0" min="0">
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" style="margin-top: 1em;" id="botonInformeVisitas"
+            type="button">Informe
+    </button>
+
+    <div class="form-group" style="text-align: left; margin-top:2em">
+        <label for="profesorSelect">Profesor</label>
+        <select class="form-control" id="profesorSelect">
+            <option value="" selected disabled hidden>Elegir Profesor</option>
+            {% for profesor in profesores %}
+            <option value="{{ profesor.id }}">{{ profesor.usuario.first_name }} {{ profesor.usuario.last_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" style="margin-top: 1em;" id="botonFiltrarVisitas"
+            type="button">Buscar
+    </button>
+</form>
+
+<table class="table" id="tabla_visitas" style="margin-top: 2em;">
+    <thead>
+    <tr>
+        <th>Profesor</th>
+        <th>Alumno</th>
+        <th>Empresa</th>
+        <th>Fecha</th>
+        <th>Imagen</th>
+        <th colspan="2">Validada</th>
+
+    </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'js/visitas.js' %}"></script>
+{% endblock %}

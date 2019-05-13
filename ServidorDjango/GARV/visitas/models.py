@@ -27,7 +27,7 @@ class Alumno(models.Model):
 
 
 class Visita(models.Model):
-    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE, related_name='profesores')
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     fecha = models.DateField()
     imagen = models.ImageField(upload_to='images/%Y/%m/%d')

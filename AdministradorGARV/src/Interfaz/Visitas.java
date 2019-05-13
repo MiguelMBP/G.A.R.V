@@ -43,7 +43,7 @@ public class Visitas extends javax.swing.JFrame {
 
     public Visitas(List<String> cookies) {
         initComponents();
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(null);
         this.cookies = cookies;
         rellenarTabla();
     }

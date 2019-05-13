@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 
 from . import views
@@ -8,4 +10,8 @@ urlpatterns = [
     path('sendimage/', views.sendimage, name="sendimage"),
     path('changePassword/', views.changePass, name="changePassword"),
     path('resumenVisitas/', views.resumenVisitas, name="resumenVisitas"),
+    path('visitas/', views.visitas, name="visitas"),
+    path('getVisitas/', views.getVisitas, name="getVisitas"),
+    path('actualizarVisita/', views.actualizarVisita, name="actualizarVisita"),
+    path('verImagen/', views.verImagen, name="verImagen"),
 ]

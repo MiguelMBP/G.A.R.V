@@ -1,10 +1,13 @@
 import csv
+from datetime import datetime
+import json
 from base64 import b64decode, b64encode
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core import serializers
 from django.core.files.base import ContentFile
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -111,6 +114,82 @@ def resumenVisitas(request):
                 distancia = empresa[0].distancia
                 distanciaTotal += float(distancia)
             importe = distanciaTotal * float(valor)
-            writer.writerow([profesorObj[0].nombre, distanciaTotal, importe])
+            writer.writerow([profesorObj[0].usuario.first_name + ' ' + profesorObj[0].usuario.last_name, distanciaTotal, importe])
 
         return response
+
+
+@login_required
+def visitas(request):
+    visitas = list(Visita.objects.values('profesor').distinct())
+    profesores = []
+    for visita in visitas:
+        profesores.append(Profesor.objects.get(id=visita['profesor']))
+    return render(request, 'visitas.html', {'profesores': profesores})
+
+
+@login_required
+def getVisitas(request):
+    if request.GET and 'profesor' in request.GET:
+        profesor = request.GET['profesor']
+        visitas = Visita.objects.filter(profesor_id=profesor)
+        respuesta = []
+        for visita in visitas:
+            fecha = datetime.strptime(str(visita.fecha), "%Y-%M-%d").strftime('%d-%m-%Y')
+            fila = VisitaTabla(id=visita.id, profesor=visita.profesor.usuario.first_name + ' ' + visita.profesor.usuario.last_name, alumno=visita.alumno.nombre + ' ' + visita.alumno.apellidos, empresa=visita.alumno.empresa.nombre, fecha=str(fecha), validada=visita.validada)
+            respuesta.append(fila.as_json())
+        print(respuesta)
+        return JsonResponse(respuesta, safe=False)
+    else:
+        return HttpResponse('error')
+
+
+@login_required
+def actualizarVisita(request):
+    if request.GET and request.is_ajax() and 'profesor' in request.GET and 'visita' in request.GET:
+        id = request.GET['visita']
+        visita = Visita.objects.filter(id=id).first()
+        visita.validada = not visita.validada
+        visita.save()
+        profesor = request.GET['profesor']
+        visitas = Visita.objects.filter(profesor_id=profesor)
+        respuesta = []
+        for visita in visitas:
+            fecha = datetime.strptime(str(visita.fecha), "%Y-%M-%d").strftime('%d-%m-%Y')
+            fila = VisitaTabla(id=visita.id,
+                               profesor=visita.profesor.usuario.first_name + ' ' + visita.profesor.usuario.last_name,
+                               alumno=visita.alumno.nombre + ' ' + visita.alumno.apellidos,
+                               empresa=visita.alumno.empresa.nombre, fecha=str(fecha),
+                               validada=visita.validada)
+            respuesta.append(fila.as_json())
+        print(respuesta)
+        return JsonResponse(respuesta, safe=False)
+    else:
+        return HttpResponse('error')
+
+
+@login_required
+def verImagen(request):
+    if request.GET and 'id' in request.GET:
+        id = request.GET['id']
+        visita = Visita.objects.get(id=id)
+        return render(request, 'imagenVisita.html', {'visita': visita})
+    else:
+        return HttpResponse('error')
+
+class VisitaTabla:
+    def __init__(self, id, profesor, alumno, empresa, fecha, validada):
+        self.id = id
+        self.profesor = profesor
+        self.alumno = alumno
+        self.empresa = empresa
+        self.fecha = fecha
+        self.validada = validada
+
+    def as_json(self):
+        return dict(
+            id=self.id, profesor=self.profesor,
+            alumno=self.alumno,
+            empresa=self.empresa,
+            validada=self.validada,
+            fecha=self.fecha)
