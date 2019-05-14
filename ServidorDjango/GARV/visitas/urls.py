@@ -14,4 +14,7 @@ urlpatterns = [
     path('getVisitas/', views.getVisitas, name="getVisitas"),
     path('actualizarVisita/', views.actualizarVisita, name="actualizarVisita"),
     path('verImagen/', views.verImagen, name="verImagen"),
+    path('usuarios/', views.usuarios, name="usuarios"),
+    path('editarUsuario/<int:id>/', views.editarUsuario, name="editarUsuario"),
+    path('crearUsuario/', views.crearUsuario, name="crearUsuario"),
 ]

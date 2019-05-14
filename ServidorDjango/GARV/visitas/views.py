@@ -177,6 +177,30 @@ def verImagen(request):
     else:
         return HttpResponse('error')
 
+
+@login_required
+def usuarios(request):
+    users = User.objects.all()
+    usuarios = []
+    for user in users:
+        profesor = Profesor.objects.values('dni', 'cursoTutor').filter(usuario=user).first()
+        usuarios.append(Usuario(usuario=user, profesor=profesor))
+    print(usuarios)
+    return render(request, 'usuarios.html', {'usuarios': usuarios})
+
+
+@login_required
+def editarUsuario(request, id):
+    usuario = User.objects.get(id=id)
+    profesor = Profesor.objects.filter(usuario=usuario).first()
+    return render(request, 'editarUsuarios.html', {'usuario': usuario, 'profesor': profesor})
+
+
+@login_required
+def crearUsuario(request):
+    return render(request, 'crearUsuario.html')
+
+
 class VisitaTabla:
     def __init__(self, id, profesor, alumno, empresa, fecha, validada):
         self.id = id
@@ -193,3 +217,9 @@ class VisitaTabla:
             empresa=self.empresa,
             validada=self.validada,
             fecha=self.fecha)
+
+
+class Usuario:
+    def __init__(self, usuario, profesor):
+        self.usuario = usuario
+        self.profesor = profesor

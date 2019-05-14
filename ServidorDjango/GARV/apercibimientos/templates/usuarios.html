@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1 >Usuarios</h1>
+<table class="table" style="margin-top: 2em;">
+    <tr>
+        <th>Usuario</th>
+        <th>Correo</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>DNI</th>
+        <th>Curso</th>
+        <th></th>
+    </tr>
+    {% for u in usuarios %}
+    <tr>
+        <td>{{ u.usuario.username }}</td>
+        <td>{{ u.usuario.email }}</td>
+        <td>{{ u.usuario.first_name }}</td>
+        <td>{{ u.usuario.first_name }}</td>
+        <td>{{ u.profesor.dni }}</td>
+        <td>{{ u.profesor.cursoTutor }}</td>
+        <td><button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'editarUsuario' u.usuario.id %}'">Editar</button></td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}
