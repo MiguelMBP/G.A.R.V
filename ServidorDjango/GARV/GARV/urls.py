@@ -26,4 +26,5 @@ urlpatterns = [
     path('apercibimientos/', include('apercibimientos.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('visitas/', include('visitas.urls')),
+    path('usuarios/', include('usuarios.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

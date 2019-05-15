@@ -50,23 +50,6 @@ def subir_pdf(request):
     return render(request, 'list.html', {'documents': documents, 'form': form})
 
 
-def a_login(request):
-    msg = []
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                msg.append("login successful")
-            else:
-                msg.append("disabled account")
-        else:
-            msg.append("invalid login")
-    return HttpResponse(msg)
-
-
 @login_required
 def buscarApercibimiento(request):
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
@@ -95,7 +78,7 @@ def sacarAsignaturas(request):
 
 
 @login_required
-def añadirAsignaturas(request):
+def introducirAsignaturas(request):
     if request.GET and request.is_ajax():
         materia = request.GET['materia']
         asignatura = AsignaturasEspeciales(materia=materia)

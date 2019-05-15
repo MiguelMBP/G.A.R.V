@@ -17,29 +17,16 @@ from .models import Profesor, Visita, Empresa, Alumno
 
 
 @login_required
-def createuser(request):
+def sendimage(request):
     if request.method == "POST":
-        userName = request.POST.get('username', None)
-        userPass = request.POST.get('password', None)
-        userMail = request.POST.get('email', None)
+        id = request.POST.get('id', None)
 
-        if userName and userPass and userMail:
-            if User.objects.filter(username=userName).exists():
-                return HttpResponse('Duplicate username')
-            user = User.objects.create_user(username=userName, email=userMail, password=userPass)
+        if id:
+            visita = Visita.objects.get(id=id)
+            with open(visita.imagen.path, "rb") as image_file:
+                encoded_string = b64encode(image_file.read())
 
-            dni = request.POST.get('dni', None)
-            nombre = request.POST.get('nombre', None)
-            apellidos = request.POST.get('apellidos', None)
-            curso = request.POST.get('curso', None)
-
-            if dni and nombre and apellidos and curso:
-                user.first_name = nombre
-                user.last_name = apellidos
-                user.save()
-                p = Profesor(dni=dni, cursoTutor=curso, usuario=user)
-                p.save()
-                return HttpResponse('success')
+                return HttpResponse(encoded_string)
 
         return HttpResponse('failure')
 
@@ -57,37 +44,6 @@ def registervisit(request):
             imgFile = ContentFile(b64decode(img), name=userId + '_' + studentId + '_' + date + '.jpg')
             visita = Visita(fecha=date, imagen=imgFile, alumno_id=studentId, profesor_id=userId)
             visita.save()
-
-            return HttpResponse('success')
-
-        return HttpResponse('failure')
-
-
-@login_required
-def sendimage(request):
-    if request.method == "POST":
-        id = request.POST.get('id', None)
-
-        if id:
-            visita = Visita.objects.get(id=id)
-            with open(visita.imagen.path, "rb") as image_file:
-                encoded_string = b64encode(image_file.read())
-
-                return HttpResponse(encoded_string)
-
-        return HttpResponse('failure')
-
-
-@login_required
-def changePass(request):
-    if request.method == "POST":
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-
-        if username and password:
-            u = User.objects.get(username=username)
-            u.set_password(password)
-            u.save()
 
             return HttpResponse('success')
 
@@ -178,29 +134,6 @@ def verImagen(request):
         return HttpResponse('error')
 
 
-@login_required
-def usuarios(request):
-    users = User.objects.all()
-    usuarios = []
-    for user in users:
-        profesor = Profesor.objects.values('dni', 'cursoTutor').filter(usuario=user).first()
-        usuarios.append(Usuario(usuario=user, profesor=profesor))
-    print(usuarios)
-    return render(request, 'usuarios.html', {'usuarios': usuarios})
-
-
-@login_required
-def editarUsuario(request, id):
-    usuario = User.objects.get(id=id)
-    profesor = Profesor.objects.filter(usuario=usuario).first()
-    return render(request, 'editarUsuarios.html', {'usuario': usuario, 'profesor': profesor})
-
-
-@login_required
-def crearUsuario(request):
-    return render(request, 'crearUsuario.html')
-
-
 class VisitaTabla:
     def __init__(self, id, profesor, alumno, empresa, fecha, validada):
         self.id = id
@@ -219,7 +152,3 @@ class VisitaTabla:
             fecha=self.fecha)
 
 
-class Usuario:
-    def __init__(self, usuario, profesor):
-        self.usuario = usuario
-        self.profesor = profesor

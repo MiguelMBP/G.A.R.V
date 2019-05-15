@@ -53,7 +53,7 @@ public class DjangoConnection {
 			connection.disconnect();
 
 			connection = (HttpURLConnection) new URL(
-					"http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/login/").openConnection();
+					"http://" + parametros[0] + ":" + parametros[1] + "/usuarios/login/").openConnection();
 
 			if (cookieManager.getCookieStore().getCookies().size() > 0) {
 				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
@@ -114,7 +114,7 @@ public class DjangoConnection {
 		String cookies="";
 
 		try {
-			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/createuser/";
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/usuarios/createuser/";
 			String charset = "UTF-8";
 
 			String query = String.format("username=%s&password=%s&email=%s&dni=%s&nombre=%s&apellidos=%s&curso=%s",
@@ -342,7 +342,7 @@ public class DjangoConnection {
 		String[] parametros = leerConfiguracion();
 
 		try {
-			String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/changePassword/";
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/usuarios/changePassword/";
 			String charset = "UTF-8";
 			String cookies="";
 

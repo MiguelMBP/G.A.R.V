@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script>
+    function redirect(){
+       window.location.href = "/accounts/login";
+    }
 
-OUT!
-
-<a class="" href="{% url 'login' %}">Login again</a>
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
 
 {% endblock %}

@@ -5,7 +5,6 @@ from . import views
 urlpatterns = [
     path('list/', views.subir_pdf, name='list'),
     path('list/', views.subir_pdf, name='subir-pdf'),
-    path('login/', views.a_login, name="login"),
     path('buscar/', views.buscarApercibimiento, name="buscarApercibimientos"),
     path('informe/', views.informeApercibimientos, name="informeApercibimientos"),
     path('asignaturas/', views.asignaturasEspeciales, name="asignaturas"),
@@ -16,7 +15,7 @@ urlpatterns = [
     path('getCursosInformes/', views.sacarCursoInformes, name="getCursos"),
     path('updateApercibimiento/', views.actualizarApercibimiento, name="updateApercibimientos"),
     path('getAsignaturas/', views.sacarAsignaturas, name="getAsignaturas"),
-    path('anadirAsignatura/', views.añadirAsignaturas, name="anadirAsignatura"),
+    path('anadirAsignatura/', views.introducirAsignaturas, name="anadirAsignatura"),
     path('modificarAsignatura/', views.modificarAsignaturas, name="modificarAsignatura"),
     path('eliminarAsignatura/', views.eliminarAsignaturas, name="eliminarAsignatura"),
     path('informe/informeNumeroApercibimiento/<int:anno>/<int:mes>/<str:unidad>/<int:minimo>', views.informeNumeroApercibimiento, name="informeNumeroApercibimiento"),
