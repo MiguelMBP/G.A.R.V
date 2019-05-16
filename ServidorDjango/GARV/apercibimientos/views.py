@@ -63,6 +63,12 @@ def informeApercibimientos(request):
 
 
 @login_required
+def informeEstadisticas(request):
+    periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
+    return render(request, 'menuInformeNumeroApercibimientos.html', {'years': periodo})
+
+
+@login_required
 def asignaturasEspeciales(request):
     lista = AsignaturasEspeciales.objects.all()
     return render(request, 'asignaturasEspeciales.html', {'lista': lista})

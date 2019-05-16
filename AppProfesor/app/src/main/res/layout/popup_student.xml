@@ -77,11 +77,21 @@
         android:layout_marginRight="4dp"/>
 
     <Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/spinnerCompany"
+    android:id="@+id/popupCreateCompanyButton"
+    android:text="Añadir Empresa"
+    android:textColor="@android:color/white"
+    android:background="@color/colorPrimary"
+    android:layout_marginTop="10dp"/>
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerCompany"
-        android:id="@+id/popupCreateCompanyButton"
-        android:text="Añadir Empresa"
+        android:layout_below="@id/popupCreateCompanyButton"
+        android:id="@+id/popupCreateCompanyManualButton"
+        android:text="Añadir Empresa Manual"
         android:textColor="@android:color/white"
         android:background="@color/colorPrimary"
         android:layout_marginTop="10dp"/>
@@ -89,7 +99,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/popupCreateCompanyButton"
+        android:layout_below="@+id/popupCreateCompanyManualButton"
         android:id="@+id/popupSavePlayerButton"
         android:text="Añadir Alumno"
         android:textColor="@android:color/white"

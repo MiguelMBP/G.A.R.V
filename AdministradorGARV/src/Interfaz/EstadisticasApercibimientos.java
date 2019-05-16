@@ -163,7 +163,7 @@ public class EstadisticasApercibimientos extends javax.swing.JDialog {
 
         } else {
             try {
-                String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/estadisticasApercibimiento/";
+                String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/informe/estadisticasApercibimiento/";
                 String año = jComboBoxAño.getItemAt(posAño);
                 String inicio = mesANumero(jComboBoxMes.getItemAt(posInicio));
                 String fin = mesANumero(jComboBoxMes1.getItemAt(posFin));

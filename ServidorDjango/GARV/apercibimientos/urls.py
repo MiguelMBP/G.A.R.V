@@ -7,6 +7,7 @@ urlpatterns = [
     path('list/', views.subir_pdf, name='subir-pdf'),
     path('buscar/', views.buscarApercibimiento, name="buscarApercibimientos"),
     path('informe/', views.informeApercibimientos, name="informeApercibimientos"),
+    path('informeEstadisticas/', views.informeEstadisticas, name="informeEstadisticas"),
     path('asignaturas/', views.asignaturasEspeciales, name="asignaturas"),
     path('getCursos/', views.sacarCursos, name="getCursos"),
     path('getAlumnos/', views.sacarAlumnos, name="getAlumnos"),
@@ -21,5 +22,5 @@ urlpatterns = [
     path('informe/informeNumeroApercibimiento/<int:anno>/<int:mes>/<str:unidad>/<int:minimo>', views.informeNumeroApercibimiento, name="informeNumeroApercibimiento"),
     path('informe/informeApercibimientoIndividual/<int:anno>/<int:mes>/<str:unidad>', views.informeApercibimientoIndividual, name="informeApercibimientoIndividual"),
     path('informe/informeResumenApercibimiento/<int:anno>/<int:mes>/<str:unidad>', views.informeResumenApercibimiento, name="informeResumenApercibimiento"),
-    path('estadisticasApercibimiento/<int:periodo>/<int:inicio>/<int:fin>', views.estadisticasApercibimientos, name="estadisticasApercibimiento"),
+    path('informe/estadisticasApercibimiento/<int:periodo>/<int:inicio>/<int:fin>', views.estadisticasApercibimientos, name="estadisticasApercibimiento"),
 ]

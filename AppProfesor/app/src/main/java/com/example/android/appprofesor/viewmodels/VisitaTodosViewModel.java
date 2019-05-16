@@ -28,11 +28,10 @@ public class VisitaTodosViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Alumno>> getTodosAlumnos(Settings settings) {
-
-        if (alumnos==null){
-            alumnos= new MutableLiveData<>();
-            new ConectarServidorTodosAlumnos(settings).execute();
+        if (alumnos == null) {
+            alumnos = new MutableLiveData<>();
         }
+        new ConectarServidorTodosAlumnos(settings).execute();
         return alumnos;
     }
 

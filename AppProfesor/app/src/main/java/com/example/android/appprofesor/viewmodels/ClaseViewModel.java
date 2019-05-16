@@ -37,8 +37,8 @@ public class ClaseViewModel extends AndroidViewModel {
 
         if (clases==null){
             clases= new MutableLiveData<>();
-            new ConectarServidor(settings).execute();
         }
+        new ConectarServidor(settings).execute();
         return clases;
     }
 

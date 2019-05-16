@@ -25,11 +25,11 @@ public class VisitaViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Alumno>> getAlumnos(Context context, Settings settings) {
-
         if (alumnos == null) {
             alumnos = new MutableLiveData<>();
-            new ConectarServidorAlumnos(settings).execute(context);
         }
+        new ConectarServidorAlumnos(settings).execute(context);
+
         return alumnos;
     }
 
@@ -58,6 +58,7 @@ public class VisitaViewModel extends AndroidViewModel {
         public ConectarServidorAñadirAlumno(Settings settings) {
             this.settings = settings;
         }
+
         @Override
         protected List<Alumno> doInBackground(Context... contexts) {
             return VisitConnector.getAlumnos(contexts[0], settings);

@@ -161,7 +161,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
             String address = prefs.getString("address", null);
             int port = prefs.getInt("port", -1);
             if (address != null && port != -1) {
-                Settings settings = new Settings();
+                Settings settings = new Settings(address, port);
                 model.getTodosAlumnos(settings).observe(this, new Observer<List<Alumno>>() {
                     @Override
                     public void onChanged(List<Alumno> alumnosList) {

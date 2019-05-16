@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<form class="form-signin" id="informes" style="text-align: left;">
+    <h1 class="h3 mb-3 font-weight-normal" style="width: 150%;">Estadísticas de Apercibimientos</h1>
+
+    <div class="form-group" style="text-align: left;">
+        <label for="periodoSelect">Periodo Academico</label>
+        <select class="form-control" id="periodoSelect" onclick="">
+            <option value="" selected disabled hidden>Elegir Periodo</option>
+            {% for year in years %}
+            <option value="{{ year.periodo_academico }}">{{ year.periodo_academico }}/{{ year.periodo_academico|add:1}}
+            </option>
+            {% endfor %}
+
+        </select>
+    </div>
+
+    <div class="form-group" style="text-align: left;">
+        <label for="mesInicioSelect">Mes</label>
+        <select class="form-control" id="mesInicioSelect">
+            <option value="" selected disabled hidden>Elegir Mes de Inicio</option>
+        </select>
+    </div>
+
+    <div class="form-group" style="text-align: left;">
+        <label for="mesFinSelect">Mes</label>
+        <select class="form-control" id="mesFinSelect">
+            <option value="" selected disabled hidden>Elegir Mes Final</option>
+        </select>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" id="botonInformes" type="button" onclick="">Generar Informe
+    </button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'js/informeNumero.js' %}"></script>
+{% endblock %}

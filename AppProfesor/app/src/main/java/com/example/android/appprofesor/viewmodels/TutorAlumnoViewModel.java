@@ -27,11 +27,11 @@ public class TutorAlumnoViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<TutorAlumno>> getAlumnos(Context context, Settings settings) {
-
-        if (alumnos==null){
-            alumnos= new MutableLiveData<>();
-            new ConectarServidor(settings).execute(context);
+        if (alumnos == null) {
+            alumnos = new MutableLiveData<>();
         }
+        new ConectarServidor(settings).execute(context);
+
         return alumnos;
     }
 

@@ -120,8 +120,6 @@ public class VisitListFragment extends Fragment {
             if (address != null && port != -1) {
                 Settings settings = new Settings(address, port);
                 model.getAlumnos(getContext(), settings).observe(this, new Observer<List<Alumno>>() {
-
-
                     @Override
                     public void onChanged(List<Alumno> alumnos) {
                         adapter.addAlumnos(alumnos);
@@ -151,5 +149,33 @@ public class VisitListFragment extends Fragment {
     public interface OnStudentSelected {
         public void onChange(Alumno alumno);
     }
-    
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            SharedPreferences prefs =
+                    getContext().getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings(address, port);
+                model.getAlumnos(getContext(), settings).observe(this, new Observer<List<Alumno>>() {
+
+
+                    @Override
+                    public void onChanged(List<Alumno> alumnos) {
+                        adapter.addAlumnos(alumnos);
+                    }
+                });
+            }else {
+                throw new NullPointerException();
+            }
+        } catch (NullPointerException e) {
+            Toast.makeText(getContext(), "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+
 }
