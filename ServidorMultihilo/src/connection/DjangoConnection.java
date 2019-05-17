@@ -401,4 +401,71 @@ public class DjangoConnection {
 		}
 		return creado;
 	}
+
+	public void subirApercibimientos(String base64, String extension, String csrfToken, String sessionId) {
+		HttpURLConnection connection = null;
+		boolean creado = false;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String[] parametros = leerConfiguracion();
+		String cookies = "";
+
+		try {
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/subirPost/";
+			String charset = "UTF-8";
+
+			String query = String.format("archivo=%s&extension=%s", URLEncoder.encode(base64, charset),
+					URLEncoder.encode(extension, charset));
+
+			CookieManager cookieManager = new CookieManager();
+			CookieHandler.setDefault(cookieManager);
+
+			HttpCookie csrf = new HttpCookie("csrftoken", csrfToken);
+			csrf.setPath("/");
+			csrf.setDomain(parametros[0]);
+			csrf.setHttpOnly(true);
+			HttpCookie session = new HttpCookie("sessionid", sessionId);
+			session.setPath("/");
+			session.setDomain(parametros[0]);
+			session.setHttpOnly(true);
+
+			cookieManager.getCookieStore().add(new URI(parametros[0]), csrf);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), session);
+
+			connection = (HttpURLConnection) new URL(url).openConnection();
+
+			if (cookieManager.getCookieStore().getCookies().size() > 0) {
+				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
+					if (cookie.getName().equals("csrftoken")) {
+						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
+					}
+					cookies+=cookie.getName()+"="+cookie.getValue()+";";
+				}
+			}
+
+			connection.setRequestMethod("POST");
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Accept-Charset", charset);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+			connection.setRequestProperty("Cookie", cookies); 
+
+			try (OutputStream output = connection.getOutputStream()) {
+				output.write(query.getBytes(charset));
+			}
+
+			InputStream response = connection.getInputStream();
+			try (Scanner scanner = new Scanner(response)) {
+				String responseBody = scanner.useDelimiter("\\A").next();
+				if (responseBody.equals("success")) {
+					creado = true;
+				}
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

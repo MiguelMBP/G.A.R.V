@@ -141,6 +141,8 @@ public class HiloServidor extends Thread {
 			case 31:
 				modificarUsuario(entrada, salida);
 				break;
+			case 32:
+				enviarImagen(entrada);
 			default:
 				System.out.println(op);
 				break;
@@ -150,6 +152,23 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void enviarImagen(ObjectInputStream entrada) {
+		try {
+			DjangoConnection dc = new DjangoConnection();
+			String base64 = (String) entrada.readObject();
+			String extension = entrada.readUTF();
+			String csrftoken = entrada.readUTF();
+			String sessionId = entrada.readUTF();
+			dc.subirApercibimientos(base64, extension, csrftoken, sessionId);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void modificarUsuario(ObjectInputStream entrada, ObjectOutputStream salida) {

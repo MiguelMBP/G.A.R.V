@@ -1,9 +1,11 @@
 import datetime
 import tempfile
+from base64 import b64decode
 from calendar import month
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.core.files.base import ContentFile
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
@@ -13,6 +15,7 @@ from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from weasyprint import HTML
 
@@ -44,6 +47,24 @@ def subir_pdf(request):
     documents = Document.objects.all()
 
     return render(request, 'list.html', {'documents': documents, 'form': form})
+
+
+@login_required
+def subir_pdf_post(request):
+    if request.method == 'POST':
+        base64 = request.POST.get('archivo', None)
+        extension = request.POST.get('extension', None)
+        if base64:
+            newdoc = ContentFile(b64decode(base64), name=str(now) + '.' + extension)
+            archivo = Document(docfile=newdoc)
+            archivo.save()
+
+            if archivo.docfile.path.endswith('.pdf'):
+                pdf_to_csv(archivo.docfile.path)
+            elif archivo.docfile.path.endswith('.zip'):
+                extractZip(archivo.docfile.path)
+
+            return HttpResponseRedirect(reverse('list'))
 
 
 @login_required

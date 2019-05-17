@@ -7,14 +7,20 @@ package Interfaz;
 
 import Cliente.ConectorApercibimientos;
 import Util.ConfigurationFileException;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FilenameUtils;
 import vo.Apercibimiento;
 
 /**
@@ -27,7 +33,7 @@ public class Apercibimientos extends javax.swing.JFrame {
      * Creates new form Apercibimientos
      */
     private List<String> cookies;
-    
+
     public Apercibimientos(List<String> cookies) {
         initComponents();
         setLocationRelativeTo(null);
@@ -131,6 +137,11 @@ public class Apercibimientos extends javax.swing.JFrame {
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setText("Subir Archivos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuItem7.setText("Asignaturas Especiales");
@@ -267,11 +278,11 @@ public class Apercibimientos extends javax.swing.JFrame {
                 jComboBoxCurso.removeAllItems();
                 jComboBoxCurso.addItem("Todos");
                 jComboBoxCurso.setEnabled(false);
-                
+
                 jComboBoxAlumno.removeAllItems();
                 jComboBoxAlumno.addItem("Todos");
                 jComboBoxAlumno.setEnabled(false);
-                
+
                 rellenarTabla();
             } else {
                 try {
@@ -292,7 +303,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         int posCurso = jComboBoxCurso.getSelectedIndex();
         String año = jComboBoxAño.getItemAt(posAño);
         String curso = jComboBoxCurso.getItemAt(posCurso);
-        
+
         if (posAño != -1 && posCurso != -1) {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             if (curso.equalsIgnoreCase("todos")) {
@@ -300,7 +311,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                     jComboBoxAlumno.removeAllItems();
                     jComboBoxAlumno.addItem("Todos");
                     jComboBoxAlumno.setEnabled(false);
-                    
+
                     List<Apercibimiento> lista = cs.apercibimientosPorAño(año);
                     rellenarTabla(lista);
                 } catch (IOException ex) {
@@ -317,7 +328,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                 }
             }
         }
-        
+
 
     }//GEN-LAST:event_jComboBoxCursoActionPerformed
 
@@ -328,7 +339,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         String año = jComboBoxAño.getItemAt(posAño);
         String curso = jComboBoxCurso.getItemAt(posCurso);
         String alumno = jComboBoxAlumno.getItemAt(posAlumno);
-        
+
         if (posAño != -1 && posCurso != -1 && posAlumno != -1) {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             if (alumno.equalsIgnoreCase("todos")) {
@@ -348,6 +359,30 @@ public class Apercibimientos extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jComboBoxAlumnoActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccione un archivo zip o pdf");
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filterpdf = new FileNameExtensionFilter("Archivo pdf", "pdf");
+        FileNameExtensionFilter filterzip = new FileNameExtensionFilter("Archivo zip", "zip");
+        fileChooser.addChoosableFileFilter(filterpdf);
+        fileChooser.addChoosableFileFilter(filterzip);
+
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            if (filterpdf.accept(selectedFile) || filterzip.accept(selectedFile)) {
+                enviarArchivo(selectedFile);
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione un archivo zip o pdf");
+            }
+        } else if (result == JFileChooser.CANCEL_OPTION) {
+            fileChooser.setVisible(false);
+        }
+
+
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -409,7 +444,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         try {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<Apercibimiento> apercibimientos = cs.cargarApercibimientos();
-            
+
             DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
             t.setRowCount(0);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -424,7 +459,7 @@ public class Apercibimientos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
     }
-    
+
     private void rellenarTabla(List<Apercibimiento> apercibimientos) {
         DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
         t.setRowCount(0);
@@ -434,9 +469,9 @@ public class Apercibimientos extends javax.swing.JFrame {
             Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.isActivo()};
             t.addRow(elementos);
         }
-        
+
     }
-    
+
     private void rellenarAño() {
         try {
             ConectorApercibimientos cs = new ConectorApercibimientos();
@@ -451,9 +486,9 @@ public class Apercibimientos extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
-        
+
     }
-    
+
     private void rellenarCurso() {
         try {
             int posAño = jComboBoxAño.getSelectedIndex();
@@ -471,9 +506,9 @@ public class Apercibimientos extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
-        
+
     }
-    
+
     private void rellenarAlumno() {
         try {
             int posAño = jComboBoxAño.getSelectedIndex();
@@ -491,6 +526,17 @@ public class Apercibimientos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
+    }
+
+    private void enviarArchivo(File selectedFile) {
+        try {
+            byte[] archivo = Files.readAllBytes(selectedFile.toPath());
+            String base64 = Base64.encodeBase64String(archivo);
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            cs.enviarArchivo(base64, FilenameUtils.getExtension(selectedFile.getAbsolutePath()), cookies.get(0), cookies.get(1));
+        } catch (IOException ex) {
+            Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
