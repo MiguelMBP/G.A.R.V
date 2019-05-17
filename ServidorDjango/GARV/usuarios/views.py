@@ -1,11 +1,14 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.files.base import ContentFile
 from django.db import IntegrityError
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 
+from usuarios.models import Document
+from usuarios.usuarios_csv import leercsv
+from usuarios.forms import DocumentForm
 from visitas.models import Profesor
 
 
@@ -45,7 +48,7 @@ def createuser(request):
 
             user = User.objects.create_user(username=userName, email=userMail, password=userPass)
 
-            if dni and nombre and apellidos and curso:
+            if dni and nombre and apellidos:
                 user.first_name = nombre
                 user.last_name = apellidos
 
@@ -67,7 +70,7 @@ def updateuser(request):
         apellidos = request.POST.get('apellidos', None)
         curso = request.POST.get('curso', None)
 
-        if dni and nombre and apellidos and curso and mail and username:
+        if dni and nombre and apellidos and mail and username:
             user = User.objects.get(username=username)
             p = Profesor.objects.filter(usuario=user).first()
             user.first_name = nombre
@@ -121,6 +124,26 @@ def editarUsuario(request, id):
 @login_required
 def crearUsuario(request):
     return render(request, 'crearUsuario.html')
+
+
+@login_required
+def importarusuarios(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            newdoc = Document(docfile=request.FILES['docfile'])
+            newdoc.save()
+
+            file = request.FILES['docfile'].name
+
+            if file.endswith('.csv'):
+                leercsv(newdoc.docfile.path)
+
+            return HttpResponseRedirect(reverse('usuarios'))
+    else:
+        form = DocumentForm()
+
+    return render(request, 'importar.html', {'form': form})
 
 
 class Usuario:

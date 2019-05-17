@@ -24,7 +24,6 @@ from .analisis_pdf import pdf_to_csv
 
 @login_required
 def subir_pdf(request):
-    # Handle file upload
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -38,15 +37,12 @@ def subir_pdf(request):
             elif file.endswith('.zip'):
                 extractZip(newdoc.docfile.path)
 
-            # Redirect to the document list after POST
             return HttpResponseRedirect(reverse('list'))
     else:
-        form = DocumentForm() # A empty, unbound form
+        form = DocumentForm()
 
-    # Load documents for the list page
     documents = Document.objects.all()
 
-    # Render list page with the documents and the form
     return render(request, 'list.html', {'documents': documents, 'form': form})
 
 
