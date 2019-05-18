@@ -11,4 +11,5 @@ urlpatterns = [
     path('updateuser/', views.updateuser, name="updateuser"),
     path('login/', views.a_login, name="a_login"),
     path('importarUsuarios/', views.importarusuarios, name="importarUsuarios"),
+    path('importarPost/', views.importarPost, name="importarPost"),
 ]

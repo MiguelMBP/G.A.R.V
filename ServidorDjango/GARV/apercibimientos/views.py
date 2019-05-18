@@ -54,7 +54,7 @@ def subir_pdf_post(request):
     if request.method == 'POST':
         base64 = request.POST.get('archivo', None)
         extension = request.POST.get('extension', None)
-        if base64:
+        if base64 and extension:
             newdoc = ContentFile(b64decode(base64), name=str(now) + '.' + extension)
             archivo = Document(docfile=newdoc)
             archivo.save()
@@ -64,7 +64,7 @@ def subir_pdf_post(request):
             elif archivo.docfile.path.endswith('.zip'):
                 extractZip(archivo.docfile.path)
 
-            return HttpResponseRedirect(reverse('list'))
+    return HttpResponse('success')
 
 
 @login_required

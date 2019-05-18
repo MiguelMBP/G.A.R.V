@@ -14,7 +14,7 @@ public class UsuariosDAO {
 	public List<Usuario> mostrarUsuarios() {
 		List<Usuario> usuarios = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "select A1.username, A1.first_name, A1.last_name, A1.email, A2.cursoTutor, A2.dni from auth_user A1, visitas_profesor A2 where A1.id = A2.usuario_id";
+		String sql = "select A1.username, A1.first_name, A1.last_name, A1.email, (select A2.cursoTutor from visitas_profesor A2 where A1.id = A2.usuario_id),(select A2.dni from visitas_profesor A2 where A1.id = A2.usuario_id) from auth_user A1";
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {

@@ -1,10 +1,14 @@
+from base64 import b64decode
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.timezone import now
 
 from usuarios.models import Document
 from usuarios.usuarios_csv import leercsv
@@ -145,6 +149,17 @@ def importarusuarios(request):
 
     return render(request, 'importar.html', {'form': form})
 
+
+@login_required
+def importarPost(request):
+    if request.method == 'POST':
+        base64 = request.POST.get('archivo', None)
+        if base64:
+            archivo = ContentFile(b64decode(base64), name=str(now) + '.csv')
+            newdoc = Document(docfile=archivo)
+            newdoc.save()
+            leercsv(newdoc.docfile.path)
+    return HttpResponse('success')
 
 class Usuario:
     def __init__(self, usuario, profesor):

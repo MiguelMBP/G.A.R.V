@@ -340,4 +340,43 @@ public class ConectorUsuarios implements Constants {
         Usuario usuario = gson.fromJson(linea, typeList);
         return usuario;
     }
+
+    public void enviarArchivo(String base64, String csrfToken, String sessionId)  throws FileNotFoundException, IOException{
+        Socket socketCliente = null;
+        ObjectInputStream entrada = null;
+        ObjectOutputStream salida = null;
+
+        try {
+            String[] parametros = leerConfiguración();
+            if (parametros[0] == null || parametros[1] == null) {
+                throw new ConfigurationFileException();
+            }
+            socketCliente = new Socket(parametros[0], Integer.parseInt(parametros[1]));
+            salida = new ObjectOutputStream(socketCliente.getOutputStream());
+            entrada = new ObjectInputStream(socketCliente.getInputStream());
+            System.out.println("Conectado");
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException();
+        } catch (IOException e) {
+            throw new IOException();
+        } catch (NumberFormatException e) {
+            throw new ConfigurationFileException();
+        }
+        try {
+            salida.writeInt(33);
+            salida.flush();
+            salida.writeObject(base64);
+            salida.flush();
+            salida.writeUTF(csrfToken);
+            salida.flush();
+            salida.writeUTF(sessionId);
+            salida.flush();
+
+            entrada.close();
+            socketCliente.close();
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+    }
 }

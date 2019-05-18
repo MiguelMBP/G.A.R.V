@@ -5,14 +5,21 @@
  */
 package Interfaz;
 
+import Cliente.ConectorApercibimientos;
 import Cliente.ConectorUsuarios;
 import Util.ConfigurationFileException;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FilenameUtils;
 import vo.Usuario;
 
 /**
@@ -53,6 +60,7 @@ public class Usuarios extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,6 +126,14 @@ public class Usuarios extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem4);
+
+        jMenuItem5.setText("Importar usuarios");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
 
         jMenuBar1.add(jMenu3);
 
@@ -187,6 +203,26 @@ public class Usuarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccione un archivo csv");
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filtercsv = new FileNameExtensionFilter("Archivo csv", "csv");
+        fileChooser.addChoosableFileFilter(filtercsv);
+
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            if (filtercsv.accept(selectedFile)) {
+                enviarArchivo(selectedFile);
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione un archivo csv");
+            }
+        } else if (result == JFileChooser.CANCEL_OPTION) {
+            fileChooser.setVisible(false);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -231,6 +267,7 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
@@ -252,6 +289,17 @@ public class Usuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
+    }
+    
+    private void enviarArchivo(File selectedFile) {
+        try {
+            byte[] archivo = Files.readAllBytes(selectedFile.toPath());
+            String base64 = Base64.encodeBase64String(archivo);
+            ConectorUsuarios cs = new ConectorUsuarios();
+            cs.enviarArchivo(base64, cookies.get(0), cookies.get(1));
+        } catch (IOException ex) {
+            Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
