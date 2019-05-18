@@ -565,7 +565,7 @@ public class HiloServidor extends Thread {
 	}
 
 	private String alumnoVisitasJson(List<Alumno> visitas) {
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		return gson.toJson(visitas);
 	}
 

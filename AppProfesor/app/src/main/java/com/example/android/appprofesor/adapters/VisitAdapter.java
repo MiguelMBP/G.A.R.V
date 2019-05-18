@@ -41,11 +41,11 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         final Alumno alumno = alumnos.get(position);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         holder.alumno.setText(alumno.getNombre() + " " + alumno.getApellidos());
         holder.empresa.setText(alumno.getEmpresa().getNombre());
-        holder.fecha.setText(alumno.getFecha() + "");
+        holder.fecha.setText(sdf.format(alumno.getFecha()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

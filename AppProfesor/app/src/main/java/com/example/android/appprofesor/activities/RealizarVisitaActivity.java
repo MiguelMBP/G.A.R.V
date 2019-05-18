@@ -67,6 +67,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
 
     private AlertDialog.Builder builder;
     private AlertDialog dialogAlumno;
+    private AlertDialog dialogEmpresa;
 
     VisitaTodosViewModel model;
 
@@ -155,35 +156,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         });
 
         model = ViewModelProviders.of(this).get(VisitaTodosViewModel.class);
-        try {
-            SharedPreferences prefs =
-                    this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
-            String address = prefs.getString("address", null);
-            int port = prefs.getInt("port", -1);
-            if (address != null && port != -1) {
-                Settings settings = new Settings(address, port);
-                model.getTodosAlumnos(settings).observe(this, new Observer<List<Alumno>>() {
-                    @Override
-                    public void onChanged(List<Alumno> alumnosList) {
-                        String[] nombres = new String[alumnosList.size()];
-                        for (int i = 0; i < alumnosList.size(); i++) {
-                            nombres[i] = alumnosList.get(i).getNombre() + " " + alumnosList.get(i).getApellidos();
-                        }
-
-                        ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
-                        aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                        spinnerAlumnos.setAdapter(aa);
-                        alumnos = alumnosList;
-                    }
-                });
-            } else {
-                throw new NullPointerException();
-            }
-
-        } catch (NullPointerException e) {
-            Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
-                    .show();
-        }
+        cargarAlumnos();
 
         fechaVisita.setFocusable(false);
         fechaVisita.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +190,38 @@ public class RealizarVisitaActivity extends AppCompatActivity {
 
     }
 
+    private void cargarAlumnos() {
+        try {
+            SharedPreferences prefs =
+                    this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings(address, port);
+                model.getTodosAlumnos(settings).observe(this, new Observer<List<Alumno>>() {
+                    @Override
+                    public void onChanged(List<Alumno> alumnosList) {
+                        String[] nombres = new String[alumnosList.size()];
+                        for (int i = 0; i < alumnosList.size(); i++) {
+                            nombres[i] = alumnosList.get(i).getNombre() + " " + alumnosList.get(i).getApellidos();
+                        }
+
+                        ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
+                        aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                        spinnerAlumnos.setAdapter(aa);
+                        alumnos = alumnosList;
+                    }
+                });
+            } else {
+                throw new NullPointerException();
+            }
+
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
     private void createPopUpAlumno() {
         builder = new AlertDialog.Builder(RealizarVisitaActivity.this);
         View view = LayoutInflater.from(RealizarVisitaActivity.this).inflate(R.layout.popup_student, null);
@@ -233,6 +238,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         final Spinner empresa = view.findViewById(R.id.spinnerCompany);
         Button saveButton = view.findViewById(R.id.popupSavePlayerButton);
         Button añadirEmpresa = view.findViewById(R.id.popupCreateCompanyButton);
+        Button empresaManual = view.findViewById(R.id.popupCreateCompanyManualButton);
 
         empresa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -254,6 +260,7 @@ public class RealizarVisitaActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(nombre.getText()) && !TextUtils.isEmpty(apellidos.getText()) && !TextUtils.isEmpty(dni.getText()) && !TextUtils.isEmpty(curso.getText())) {
 
                     añadirAlumno(nombre.getText().toString(), apellidos.getText().toString(), dni.getText().toString(), curso.getText().toString());
+                    cargarAlumnos();
 
                 }
 
@@ -261,40 +268,22 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         });
 
         empresaModel = ViewModelProviders.of(this).get(EmpresaViewModel.class);
-        try {
-            SharedPreferences prefs =
-                    this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
-            String address = prefs.getString("address", null);
-            int port = prefs.getInt("port", -1);
-            if (address != null && port != -1) {
-                Settings settings = new Settings(address, port);
-                empresaModel.getEmpresas(settings).observe(this, new Observer<List<Empresa>>() {
-                    @Override
-                    public void onChanged(List<Empresa> empresasList) {
-                        String[] nombres = new String[empresasList.size()];
-                        for (int i = 0; i < empresasList.size(); i++) {
-                            nombres[i] = empresasList.get(i).getNombre();
-                        }
-
-                        ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
-                        aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                        empresa.setAdapter(aa);
-                        empresas = empresasList;
-                    }
-                });
-            } else {
-                throw new NullPointerException();
-            }
-        } catch (NullPointerException e) {
-            Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
-                    .show();
-        }
+        cargarEmpresas(empresa);
 
         añadirEmpresa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RealizarVisitaActivity.this, SelectMapActivity.class);
                 startActivity(intent);
+                cargarEmpresas(empresa);
+            }
+        });
+
+        empresaManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPopUpEmpresa();
+                cargarEmpresas(empresa);
             }
         });
     }
@@ -327,6 +316,37 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         localizacionTextView.setText(alumnoSeleccionado.getEmpresa().getDireccion() + ", " + alumnoSeleccionado.getEmpresa().getPoblacion());
         coordenadasTextView.setText(alumnoSeleccionado.getEmpresa().getLatitud() + ", " + alumnoSeleccionado.getEmpresa().getLongitud());
         distanciaTextView.setText(alumnoSeleccionado.getEmpresa().getDistancia() + "");
+    }
+
+    private void cargarEmpresas(final Spinner empresa) {
+        try {
+            SharedPreferences prefs =
+                    this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings(address, port);
+                empresaModel.getEmpresas(settings).observe(this, new Observer<List<Empresa>>() {
+                    @Override
+                    public void onChanged(List<Empresa> empresasList) {
+                        String[] nombres = new String[empresasList.size()];
+                        for (int i = 0; i < empresasList.size(); i++) {
+                            nombres[i] = empresasList.get(i).getNombre();
+                        }
+
+                        ArrayAdapter aa = new ArrayAdapter(RealizarVisitaActivity.this, R.layout.support_simple_spinner_dropdown_item, nombres);
+                        aa.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                        empresa.setAdapter(aa);
+                        empresas = empresasList;
+                    }
+                });
+            } else {
+                throw new NullPointerException();
+            }
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     @Override
@@ -429,4 +449,70 @@ public class RealizarVisitaActivity extends AppCompatActivity {
         }
     }
 
+    private void createPopUpEmpresa() {
+        builder = new AlertDialog.Builder(RealizarVisitaActivity.this);
+        View view = LayoutInflater.from(RealizarVisitaActivity.this).inflate(R.layout.popup_company_manual, null);
+        builder.setView(view);
+        dialogEmpresa = builder.create();
+        dialogEmpresa.show();
+
+        final EditText nombre = view.findViewById(R.id.popupCompanyName);
+        final EditText cif = view.findViewById(R.id.popupCompanyID);
+        final EditText direccion = view.findViewById(R.id.popupCompanyLoc);
+        final EditText poblacion = view.findViewById(R.id.popupCompanyPob);
+        final EditText longitud = view.findViewById(R.id.popupCompanyLong);
+        final EditText latitud = view.findViewById(R.id.popupCompanyLat);
+        final EditText distancia = view.findViewById(R.id.popupCompanyDist);
+        Button guardar = view.findViewById(R.id.popupSaveCompanyButton);
+
+
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (!TextUtils.isEmpty(nombre.getText()) && !TextUtils.isEmpty(cif.getText()) && !TextUtils.isEmpty(direccion.getText()) && !TextUtils.isEmpty(poblacion.getText())
+                            && !TextUtils.isEmpty(longitud.getText()) && !TextUtils.isEmpty(latitud.getText())) {
+                        añadirEmpresa(nombre.getText().toString(), cif.getText().toString(), direccion.getText().toString(), poblacion.getText().toString(), longitud.getText().toString(), latitud.getText().toString(), distancia.getText().toString());
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(RealizarVisitaActivity.this, "Error Añadiendo empresa", Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+            }
+        });
+    }
+
+    private void añadirEmpresa(String nombre, String cif, String direccion, String poblacion, String longitud, String latitud, String distancia) {
+        try {
+            Empresa empresa = new Empresa();
+            empresa.setNombre(nombre);
+            empresa.setCif(cif);
+            empresa.setDireccion(direccion);
+            empresa.setPoblacion(poblacion);
+            empresa.setLongitud(Float.parseFloat(longitud));
+            empresa.setLatitud(Float.parseFloat(latitud));
+            empresa.setDistancia(Float.parseFloat(distancia));
+
+            SharedPreferences prefs =
+                    this.getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
+            String address = prefs.getString("address", null);
+            int port = prefs.getInt("port", -1);
+            if (address != null && port != -1) {
+                Settings settings = new Settings(address, port);
+                empresaModel.addEmpresa(empresa, settings);
+
+            } else {
+                Toast.makeText(this, "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
+                        .show();
+            }
+            dialogEmpresa.dismiss();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "La longitud, latitud y distancia deben ser números", Toast.LENGTH_SHORT)
+                    .show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error al introducir la empresa", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
 }

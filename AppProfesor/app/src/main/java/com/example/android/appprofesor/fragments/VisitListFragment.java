@@ -65,37 +65,6 @@ public class VisitListFragment extends Fragment {
             }
         });
 
-        FloatingActionButton fabAct = (FloatingActionButton) view.findViewById(R.id.fab_act_visitas);
-        fabAct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    SharedPreferences prefs =
-                            getContext().getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
-                    String address = prefs.getString("address", null);
-                    int port = prefs.getInt("port", -1);
-                    if (address != null && port != -1) {
-                        Settings settings = new Settings(address, port);
-                        model = ViewModelProviders.of(VisitListFragment.this).get(VisitaViewModel.class);
-                        model.getAlumnos(getContext(), settings).observe(VisitListFragment.this, new Observer<List<Alumno>>() {
-
-
-                            @Override
-                            public void onChanged(List<Alumno> alumnos) {
-                                adapter.addAlumnos(alumnos);
-                            }
-                        });
-                    } else {
-                        throw new NullPointerException();
-                    }
-                } catch (NullPointerException e) {
-                    Toast.makeText(getContext(), "Error, ajustes no establecidos", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-            }
-        });
-
         recyclerView = view.findViewById(R.id.visit_recyclerView);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
