@@ -17,7 +17,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:text="Login"
+            android:text="G.A.R.V."
             android:textSize="40sp"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -52,7 +52,7 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:background="@color/colorAccent"
-            android:text="Login"/>
+            android:text="Iniciar Sesión"/>
 
 
     </LinearLayout>

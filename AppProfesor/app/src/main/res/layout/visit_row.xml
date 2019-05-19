@@ -16,7 +16,7 @@
             android:layout_height="50dp"
             android:id="@+id/textViewCompanyIcon"
             android:layout_gravity="center"
-            android:src="@drawable/ic_menu_camera"
+            android:src="@drawable/student"
             android:gravity="center"
             android:text="T"
             android:textAlignment="center"

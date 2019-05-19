@@ -56,7 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //LatLng sydney = new LatLng(-34, 151);
         if(coordenadas != null) {
             mMap.addMarker(new MarkerOptions().position(coordenadas).title("Empresa"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(coordenadas));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10.0f));
         }
     }
 }

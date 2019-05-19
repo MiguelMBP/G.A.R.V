@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -143,9 +144,12 @@ public class ApercibimientoDAO {
 		List<TutorAlumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
 		String sql = "select alumno, unidad from apercibimientos_apercibimiento where unidad = (select P.cursoTutor from visitas_profesor P, auth_user U "
-				+ "where U.username = '" + username + "' and P.usuario_id = U.id) group by alumno, unidad";
+				+ "where U.username = ? and P.usuario_id = U.id) group by alumno, unidad";
 
-		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+		try {
+			PreparedStatement st = conex.getConnection().prepareStatement(sql);
+			st.setString(1, username);
+			ResultSet rs = st.executeQuery();
 			ResultSet rsAsignatura = null;
 
 			while (rs.next()) {
@@ -153,10 +157,12 @@ public class ApercibimientoDAO {
 				t.setNombre(rs.getString(1));
 				t.setCurso(rs.getString(2));
 
-				sql = "select materia, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento where alumno like '"
-						+ t.getNombre() + "' and unidad like (select P.cursoTutor from visitas_profesor P, auth_user U "
-						+ "where U.username = '" + username + "' and P.usuario_id = U.id) group by materia";
-				rsAsignatura = st.executeQuery(sql);
+				sql = "select materia, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento where alumno like ? and unidad like (select P.cursoTutor from visitas_profesor P, auth_user U "
+						+ "where U.username = ? and P.usuario_id = U.id) group by materia";
+				st = conex.getConnection().prepareStatement(sql);
+				st.setString(1, t.getNombre());
+				st.setString(2, username);
+				rsAsignatura = st.executeQuery();
 				List<TutorAsignatura> asignaturas = new ArrayList<>();
 
 				while (rsAsignatura.next()) {
@@ -203,10 +209,10 @@ public class ApercibimientoDAO {
 
 	public void insertarAsignatura(String asignatura) {
 		DBConnection db = new DBConnection();
-		String sql = "insert into apercibimientos_asignaturasespeciales values (0, '" + asignatura + "')";
-		try (Statement st = db.getConnection().createStatement();) {
-
-			st.executeQuery(sql);
+		String sql = "insert into apercibimientos_asignaturasespeciales values (0, ?)";
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
+			st.setString(1, asignatura);
+			st.executeUpdate();
 			st.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -217,10 +223,11 @@ public class ApercibimientoDAO {
 
 	public void desActivarApercibimiento(int id, boolean activo) {
 		DBConnection db = new DBConnection();
-		String sql = "update apercibimientos_apercibimiento set activo = " + activo + " where id = " + id;
-		try (Statement st = db.getConnection().createStatement();) {
-
-			st.executeQuery(sql);
+		String sql = "update apercibimientos_apercibimiento set activo = ? where id = ?";
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
+			st.setBoolean(1, activo);
+			st.setInt(2, id);
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -250,11 +257,11 @@ public class ApercibimientoDAO {
 
 	public List<String> getMeses(String anno) {
 		DBConnection db = new DBConnection();
-		String sql = "SELECT distinct(month(fecha_inicio)) FROM GARV.apercibimientos_apercibimiento where periodo_academico = "
-				+ anno;
+		String sql = "SELECT distinct(month(fecha_inicio)) FROM GARV.apercibimientos_apercibimiento where periodo_academico = ?";
 		List<String> lista = new ArrayList<>();
-		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
-
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
+			st.setInt(1, Integer.parseInt(anno));
+			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				lista.add(rs.getString(1));
 			}
@@ -270,11 +277,12 @@ public class ApercibimientoDAO {
 
 	public List<String> getCursos(String anno, String mes) {
 		DBConnection db = new DBConnection();
-		String sql = "SELECT distinct(unidad) FROM GARV.apercibimientos_apercibimiento where periodo_academico = "
-				+ anno + " and month(fecha_inicio) = " + mes + " order by unidad";
+		String sql = "SELECT distinct(unidad) FROM GARV.apercibimientos_apercibimiento where periodo_academico = ? and month(fecha_inicio) = ? order by unidad";
 		List<String> lista = new ArrayList<>();
-		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
-
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
+			st.setInt(1, Integer.parseInt(anno));
+			st.setInt(2, Integer.parseInt(mes));
+			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				lista.add(rs.getString(1));
 			}
@@ -291,11 +299,11 @@ public class ApercibimientoDAO {
 	public void modificarAsignatura(int id, String asignatura) {
 
 		DBConnection db = new DBConnection();
-		String sql = "update apercibimientos_asignaturasespeciales set materia = '" + asignatura + "' where id = " + id;
-		try (Statement st = db.getConnection().createStatement();) {
-
-			st.executeQuery(sql);
-			st.close();
+		String sql = "update apercibimientos_asignaturasespeciales set materia = ? where id = ?";
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
+			st.setString(1, asignatura);
+			st.setInt(2, id);
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -306,10 +314,10 @@ public class ApercibimientoDAO {
 
 	public void eliminarAsignatura(int id) {
 		DBConnection db = new DBConnection();
-		String sql = "delete from apercibimientos_asignaturasespeciales where id =" + id;
-		try (Statement st = db.getConnection().createStatement();) {
-
-			st.executeQuery(sql);
+		String sql = "delete from apercibimientos_asignaturasespeciales where id = ?";
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
+			st.setInt(1, id);
+			st.executeUpdate();
 			st.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -321,11 +329,11 @@ public class ApercibimientoDAO {
 
 	public List<String> getCursosfiltro(String anno) {
 		DBConnection db = new DBConnection();
-		String sql = "SELECT distinct(unidad) FROM apercibimientos_apercibimiento where periodo_academico = "
-				+ anno + " order by unidad";
+		String sql = "SELECT distinct(unidad) FROM apercibimientos_apercibimiento where periodo_academico = ? order by unidad";
 		List<String> lista = new ArrayList<>();
-		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
-
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql); ) {
+			st.setInt(1, Integer.parseInt(anno));
+			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				lista.add(rs.getString(1));
 			}
@@ -341,10 +349,12 @@ public class ApercibimientoDAO {
 
 	public List<String> getAlumnosFiltro(String anno, String curso) {
 		DBConnection db = new DBConnection();
-		String sql = "SELECT distinct(alumno) FROM apercibimientos_apercibimiento where periodo_academico = " + anno + " and unidad like '" + curso + "' order by alumno;";
+		String sql = "SELECT distinct(alumno) FROM apercibimientos_apercibimiento where periodo_academico = ? and unidad like ? order by alumno;";
 		List<String> lista = new ArrayList<>();
-		try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
-
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
+			st.setInt(1, Integer.parseInt(anno));
+			st.setString(2, curso);
+			 ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				lista.add(rs.getString(1));
 			}
@@ -361,9 +371,10 @@ public class ApercibimientoDAO {
 	public List<Apercibimiento> mostrarApercibimientosFiltroAno(String ano) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + ano;
-		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
-
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = ?";
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql); ) {
+			st.setInt(1, Integer.parseInt(ano));
+			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				Apercibimiento a = new Apercibimiento();
 				a.setId(rs.getInt(1));
@@ -396,9 +407,11 @@ public class ApercibimientoDAO {
 	public List<Apercibimiento> mostrarApercibimientosFiltroCurso(String ano, String curso) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + ano + " and unidad like '" + curso + "'";
-		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
-
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = ? and unidad like ?";
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql); ) {
+			st.setInt(1, Integer.parseInt(ano));
+			st.setString(2, curso);
+			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				Apercibimiento a = new Apercibimiento();
 				a.setId(rs.getInt(1));
@@ -431,8 +444,12 @@ public class ApercibimientoDAO {
 	public List<Apercibimiento> mostrarApercibimientosFiltroAlumno(String ano, String curso, String alumno) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = " + ano + " and unidad like '" + curso + "' and alumno like '" + alumno + "'";
-		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+		String sql = "SELECT * FROM apercibimientos_apercibimiento where periodo_academico = ? and unidad like ? and alumno like ?";
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql); ) {
+			st.setInt(1, Integer.parseInt(ano));
+			st.setString(2, curso);
+			st.setString(3, alumno);
+			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
 				Apercibimiento a = new Apercibimiento();

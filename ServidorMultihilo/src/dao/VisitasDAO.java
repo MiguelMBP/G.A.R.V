@@ -2,6 +2,7 @@ package dao;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,8 +19,7 @@ import vo.RegistroVisita;
 import vo.Visita;
 
 public class VisitasDAO {
-	
-	
+
 	public List<Visita> mostrarVisitas() {
 		List<Visita> visitas = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -48,19 +48,21 @@ public class VisitasDAO {
 
 		return visitas;
 	}
-	
+
 	public List<Alumno> mostrarAlumnoVisitas(String username) {
 		List<Alumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
 		String sql = "select A.nombre, A.apellidos, E.nombre, E.direccion, E.poblacion, E.latitud, E.longitud, E.distancia, V.fecha from visitas_alumno A, visitas_empresa E, visitas_profesor P, visitas_visita V "
-				+ "where P.usuario_id = (select id from auth_user U where username = '" + username + "') and A.empresa_id = E.id and P.id = V.profesor_id and A.id = V.alumno_id";
-		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
-
+				+ "where P.usuario_id = (select id from auth_user U where username = ?) and A.empresa_id = E.id and P.id = V.profesor_id and A.id = V.alumno_id";
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
+			
+			st.setString(1, username);
+			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				Alumno a = new Alumno();
 				a.setNombre(rs.getString(1));
 				a.setApellidos(rs.getString(2));
-				
+
 				Empresa e = new Empresa();
 				e.setNombre(rs.getString(3));
 				e.setDireccion(rs.getString(4));
@@ -68,11 +70,10 @@ public class VisitasDAO {
 				e.setLatitud(rs.getFloat(6));
 				e.setLongitud(rs.getFloat(7));
 				e.setDistancia(rs.getFloat(8));
-				
+
 				a.setEmpresa(e);
 				a.setFecha(rs.getDate(9));
 
-				
 				alumnos.add(a);
 			}
 
@@ -96,7 +97,7 @@ public class VisitasDAO {
 				a.setId(rs.getInt(1));
 				a.setNombre(rs.getString(2));
 				a.setApellidos(rs.getString(3));
-				
+
 				Empresa e = new Empresa();
 				e.setId(rs.getInt(4));
 				e.setNombre(rs.getString(5));
@@ -105,10 +106,9 @@ public class VisitasDAO {
 				e.setLatitud(rs.getFloat(8));
 				e.setLongitud(rs.getFloat(9));
 				e.setDistancia(rs.getFloat(10));
-				
+
 				a.setEmpresa(e);
 
-				
 				alumnos.add(a);
 			}
 
@@ -120,7 +120,7 @@ public class VisitasDAO {
 
 		return alumnos;
 	}
-	
+
 	public List<Empresa> mostrarEmpresas() {
 		List<Empresa> empresas = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -128,7 +128,7 @@ public class VisitasDAO {
 		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
 			while (rs.next()) {
-				
+
 				Empresa e = new Empresa();
 				e.setId(rs.getInt(1));
 				e.setCif(rs.getString(2));
@@ -139,8 +139,6 @@ public class VisitasDAO {
 				e.setLongitud(rs.getFloat(7));
 				e.setDistancia(rs.getFloat(8));
 
-
-				
 				empresas.add(e);
 			}
 
@@ -155,22 +153,19 @@ public class VisitasDAO {
 
 	public int insertarEmpresa(Empresa empresa) {
 		DBConnection conex = new DBConnection();
-		String sql = "Insert into visitas_empresa values (0, '" + empresa.getCif() + "', '" + empresa.getNombre() + "', '" + empresa.getPoblacion() + "', "
-				+ "'" + empresa.getDireccion() + "', " + empresa.getLatitud() + ", " + empresa.getLongitud() + ", " + empresa.getDistancia() + ")";
+		String sql = "Insert into visitas_empresa values (0, ?, ?, ?, ?, ?, ?, ?)";
 		int id = -1;
-		
-		try (Statement st = conex.getConnection().createStatement();) {
 
-			st.executeQuery(sql);
-			
-			sql = "SELECT MAX(id) FROM visitas_empresa";
-			
-			ResultSet rs = st.executeQuery(sql);
-			rs.next();
-			id = rs.getInt(1);
-			
-			st.close();
-			
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
+			st.setString(1, empresa.getCif());
+			st.setString(2, empresa.getNombre());
+			st.setString(3, empresa.getPoblacion());
+			st.setString(4, empresa.getDireccion());
+			st.setFloat(5, empresa.getLatitud());
+			st.setFloat(6, empresa.getLongitud());
+			st.setFloat(7, empresa.getDistancia());
+			id = st.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
@@ -182,23 +177,21 @@ public class VisitasDAO {
 
 	public int insertarAlumno(Alumno alumno) {
 		DBConnection conex = new DBConnection();
-		String sql = "Insert into visitas_alumno values (0, '" + alumno.getDni() + "', '" + alumno.getNombre() + "', '" + alumno.getApellidos() + "', "
-				+ "'" + alumno.getCurso() + "', " + alumno.getEmpresa().getId() + ")";
+		String sql = "Insert into visitas_alumno values (0, ?, ?, ?, ?, ?)";
 		int id = -1;
-		
-		try (Statement st = conex.getConnection().createStatement();) {
 
-			st.executeQuery(sql);
-			
-			sql = "SELECT MAX(id) FROM visitas_alumno";
-			
-			ResultSet rs = st.executeQuery(sql);
-			rs.next();
-			id = rs.getInt(1);
-			
-			st.close();
-			
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
+			st.setString(1, alumno.getDni());
+			st.setString(2, alumno.getNombre());
+			st.setString(3, alumno.getApellidos());
+			st.setString(4, alumno.getCurso());
+			st.setInt(5, alumno.getEmpresa().getId());
+			id = st.executeUpdate();
+
 		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		} finally {
@@ -206,22 +199,21 @@ public class VisitasDAO {
 		}
 		return id;
 	}
-	
+
 	public int idUsuario(String usuario) {
 		DBConnection conex = new DBConnection();
-		String sql = "SELECT B.id FROM auth_user A, visitas_profesor B where username='" + usuario + "' and A.id = B.usuario_id";
+		String sql = "SELECT B.id FROM auth_user A, visitas_profesor B where username= ? and A.id = B.usuario_id";
 		int id = -1;
-		
-		try (Statement st = conex.getConnection().createStatement();) {
 
-			st.executeQuery(sql);
-			
-			ResultSet rs = st.executeQuery(sql);
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
+			st.setString(1, usuario);
+
+			ResultSet rs = st.executeQuery();
 			rs.next();
 			id = rs.getInt(1);
-			
+
 			st.close();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
@@ -230,18 +222,19 @@ public class VisitasDAO {
 		}
 		return id;
 	}
-	
+
 	public void inValidarVisita(int id, boolean activo) {
 		DBConnection db = new DBConnection();
 		String sql = "update visitas_visita set validada = " + activo + " where id = " + id;
-		try (Statement st = db.getConnection().createStatement();) {
-
-			st.executeQuery(sql);
+		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
+			st.setBoolean(1, activo);
+			st.setInt(2, id);
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			db.desconectar();
 		}
 	}
-	
+
 }

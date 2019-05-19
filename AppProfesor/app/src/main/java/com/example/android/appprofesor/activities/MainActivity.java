@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.fragments.ChangePassFragment;
 import com.example.android.appprofesor.fragments.ClassListFragment;
+import com.example.android.appprofesor.fragments.InitialFragment;
 import com.example.android.appprofesor.fragments.TutorListFragment;
 import com.example.android.appprofesor.fragments.VisitListFragment;
 import com.example.android.appprofesor.models.Alumno;
@@ -47,10 +48,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        drawerOptionId = R.id.nav_apercibimientos;
+        drawerOptionId = 0;
 
         changeFragment();
-        drawer.openDrawer(GravityCompat.START);
     }
 
     @Override
@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new VisitListFragment();
         } else if (drawerOptionId == R.id.nav_cuenta) {
             fragment = new ChangePassFragment();
+        } else if (drawerOptionId == 0){
+            fragment = new InitialFragment();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -94,6 +96,11 @@ public class MainActivity extends AppCompatActivity
                 .commit();
 
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void setDrawerOptionId(int drawerOptionId) {
+        this.drawerOptionId = drawerOptionId;
+        changeFragment();
     }
 
     @Override

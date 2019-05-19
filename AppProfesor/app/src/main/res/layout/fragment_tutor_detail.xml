@@ -47,7 +47,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/imageViewStudentTutorIcon"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_menu_gallery"
+                android:src="@drawable/student"
                 android:gravity="center" />
 
             <TextView

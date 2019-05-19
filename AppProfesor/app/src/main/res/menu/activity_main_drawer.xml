@@ -8,11 +8,11 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_apercibimientos"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/student"
                     android:title="Lista Apercibimientos" />
                 <item
                     android:id="@+id/nav_tutoria"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@drawable/classroom2"
                     android:title="Tutoría" />
             </group>
         </menu>
@@ -23,7 +23,7 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_visitas"
-                    android:icon="@drawable/ic_menu_slideshow"
+                    android:icon="@drawable/company"
                     android:title="Visitas FCT" />
             </group>
         </menu>
@@ -34,7 +34,7 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_cuenta"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/ic_menu_manage"
                     android:title="Cambiar Contraseña" />
             </group>
         </menu>

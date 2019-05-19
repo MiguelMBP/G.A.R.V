@@ -16,7 +16,7 @@
             android:layout_height="50dp"
             android:id="@+id/imageViewClassIcon"
             android:layout_gravity="center"
-            android:src="@drawable/ic_menu_camera"
+            android:src="@drawable/classroom2"
             android:gravity="center"
             android:text="T"
             android:textAlignment="center"

@@ -19,7 +19,7 @@ class Empresa(models.Model):
 
 
 class Alumno(models.Model):
-    dni = models.CharField(max_length=9, unique=True)
+    dni = models.CharField(max_length=9, unique=True, )
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=100)
     curso = models.CharField(max_length=100)

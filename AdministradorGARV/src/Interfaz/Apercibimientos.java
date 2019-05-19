@@ -244,7 +244,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                 boolean activo = (activoS.equals("true"));
                 ConectorApercibimientos cs = new ConectorApercibimientos();
                 List<Apercibimiento> apercibimientos = cs.desActivarApercibimiento(id, !activo);
-                rellenarTabla(apercibimientos);
+                actualizarTabla();
             } catch (ConfigurationFileException ex) {
                 JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
             } catch (IOException ex) {
@@ -252,6 +252,51 @@ public class Apercibimientos extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void actualizarTabla() {
+        int posAño = jComboBoxAño.getSelectedIndex();
+        int posCurso = jComboBoxCurso.getSelectedIndex();
+        int posAlumno = jComboBoxAlumno.getSelectedIndex();
+
+        if (posAño != -1 && posCurso != -1 && posAlumno != -1) {
+            String año = jComboBoxAño.getItemAt(posAño);
+            String curso = jComboBoxCurso.getItemAt(posCurso);
+            String alumno = jComboBoxAlumno.getItemAt(posAlumno);
+            ConectorApercibimientos cs = new ConectorApercibimientos();
+            if (año.equalsIgnoreCase("todos")) {
+                try {
+                    List<Apercibimiento> lista = cs.cargarApercibimientos();
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (curso.equalsIgnoreCase("todos")) {
+                try {
+                    List<Apercibimiento> lista = cs.apercibimientosPorAño(año);
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (alumno.equalsIgnoreCase("todos")) {
+                try {
+                    List<Apercibimiento> lista = cs.apercibimientosPorCurso(año, curso);
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    List<Apercibimiento> lista = cs.apercibimientosPorAlumno(año, curso, alumno);
+                    rellenarTabla(lista);
+                } catch (IOException ex) {
+                    Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            rellenarTabla();
+        }
+    }
+
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         Usuarios usuarios = new Usuarios(cookies);
@@ -271,8 +316,8 @@ public class Apercibimientos extends javax.swing.JFrame {
 
     private void jComboBoxAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAñoActionPerformed
         int posAño = jComboBoxAño.getSelectedIndex();
-        String año = jComboBoxAño.getItemAt(posAño);
         if (posAño != -1) {
+            String año = jComboBoxAño.getItemAt(posAño);
             ConectorApercibimientos cs = new ConectorApercibimientos();
             if (año.equalsIgnoreCase("todos")) {
                 jComboBoxCurso.removeAllItems();
@@ -301,12 +346,12 @@ public class Apercibimientos extends javax.swing.JFrame {
     private void jComboBoxCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCursoActionPerformed
         int posAño = jComboBoxAño.getSelectedIndex();
         int posCurso = jComboBoxCurso.getSelectedIndex();
-        String año = jComboBoxAño.getItemAt(posAño);
-        String curso = jComboBoxCurso.getItemAt(posCurso);
 
         if (posAño != -1 && posCurso != -1) {
+            String año = jComboBoxAño.getItemAt(posAño);
+            String curso = jComboBoxCurso.getItemAt(posCurso);
             ConectorApercibimientos cs = new ConectorApercibimientos();
-            if (curso.equalsIgnoreCase("todos")) {
+            if (curso.equalsIgnoreCase("todos") && !año.equalsIgnoreCase("todos")) {
                 try {
                     jComboBoxAlumno.removeAllItems();
                     jComboBoxAlumno.addItem("Todos");
@@ -317,7 +362,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
+            } else if (!curso.equalsIgnoreCase("todos") && !año.equalsIgnoreCase("todos")){
                 try {
                     jComboBoxAlumno.setEnabled(true);
                     rellenarAlumno();
@@ -336,20 +381,20 @@ public class Apercibimientos extends javax.swing.JFrame {
         int posAño = jComboBoxAño.getSelectedIndex();
         int posCurso = jComboBoxCurso.getSelectedIndex();
         int posAlumno = jComboBoxAlumno.getSelectedIndex();
-        String año = jComboBoxAño.getItemAt(posAño);
-        String curso = jComboBoxCurso.getItemAt(posCurso);
-        String alumno = jComboBoxAlumno.getItemAt(posAlumno);
 
         if (posAño != -1 && posCurso != -1 && posAlumno != -1) {
+            String año = jComboBoxAño.getItemAt(posAño);
+            String curso = jComboBoxCurso.getItemAt(posCurso);
+            String alumno = jComboBoxAlumno.getItemAt(posAlumno);
             ConectorApercibimientos cs = new ConectorApercibimientos();
-            if (alumno.equalsIgnoreCase("todos")) {
+            if (alumno.equalsIgnoreCase("todos") && !curso.equalsIgnoreCase("todos") && !año.equalsIgnoreCase("todos")) {
                 try {
                     List<Apercibimiento> lista = cs.apercibimientosPorCurso(año, curso);
                     rellenarTabla(lista);
                 } catch (IOException ex) {
                     Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
+            } else if (!alumno.equalsIgnoreCase("todos") && !curso.equalsIgnoreCase("todos") && !año.equalsIgnoreCase("todos")){
                 try {
                     List<Apercibimiento> lista = cs.apercibimientosPorAlumno(año, curso, alumno);
                     rellenarTabla(lista);
@@ -477,10 +522,11 @@ public class Apercibimientos extends javax.swing.JFrame {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<String> año = cs.cargarAño();
             jComboBoxAño.removeAllItems();
+            jComboBoxAño.addItem("Todos");
             for (int i = 0; i < año.size(); i++) {
                 jComboBoxAño.addItem(año.get(i));
             }
-            jComboBoxAño.setSelectedIndex(-1);
+            jComboBoxAño.setSelectedIndex(0);
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
@@ -496,10 +542,11 @@ public class Apercibimientos extends javax.swing.JFrame {
                 ConectorApercibimientos cs = new ConectorApercibimientos();
                 List<String> cursos = cs.cargarCursosFiltro(jComboBoxAño.getItemAt(posAño));
                 jComboBoxCurso.removeAllItems();
+                jComboBoxCurso.addItem("Todos");
                 for (int i = 0; i < cursos.size(); i++) {
                     jComboBoxCurso.addItem(cursos.get(i));
                 }
-                jComboBoxCurso.setSelectedIndex(-1);
+                jComboBoxCurso.setSelectedIndex(0);
             }
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
@@ -514,13 +561,18 @@ public class Apercibimientos extends javax.swing.JFrame {
             int posAño = jComboBoxAño.getSelectedIndex();
             int posCurso = jComboBoxCurso.getSelectedIndex();
             if (posAño != -1 && posCurso != -1) {
+                String año = jComboBoxAño.getItemAt(posAño);
+                String curso = jComboBoxCurso.getItemAt(posCurso);
+                if (!año.equalsIgnoreCase("todos") && !curso.equalsIgnoreCase("todos")){
                 ConectorApercibimientos cs = new ConectorApercibimientos();
-                List<String> alumnos = cs.cargarAlumnoFiltro(jComboBoxAño.getItemAt(posAño), jComboBoxCurso.getItemAt(posCurso));
+                List<String> alumnos = cs.cargarAlumnoFiltro(año, curso);
                 jComboBoxAlumno.removeAllItems();
+                jComboBoxAlumno.addItem("Todos");
                 for (int i = 0; i < alumnos.size(); i++) {
                     jComboBoxAlumno.addItem(alumnos.get(i));
                 }
-                jComboBoxAlumno.setSelectedIndex(-1);
+                jComboBoxAlumno.setSelectedIndex(0);
+                }
             }
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
