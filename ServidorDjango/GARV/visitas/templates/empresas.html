@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1 class="h3 mb-3 font-weight-normal">Empresas</h1>
+
+<table class="table" id="tabla_visitas" style="margin-top: 3em;">
+    <tr>
+        <th>CIF</th>
+        <th>Nombre</th>
+        <th>Población</th>
+        <th>Dirección</th>
+        <th>Distancia al Centro</th>
+        <th><button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'crearEmpresa' %}'">Añadir</button></th>
+
+    </tr>
+    {% for empresa in empresas %}
+    <tr>
+        <td>{{empresa.cif}}</td>
+        <td>{{empresa.nombre}}</td>
+        <td>{{empresa.poblacion}}</td>
+        <td>{{empresa.direccion}}</td>
+        <td>{{empresa.distancia}}</td>
+        <td><button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'editarEmpresa' empresa.id %}'">Editar</button></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'js/visitas.js' %}"></script>
+{% endblock %}

@@ -85,6 +85,38 @@ def visitas(request):
 
 
 @login_required
+def empresas(request):
+    empresas = Empresa.objects.all()
+    return render(request, 'empresas.html', {'empresas': empresas})
+
+
+@login_required
+def editarEmpresa(request, id):
+    return HttpResponse("ok")
+
+
+@login_required
+def editarAlumno(request, id):
+    return HttpResponse("ok")
+
+
+@login_required
+def crearEmpresa(request):
+    return HttpResponse("ok")
+
+
+@login_required
+def crearAlumno(request):
+    return HttpResponse("ok")
+
+
+@login_required
+def alumnos(request):
+    alumnos = Alumno.objects.all()
+    return render(request, 'alumnos.html', {'alumnos': alumnos})
+
+
+@login_required
 def getVisitas(request):
     if request.GET and 'profesor' in request.GET:
         profesor = request.GET['profesor']

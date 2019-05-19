@@ -12,4 +12,10 @@ urlpatterns = [
     path('getVisitas/', views.getVisitas, name="getVisitas"),
     path('actualizarVisita/', views.actualizarVisita, name="actualizarVisita"),
     path('verImagen/', views.verImagen, name="verImagen"),
+    path('alumnos/', views.alumnos, name="alumnos"),
+    path('empresas/', views.empresas, name="empresas"),
+    path('crearAlumno/', views.crearAlumno, name="crearAlumno"),
+    path('crearEmpresa/', views.crearEmpresa, name="crearEmpresa"),
+    path('editarAlumno/<int:id>/', views.editarAlumno, name="editarAlumno"),
+    path('editarEmpresa/<int:id>/', views.editarEmpresa, name="editarEmpresa"),
 ]

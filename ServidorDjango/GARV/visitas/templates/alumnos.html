@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1 class="h3 mb-3 font-weight-normal">Alumnos</h1>
+
+<table class="table" id="tabla_visitas" style="margin-top: 3em;">
+    <tr>
+        <th>DNI</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Curso</th>
+        <th>Empresa</th>
+        <th><button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'crearAlumno' %}'">Añadir</button></th>
+
+    </tr>
+    {% for alumno in alumnos %}
+    <tr>
+        <td>{{alumno.dni}}</td>
+        <td>{{alumno.nombre}}</td>
+        <td>{{alumno.apellidos}}</td>
+        <td>{{alumno.curso}}</td>
+        <td>{{alumno.empresa.nombre}}</td>
+        <td><button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'editarAlumno' alumno.id %}'">Editar</button></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'js/visitas.js' %}"></script>
+{% endblock %}
