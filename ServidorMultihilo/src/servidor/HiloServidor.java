@@ -147,6 +147,21 @@ public class HiloServidor extends Thread {
 			case 33:
 				importarUsuarios(entrada);
 				break;
+			case 34:
+				getAlumnos(salida);
+				break;
+			case 35:
+				getEmpresaPorId(entrada, salida);
+				break;
+			case 36:
+				modificarEmpresa(entrada, salida);
+				break;
+			case 37:
+				getAlumnoPorId(entrada, salida);
+				break;
+			case 38:
+				modificarAlumno(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -156,6 +171,95 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void modificarAlumno(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			String json = (String) entrada.readObject();
+			Alumno alumno = jsonToAlumno(json);
+			int id = dao.modificarAlumno(alumno);
+			salida.writeInt(id);
+			salida.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private Alumno jsonToAlumno(String json) {
+		java.lang.reflect.Type typeList = new TypeToken<Alumno>() {
+        }.getType();
+        Gson gson = new Gson();
+        Alumno alumno = gson.fromJson(json, typeList);
+        return alumno;
+	}
+
+	private void getAlumnoPorId(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			String id = entrada.readUTF();
+			Alumno alumno = dao.mostrarAlumno(id);
+
+			String json = new Gson().toJson(alumno);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void modificarEmpresa(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			String json = (String) entrada.readObject();
+			Empresa empresa = jsonToEmpresa(json);
+			int id = dao.modificarEmpresa(empresa);
+			salida.writeInt(id);
+			salida.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private Empresa jsonToEmpresa(String json) {
+		java.lang.reflect.Type typeList = new TypeToken<Empresa>() {
+        }.getType();
+        Gson gson = new Gson();
+        Empresa empresa = gson.fromJson(json, typeList);
+        return empresa;
+	}
+
+	private void getEmpresaPorId(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			String id = entrada.readUTF();
+			Empresa empresa = dao.mostrarEmpresa(id);
+
+			String json = new Gson().toJson(empresa);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void getAlumnos(ObjectOutputStream salida) {
+		try {
+			VisitasDAO dao = new VisitasDAO();
+			List<Alumno> visitas = dao.mostrarAlumnos();
+
+			String json = alumnoVisitasJson(visitas);
+			salida.writeObject(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void importarUsuarios(ObjectInputStream entrada) {

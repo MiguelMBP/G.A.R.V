@@ -16,6 +16,7 @@ import vo.AlumnoApercibimiento;
 import vo.ClaseApercibimiento;
 import vo.Empresa;
 import vo.RegistroVisita;
+import vo.Usuario;
 import vo.Visita;
 
 public class VisitasDAO {
@@ -55,7 +56,7 @@ public class VisitasDAO {
 		String sql = "select A.nombre, A.apellidos, E.nombre, E.direccion, E.poblacion, E.latitud, E.longitud, E.distancia, V.fecha from visitas_alumno A, visitas_empresa E, visitas_profesor P, visitas_visita V "
 				+ "where P.usuario_id = (select id from auth_user U where username = ?) and A.empresa_id = E.id and P.id = V.profesor_id and A.id = V.alumno_id";
 		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
-			
+
 			st.setString(1, username);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -191,7 +192,7 @@ public class VisitasDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
 		} finally {
@@ -235,6 +236,148 @@ public class VisitasDAO {
 		} finally {
 			db.desconectar();
 		}
+	}
+
+	public List<Alumno> mostrarAlumnos() {
+		List<Alumno> alumnos = new ArrayList<>();
+		DBConnection conex = new DBConnection();
+		String sql = "select A.id, A.nombre, A.apellidos, A.dni, A.curso, E.id, E.nombre from visitas_alumno A, visitas_empresa E where A.empresa_id = E.id";
+		try (Statement st = conex.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
+
+			while (rs.next()) {
+				Alumno a = new Alumno();
+				a.setId(rs.getInt(1));
+				a.setNombre(rs.getString(2));
+				a.setApellidos(rs.getString(3));
+				a.setDni(rs.getString(4));
+				a.setCurso(rs.getString(5));
+
+				Empresa e = new Empresa();
+				e.setId(rs.getInt(6));
+				e.setNombre(rs.getString(7));
+
+				a.setEmpresa(e);
+
+				alumnos.add(a);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return alumnos;
+	}
+
+	public Empresa mostrarEmpresa(String id) {
+		DBConnection conex = new DBConnection();
+		String sql = "SELECT * FROM visitas_empresa where id = ?";
+		Empresa e = new Empresa();
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
+			st.setInt(1, Integer.parseInt(id));
+			ResultSet rs = st.executeQuery();
+			rs.next();
+
+			e.setId(rs.getInt(1));
+			e.setCif(rs.getString(2));
+			e.setNombre(rs.getString(3));
+			e.setDireccion(rs.getString(4));
+			e.setPoblacion(rs.getString(5));
+			e.setLatitud(rs.getFloat(6));
+			e.setLongitud(rs.getFloat(7));
+			e.setDistancia(rs.getFloat(8));
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return e;
+	}
+
+	public int modificarEmpresa(Empresa empresa) {
+		DBConnection conex = new DBConnection();
+		String sql = "update visitas_empresa set cif=?, nombre=?, poblacion=?, direccion=?, latitud=?, longitud=?, distancia=? where id = ?";
+		int id = -1;
+
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
+			st.setString(1, empresa.getCif());
+			st.setString(2, empresa.getNombre());
+			st.setString(3, empresa.getPoblacion());
+			st.setString(4, empresa.getDireccion());
+			st.setFloat(5, empresa.getLatitud());
+			st.setFloat(6, empresa.getLongitud());
+			st.setFloat(7, empresa.getDistancia());
+			st.setInt(8,  empresa.getId());
+			id = st.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			conex.desconectar();
+		}
+		return id;
+		
+	}
+	
+	public Alumno mostrarAlumno(String id) {
+		Alumno a = new Alumno();
+		DBConnection conex = new DBConnection();
+		String sql = "select A.id, A.nombre, A.apellidos, A.dni, A.curso, E.id, E.nombre from visitas_alumno A, visitas_empresa E where A.empresa_id = E.id and A.id = ?";
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql); ) {
+			st.setInt(1, Integer.parseInt(id));
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				
+				a.setId(rs.getInt(1));
+				a.setNombre(rs.getString(2));
+				a.setApellidos(rs.getString(3));
+				a.setDni(rs.getString(4));
+				a.setCurso(rs.getString(5));
+
+				Empresa e = new Empresa();
+				e.setId(rs.getInt(6));
+				e.setNombre(rs.getString(7));
+
+				a.setEmpresa(e);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			conex.desconectar();
+		}
+
+		return a;
+	}
+
+	public int modificarAlumno(Alumno alumno) {
+		DBConnection conex = new DBConnection();
+		String sql = "update visitas_alumno set dni=?, nombre=?, apellidos=?, curso=?, empresa_id=? where id = ?";
+		int id = -1;
+
+		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
+			st.setString(1, alumno.getDni());
+			st.setString(2, alumno.getNombre());
+			st.setString(3, alumno.getApellidos());
+			st.setString(4, alumno.getCurso());
+			st.setInt(5, alumno.getEmpresa().getId());
+			st.setInt(6, alumno.getId());
+			id = st.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			conex.desconectar();
+		}
+		return id;
 	}
 
 }
