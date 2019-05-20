@@ -92,22 +92,82 @@ def empresas(request):
 
 @login_required
 def editarEmpresa(request, id):
-    return HttpResponse("ok")
+    if request.POST and request.is_ajax():
+        nombre = request.POST.get('nombre', None)
+        cif = request.POST.get('cif', None)
+        poblacion = request.POST.get('poblacion', None)
+        direccion = request.POST.get('direccion', None)
+        latitud = request.POST.get('latitud', None)
+        longitud = request.POST.get('longitud', None)
+        distancia = request.POST.get('distancia', None)
+
+        if nombre and cif and poblacion and direccion and latitud and longitud and distancia:
+            temp = Empresa.objects.filter(cif=cif)
+            if temp.exists() and temp.id != id:
+                return HttpResponse('Duplicate cif')
+            empresa = Empresa.objects.get(id=id)
+            empresa.nombre = nombre
+            empresa.cif = cif
+            empresa.poblacion = poblacion
+            empresa.direccion = direccion
+            empresa.latitud = latitud
+            empresa.longitud = longitud
+            empresa.distancia = distancia
+            empresa.save()
+            return HttpResponse('ok')
+        return HttpResponse('error')
+    else:
+        empresa = Empresa.objects.get(id=id)
+        return render(request, 'modificarEmpresa.html', {'empresa': empresa})
 
 
 @login_required
 def editarAlumno(request, id):
-    return HttpResponse("ok")
+    empresas = Empresa.objects.all()
+    alumno = Alumno.objects.get(id=id)
+    return render(request, 'modificarAlumno.html', {'empresas': empresas, 'alumno': alumno})
 
 
 @login_required
 def crearEmpresa(request):
-    return HttpResponse("ok")
+    if request.POST and request.is_ajax():
+        nombre = request.POST.get('nombre', None)
+        cif = request.POST.get('cif', None)
+        poblacion = request.POST.get('poblacion', None)
+        direccion = request.POST.get('direccion', None)
+        latitud = request.POST.get('latitud', None)
+        longitud = request.POST.get('longitud', None)
+        distancia = request.POST.get('distancia', None)
+
+        if nombre and cif and poblacion and direccion and latitud and longitud and distancia:
+            if Empresa.objects.filter(cif=cif):
+                return HttpResponse('Duplicate cif')
+            Empresa(nombre=nombre, cif=cif, poblacion=poblacion, direccion=direccion, latitud=latitud, longitud=longitud, distancia=distancia).save()
+            return HttpResponse('ok')
+        return HttpResponse('error')
+    else:
+        return render(request, 'crearEmpresa.html')
 
 
 @login_required
 def crearAlumno(request):
-    return HttpResponse("ok")
+    if request.POST and request.is_ajax():
+        nombre = request.POST.get('nombre', None)
+        dni = request.POST.get('dni', None)
+        apellidos = request.POST.get('apellidos', None)
+        curso = request.POST.get('curso', None)
+        empresa_id = request.POST.get('empresa', None)
+
+        if nombre and dni and apellidos and curso and empresa_id:
+            if Alumno.objects.filter(dni=dni):
+                return HttpResponse('Duplicate dni')
+            empresa = Empresa.objects.get(id=empresa_id)
+            Alumno(nombre=nombre, apellidos=apellidos, dni=dni, curso=curso, empresa=empresa).save()
+            return HttpResponse('ok')
+        return HttpResponse('error')
+    else:
+        empresas = Empresa.objects.all()
+        return render(request, 'crearAlumno.html', {'empresas': empresas})
 
 
 @login_required
