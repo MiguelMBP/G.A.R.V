@@ -123,9 +123,31 @@ def editarEmpresa(request, id):
 
 @login_required
 def editarAlumno(request, id):
-    empresas = Empresa.objects.all()
-    alumno = Alumno.objects.get(id=id)
-    return render(request, 'modificarAlumno.html', {'empresas': empresas, 'alumno': alumno})
+    if request.POST and request.is_ajax():
+        nombre = request.POST.get('nombre', None)
+        dni = request.POST.get('dni', None)
+        apellidos = request.POST.get('apellidos', None)
+        curso = request.POST.get('curso', None)
+        empresa_id = request.POST.get('empresa', None)
+
+        if nombre and dni and apellidos and curso and empresa_id:
+            temp =Alumno.objects.filter(dni=dni)
+            if temp.exists() and temp.dni == dni:
+                return HttpResponse('Duplicate dni')
+            empresa = Empresa.objects.get(id=empresa_id)
+            alumno = Alumno.objects.get(id=id)
+            alumno.nombre = nombre
+            alumno.dni=dni
+            alumno.apellidos=apellidos
+            alumno.curso=curso
+            alumno.empresa=empresa
+            alumno.save()
+            return HttpResponse('ok')
+        return HttpResponse('error')
+    else:
+        empresas = Empresa.objects.all()
+        alumno = Alumno.objects.get(id=id)
+        return render(request, 'modificarAlumno.html', {'empresas': empresas, 'alumno': alumno})
 
 
 @login_required

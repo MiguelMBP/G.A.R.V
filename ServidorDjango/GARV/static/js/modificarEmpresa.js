@@ -36,7 +36,7 @@ document.getElementById('botonModificarEmpresa').onclick = function () {
                     }
                 },
                 error: function() {
-                    alert("Error al introducir la empresa");
+                    alert("Error al modificar la empresa");
                 }
             });
         } else {
