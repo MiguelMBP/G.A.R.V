@@ -8,8 +8,18 @@ import java.net.ServerSocket;
 
 import Util.Constants;
 
+/**
+ * Clase principal del servidor multihilos
+ * @author mmbernal
+ *
+ */
 public class Servidor {
 
+	/**
+	 * Método principal del servidor, ejecuta un hilo por cada petición 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		ServerSocket socketServidor = null;
 		boolean seguir = true;

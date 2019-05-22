@@ -19,8 +19,17 @@ import vo.RegistroVisita;
 import vo.Usuario;
 import vo.Visita;
 
+/**
+ * Clase que se encarga de realizar consultas a la base de datos para las tablas de visitas
+ * @author mmbernal
+ *
+ */
 public class VisitasDAO {
 
+	/**
+	 * Recoge las visitas de la base de datos
+	 * @return Lista con objetos Visita 
+	 */
 	public List<Visita> mostrarVisitas() {
 		List<Visita> visitas = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -50,11 +59,16 @@ public class VisitasDAO {
 		return visitas;
 	}
 
+	/**
+	 * Recoge las visitas realizadas por un profesor de la base de datos
+	 * @param username
+	 * @return Lista con objetos alumno
+	 */
 	public List<Alumno> mostrarAlumnoVisitas(String username) {
 		List<Alumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
 		String sql = "select A.nombre, A.apellidos, E.nombre, E.direccion, E.poblacion, E.latitud, E.longitud, E.distancia, V.fecha from visitas_alumno A, visitas_empresa E, visitas_profesor P, visitas_visita V "
-				+ "where P.usuario_id = (select id from auth_user U where username = ?) and A.empresa_id = E.id and P.id = V.profesor_id and A.id = V.alumno_id";
+				+ "where P.usuario_id = (select id from auth_user U where username = ?) and A.empresa_id = E.id and P.id = V.profesor_id and A.id = V.alumno_id order by V.fecha";
 		try (PreparedStatement st = conex.getConnection().prepareStatement(sql);) {
 
 			st.setString(1, username);
@@ -87,6 +101,10 @@ public class VisitasDAO {
 		return alumnos;
 	}
 
+	/**
+	 * Recoge los alumnos y empresas asignadas del módulo de visitas de la base de datos
+	 * @return Lista con objetos alumno
+	 */
 	public List<Alumno> mostrarTodosAlumnoVisitas() {
 		List<Alumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -122,6 +140,10 @@ public class VisitasDAO {
 		return alumnos;
 	}
 
+	/**
+	 * Recoge las empresas de la base de datos
+	 * @return Lista con objetos Empresa
+	 */
 	public List<Empresa> mostrarEmpresas() {
 		List<Empresa> empresas = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -152,6 +174,11 @@ public class VisitasDAO {
 		return empresas;
 	}
 
+	/**
+	 * Inserta una empresa en la base de datos
+	 * @param empresa
+	 * @return Entero indicando la fila insertada
+	 */
 	public int insertarEmpresa(Empresa empresa) {
 		DBConnection conex = new DBConnection();
 		String sql = "Insert into visitas_empresa values (0, ?, ?, ?, ?, ?, ?, ?)";
@@ -176,6 +203,11 @@ public class VisitasDAO {
 		return id;
 	}
 
+	/**
+	 * Inserta una empresa en la base de datos
+	 * @param alumno
+	 * @return Entero indicando la fila insertada
+	 */
 	public int insertarAlumno(Alumno alumno) {
 		DBConnection conex = new DBConnection();
 		String sql = "Insert into visitas_alumno values (0, ?, ?, ?, ?, ?)";
@@ -201,6 +233,11 @@ public class VisitasDAO {
 		return id;
 	}
 
+	/**
+	 * Recoge el id de la tabla profesor que corresponde al usuario insertado
+	 * @param usuario
+	 * @return El id del usuario (Entero)
+	 */
 	public int idUsuario(String usuario) {
 		DBConnection conex = new DBConnection();
 		String sql = "SELECT B.id FROM auth_user A, visitas_profesor B where username= ? and A.id = B.usuario_id";
@@ -224,6 +261,11 @@ public class VisitasDAO {
 		return id;
 	}
 
+	/**
+	 * Cambia el estado de la visita a validado/invalidado
+	 * @param id
+	 * @param activo
+	 */
 	public void inValidarVisita(int id, boolean activo) {
 		DBConnection db = new DBConnection();
 		String sql = "update visitas_visita set validada = " + activo + " where id = " + id;
@@ -238,6 +280,10 @@ public class VisitasDAO {
 		}
 	}
 
+	/**
+	 * Recoge los alumnos del módulo de visitas de la base de datos
+	 * @return Lista de objetos Alumno
+	 */
 	public List<Alumno> mostrarAlumnos() {
 		List<Alumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -270,6 +316,11 @@ public class VisitasDAO {
 		return alumnos;
 	}
 
+	/**
+	 * Recoge la empresa de la base de datos que corresponde al id pasado por parámetros
+	 * @param id
+	 * @return La empresa seleccionada
+	 */
 	public Empresa mostrarEmpresa(String id) {
 		DBConnection conex = new DBConnection();
 		String sql = "SELECT * FROM visitas_empresa where id = ?";
@@ -297,6 +348,11 @@ public class VisitasDAO {
 		return e;
 	}
 
+	/**
+	 * Actualiza una empresa de la base de datos
+	 * @param empresa
+	 * @return El número de fila modificada
+	 */
 	public int modificarEmpresa(Empresa empresa) {
 		DBConnection conex = new DBConnection();
 		String sql = "update visitas_empresa set cif=?, nombre=?, poblacion=?, direccion=?, latitud=?, longitud=?, distancia=? where id = ?";
@@ -323,6 +379,11 @@ public class VisitasDAO {
 		
 	}
 	
+	/**
+	 * Recoge el alumno de la base de datos que corresponde al id pasado por parámetros
+	 * @param id
+	 * @return El alumno seleccionado
+	 */
 	public Alumno mostrarAlumno(String id) {
 		Alumno a = new Alumno();
 		DBConnection conex = new DBConnection();
@@ -354,6 +415,11 @@ public class VisitasDAO {
 		return a;
 	}
 
+	/**
+	 * Actualiza un alumno de la base de datos
+	 * @param alumno
+	 * @return El número de fila modificada
+	 */
 	public int modificarAlumno(Alumno alumno) {
 		DBConnection conex = new DBConnection();
 		String sql = "update visitas_alumno set dni=?, nombre=?, apellidos=?, curso=?, empresa_id=? where id = ?";

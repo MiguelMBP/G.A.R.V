@@ -24,8 +24,19 @@ import java.util.Scanner;
 import Util.Constants;
 import vo.RegistroVisita;
 
+/**
+ * Clase que se encarga de realizar peticiones al servidor Django
+ * @author mmbernal
+ *
+ */
 public class DjangoConnection {
 
+	/**
+	 * Realiza una conexión HTTP al servidor Django para verificar usuario y contraseña
+	 * @param username 
+	 * @param password
+	 * @return La lista de cookies de la conexión para acceder a los otros métodos
+	 */
 	public List<String> conectar(String username, String password) {
 		HttpURLConnection connection = null;
 		boolean existe = false;
@@ -106,6 +117,20 @@ public class DjangoConnection {
 		return cookies;
 	}
 
+	/**
+	 * Realiza una conexión HTTP POST al servidor Django para registrar un usuario. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la petición es válido 
+	 * @param crsftoken
+	 * @param sessionid
+	 * @param usuarioCrear
+	 * @param contrasenaCrear
+	 * @param correo
+	 * @param dni
+	 * @param nombre
+	 * @param apellidos
+	 * @param curso
+	 * @return Booleano que indica si el usuario se ha creado con exito
+	 */
 	public boolean createUser(String csrftoken, String sessionid, String usuarioCrear, String contrasenaCrear,
 			String correo, String dni, String nombre, String apellidos, String curso) {
 		HttpURLConnection connection = null;
@@ -178,7 +203,13 @@ public class DjangoConnection {
 		return creado;
 	}
 
-	public int insertarVisita(RegistroVisita visita, int id) {
+	/**
+	 * Realiza una conexión HTTP POST al servidor Django para registrar una visita. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la petición es válido 
+	 * @param visita
+	 * @param id
+	 */
+	public void insertarVisita(RegistroVisita visita, int id) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -244,9 +275,16 @@ public class DjangoConnection {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		return -1;
 	}
 
+	/**
+	 * Realiza una conexión HTTP POST al servidor Django para recoger la imagen de una visita. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la petición es válido
+	 * @param id
+	 * @param crsftoken
+	 * @param sessionId
+	 * @return La imágen codificada en base64
+	 */
 	public String getImagen(int id, String crsftoken, String sessionId) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
@@ -314,6 +352,7 @@ public class DjangoConnection {
 		return responseBody;
 	}
 
+	
 	private String[] leerConfiguracion() {
 		String[] parametros = new String[2];
 
@@ -336,7 +375,16 @@ public class DjangoConnection {
 		return parametros;
 	}
 
-	public boolean changePass(String username, String password, String crsftoken, String sessionId) {
+	/**
+	 * Realiza una conexión HTTP POST al servidor Django para cambiar la contraseña de un usuario. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la petición es válido
+	 * @param username
+	 * @param password
+	 * @param crsftoken
+	 * @param sessionId
+	 * @return Booleano que indica si se ha cambiado la contraseña con exito
+	 */
+	public boolean cambiarContrasena(String username, String password, String crsftoken, String sessionId) {
 		HttpURLConnection connection = null;
 		boolean creado = false;
 		String[] parametros = leerConfiguracion();
@@ -402,6 +450,14 @@ public class DjangoConnection {
 		return creado;
 	}
 
+	/**
+	 * Realiza una conexión HTTP POST al servidor Django para enviar un archivo que analizar para sacar apercibimientos. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la petición es válido
+	 * @param base64
+	 * @param extension
+	 * @param csrfToken
+	 * @param sessionId
+	 */
 	public void subirApercibimientos(String base64, String extension, String csrfToken, String sessionId) {
 		HttpURLConnection connection = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -469,6 +525,13 @@ public class DjangoConnection {
 		
 	}
 
+	/**
+	 * Realiza una conexión HTTP POST al servidor Django para enviar un archivo que analizar para importar usuarios. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la petición es válido
+	 * @param base64
+	 * @param csrfToken
+	 * @param sessionId
+	 */
 	public void importarUsuarios(String base64, String csrfToken, String sessionId) {
 		HttpURLConnection connection = null;
 		boolean creado = false;

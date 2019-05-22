@@ -52,7 +52,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Administrador GARV");
 
-        jButton1.setText("Login");
+        jButton1.setText("Iniciar Sesión");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -74,7 +74,7 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                             .addComponent(jPasswordField1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
+                        .addGap(130, 130, 130)
                         .addComponent(jButton1)))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
@@ -91,9 +91,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(59, 59, 59)
                 .addComponent(jButton1)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();

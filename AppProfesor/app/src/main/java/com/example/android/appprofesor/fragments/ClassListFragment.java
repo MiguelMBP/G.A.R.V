@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -13,13 +16,13 @@ import com.example.android.appprofesor.adapters.ClassAdapter;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
 import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.viewmodels.ClaseViewModel;
-import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -42,6 +45,7 @@ public class ClassListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_class_list, container, false);
+        setHasOptionsMenu(true);
 
         recyclerView = view.findViewById(R.id.class_recyclerView);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -99,4 +103,27 @@ public class ClassListFragment extends Fragment {
         public void onChange(ClaseApercibimiento clase);
     }
 
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.buscador, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+
+                return false;
+            }
+        });
+    }
 }

@@ -27,6 +27,11 @@ import vo.Usuario;
 import vo.Visita;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * El hilo que se encarga de responder las peticiones de los clientes.
+ * @author mmbernal
+ *
+ */
 public class HiloServidor extends Thread {
 
 	private Socket socket = null;
@@ -339,7 +344,7 @@ public class HiloServidor extends Thread {
 			String crsftoken = entrada.readUTF();
 			String sessionId = entrada.readUTF();
 
-			boolean cambiado = dc.changePass(username, password, crsftoken, sessionId);
+			boolean cambiado = dc.cambiarContrasena(username, password, crsftoken, sessionId);
 			salida.writeBoolean(cambiado);
 			salida.flush();
 

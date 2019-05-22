@@ -20,12 +20,6 @@ import java.sql.SQLException;
  * @author miguelmbp
  */
 public class DBConnection {
-    
-    /**Parametros de conexion*/
-   /*static String bd = "GARV";
-   static String login = "miguelmbp";
-   static String password = "pass";
-   static String url = "jdbc:mysql://localhost/"+bd;*/
    
    Connection connection = null;
  
@@ -54,7 +48,7 @@ public class DBConnection {
          System.out.println(e);
       }
    }
-   /**Permite retornar la conexión*/
+   /**Permite retornar la conexion*/
    public Connection getConnection(){
       return connection;
    }

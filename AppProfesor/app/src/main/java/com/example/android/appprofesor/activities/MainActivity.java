@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         drawerOptionId = item.getItemId();
+
         changeFragment();
         return true;
     }
