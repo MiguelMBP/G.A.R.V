@@ -46,6 +46,7 @@ public class Visitas extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.cookies = cookies;
         rellenarTabla();
+        this.setTitle("G.A.R.V.");
     }
 
     /**
@@ -73,6 +74,7 @@ public class Visitas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -83,15 +85,34 @@ public class Visitas extends javax.swing.JFrame {
             new String [] {
                 "id", "Docente", "Alumno", "Empresa", "Población", "Fecha", "Distancia", "Validada"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(0);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(6).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(6).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(7).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(7).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(7).setMaxWidth(100);
         }
 
         jMenu1.setText("Apercibimientos");
+        jMenu1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem1.setText("Ver Apercibimientos");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,7 +124,9 @@ public class Visitas extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Visitas");
+        jMenu2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem2.setText("Validar/Invalidar visita");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +135,7 @@ public class Visitas extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem2);
 
+        jMenuItem3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem3.setText("Ver Documento");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +144,7 @@ public class Visitas extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenuItem4.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem4.setText("Informe");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +153,7 @@ public class Visitas extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem4);
 
+        jMenuItem5.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem5.setText("Ver Alumnos");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +162,7 @@ public class Visitas extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem5);
 
+        jMenuItem7.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem7.setText("Ver Empresas");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,7 +174,9 @@ public class Visitas extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Usuarios");
+        jMenu3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem6.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem6.setText("Ver usuarios");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,7 +279,7 @@ public class Visitas extends javax.swing.JFrame {
         try {
             String[] parametros = leerConfiguración();
             double importe = Double.parseDouble(JOptionPane.showInputDialog("Importe por kilometro"));
-            String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/resumenVisitas?valor="+importe;
+            String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/resumenVisitas?valor=" + importe;
 
             Desktop.getDesktop().browse(new URL(url).toURI());
         } catch (MalformedURLException ex) {
@@ -336,7 +365,13 @@ public class Visitas extends javax.swing.JFrame {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             for (int i = 0; i < visitas.size(); i++) {
                 Visita v = visitas.get(i);
-                Object[] elementos = {v.getId(), v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), v.isValidada()};
+                String activo = "";
+                if (v.isValidada()) {
+                    activo = "Activo";
+                } else {
+                    activo = "Inactivo";
+                }
+                Object[] elementos = {v.getId(), v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), activo};
                 t.addRow(elementos);
             }
         } catch (ConfigurationFileException ex) {
@@ -353,13 +388,19 @@ public class Visitas extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         for (int i = 0; i < visitas.size(); i++) {
             Visita v = visitas.get(i);
-            Object[] elementos = {v.getId(), v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), v.isValidada()};
+            String activo = "";
+            if (v.isValidada()) {
+                activo = "Activo";
+            } else {
+                activo = "Inactivo";
+            }
+            Object[] elementos = {v.getId(), v.getDocente(), v.getAlumno(), v.getEmpresa(), v.getPoblacion(), sdf.format(v.getFecha()), v.getDistancia(), activo};
             t.addRow(elementos);
         }
 
     }
-    
-    private String[] leerConfiguración(){
+
+    private String[] leerConfiguración() {
         String[] parametros = new String[2];
 
         try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {

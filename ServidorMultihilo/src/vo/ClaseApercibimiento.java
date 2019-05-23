@@ -3,6 +3,11 @@ package vo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Objeto que representa una asignatura con sus alumnos
+ * @author mmbernal
+ *
+ */
 public class ClaseApercibimiento {
 	private String materia;
 	private String unidad;

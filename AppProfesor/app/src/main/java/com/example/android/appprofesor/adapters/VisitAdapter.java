@@ -94,7 +94,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
             }
 
             FilterResults r = new FilterResults();
-            r.values = todosAlumnos;
+            r.values = filteredAlumnos;
             return r;
         }
 

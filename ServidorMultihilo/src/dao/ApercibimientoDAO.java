@@ -8,16 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.DBConnection;
-import vo.Alumno;
 import vo.AlumnoApercibimiento;
 import vo.Apercibimiento;
 import vo.ClaseApercibimiento;
-import vo.Empresa;
 import vo.TutorAlumno;
 import vo.TutorAsignatura;
 
+/**
+ * Clase que se encarga de realizar consultas a la base de datos para las tablas de apercibimientos
+ * @author mmbernal
+ *
+ */
 public class ApercibimientoDAO {
 
+	/**
+	 * Recoge los apercibimientos de la base de datos
+	 * @return Lista con objetos Apercibimiento
+	 */
 	public List<Apercibimiento> mostrarApercibimientos() {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -53,6 +60,10 @@ public class ApercibimientoDAO {
 		return apercibimientos;
 	}
 
+	/**
+	 * Recoge los apercibimientos de la base de datos agrupados por materia y unidad
+	 * @return Lista con objetos ClaseApercibimiento
+	 */
 	public List<ClaseApercibimiento> mostrarMaterias() {
 		List<ClaseApercibimiento> materias = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -140,6 +151,12 @@ public class ApercibimientoDAO {
 		return mesesString;
 	}
 
+	/**
+	 * Recoge los apercibimientos agrupados por alumno donde la unidad coincide con el cursoTutor del objeto pasado
+	 * por parámetros
+	 * @param username
+	 * @return Lista con objetos TutorAlumno
+	 */
 	public List<TutorAlumno> mostrarAlumnosTutor(String username) {
 		List<TutorAlumno> alumnos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -187,6 +204,10 @@ public class ApercibimientoDAO {
 		return alumnos;
 	}
 
+	/**
+	 * Recoge las asignaturas especiales de la base de datos
+	 * @return Lista de String
+	 */
 	public List<String> getAsignaturasEspeciales() {
 		List<String> asignaturas = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -207,6 +228,10 @@ public class ApercibimientoDAO {
 		return asignaturas;
 	}
 
+	/**
+	 * Inserta la asignatura especial pasada por parámetros en la base de datos 
+	 * @param asignatura
+	 */
 	public void insertarAsignatura(String asignatura) {
 		DBConnection db = new DBConnection();
 		String sql = "insert into apercibimientos_asignaturasespeciales values (0, ?)";
@@ -221,6 +246,11 @@ public class ApercibimientoDAO {
 		}
 	}
 
+	/**
+	 * Actualiza el apercibimiento de la base de datos activándolo/desactivándolo
+	 * @param id
+	 * @param activo
+	 */
 	public void desActivarApercibimiento(int id, boolean activo) {
 		DBConnection db = new DBConnection();
 		String sql = "update apercibimientos_apercibimiento set activo = ? where id = ?";
@@ -235,6 +265,10 @@ public class ApercibimientoDAO {
 		}
 	}
 
+	/**
+	 * Recoge la lista de periodos academicos de la base de datos
+	 * @return
+	 */
 	public List<String> getAnnoAcademico() {
 		DBConnection db = new DBConnection();
 		String sql = "SELECT distinct(periodo_academico) FROM GARV.apercibimientos_apercibimiento order by periodo_academico";
@@ -255,6 +289,11 @@ public class ApercibimientoDAO {
 
 	}
 
+	/**
+	 * Recoge la lista de meses con apercibimientos en el perdiodo especificado de la base de datos
+	 * @param anno
+	 * @return
+	 */
 	public List<String> getMeses(String anno) {
 		DBConnection db = new DBConnection();
 		String sql = "SELECT distinct(month(fecha_inicio)) FROM GARV.apercibimientos_apercibimiento where periodo_academico = ?";
@@ -275,6 +314,12 @@ public class ApercibimientoDAO {
 		return lista;
 	}
 
+	/**
+	 * Recoge la lista de cursos con apercibimientos en el periodo academico y mes especificado
+	 * @param anno
+	 * @param mes
+	 * @return
+	 */
 	public List<String> getCursos(String anno, String mes) {
 		DBConnection db = new DBConnection();
 		String sql = "SELECT distinct(unidad) FROM GARV.apercibimientos_apercibimiento where periodo_academico = ? and month(fecha_inicio) = ? order by unidad";
@@ -296,6 +341,11 @@ public class ApercibimientoDAO {
 		return lista;
 	}
 
+	/**
+	 * Modifica la asignatura especial con los datos pasados por parámetros
+	 * @param id
+	 * @param asignatura
+	 */
 	public void modificarAsignatura(int id, String asignatura) {
 
 		DBConnection db = new DBConnection();
@@ -312,6 +362,10 @@ public class ApercibimientoDAO {
 
 	}
 
+	/**
+	 * Elimina la asignatura especial de la base de datos especificada por parámetros
+	 * @param id
+	 */
 	public void eliminarAsignatura(int id) {
 		DBConnection db = new DBConnection();
 		String sql = "delete from apercibimientos_asignaturasespeciales where id = ?";
@@ -327,6 +381,11 @@ public class ApercibimientoDAO {
 		
 	}
 
+	/**
+	 * Recoge la lista de cursos con apercibimientos en el año especificado
+	 * @param anno
+	 * @return
+	 */
 	public List<String> getCursosfiltro(String anno) {
 		DBConnection db = new DBConnection();
 		String sql = "SELECT distinct(unidad) FROM apercibimientos_apercibimiento where periodo_academico = ? order by unidad";
@@ -347,6 +406,12 @@ public class ApercibimientoDAO {
 		return lista;
 	}
 
+	/**
+	 * Recoge la lista de alumnos con apercibimientos en el año y curso especificado
+	 * @param anno
+	 * @param curso
+	 * @return
+	 */
 	public List<String> getAlumnosFiltro(String anno, String curso) {
 		DBConnection db = new DBConnection();
 		String sql = "SELECT distinct(alumno) FROM apercibimientos_apercibimiento where periodo_academico = ? and unidad like ? order by alumno;";
@@ -368,6 +433,11 @@ public class ApercibimientoDAO {
 		return lista;
 	}
 	
+	/**
+	 * Recoge los apercibimientos del año especificado
+	 * @param ano
+	 * @return
+	 */
 	public List<Apercibimiento> mostrarApercibimientosFiltroAno(String ano) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -404,6 +474,12 @@ public class ApercibimientoDAO {
 		return apercibimientos;
 	}
 	
+	/**
+	 * Recoge los apercibimientos del año y curso especificado
+	 * @param ano
+	 * @param curso
+	 * @return
+	 */
 	public List<Apercibimiento> mostrarApercibimientosFiltroCurso(String ano, String curso) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -441,6 +517,13 @@ public class ApercibimientoDAO {
 		return apercibimientos;
 	}
 	
+	/**
+	 * Recoge los apercibimientos del alumno en el año y curso especificados
+	 * @param ano
+	 * @param curso
+	 * @param alumno
+	 * @return
+	 */
 	public List<Apercibimiento> mostrarApercibimientosFiltroAlumno(String ano, String curso, String alumno) {
 		List<Apercibimiento> apercibimientos = new ArrayList<>();
 		DBConnection conex = new DBConnection();

@@ -2,6 +2,11 @@ package vo;
 
 import java.util.Date;
 
+/**
+ * Objeto que representa una visita para introducir en la base de datos
+ * @author mmbernal
+ *
+ */
 public class RegistroVisita {
 	private String docente;
 	private Alumno alumno;

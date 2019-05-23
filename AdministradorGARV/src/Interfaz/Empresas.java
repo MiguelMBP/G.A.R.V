@@ -31,6 +31,7 @@ public class Empresas extends javax.swing.JDialog {
         this.parent = parent;
         setLocationRelativeTo(parent);
         rellenarTabla();
+        this.setTitle("G.A.R.V.");
     }
 
     /**
@@ -54,6 +55,7 @@ public class Empresas extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jTable1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -70,7 +72,9 @@ public class Empresas extends javax.swing.JDialog {
         }
 
         jMenu2.setText("Opciones");
+        jMenu2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem1.setText("Añadir");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +83,7 @@ public class Empresas extends javax.swing.JDialog {
         });
         jMenu2.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem2.setText("Modificar");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

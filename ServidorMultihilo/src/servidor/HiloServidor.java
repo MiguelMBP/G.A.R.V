@@ -1,17 +1,14 @@
 package servidor;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
 import java.util.List;
-
-import javax.swing.text.html.CSS;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import connection.DjangoConnection;
 import dao.ApercibimientoDAO;
@@ -25,7 +22,6 @@ import vo.RegistroVisita;
 import vo.TutorAlumno;
 import vo.Usuario;
 import vo.Visita;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * El hilo que se encarga de responder las peticiones de los clientes.

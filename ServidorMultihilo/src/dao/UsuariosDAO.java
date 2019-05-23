@@ -9,9 +9,17 @@ import java.util.List;
 
 import connection.DBConnection;
 import vo.Usuario;
-
+/**
+ * Clase que se encarga de realizar consultas a la base de datos para las tablas de usuarios
+ * @author mmbernal
+ *
+ */
 public class UsuariosDAO {
 
+	/**
+	 * Recoge los usuarios de la base de datos
+	 * @return Lista con objetos Usuario
+	 */
 	public List<Usuario> mostrarUsuarios() {
 		List<Usuario> usuarios = new ArrayList<>();
 		DBConnection conex = new DBConnection();
@@ -39,6 +47,11 @@ public class UsuariosDAO {
 		return usuarios;
 	}
 	
+	/**
+	 * Recoge el usuario de la base de datos con el ID pasado por parámetros
+	 * @param id
+	 * @return El objeto Usuario
+	 */
 	public Usuario mostrarUsuario(String id) {
 		Usuario u = new Usuario();
 		DBConnection conex = new DBConnection();
@@ -65,6 +78,10 @@ public class UsuariosDAO {
 		return u;
 	}
 
+	/**
+	 * Actualiza el usuario de la base de datos con los datos del objeto pasado por parámetros
+	 * @param usuario
+	 */
 	public void modificarUsuario(Usuario usuario) {
 		DBConnection db = new DBConnection();
 		String sql = "update visitas_profesor A1, auth_user A2 set A2.first_name = ?, A2.last_name = ?, A2.email = ?, A1.cursoTutor = ?, A1.dni = ? where A2.username = ? and A1.usuario_id = A2.id";

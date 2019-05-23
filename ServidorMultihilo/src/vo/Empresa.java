@@ -3,6 +3,11 @@ package vo;
 
 import java.io.Serializable;
 
+/**
+ * Objeto que representa una empresa
+ * @author mmbernal
+ *
+ */
 public class Empresa implements Serializable {
 	private int id;
 	private String cif;

@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import Util.Constants;
-
 /**
  * Clase principal del servidor multihilos
  * @author mmbernal

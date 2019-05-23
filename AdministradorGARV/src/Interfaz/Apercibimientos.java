@@ -7,6 +7,7 @@ package Interfaz;
 
 import Cliente.ConectorApercibimientos;
 import Util.ConfigurationFileException;
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.codec.binary.Base64;
@@ -35,11 +37,14 @@ public class Apercibimientos extends javax.swing.JFrame {
     private List<String> cookies;
 
     public Apercibimientos(List<String> cookies) {
+        UIManager.getLookAndFeelDefaults()
+                .put("defaultFont", new Font("Verdana", Font.PLAIN, 13));
         initComponents();
         setLocationRelativeTo(null);
         rellenarTabla();
         this.cookies = cookies;
         rellenarAño();
+        this.setTitle("G.A.R.V.");
     }
 
     /**
@@ -72,6 +77,7 @@ public class Apercibimientos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -79,13 +85,39 @@ public class Apercibimientos extends javax.swing.JFrame {
             new String [] {
                 "id", "Alumno", "Periodo", "Unidad", "Materia", "FechaInicio", "FechaFin", "Activo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setGridColor(new java.awt.Color(204, 204, 204));
+        jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(0);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(3).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(6).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(6).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(7).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(7).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(7).setMaxWidth(100);
         }
 
+        jComboBoxCurso.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jComboBoxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
         jComboBoxCurso.setEnabled(false);
         jComboBoxCurso.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +126,7 @@ public class Apercibimientos extends javax.swing.JFrame {
             }
         });
 
+        jComboBoxAlumno.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jComboBoxAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
         jComboBoxAlumno.setEnabled(false);
         jComboBoxAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -102,12 +135,13 @@ public class Apercibimientos extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jLabel1.setText("Curso");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jLabel2.setText("Alumno");
 
+        jComboBoxAño.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jComboBoxAño.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
         jComboBoxAño.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,11 +149,13 @@ public class Apercibimientos extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jLabel3.setText("Año");
 
         jMenu1.setText("Apercibimientos");
+        jMenu1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem1.setText("Activar/Desactivar Apercibimiento");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +164,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem4.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem4.setText("Informes");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +173,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem4);
 
+        jMenuItem5.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem5.setText("Subir Archivos");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +182,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem5);
 
+        jMenuItem7.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem7.setText("Asignaturas Especiales");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,7 +194,9 @@ public class Apercibimientos extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Visitas");
+        jMenu2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem3.setText("Ver visitas");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,7 +208,9 @@ public class Apercibimientos extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Usuarios");
+        jMenu3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem6.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem6.setText("Ver usuarios");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,16 +234,17 @@ public class Apercibimientos extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1139, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel3)
-                        .addGap(76, 76, 76)
+                        .addGap(56, 56, 56)
                         .addComponent(jComboBoxAño, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79)
+                        .addGap(83, 83, 83)
                         .addComponent(jLabel1)
-                        .addGap(76, 76, 76)
+                        .addGap(69, 69, 69)
                         .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
+                        .addGap(83, 83, 83)
                         .addComponent(jLabel2)
-                        .addGap(85, 85, 85)
+                        .addGap(71, 71, 71)
                         .addComponent(jComboBoxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(53, 53, 53))))
         );
@@ -208,17 +252,14 @@ public class Apercibimientos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBoxAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBoxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBoxAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -241,7 +282,7 @@ public class Apercibimientos extends javax.swing.JFrame {
             try {
                 int id = Integer.parseInt(t.getValueAt(pos, 0).toString());
                 String activoS = t.getValueAt(pos, 7).toString();
-                boolean activo = (activoS.equals("true"));
+                boolean activo = (activoS.equals("Activo"));
                 ConectorApercibimientos cs = new ConectorApercibimientos();
                 List<Apercibimiento> apercibimientos = cs.desActivarApercibimiento(id, !activo);
                 actualizarTabla();
@@ -362,7 +403,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else if (!curso.equalsIgnoreCase("todos") && !año.equalsIgnoreCase("todos")){
+            } else if (!curso.equalsIgnoreCase("todos") && !año.equalsIgnoreCase("todos")) {
                 try {
                     jComboBoxAlumno.setEnabled(true);
                     rellenarAlumno();
@@ -394,7 +435,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else if (!alumno.equalsIgnoreCase("todos") && !curso.equalsIgnoreCase("todos") && !año.equalsIgnoreCase("todos")){
+            } else if (!alumno.equalsIgnoreCase("todos") && !curso.equalsIgnoreCase("todos") && !año.equalsIgnoreCase("todos")) {
                 try {
                     List<Apercibimiento> lista = cs.apercibimientosPorAlumno(año, curso, alumno);
                     rellenarTabla(lista);
@@ -495,7 +536,13 @@ public class Apercibimientos extends javax.swing.JFrame {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             for (int i = 0; i < apercibimientos.size(); i++) {
                 Apercibimiento a = apercibimientos.get(i);
-                Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.isActivo()};
+                String activo = "";
+                if (a.isActivo()) {
+                    activo = "Activo";
+                } else {
+                    activo = "Inactivo";
+                }
+                Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), activo};
                 t.addRow(elementos);
             }
         } catch (ConfigurationFileException ex) {
@@ -511,7 +558,13 @@ public class Apercibimientos extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         for (int i = 0; i < apercibimientos.size(); i++) {
             Apercibimiento a = apercibimientos.get(i);
-            Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), a.isActivo()};
+            String activo = "";
+            if (a.isActivo()) {
+                activo = "Activo";
+            } else {
+                activo = "Inactivo";
+            }
+            Object[] elementos = {a.getId(), a.getAlumno(), a.getPeriodoAcademico(), a.getUnidad(), a.getMateria(), sdf.format(a.getFechaInicio()), sdf.format(a.getFechaFin()), activo};
             t.addRow(elementos);
         }
 
@@ -563,15 +616,15 @@ public class Apercibimientos extends javax.swing.JFrame {
             if (posAño != -1 && posCurso != -1) {
                 String año = jComboBoxAño.getItemAt(posAño);
                 String curso = jComboBoxCurso.getItemAt(posCurso);
-                if (!año.equalsIgnoreCase("todos") && !curso.equalsIgnoreCase("todos")){
-                ConectorApercibimientos cs = new ConectorApercibimientos();
-                List<String> alumnos = cs.cargarAlumnoFiltro(año, curso);
-                jComboBoxAlumno.removeAllItems();
-                jComboBoxAlumno.addItem("Todos");
-                for (int i = 0; i < alumnos.size(); i++) {
-                    jComboBoxAlumno.addItem(alumnos.get(i));
-                }
-                jComboBoxAlumno.setSelectedIndex(0);
+                if (!año.equalsIgnoreCase("todos") && !curso.equalsIgnoreCase("todos")) {
+                    ConectorApercibimientos cs = new ConectorApercibimientos();
+                    List<String> alumnos = cs.cargarAlumnoFiltro(año, curso);
+                    jComboBoxAlumno.removeAllItems();
+                    jComboBoxAlumno.addItem("Todos");
+                    for (int i = 0; i < alumnos.size(); i++) {
+                        jComboBoxAlumno.addItem(alumnos.get(i));
+                    }
+                    jComboBoxAlumno.setSelectedIndex(0);
                 }
             }
         } catch (ConfigurationFileException ex) {
@@ -591,4 +644,5 @@ public class Apercibimientos extends javax.swing.JFrame {
             Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

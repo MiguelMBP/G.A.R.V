@@ -36,6 +36,7 @@ public class InformesApercibimientos extends javax.swing.JDialog {
         setLocationRelativeTo(parent);
         rellenarAño();
         jSpinner1.setValue(Integer.valueOf("2"));
+        this.setTitle("G.A.R.V.");
     }
 
     /**
@@ -65,9 +66,10 @@ public class InformesApercibimientos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 20)); // NOI18N
         jLabel1.setText("Informes");
 
+        jComboBoxTipo.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alumnos con N o más apercibimientos", "Apercibimientos Individuales", "Resumen de apercibimientos por materia" }));
         jComboBoxTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,27 +77,36 @@ public class InformesApercibimientos extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jLabel2.setText("Tipo");
 
+        jComboBoxMes.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jComboBoxMes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxMesActionPerformed(evt);
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jLabel3.setText("Mes");
 
+        jComboBoxAño.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jComboBoxAño.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxAñoActionPerformed(evt);
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jLabel4.setText("Año académico");
 
+        jSpinner1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jLabel5.setText("Número de apercibimientos");
 
         buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Generar informe de todos los cursos");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +116,7 @@ public class InformesApercibimientos extends javax.swing.JDialog {
         });
 
         buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jRadioButton2.setText("Generar informe de un curso");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,10 +124,13 @@ public class InformesApercibimientos extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jLabel6.setText("Curso");
 
+        jComboBoxCurso.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jComboBoxCurso.setEnabled(false);
 
+        jButton1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jButton1.setText("Generar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,19 +161,19 @@ public class InformesApercibimientos extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(205, 205, 205)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(198, 198, 198)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(197, 197, 197)
+                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel1)
-                .addGap(31, 31, 31)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,7 +199,7 @@ public class InformesApercibimientos extends javax.swing.JDialog {
                 .addComponent(jComboBoxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(jButton1)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();

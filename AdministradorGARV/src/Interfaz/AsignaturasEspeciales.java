@@ -28,6 +28,7 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(parent);
         rellenarTabla();
+        this.setTitle("G.A.R.V.");
     }
 
     /**
@@ -64,7 +65,9 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         }
 
         jMenu1.setText("Opciones");
+        jMenu1.setFont(new java.awt.Font("Verdana", 0, 15)); // NOI18N
 
+        jMenuItem1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem1.setText("Añadir");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,6 +76,7 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem2.setText("Modificar");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +85,7 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem3.setText("Eliminar");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +106,7 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
         );
 
         pack();

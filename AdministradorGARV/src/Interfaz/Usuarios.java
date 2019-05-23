@@ -38,6 +38,7 @@ public class Usuarios extends javax.swing.JFrame {
         this.cookies = cookies;
         setLocationRelativeTo(null);
         rellenarTabla();
+        this.setTitle("G.A.R.V.");
     }
 
     /**
@@ -64,6 +65,7 @@ public class Usuarios extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -78,7 +80,9 @@ public class Usuarios extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jMenu1.setText("Apercibimientos");
+        jMenu1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem1.setText("Ver Apercibimientos");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,7 +94,9 @@ public class Usuarios extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Visitas");
+        jMenu2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem3.setText("Ver visitas");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,7 +108,9 @@ public class Usuarios extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Usuarios");
+        jMenu3.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
 
+        jMenuItem6.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem6.setText("Crear ususario");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +119,7 @@ public class Usuarios extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem6);
 
+        jMenuItem2.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem2.setText("Cambiar contraseña");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,6 +128,7 @@ public class Usuarios extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem2);
 
+        jMenuItem4.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem4.setText("Editar usuario");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,6 +137,7 @@ public class Usuarios extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem4);
 
+        jMenuItem5.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
         jMenuItem5.setText("Importar usuarios");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -1,22 +1,15 @@
 package dao;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 import connection.DBConnection;
 import vo.Alumno;
-import vo.AlumnoApercibimiento;
-import vo.ClaseApercibimiento;
 import vo.Empresa;
-import vo.RegistroVisita;
-import vo.Usuario;
 import vo.Visita;
 
 /**
@@ -268,7 +261,7 @@ public class VisitasDAO {
 	 */
 	public void inValidarVisita(int id, boolean activo) {
 		DBConnection db = new DBConnection();
-		String sql = "update visitas_visita set validada = " + activo + " where id = " + id;
+		String sql = "update visitas_visita set validada = ? where id = ?";
 		try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
 			st.setBoolean(1, activo);
 			st.setInt(2, id);
