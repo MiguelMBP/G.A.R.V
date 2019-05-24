@@ -43,7 +43,7 @@ document.getElementById('informes').mesSelect.onchange = function () {
     mes = $("#mesSelect").val()
     url = '/apercibimientos/getCursosInformes'
     $.ajax({
-        url: url + '?periodo=' + periodo + '&mes=' + 11,
+        url: url + '?periodo=' + periodo + '&mes=' + mes,
         success: function(respuesta) {
             $('#cursoSelect').find('option').remove().end().append('<option value="" selected disabled hidden>Elegir Curso</option>');
             for (var i = 0, len = respuesta.length; i<len; i++) {
@@ -132,7 +132,7 @@ function numeroAMes(mes) {
     month_name[8] = "Septiembre";
     month_name[9] = "Octubre";
     month_name[10] = "Noviembre";
-    month_name[11] = "Deciembre";
+    month_name[11] = "Diciembre";
 
     return month_name[mes-1]
     //return mes
