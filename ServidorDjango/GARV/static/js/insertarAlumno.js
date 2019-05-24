@@ -10,7 +10,6 @@ document.getElementById('botonCrearAlumno').onclick = function () {
         var formData = {
             'nombre': nombre, 'dni': dni, 'apellidos': apellidos, 'curso': curso, 'empresa': empresa
         };
-        console.log(formData)
          $.ajaxSetup({
             headers: { "X-CSRFToken": getCookie("csrftoken") }
          });

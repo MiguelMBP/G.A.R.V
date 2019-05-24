@@ -112,7 +112,9 @@ public class Login extends javax.swing.JFrame {
         String password = String.valueOf(jPasswordField1.getPassword());
         try {
             List<String> cookies = cs.iniciarSesion(username, password);
-            if (!cookies.isEmpty()) {
+            if (cookies == null) {
+                JOptionPane.showMessageDialog(this, "El usuario no pertenece al grupo Staff");
+            } else if (!cookies.isEmpty()) {
                 Inicio a = new Inicio(cookies);
                 a.setVisible(true);
                 this.setVisible(false);

@@ -3,6 +3,7 @@ import tempfile
 from base64 import b64decode
 from calendar import month
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
@@ -26,6 +27,7 @@ from .analisis_pdf import pdf_to_csv
 
 
 @login_required
+@staff_member_required
 def subir_pdf(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -50,6 +52,7 @@ def subir_pdf(request):
 
 
 @login_required
+@staff_member_required
 def subir_pdf_post(request):
     if request.method == 'POST':
         base64 = request.POST.get('archivo', None)
@@ -68,30 +71,35 @@ def subir_pdf_post(request):
 
 
 @login_required
+@staff_member_required
 def buscarApercibimiento(request):
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'buscar_apercibimiento.html', {'years': periodo})
 
 
 @login_required
+@staff_member_required
 def informeApercibimientos(request):
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'menuInformes.html', {'years': periodo})
 
 
 @login_required
+@staff_member_required
 def informeEstadisticas(request):
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'menuInformeNumeroApercibimientos.html', {'years': periodo})
 
 
 @login_required
+@staff_member_required
 def asignaturasEspeciales(request):
     lista = AsignaturasEspeciales.objects.all()
     return render(request, 'asignaturasEspeciales.html', {'lista': lista})
 
 
 @login_required
+@staff_member_required
 def sacarAsignaturas(request):
     if request.is_ajax():
         lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
@@ -101,6 +109,7 @@ def sacarAsignaturas(request):
 
 
 @login_required
+@staff_member_required
 def introducirAsignaturas(request):
     if request.GET and request.is_ajax():
         materia = request.GET['materia']
@@ -113,6 +122,7 @@ def introducirAsignaturas(request):
 
 
 @login_required
+@staff_member_required
 def modificarAsignaturas(request):
     if request.GET and request.is_ajax():
         id = request.GET['id']
@@ -127,6 +137,7 @@ def modificarAsignaturas(request):
 
 
 @login_required
+@staff_member_required
 def eliminarAsignaturas(request):
     if request.GET and request.is_ajax():
         id = request.GET['id']
@@ -138,6 +149,7 @@ def eliminarAsignaturas(request):
 
 
 @login_required
+@staff_member_required
 def sacarCursos(request):
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
@@ -148,6 +160,7 @@ def sacarCursos(request):
 
 
 @login_required
+@staff_member_required
 def sacarAlumnos(request):
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
@@ -159,6 +172,7 @@ def sacarAlumnos(request):
 
 
 @login_required
+@staff_member_required
 def sacarApercibimientos(request):
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
@@ -172,6 +186,7 @@ def sacarApercibimientos(request):
 
 
 @login_required
+@staff_member_required
 def sacarMeses(request):
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
@@ -179,11 +194,11 @@ def sacarMeses(request):
         lista = []
         for resultado in resultados:
             lista.append(resultado['fecha_inicio'].month)
-        print(lista)
         return JsonResponse(lista, safe=False)
 
 
 @login_required
+@staff_member_required
 def sacarCursoInformes(request):
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
@@ -194,6 +209,7 @@ def sacarCursoInformes(request):
 
 
 @login_required
+@staff_member_required
 def actualizarApercibimiento(request):
     if request.GET and request.is_ajax():
         id = request.GET['id']
@@ -213,6 +229,7 @@ def actualizarApercibimiento(request):
 
 
 @login_required
+@staff_member_required
 def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
     if 9 <= mes <= 12:
         fecha = datetime.datetime(anno, mes, 28)
@@ -255,6 +272,7 @@ def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
 
 
 @login_required
+@staff_member_required
 def informeApercibimientoIndividual(request, anno, mes, unidad):
     if 9 <= mes <= 12:
         fecha = datetime.datetime(anno, mes, 28)
@@ -308,6 +326,7 @@ def informeApercibimientoIndividual(request, anno, mes, unidad):
 
 
 @login_required
+@staff_member_required
 def informeResumenApercibimiento(request, anno, mes, unidad):
     if 9 <= mes <= 12:
         fecha = datetime.datetime(anno, mes, 28)
@@ -358,6 +377,7 @@ def informeResumenApercibimiento(request, anno, mes, unidad):
 
 
 @login_required
+@staff_member_required
 def estadisticasApercibimientos(request, periodo, inicio, fin):
     if 9 <= inicio <= 12:
         fechainicio = datetime.datetime(periodo, inicio, 1)

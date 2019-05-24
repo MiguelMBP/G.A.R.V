@@ -134,7 +134,6 @@ function numeroAMes(mes) {
     month_name[10] = "Noviembre";
     month_name[11] = "Deciembre";
 
-    console.log(month_name[mes-1])
     return month_name[mes-1]
     //return mes
 }

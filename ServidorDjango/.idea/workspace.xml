@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/GARV/visitas/views.py" line="50" />
+    <bookmark url="file://$PROJECT_DIR$/GARV/visitas/views.py" line="51" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/GARV/static/js/usuarios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorUsuarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Login.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/GARV/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/GARV/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/GARV/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/GARV/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/informeNumero.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/informeNumero.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/informes.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/informes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/insertarAlumno.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/insertarAlumno.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/insertarEmpresa.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/insertarEmpresa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/modificarAlumno.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/modificarAlumno.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/modificarEmpresa.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/modificarEmpresa.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/modificarUsuario.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/modificarUsuario.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/registro.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/registro.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/static/js/visitas.js" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/static/js/visitas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/usuarios/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/usuarios/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/visitas/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/visitas/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/connection/DjangoConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/connection/DjangoConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/bin/servidor/HiloServidor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/connection/DjangoConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/connection/DjangoConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/HiloServidor.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,24 +45,91 @@
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="5" column="14" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="47" column="99" selection-start-line="47" selection-start-column="99" selection-end-line="47" selection-end-column="99" />
+              <folding>
+                <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="e#1406#1413#1" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/menuInformes.html">
+        <entry file="file://$PROJECT_DIR$/GARV/static/js/usuarios.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="12" column="68" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="68" />
+            <state relative-caret-position="357">
+              <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/usuarios/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
               <folding>
-                <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-429">
+              <caret line="87" column="86" selection-start-line="87" selection-start-column="86" selection-end-line="87" selection-end-column="86" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="347">
+              <caret line="43" column="100" selection-start-line="43" selection-start-column="82" selection-end-line="43" selection-end-column="100" />
+              <folding>
                 <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#1;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#4;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#5;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#6;n#form#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/static/js/visitas.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="47" column="5" lean-forward="true" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/static/js/modificarUsuario.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="489">
+              <caret line="66" column="26" lean-forward="true" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -56,6 +149,9 @@
       <find>start</find>
       <find>favicon.ico</find>
       <find>console</find>
+      <find>visitas</find>
+      <find>spli</find>
+      <find>console.log</find>
       <find>print</find>
     </findStrings>
   </component>
@@ -65,13 +161,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/AsiganturasEspeciales.html" />
-        <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/asignaturasEspeciales.html" />
-        <option value="$PROJECT_DIR$/GARV/static/js/asignaturas.js" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/ApercibimientosPorUnidad.html" />
         <option value="$PROJECT_DIR$/GARV/static/js/filtro.js" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/visitas.html" />
-        <option value="$PROJECT_DIR$/GARV/static/js/visitas.js" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/imagenVisita.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/usuarios.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/editarUsuarios.html" />
@@ -79,26 +171,16 @@
         <option value="$PROJECT_DIR$/GARV/GARV/urls.py" />
         <option value="$PROJECT_DIR$/GARV/templates/registration/logged_out.html" />
         <option value="$PROJECT_DIR$/GARV/usuarios/templates/crearUsuario.html" />
-        <option value="$PROJECT_DIR$/GARV/static/js/registro.js" />
-        <option value="$PROJECT_DIR$/GARV/static/js/modificarUsuario.js" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/menuInformeNumeroApercibimientos.html" />
-        <option value="$PROJECT_DIR$/GARV/static/js/informes.js" />
-        <option value="$PROJECT_DIR$/GARV/static/js/informeNumero.js" />
         <option value="$PROJECT_DIR$/GARV/visitas/forms.py" />
         <option value="$PROJECT_DIR$/GARV/usuarios/templates/importar.html" />
         <option value="$PROJECT_DIR$/GARV/usuarios/forms.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/GARV/usuarios/usuarios_csv.py" />
         <option value="$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html" />
-        <option value="$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/urls.py" />
         <option value="$PROJECT_DIR$/GARV/usuarios/models.py" />
-        <option value="$PROJECT_DIR$/GARV/usuarios/urls.py" />
-        <option value="$PROJECT_DIR$/GARV/apercibimientos/views.py" />
-        <option value="$PROJECT_DIR$/GARV/usuarios/views.py" />
         <option value="$PROJECT_DIR$/GARV/GARV/wsgi.py" />
-        <option value="$PROJECT_DIR$/GARV/GARV/settings.py" />
-        <option value="$PROJECT_DIR$/GARV/GARV/views.py" />
         <option value="$PROJECT_DIR$/GARV/visitas/models.py" />
         <option value="$PROJECT_DIR$/GARV/templates/index.html" />
         <option value="$PROJECT_DIR$/GARV/templates/navbar.html" />
@@ -109,13 +191,27 @@
         <option value="$PROJECT_DIR$/GARV/visitas/templates/crearEmpresa.html" />
         <option value="$PROJECT_DIR$/GARV/static/js/modificarEmpresa.html" />
         <option value="$PROJECT_DIR$/GARV/visitas/templates/modificarEmpresa.html" />
-        <option value="$PROJECT_DIR$/GARV/static/js/insertarEmpresa.js" />
-        <option value="$PROJECT_DIR$/GARV/static/js/insertarAlumno.js" />
         <option value="$PROJECT_DIR$/GARV/visitas/templates/crearAlumno.html" />
+        <option value="$PROJECT_DIR$/GARV/visitas/templates/modificarAlumno.html" />
+        <option value="$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py" />
+        <option value="$PROJECT_DIR$/GARV/GARV/settings.py" />
+        <option value="$PROJECT_DIR$/GARV/usuarios/urls.py" />
+        <option value="$PROJECT_DIR$/GARV/GARV/views.py" />
+        <option value="$PROJECT_DIR$/GARV/usuarios/views.py" />
+        <option value="$PROJECT_DIR$/GARV/visitas/templates/visitas.html" />
+        <option value="$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html" />
+        <option value="$PROJECT_DIR$/GARV/static/js/informes.js" />
+        <option value="$PROJECT_DIR$/GARV/static/js/visitas.js" />
+        <option value="$PROJECT_DIR$/GARV/static/js/registro.js" />
+        <option value="$PROJECT_DIR$/GARV/static/js/modificarUsuario.js" />
+        <option value="$PROJECT_DIR$/GARV/static/js/informeNumero.js" />
+        <option value="$PROJECT_DIR$/GARV/static/js/insertarEmpresa.js" />
         <option value="$PROJECT_DIR$/GARV/static/js/modificarEmpresa.js" />
+        <option value="$PROJECT_DIR$/GARV/static/js/insertarAlumno.js" />
         <option value="$PROJECT_DIR$/GARV/static/js/modificarAlumno.js" />
         <option value="$PROJECT_DIR$/GARV/visitas/views.py" />
-        <option value="$PROJECT_DIR$/GARV/visitas/templates/modificarAlumno.html" />
+        <option value="$PROJECT_DIR$/GARV/apercibimientos/views.py" />
+        <option value="$PROJECT_DIR$/GARV/static/js/usuarios.js" />
       </list>
     </option>
   </component>
@@ -131,6 +227,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -146,19 +243,46 @@
             <path>
               <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
               <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="apercibimientos" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GARV" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GARV" type="462c0819:PsiDirectoryNode" />
+              <item name="usuarios" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GARV" type="462c0819:PsiDirectoryNode" />
+              <item name="usuarios" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GARV" type="462c0819:PsiDirectoryNode" />
+              <item name="visitas" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GARV" type="462c0819:PsiDirectoryNode" />
+              <item name="visitas" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Descargas/Django-Celery-Example-master" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -171,17 +295,17 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/GARV/usuarios/templates" />
+      <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\static\js" />
+      <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\visitas\templates" />
       <recent name="$PROJECT_DIR$/GARV/usuarios" />
       <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\usuarios\templates" />
       <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\usuarios" />
       <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\GARV\templates" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/GARV/usuarios/templates" />
-      <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\static\js" />
-      <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\templates" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -232,19 +356,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/informeApercibimientoIndividual.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1326">
-          <caret line="78" column="38" lean-forward="true" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="38" />
-          <folding>
-            <element signature="n#style#0;n#p#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/apps.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/visitas/apps.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -328,77 +439,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1305">
-          <caret line="94" column="28" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/static/js/modificarUsuario.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="27" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#4;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#5;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#6;n#form#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/GARV/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
           <folding>
             <element signature="e#220#229#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/GARV/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="35" column="27" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
-          <folding>
-            <element signature="e#303#312#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/GARV/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-          <folding>
-            <element signature="e#0#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/importar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -426,23 +472,6 @@
           <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/static/js/visitas.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="20" column="129" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="129" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="150" lean-forward="true" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="150" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -491,20 +520,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/visitas.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="13" selection-start-line="25" selection-start-column="4" selection-end-line="27" selection-end-column="13" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/empresas.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="159">
@@ -530,16 +545,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="104" column="40" selection-start-line="104" selection-start-column="19" selection-end-line="104" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/static/js/registro.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -551,26 +556,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="931">
           <caret line="81" column="61" lean-forward="true" selection-start-line="81" selection-start-column="42" selection-end-line="81" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/usuarios/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-401">
-          <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/usuarios/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -623,24 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="154" column="42" lean-forward="true" selection-start-line="154" selection-start-column="42" selection-end-line="154" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#547#898#0" />
-            <element signature="e#949#1554#0" />
-            <element signature="e#1606#2666#0" />
-            <element signature="e#2711#2960#0" />
-            <element signature="e#3006#3106#0" />
-            <element signature="e#3008#3745#0" />
-            <element signature="e#4914#5146#0" />
-            <element signature="e#5172#5638#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/static/js/modificarAlumno.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -690,17 +657,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
+    <entry file="file://$PROJECT_DIR$/GARV/GARV/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="14" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+        <state relative-caret-position="58">
+          <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
+          <folding>
+            <element signature="e#303#312#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/menuInformes.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="12" column="68" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="68" />
+        <state relative-caret-position="377">
+          <caret line="25" column="21" lean-forward="true" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
           <folding>
             <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
@@ -709,6 +689,144 @@
             <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#3;n#form#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="380" selection-start-line="380" selection-end-line="380" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/GARV/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="40" lean-forward="true" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/usuarios/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="172" selection-start-line="172" selection-end-line="172" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/visitas.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+          <folding>
+            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/importar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="43" column="100" selection-start-line="43" selection-start-column="82" selection-end-line="43" selection-end-column="100" />
+          <folding>
+            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#5;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#6;n#form#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-429">
+          <caret line="87" column="86" selection-start-line="87" selection-start-column="86" selection-end-line="87" selection-end-column="86" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/static/js/visitas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="47" column="5" lean-forward="true" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="47" column="99" selection-start-line="47" selection-start-column="99" selection-end-line="47" selection-end-column="99" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="e#1406#1413#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/usuarios/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/static/node_modules/jquery/test/networkerror.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/static/js/modificarUsuario.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="66" column="26" lean-forward="true" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/static/js/usuarios.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
         </state>
       </provider>
     </entry>

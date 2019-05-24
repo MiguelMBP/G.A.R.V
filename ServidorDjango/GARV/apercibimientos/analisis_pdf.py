@@ -19,9 +19,11 @@ expresion_nombre_alumno = '^[a-zA-zÀ-ÿ ]+[,][a-zA-zÀ-ÿ ]+'
 expresion_horas_asignatura = '[0-9]{1,2}[:][0-9]{2}'
 expresion_porcentaje_asignatura = '[0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]'
 
+RUTA_CSV = '/var/www/output.csv'
+
 
 def pdf_to_csv(filepath):
-    tabula.convert_into(filepath, "output.csv", pages="all", output_format="csv", guess=False, stream=True)
+    tabula.convert_into(filepath, RUTA_CSV, pages="all", output_format="csv", guess=False, stream=True)
     leer_csv()
 
 
@@ -40,7 +42,7 @@ def get_cabecera():
     fecha_inicio = 'nada'
     fecha_fin = 'nada'
 
-    with open('output.csv', 'r') as csvFile:
+    with open(RUTA_CSV, 'r', encoding='utf-8') as csvFile:
         reader = csv.reader(csvFile)
 
         for row in reader:
@@ -84,7 +86,7 @@ def get_cabecera():
 
 
 def contar_asignaturas():
-    with open('output.csv', 'r') as csvFile:
+    with open(RUTA_CSV, 'r', encoding='utf-8') as csvFile:
         reader = csv.reader(csvFile)
         materias = []
         for row in reader:
@@ -115,7 +117,7 @@ def comprobar_cabecera(cabecera):
 
 
 def get_asignaturas(cabecera, repetidas):
-    with open('output.csv', 'r') as csvFile:
+    with open(RUTA_CSV, 'r', encoding='utf-8') as csvFile:
         reader = csv.reader(csvFile)
 
         for row in reader:

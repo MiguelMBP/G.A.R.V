@@ -41,13 +41,10 @@ function inValidar(chk_activo) {
 
 document.getElementById('botonInformeVisitas').onclick = function () {
     var importe = parseFloat($("#importe").val());
-    console.log(importe)
 
     if(!isNaN(importe)){
         url = '/visitas/resumenVisitas?valor=' + importe
         window.location.replace(url);
-    } else {
-        console.log(importe)
     }
 }
 
@@ -58,7 +55,6 @@ document.getElementById('botonFiltrarVisitas').onclick = function () {
     $.ajax({
         url: url + '?profesor=' + profesor,
         success: function(respuesta) {
-        console.log(respuesta)
            rellenarTabla(respuesta)
         },
         error: function() {

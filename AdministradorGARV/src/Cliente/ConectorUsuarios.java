@@ -140,6 +140,7 @@ public class ConectorUsuarios implements Constants {
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
         boolean existe = false;
+        boolean staff = false;
         List<String> cookies = new ArrayList<>();
 
         try {
@@ -159,7 +160,7 @@ public class ConectorUsuarios implements Constants {
             throw new ConfigurationFileException();
         }
         try {
-            salida.writeInt(5);
+            salida.writeInt(39);
             salida.flush();
             salida.writeUTF(username);
             salida.flush();
@@ -169,8 +170,13 @@ public class ConectorUsuarios implements Constants {
             existe = entrada.readBoolean();
 
             if (existe) {
-                cookies.add(entrada.readUTF());
-                cookies.add(entrada.readUTF());
+                staff = entrada.readBoolean();
+                if (staff) {
+                    cookies.add(entrada.readUTF());
+                    cookies.add(entrada.readUTF());
+                } else {
+                    cookies = null;
+                }
             }
 
             entrada.close();
@@ -288,7 +294,7 @@ public class ConectorUsuarios implements Constants {
         }
 
     }
-    
+
     public Usuario cargarUsuario(String usuario) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -332,7 +338,7 @@ public class ConectorUsuarios implements Constants {
         return u;
 
     }
-    
+
     private Usuario jsonToUsuarios(String linea) {
         java.lang.reflect.Type typeList = new TypeToken<Usuario>() {
         }.getType();
@@ -341,7 +347,7 @@ public class ConectorUsuarios implements Constants {
         return usuario;
     }
 
-    public void enviarArchivo(String base64, String csrfToken, String sessionId)  throws FileNotFoundException, IOException{
+    public void enviarArchivo(String base64, String csrfToken, String sessionId) throws FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;

@@ -163,6 +163,9 @@ public class HiloServidor extends Thread {
 			case 38:
 				modificarAlumno(entrada, salida);
 				break;
+			case 39:
+				inicioSesionStaff(entrada, salida);
+				break;
 			default:
 				System.out.println(op);
 				break;
@@ -172,6 +175,40 @@ public class HiloServidor extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+
+	private void inicioSesionStaff(ObjectInputStream entrada, ObjectOutputStream salida) {
+		try {
+			String username = entrada.readUTF();
+			String password = entrada.readUTF();
+			DjangoConnection dc = new DjangoConnection();
+			List<String> cookies = dc.conectar(username, password);
+
+			boolean existe = false;
+
+			if (!cookies.isEmpty() && !cookies.get(0).equals("") && !cookies.get(1).equals("")) {
+				existe = true;
+			}
+
+			salida.writeBoolean(existe);
+			salida.flush();
+
+			if (existe) {
+				boolean staff = dc.comprobarStaff(username, cookies.get(0), cookies.get(1));
+				salida.writeBoolean(staff);
+				salida.flush();
+				salida.writeUTF(cookies.get(0));
+				salida.flush();
+				salida.writeUTF(cookies.get(1));
+				salida.flush();
+				salida.writeUTF(username);
+			}
+
+			salida.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void modificarAlumno(ObjectInputStream entrada, ObjectOutputStream salida) {

@@ -15,7 +15,6 @@ document.getElementById('botonCrearUsuario').onclick = function () {
                 var formData = {
                     'username': usuario, 'password': contrasena, 'nombre': nombre, 'email': correo, 'apellidos': apellidos, "dni": dni, 'curso': tutor
                 };
-                console.log(formData)
                  $.ajaxSetup({
                     headers: { "X-CSRFToken": getCookie("csrftoken") }
                  });

@@ -14,7 +14,6 @@ document.getElementById('botonEditarUsuario').onclick = function () {
             var formData = {
                 'username': usuario, 'password': contrasena
             };
-            console.log(formData)
              $.ajaxSetup({
                 headers: { "X-CSRFToken": getCookie("csrftoken") }
              });
@@ -41,7 +40,6 @@ document.getElementById('botonEditarUsuario').onclick = function () {
             var formData = {
                 'username': usuario, 'nombre': nombre, 'email': correo, 'apellidos': apellidos, "dni": dni, 'curso': tutor
             };
-            console.log(formData)
              $.ajaxSetup({
                 headers: { "X-CSRFToken": getCookie("csrftoken") }
              });

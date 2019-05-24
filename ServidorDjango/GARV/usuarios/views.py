@@ -1,5 +1,6 @@
 from base64 import b64decode
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -34,6 +35,7 @@ def a_login(request):
 
 
 @login_required
+@staff_member_required
 def createuser(request):
     if request.method == "POST":
         userName = request.POST.get('username', None)
@@ -65,6 +67,7 @@ def createuser(request):
 
 
 @login_required
+@staff_member_required
 def updateuser(request):
     if request.method == 'POST':
         username = request.POST.get('username', None)
@@ -92,6 +95,16 @@ def updateuser(request):
     return HttpResponse('failure')
 
 
+@login_required
+def is_staff(request):
+    username = request.POST.get('username', None)
+    if username:
+        if User.objects.filter(username=username).exists():
+            u = User.objects.get(username=username)
+            staff = u.is_staff
+            return HttpResponse(staff)
+    return HttpResponse(False)
+
 
 @login_required
 def changePass(request):
@@ -100,15 +113,18 @@ def changePass(request):
         password = request.POST.get('password', None)
 
         if username and password:
-            u = User.objects.get(username=username)
-            u.set_password(password)
-            u.save()
-
-            return HttpResponse('success')
+            if request.user.is_authenticated:
+                user = request.user
+                if user.username == username or user.is_staff:
+                    u = User.objects.get(username=username)
+                    u.set_password(password)
+                    u.save()
+                    return HttpResponse('success')
 
         return HttpResponse('failure')
 
 @login_required
+@staff_member_required
 def usuarios(request):
     users = User.objects.all()
     usuarios = []
@@ -119,6 +135,7 @@ def usuarios(request):
 
 
 @login_required
+@staff_member_required
 def editarUsuario(request, id):
     usuario = User.objects.get(id=id)
     profesor = Profesor.objects.filter(usuario=usuario).first()
@@ -126,11 +143,13 @@ def editarUsuario(request, id):
 
 
 @login_required
+@staff_member_required
 def crearUsuario(request):
     return render(request, 'crearUsuario.html')
 
 
 @login_required
+@staff_member_required
 def importarusuarios(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -151,6 +170,7 @@ def importarusuarios(request):
 
 
 @login_required
+@staff_member_required
 def importarPost(request):
     if request.method == 'POST':
         base64 = request.POST.get('archivo', None)

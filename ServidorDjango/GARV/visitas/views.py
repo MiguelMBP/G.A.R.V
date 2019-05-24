@@ -3,6 +3,7 @@ from datetime import datetime
 import json
 from base64 import b64decode, b64encode
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -17,6 +18,7 @@ from .models import Profesor, Visita, Empresa, Alumno
 
 
 @login_required
+@staff_member_required
 def sendimage(request):
     if request.method == "POST":
         id = request.POST.get('id', None)
@@ -36,7 +38,6 @@ def registervisit(request):
     if request.method == "POST":
         userId = request.POST.get('userId', None)
         date = request.POST.get('date', None)
-        print(date)
         img = request.POST.get('img', None)
         studentId = request.POST.get('studentId', None)
 
@@ -51,6 +52,7 @@ def registervisit(request):
 
 
 @login_required
+@staff_member_required
 def resumenVisitas(request):
     if request.GET and 'valor' in request.GET:
         valor = request.GET['valor']
@@ -76,21 +78,25 @@ def resumenVisitas(request):
 
 
 @login_required
+@staff_member_required
 def visitas(request):
     visitas = list(Visita.objects.values('profesor').distinct())
     profesores = []
     for visita in visitas:
         profesores.append(Profesor.objects.get(id=visita['profesor']))
-    return render(request, 'visitas.html', {'profesores': profesores})
+    lista = list(Visita.objects.all())
+    return render(request, 'visitas.html', {'profesores': profesores, 'visitas': lista})
 
 
 @login_required
+@staff_member_required
 def empresas(request):
     empresas = Empresa.objects.all()
     return render(request, 'empresas.html', {'empresas': empresas})
 
 
 @login_required
+@staff_member_required
 def editarEmpresa(request, id):
     if request.POST and request.is_ajax():
         nombre = request.POST.get('nombre', None)
@@ -122,6 +128,7 @@ def editarEmpresa(request, id):
 
 
 @login_required
+@staff_member_required
 def editarAlumno(request, id):
     if request.POST and request.is_ajax():
         nombre = request.POST.get('nombre', None)
@@ -151,6 +158,7 @@ def editarAlumno(request, id):
 
 
 @login_required
+@staff_member_required
 def crearEmpresa(request):
     if request.POST and request.is_ajax():
         nombre = request.POST.get('nombre', None)
@@ -172,6 +180,7 @@ def crearEmpresa(request):
 
 
 @login_required
+@staff_member_required
 def crearAlumno(request):
     if request.POST and request.is_ajax():
         nombre = request.POST.get('nombre', None)
@@ -193,12 +202,14 @@ def crearAlumno(request):
 
 
 @login_required
+@staff_member_required
 def alumnos(request):
     alumnos = Alumno.objects.all()
     return render(request, 'alumnos.html', {'alumnos': alumnos})
 
 
 @login_required
+@staff_member_required
 def getVisitas(request):
     if request.GET and 'profesor' in request.GET:
         profesor = request.GET['profesor']
@@ -208,13 +219,13 @@ def getVisitas(request):
             fecha = datetime.strptime(str(visita.fecha), "%Y-%M-%d").strftime('%d-%m-%Y')
             fila = VisitaTabla(id=visita.id, profesor=visita.profesor.usuario.first_name + ' ' + visita.profesor.usuario.last_name, alumno=visita.alumno.nombre + ' ' + visita.alumno.apellidos, empresa=visita.alumno.empresa.nombre, fecha=str(fecha), validada=visita.validada)
             respuesta.append(fila.as_json())
-        print(respuesta)
         return JsonResponse(respuesta, safe=False)
     else:
         return HttpResponse('error')
 
 
 @login_required
+@staff_member_required
 def actualizarVisita(request):
     if request.GET and request.is_ajax() and 'profesor' in request.GET and 'visita' in request.GET:
         id = request.GET['visita']
@@ -232,13 +243,13 @@ def actualizarVisita(request):
                                empresa=visita.alumno.empresa.nombre, fecha=str(fecha),
                                validada=visita.validada)
             respuesta.append(fila.as_json())
-        print(respuesta)
         return JsonResponse(respuesta, safe=False)
     else:
         return HttpResponse('error')
 
 
 @login_required
+@staff_member_required
 def verImagen(request):
     if request.GET and 'id' in request.GET:
         id = request.GET['id']

@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', views.a_login, name="a_login"),
     path('importarUsuarios/', views.importarusuarios, name="importarUsuarios"),
     path('importarPost/', views.importarPost, name="importarPost"),
+    path('isStaff/', views.is_staff, name="isStaff"),
 ]

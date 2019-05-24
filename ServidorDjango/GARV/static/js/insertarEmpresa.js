@@ -14,7 +14,6 @@ document.getElementById('botonCrearEmpresa').onclick = function () {
             var formData = {
                 'nombre': nombre, 'cif': cif, 'direccion': direccion, 'poblacion': poblacion, 'latitud': latitud, "longitud": longitud, 'distancia': distancia
             };
-            console.log(formData)
              $.ajaxSetup({
                 headers: { "X-CSRFToken": getCookie("csrftoken") }
              });
