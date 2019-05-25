@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<br>
+<p>
+    <span id="contador"></span>
+</p>
+
+<br>
+
+<p>
+    <span id="user-count"></span>
+</p>
+
+<input id="returnBtn" type=button value="Página anterior" style="visibility:hidden; margin-top:10px;"onClick="javascript:history.go(-1);">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script type="text/javascript">
+   var poll_xhr;
+   var willstop = 0;
+  (function(){
+    var poll = function(){
+      var json_dump = "{{ data }}";
+      var task_id = "{{task_id}}";
+
+      console.log(task_id);
+      poll_xhr = $.ajax({
+        url:'progress/',
+        type: 'POST',
+        data: {
+            task_id: task_id,
+            csrfmiddlewaretoken: "{{csrf_token}}",
+        },
+        success: function(result) {
+        console.log(result)
+                    if (result.current == null || result.current == undefined) {
+                        willstop = 1;
+                        document.getElementById("user-count").textContent="La tarea ha finalizado";
+                        jQuery('.progress-bar').css({'width': 100 + '%'});
+                        jQuery('.progress-bar').html(100 + '%');
+                        document.getElementById('returnBtn').style.visibility = 'visible';
+                        document.getElementById('contador').style.visibility = 'none';
+
+                    } else {
+                         jQuery('.progress-bar').css({'width': result.percent + '%'});
+                         jQuery('.progress-bar').html(result.percent + '%');
+                         document.getElementById("user-count").textContent="La tarea de está procesando";
+                         document.getElementById("contador").textContent=result.current + " / " + result.total + " archivos procesados";
+                       };
+                    }
+      });
+    };
+
+    var refreshIntervalId = setInterval(function() {
+      poll();
+      if(willstop == 1){
+        clearInterval(refreshIntervalId);
+      }
+    },500);
+
+
+  })();
+</script>
+{% endblock %}

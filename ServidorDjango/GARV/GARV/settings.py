@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apercibimientos',
     'visitas',
-    'usuarios'
+    'usuarios',
+    'djcelery'
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -141,4 +142,6 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
 

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('list/', views.subir_pdf, name='list'),
     path('list/', views.subir_pdf, name='subir-pdf'),
+    path('list/progress/', views.get_progress, name='task_status'),
     path('subirPost/', views.subir_pdf_post, name='subirPost'),
     path('buscar/', views.buscarApercibimiento, name="buscarApercibimientos"),
     path('informe/', views.informeApercibimientos, name="informeApercibimientos"),

@@ -3,29 +3,7 @@
 {% load static %}
 
 {% block content %}
-<!-- List of uploaded documents -->
-{% if documents %}
-<ul>
-    {% for document in documents %}
-    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No documents.</p>
-{% endif %}
 
-<!-- Upload form. Note enctype attribute! -->
-<!--<form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="exampleInputFile">File input</label>
-        <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-        <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above
-            input. It's a bit lighter and easily wraps to a new line.
-        </small>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>-->
 <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p>{{ form.non_field_errors }}</p>
@@ -35,4 +13,5 @@
     </p>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
 {% endblock %}

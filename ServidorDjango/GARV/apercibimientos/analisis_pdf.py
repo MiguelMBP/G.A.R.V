@@ -19,7 +19,7 @@ expresion_nombre_alumno = '^[a-zA-zÀ-ÿ ]+[,][a-zA-zÀ-ÿ ]+'
 expresion_horas_asignatura = '[0-9]{1,2}[:][0-9]{2}'
 expresion_porcentaje_asignatura = '[0-9]{1,3}[,]{0,1}[0-9]{0,2}[%]'
 
-RUTA_CSV = '/var/www/output.csv'
+RUTA_CSV = 'output.csv'
 
 
 def pdf_to_csv(filepath):

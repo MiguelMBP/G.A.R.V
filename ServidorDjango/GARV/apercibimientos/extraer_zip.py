@@ -14,7 +14,8 @@ def extractZip(filepath):
     zip_ref.extractall(extracted)
     zip_ref.close()
 
-    iterate_pdf(extracted)
+    return (extracted)
+    #iterate_pdf(extracted)
 
 
 def iterate_pdf(extracted):

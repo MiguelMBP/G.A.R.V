@@ -1,13 +1,16 @@
 import datetime
+import os
 import tempfile
 from base64 import b64decode
 from calendar import month
 
+from celery.result import AsyncResult
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator
+from django.core.serializers import json
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
 from django.shortcuts import render
@@ -24,12 +27,23 @@ from .models import Document, Apercibimiento, AsignaturasEspeciales
 from .forms import DocumentForm
 from .extraer_zip import extractZip
 from .analisis_pdf import pdf_to_csv
+from .tasks import iterar_pdf
 
 
 @login_required
 @staff_member_required
 def subir_pdf(request):
-    if request.method == 'POST':
+    if request.method == 'GET' and 'job' in request.GET:
+        job_id = request.GET['job']
+        job = AsyncResult(job_id)
+        data = job.result or job.state
+        context = {
+            'data': data,
+            'task_id': job_id,
+        }
+        return render(request, "progreso.html", context)
+
+    elif request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             newdoc = Document(docfile = request.FILES['docfile'])
@@ -40,15 +54,28 @@ def subir_pdf(request):
             if file.endswith('.pdf'):
                 pdf_to_csv(newdoc.docfile.path)
             elif file.endswith('.zip'):
-                extractZip(newdoc.docfile.path)
+                ruta = extractZip(newdoc.docfile.path)
+                job = iterar_pdf.delay(ruta)
+                return HttpResponseRedirect(reverse('list') + '?job=' + job.id)
+            else:
+                return HttpResponseRedirect(reverse('list'))
 
-            return HttpResponseRedirect(reverse('list'))
+    form = DocumentForm()
+    return render(request, 'list.html', {'form': form})
+
+
+def get_progress(request):
+    if request.is_ajax():
+        if 'task_id' in request.POST.keys() and request.POST['task_id']:
+            task_id = request.POST['task_id']
+            task = AsyncResult(task_id)
+            data = task.result or task.state
+        else:
+            data = 'No task_id in the request'
     else:
-        form = DocumentForm()
+        data = 'This is not an ajax request'
 
-    documents = Document.objects.all()
-
-    return render(request, 'list.html', {'documents': documents, 'form': form})
+    return JsonResponse(data, safe=False)
 
 
 @login_required
