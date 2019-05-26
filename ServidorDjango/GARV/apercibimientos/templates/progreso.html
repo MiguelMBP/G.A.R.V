@@ -30,7 +30,6 @@
       var json_dump = "{{ data }}";
       var task_id = "{{task_id}}";
 
-      console.log(task_id);
       poll_xhr = $.ajax({
         url:'progress/',
         type: 'POST',
@@ -63,7 +62,7 @@
       if(willstop == 1){
         clearInterval(refreshIntervalId);
       }
-    },500);
+    },1000);
 
 
   })();
