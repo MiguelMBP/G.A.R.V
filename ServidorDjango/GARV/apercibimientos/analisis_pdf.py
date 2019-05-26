@@ -164,7 +164,7 @@ def persistir_alumno(cabecera, materia, line):
                                         porcentaje_injustificado=porcentaje_injust_float,
                                         retrasos=horas[2])
 
-    if not comprobar_repetido(apercibimiento) and apercibimiento is not None:
+    if apercibimiento is not None and not comprobar_repetido(apercibimiento):
         apercibimiento.save()
 
 
@@ -172,7 +172,10 @@ def comprobar_repetido(nuevo_apercibimiento):
     repetido = False
     apercibimientos = Apercibimiento.objects.all()
 
-    if nuevo_apercibimiento in apercibimientos:
-        repetido = True
+    for apercibimiento in apercibimientos:
+        #Comprobación pequeña antes de comprobar el objeto entero para agilizar el proceso
+        if nuevo_apercibimiento.fecha_inicio == apercibimiento.fecha_inicio:
+            if nuevo_apercibimiento == apercibimiento:
+                repetido = True
 
     return repetido

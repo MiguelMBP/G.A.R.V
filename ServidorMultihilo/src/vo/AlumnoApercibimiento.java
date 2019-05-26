@@ -3,7 +3,7 @@ package vo;
 import java.util.List;
 
 /**
- * Objeto que representa un alumno en el módulo de Apercibimientos
+ * Objeto que representa un alumno en el mÃ³dulo de Apercibimientos
  * @author mmbernal
  *
  */

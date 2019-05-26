@@ -1,14 +1,13 @@
 package vo;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Objeto que representa a un alumno del módulo de Visitas
+ * Objeto que representa a un alumno del mï¿½dulo de Visitas
  * @author mmbernal
  *
  */
-public class Alumno implements Serializable {
+public class Alumno{
 
 	private int id;
 	private String dni;

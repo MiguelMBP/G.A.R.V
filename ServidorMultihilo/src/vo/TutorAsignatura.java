@@ -1,6 +1,5 @@
 package vo;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +7,7 @@ import java.util.List;
  * @author mmbernal
  *
  */
-public class TutorAsignatura implements Serializable{
+public class TutorAsignatura{
 	private String nombre;
     private List<String> meses;
 

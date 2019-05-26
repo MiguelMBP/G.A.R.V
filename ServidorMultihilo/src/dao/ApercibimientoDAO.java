@@ -153,7 +153,7 @@ public class ApercibimientoDAO {
 
 	/**
 	 * Recoge los apercibimientos agrupados por alumno donde la unidad coincide con el cursoTutor del objeto pasado
-	 * por parámetros
+	 * por parï¿½metros
 	 * @param username
 	 * @return Lista con objetos TutorAlumno
 	 */
@@ -180,7 +180,6 @@ public class ApercibimientoDAO {
 				st.setString(1, t.getNombre());
 				st.setString(2, username);
 				rsAsignatura = st.executeQuery();
-				List<TutorAsignatura> asignaturas = new ArrayList<>();
 
 				while (rsAsignatura.next()) {
 					TutorAsignatura asignatura = new TutorAsignatura();
@@ -229,7 +228,7 @@ public class ApercibimientoDAO {
 	}
 
 	/**
-	 * Inserta la asignatura especial pasada por parámetros en la base de datos 
+	 * Inserta la asignatura especial pasada por parï¿½metros en la base de datos 
 	 * @param asignatura
 	 */
 	public void insertarAsignatura(String asignatura) {
@@ -247,7 +246,7 @@ public class ApercibimientoDAO {
 	}
 
 	/**
-	 * Actualiza el apercibimiento de la base de datos activándolo/desactivándolo
+	 * Actualiza el apercibimiento de la base de datos activï¿½ndolo/desactivï¿½ndolo
 	 * @param id
 	 * @param activo
 	 */
@@ -342,7 +341,7 @@ public class ApercibimientoDAO {
 	}
 
 	/**
-	 * Modifica la asignatura especial con los datos pasados por parámetros
+	 * Modifica la asignatura especial con los datos pasados por parï¿½metros
 	 * @param id
 	 * @param asignatura
 	 */
@@ -363,7 +362,7 @@ public class ApercibimientoDAO {
 	}
 
 	/**
-	 * Elimina la asignatura especial de la base de datos especificada por parámetros
+	 * Elimina la asignatura especial de la base de datos especificada por parï¿½metros
 	 * @param id
 	 */
 	public void eliminarAsignatura(int id) {
@@ -382,7 +381,7 @@ public class ApercibimientoDAO {
 	}
 
 	/**
-	 * Recoge la lista de cursos con apercibimientos en el año especificado
+	 * Recoge la lista de cursos con apercibimientos en el aï¿½o especificado
 	 * @param anno
 	 * @return
 	 */
@@ -407,7 +406,7 @@ public class ApercibimientoDAO {
 	}
 
 	/**
-	 * Recoge la lista de alumnos con apercibimientos en el año y curso especificado
+	 * Recoge la lista de alumnos con apercibimientos en el aï¿½o y curso especificado
 	 * @param anno
 	 * @param curso
 	 * @return
@@ -434,7 +433,7 @@ public class ApercibimientoDAO {
 	}
 	
 	/**
-	 * Recoge los apercibimientos del año especificado
+	 * Recoge los apercibimientos del aï¿½o especificado
 	 * @param ano
 	 * @return
 	 */
@@ -475,7 +474,7 @@ public class ApercibimientoDAO {
 	}
 	
 	/**
-	 * Recoge los apercibimientos del año y curso especificado
+	 * Recoge los apercibimientos del aï¿½o y curso especificado
 	 * @param ano
 	 * @param curso
 	 * @return
@@ -518,7 +517,7 @@ public class ApercibimientoDAO {
 	}
 	
 	/**
-	 * Recoge los apercibimientos del alumno en el año y curso especificados
+	 * Recoge los apercibimientos del alumno en el aï¿½o y curso especificados
 	 * @param ano
 	 * @param curso
 	 * @param alumno

@@ -3,3 +3,6 @@ apuntes
 /AdministradorGARV/build/
 /Informes/*.jasper
 *.log
+/ServidorMultihilo/nbproject/private/
+/ServidorMultihilo/build/
+/ServidorMultihilo/dist/

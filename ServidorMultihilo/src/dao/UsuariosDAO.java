@@ -48,7 +48,7 @@ public class UsuariosDAO {
 	}
 	
 	/**
-	 * Recoge el usuario de la base de datos con el ID pasado por par·metros
+	 * Recoge el usuario de la base de datos con el ID pasado por par√°metros
 	 * @param id
 	 * @return El objeto Usuario
 	 */
@@ -79,7 +79,7 @@ public class UsuariosDAO {
 	}
 
 	/**
-	 * Actualiza el usuario de la base de datos con los datos del objeto pasado por par·metros
+	 * Actualiza el usuario de la base de datos con los datos del objeto pasado por par√°metros
 	 * @param usuario
 	 */
 	public void modificarUsuario(Usuario usuario) {

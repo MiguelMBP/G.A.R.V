@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.timezone import now
@@ -123,6 +123,7 @@ def changePass(request):
 
         return HttpResponse('failure')
 
+
 @login_required
 @staff_member_required
 def usuarios(request):
@@ -132,6 +133,27 @@ def usuarios(request):
         profesor = Profesor.objects.values('dni', 'cursoTutor').filter(usuario=user).first()
         usuarios.append(Usuario(usuario=user, profesor=profesor))
     return render(request, 'usuarios.html', {'usuarios': usuarios})
+
+
+@login_required
+@staff_member_required
+def eliminarusuarios(request):
+    if request.method == "POST":
+        users = request.POST.getlist('users[]', None)
+        username = request.POST.get('username', None)
+        if users:
+            for id in users:
+                user = User.objects.get(id=id)
+                if not user.is_superuser:
+                    user.delete()
+        elif username:
+            user = User.objects.get(username=username)
+            if not user.is_superuser:
+                user.delete()
+                return HttpResponse("Eliminado")
+
+    return HttpResponse("Finalizado")
+
 
 
 @login_required
@@ -180,6 +202,7 @@ def importarPost(request):
             newdoc.save()
             leercsv(newdoc.docfile.path)
     return HttpResponse('success')
+
 
 class Usuario:
     def __init__(self, usuario, profesor):

@@ -6,7 +6,7 @@ document.getElementById('botonEliminarUsuario').onclick = function () {
     if (ids.length > 0) {
         url = '/usuarios/eliminarUsuarios/'
         var formData = {
-            'id': ids
+            'users[]': ids
         };
          $.ajaxSetup({
             headers: { "X-CSRFToken": getCookie("csrftoken") }
@@ -16,7 +16,7 @@ document.getElementById('botonEliminarUsuario').onclick = function () {
             type: "post",
             data: formData,
             success: function(respuesta) {
-
+                location.reload();
             },
             error: function() {
                 alert("Error al eliminar usuario(s)");

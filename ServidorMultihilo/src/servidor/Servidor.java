@@ -14,7 +14,7 @@ import java.net.ServerSocket;
 public class Servidor {
 
 	/**
-	 * Método principal del servidor, ejecuta un hilo por cada petición 
+	 * MÃ©todo principal del servidor, ejecuta un hilo por cada peticiÃ³n 
 	 * @param args
 	 * @throws IOException
 	 */

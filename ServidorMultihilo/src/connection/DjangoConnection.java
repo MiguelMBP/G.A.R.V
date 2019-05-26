@@ -30,10 +30,10 @@ import vo.RegistroVisita;
 public class DjangoConnection {
 
 	/**
-	 * Realiza una conexión HTTP al servidor Django para verificar usuario y contraseña
+	 * Realiza una conexiï¿½n HTTP al servidor Django para verificar usuario y contraseï¿½a
 	 * @param username 
 	 * @param password
-	 * @return La lista de cookies de la conexión para acceder a los otros métodos
+	 * @return La lista de cookies de la conexiï¿½n para acceder a los otros mï¿½todos
 	 */
 	public List<String> conectar(String username, String password) {
 		HttpURLConnection connection = null;
@@ -48,7 +48,6 @@ public class DjangoConnection {
 
 			String query = String.format("username=%s&password=%s", URLEncoder.encode(username, charset),
 					URLEncoder.encode(password, charset));
-			final String COOKIES_HEADER = "Set-Cookie";
 
 			String csrftoken = "";
 			String sessionid = "";
@@ -116,8 +115,8 @@ public class DjangoConnection {
 	}
 
 	/**
-	 * Realiza una conexión HTTP POST al servidor Django para registrar un usuario. Utiliza las cookies CRSFToken y SessionId
-	 * para verificar que el usuario que realiza la petición es válido 
+	 * Realiza una conexiï¿½n HTTP POST al servidor Django para registrar un usuario. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la peticiï¿½n es vï¿½lido 
 	 * @param crsftoken
 	 * @param sessionid
 	 * @param usuarioCrear
@@ -202,14 +201,13 @@ public class DjangoConnection {
 	}
 
 	/**
-	 * Realiza una conexión HTTP POST al servidor Django para registrar una visita. Utiliza las cookies CRSFToken y SessionId
-	 * para verificar que el usuario que realiza la petición es válido 
+	 * Realiza una conexiï¿½n HTTP POST al servidor Django para registrar una visita. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la peticiï¿½n es vï¿½lido 
 	 * @param visita
 	 * @param id
 	 */
 	public void insertarVisita(RegistroVisita visita, int id) {
 		HttpURLConnection connection = null;
-		boolean creado = false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String[] parametros = leerConfiguracion();
 		String cookies = "";
@@ -263,7 +261,7 @@ public class DjangoConnection {
 			try (Scanner scanner = new Scanner(response)) {
 				String responseBody = scanner.useDelimiter("\\A").next();
 				if (responseBody.equals("success")) {
-					creado = true;
+					
 				}
 			}
 		} catch (MalformedURLException e) {
@@ -276,17 +274,15 @@ public class DjangoConnection {
 	}
 
 	/**
-	 * Realiza una conexión HTTP POST al servidor Django para recoger la imagen de una visita. Utiliza las cookies CRSFToken y SessionId
-	 * para verificar que el usuario que realiza la petición es válido
+	 * Realiza una conexiï¿½n HTTP POST al servidor Django para recoger la imagen de una visita. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la peticiï¿½n es vï¿½lido
 	 * @param id
 	 * @param crsftoken
 	 * @param sessionId
-	 * @return La imágen codificada en base64
+	 * @return La imï¿½gen codificada en base64
 	 */
 	public String getImagen(int id, String crsftoken, String sessionId) {
 		HttpURLConnection connection = null;
-		boolean creado = false;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String responseBody = null;
 		String[] parametros = leerConfiguracion();
 		String cookies = "";
@@ -337,7 +333,7 @@ public class DjangoConnection {
 			try (Scanner scanner = new Scanner(response)) {
 				responseBody = scanner.useDelimiter("\\A").next();
 				if (responseBody.equals("success")) {
-					creado = true;
+					
 				}
 			}
 		} catch (MalformedURLException e) {
@@ -374,13 +370,13 @@ public class DjangoConnection {
 	}
 
 	/**
-	 * Realiza una conexión HTTP POST al servidor Django para cambiar la contraseña de un usuario. Utiliza las cookies CRSFToken y SessionId
-	 * para verificar que el usuario que realiza la petición es válido
+	 * Realiza una conexiï¿½n HTTP POST al servidor Django para cambiar la contraseï¿½a de un usuario. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la peticiï¿½n es vï¿½lido
 	 * @param username
 	 * @param password
 	 * @param crsftoken
 	 * @param sessionId
-	 * @return Booleano que indica si se ha cambiado la contraseña con exito
+	 * @return Booleano que indica si se ha cambiado la contraseï¿½a con exito
 	 */
 	public boolean cambiarContrasena(String username, String password, String crsftoken, String sessionId) {
 		HttpURLConnection connection = null;
@@ -449,8 +445,8 @@ public class DjangoConnection {
 	}
 
 	/**
-	 * Realiza una conexión HTTP POST al servidor Django para enviar un archivo que analizar para sacar apercibimientos. Utiliza las cookies CRSFToken y SessionId
-	 * para verificar que el usuario que realiza la petición es válido
+	 * Realiza una conexiï¿½n HTTP POST al servidor Django para enviar un archivo que analizar para sacar apercibimientos. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la peticiï¿½n es vï¿½lido
 	 * @param base64
 	 * @param extension
 	 * @param csrfToken
@@ -458,10 +454,8 @@ public class DjangoConnection {
 	 */
 	public void subirApercibimientos(String base64, String extension, String csrfToken, String sessionId) {
 		HttpURLConnection connection = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String[] parametros = leerConfiguracion();
 		String cookies = "";
-		boolean creado = false;
 
 		try {
 			String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/subirPost/";
@@ -510,7 +504,7 @@ public class DjangoConnection {
 			try (Scanner scanner = new Scanner(response)) {
 				String responseBody = scanner.useDelimiter("\\A").next();
 				if (responseBody.equals("success")) {
-					creado = true;
+					
 				}
 			}
 		} catch (MalformedURLException e) {
@@ -524,16 +518,14 @@ public class DjangoConnection {
 	}
 
 	/**
-	 * Realiza una conexión HTTP POST al servidor Django para enviar un archivo que analizar para importar usuarios. Utiliza las cookies CRSFToken y SessionId
-	 * para verificar que el usuario que realiza la petición es válido
+	 * Realiza una conexiï¿½n HTTP POST al servidor Django para enviar un archivo que analizar para importar usuarios. Utiliza las cookies CRSFToken y SessionId
+	 * para verificar que el usuario que realiza la peticiï¿½n es vï¿½lido
 	 * @param base64
 	 * @param csrfToken
 	 * @param sessionId
 	 */
 	public void importarUsuarios(String base64, String csrfToken, String sessionId) {
 		HttpURLConnection connection = null;
-		boolean creado = false;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String[] parametros = leerConfiguracion();
 		String cookies = "";
 
@@ -583,7 +575,7 @@ public class DjangoConnection {
 			try (Scanner scanner = new Scanner(response)) {
 				String responseBody = scanner.useDelimiter("\\A").next();
 				if (responseBody.equals("success")) {
-					creado = true;
+					
 				}
 			}
 		} catch (MalformedURLException e) {
@@ -598,7 +590,6 @@ public class DjangoConnection {
 
 	public boolean comprobarStaff(String username, String csrftoken, String sessionid) {
 		HttpURLConnection connection = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String[] parametros = leerConfiguracion();
 		String cookies = "";
 		boolean staff = false;
@@ -662,4 +653,71 @@ public class DjangoConnection {
 		
 		return staff;
 	}
+
+	public boolean eliminarUsuario(String username, String csrftoken, String sessionid) {
+		HttpURLConnection connection = null;
+		String[] parametros = leerConfiguracion();
+		String cookies = "";
+		boolean eliminado = false;
+
+		try {
+			String url = "http://" + parametros[0] + ":" + parametros[1] + "/usuarios/eliminarUsuarios/";
+			String charset = "UTF-8";
+
+			String query = String.format("username=%s", URLEncoder.encode(username, charset));
+
+			CookieManager cookieManager = new CookieManager();
+			CookieHandler.setDefault(cookieManager);
+
+			HttpCookie csrf = new HttpCookie("csrftoken", csrftoken);
+			csrf.setPath("/");
+			csrf.setDomain(parametros[0]);
+			csrf.setHttpOnly(true);
+			HttpCookie session = new HttpCookie("sessionid", sessionid);
+			session.setPath("/");
+			session.setDomain(parametros[0]);
+			session.setHttpOnly(true);
+
+			cookieManager.getCookieStore().add(new URI(parametros[0]), csrf);
+			cookieManager.getCookieStore().add(new URI(parametros[0]), session);
+
+			connection = (HttpURLConnection) new URL(url).openConnection();
+
+			if (cookieManager.getCookieStore().getCookies().size() > 0) {
+				for (HttpCookie cookie : cookieManager.getCookieStore().getCookies()) {
+					if (cookie.getName().equals("csrftoken")) {
+						connection.setRequestProperty("X-CSRFToken", cookie.getValue());
+					}
+					cookies+=cookie.getName()+"="+cookie.getValue()+";";
+				}
+			}
+
+			connection.setRequestMethod("POST");
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Accept-Charset", charset);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+			connection.setRequestProperty("Cookie", cookies); 
+
+			try (OutputStream output = connection.getOutputStream()) {
+				output.write(query.getBytes(charset));
+			}
+
+			InputStream response = connection.getInputStream();
+			try (Scanner scanner = new Scanner(response)) {
+				String responseBody = scanner.useDelimiter("\\A").next();
+				if (responseBody.equals("Eliminado")) {
+					eliminado = true;
+				}
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
+		return eliminado;
+	}
+	
 }

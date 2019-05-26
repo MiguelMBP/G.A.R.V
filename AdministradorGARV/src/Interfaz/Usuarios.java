@@ -62,6 +62,7 @@ public class Usuarios extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,6 +146,15 @@ public class Usuarios extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem5);
+
+        jMenuItem7.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
+        jMenuItem7.setText("Eliminar usuario");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem7);
 
         jMenuBar1.add(jMenu3);
 
@@ -234,6 +244,33 @@ public class Usuarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
+        int pos = jTable1.getSelectedRow();
+        if (pos == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un registro", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String usuario = t.getValueAt(pos, 0).toString();
+            int dialogResult = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este usuario?");
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                try {
+                    ConectorUsuarios cs = new ConectorUsuarios();
+                    boolean eliminado = cs.eliminarUsuario(cookies, usuario);
+                    if (eliminado) {
+                        rellenarTabla();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error al eliminar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (ConfigurationFileException ex) {
+                    JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+                }
+            }
+
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -280,6 +317,7 @@ public class Usuarios extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
@@ -302,7 +340,7 @@ public class Usuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
         }
     }
-    
+
     private void enviarArchivo(File selectedFile) {
         try {
             byte[] archivo = Files.readAllBytes(selectedFile.toPath());
