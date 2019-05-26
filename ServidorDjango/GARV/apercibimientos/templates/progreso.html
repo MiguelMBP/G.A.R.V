@@ -51,7 +51,7 @@
                          jQuery('.progress-bar').css({'width': result.percent + '%'});
                          jQuery('.progress-bar').html(result.percent + '%');
                          document.getElementById("user-count").textContent="La tarea de está procesando";
-                         document.getElementById("contador").textContent=result.current + " / " + result.total + " archivos procesados";
+                         document.getElementById("contador").textContent="Procesando archivo " + result.current + " / " + result.total;
                        };
                     }
       });

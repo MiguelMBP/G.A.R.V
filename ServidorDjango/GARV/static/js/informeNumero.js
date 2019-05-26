@@ -52,7 +52,7 @@ function numeroAMes(mes) {
     month_name[8] = "Septiembre";
     month_name[9] = "Octubre";
     month_name[10] = "Noviembre";
-    month_name[11] = "Deciembre";
+    month_name[11] = "Diciembre";
 
     return month_name[mes-1]
     //return mes
