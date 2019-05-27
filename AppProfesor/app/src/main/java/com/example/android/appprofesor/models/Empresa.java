@@ -2,6 +2,11 @@ package com.example.android.appprofesor.models;
 
 import java.io.Serializable;
 
+/**
+ * Objeto que representa una empresa
+ * @author mmbernal
+ *
+ */
 public class Empresa implements Serializable {
     private int id;
     private String cif;

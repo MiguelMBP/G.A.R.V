@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Diálogo para mostrar los informes del módulo de apercibimientos
  * @author miguelmbp
  */
 public class InformesApercibimientos extends javax.swing.JDialog {

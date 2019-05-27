@@ -20,6 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Fragment para mostrar la vista detallada de un objeto ClaseApercibimiento
+ */
 public class ClassDetailFragment extends Fragment {
     TextView clase;
     RecyclerView recyclerView;
@@ -48,6 +51,10 @@ public class ClassDetailFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Actualiza la interfaz con los datos del objeto
+     * @param clase
+     */
     public void renderClass(ClaseApercibimiento clase) {
         alumnos = clase.getAlumnos();
 

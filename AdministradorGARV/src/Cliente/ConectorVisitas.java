@@ -6,7 +6,6 @@
 package Cliente;
 
 import Util.ConfigurationFileException;
-import Util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -25,11 +24,18 @@ import vo.Empresa;
 import vo.Visita;
 
 /**
- *
- * @author mmbernal
+ * Clase que realiza las operaciones entre el cliente y el servidor multihilos para el módulo de visitas
+ * @author miguelmbp
  */
-public class ConectorVisitas implements Constants {
+public class ConectorVisitas {
 
+    /**
+     * Recoge las visitas del servidor
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Visita> cargarVisitas() throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -79,6 +85,15 @@ public class ConectorVisitas implements Constants {
         return visitas;
     }
 
+    /**
+     * Actualiza una visita para validarla/invalidarla
+     * @param id id de la visita a actualizar
+     * @param activo nuevo estado de la visita
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Visita> inValidarVisita(int id, boolean activo) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -122,6 +137,15 @@ public class ConectorVisitas implements Constants {
         return visitas;
     }
 
+    /**
+     * Recoge la imagen de una visita del servidor
+     * @param id id de la visita
+     * @param cookies cookies de la sesión
+     * @return Imagen codificada en base64
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public String getImagen(int id, List<String> cookies) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -187,10 +211,19 @@ public class ConectorVisitas implements Constants {
             throw new FileNotFoundException();
         } catch (IOException ex) {
             throw new IOException();
+        } catch (Exception e){
+            throw new ConfigurationFileException();
         }
         return parametros;
     }
 
+    /**
+     * Recoge las empresas del servidor
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Empresa> cargarEmpresas() throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -240,6 +273,13 @@ public class ConectorVisitas implements Constants {
         return visitas;
     }
 
+    /**
+     * Recoge los alumnos del servidor
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Alumno> cargarAlumnos() throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -289,6 +329,14 @@ public class ConectorVisitas implements Constants {
         return alumnos;    
     }
     
+    /**
+     * Inserta una empresa en el servidor
+     * @param empresa
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public int insertarEmpresa(Empresa empresa) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -328,6 +376,14 @@ public class ConectorVisitas implements Constants {
         return linea;
     }
 
+    /**
+     * Recoge una empresa del servidor
+     * @param id id de la empresa
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public Empresa cargarEmpresa(String id) throws ConfigurationFileException, FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -379,6 +435,14 @@ public class ConectorVisitas implements Constants {
         return empresa;
     }
 
+    /**
+     * Actualiza una empresa
+     * @param empresa empresa a actualizar con los nuevos datos
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public int modificarEmpresa(Empresa empresa) throws ConfigurationFileException, FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -418,6 +482,14 @@ public class ConectorVisitas implements Constants {
         return linea;
     }
 
+    /**
+     * Inserta un alumno
+     * @param alumno
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public int insertarAlumno(Alumno alumno) throws ConfigurationFileException, FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -457,6 +529,14 @@ public class ConectorVisitas implements Constants {
         return linea;
     }
 
+    /**
+     * Recoge un alumno de la base de datos
+     * @param id id del alumno
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public Alumno cargarAlumno(String id) throws ConfigurationFileException, FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -508,6 +588,14 @@ public class ConectorVisitas implements Constants {
         return alumno;
     }
 
+    /**
+     * Modifica un alumno
+     * @param alumno alumno a modificar con los datos actualzados
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public int modificarAlumno(Alumno alumno) throws ConfigurationFileException, FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;

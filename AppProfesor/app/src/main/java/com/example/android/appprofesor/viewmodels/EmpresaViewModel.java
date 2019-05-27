@@ -16,6 +16,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+/**
+ * Consulta y almacena la información referente a los objetos Empresa
+ */
 public class EmpresaViewModel extends AndroidViewModel {
     private static MutableLiveData<List<Empresa>> empresas;
     private Application application;
@@ -25,6 +28,11 @@ public class EmpresaViewModel extends AndroidViewModel {
         this.application = application;
     }
 
+    /**
+     * Ejecuta la clase asincrona ConectarServidorEmpresas para consultar al servidor
+     * @param settings
+     * @return
+     */
     public LiveData<List<Empresa>> getEmpresas(Settings settings) {
 
         if (empresas==null){
@@ -35,12 +43,20 @@ public class EmpresaViewModel extends AndroidViewModel {
         return empresas;
     }
 
+    /**
+     * Ejecuta la clase asincrona ConectarServidorEmpresas para añadir una empresa
+     * @param empresa
+     * @param settings
+     */
     public void addEmpresa(Empresa empresa, Settings settings) {
 
         new ConectarServidorAñadirEmpresa(settings).execute(empresa);
         new ConectarServidorEmpresas(settings).execute();
     }
 
+    /**
+     * Consulta los datos al servidor
+     */
     private class ConectarServidorEmpresas extends AsyncTask<Void, Void, List<Empresa>> {
 
         Settings settings;
@@ -59,6 +75,9 @@ public class EmpresaViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Inserta una empresa
+     */
     private class ConectarServidorAñadirEmpresa extends AsyncTask<Empresa, Void, Integer> {
 
         Empresa empresa;

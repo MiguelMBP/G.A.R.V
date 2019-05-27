@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Define la tabla Settings en la base de datos interna de la aplicación.
+ * Guarda la dirección y el puerto del servidor al que conectarse
+ */
 @Entity(tableName = "settings")
 public class Settings {
     @PrimaryKey(autoGenerate = true)

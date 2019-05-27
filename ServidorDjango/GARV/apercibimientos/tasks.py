@@ -7,6 +7,12 @@ from apercibimientos.analisis_pdf import pdf_to_csv
 
 @shared_task
 def iterar_pdf(ruta):
+    """
+    Método asincrono ejecutado por celery
+    Cuenta el número de archivos pdf de en el directorio, actualiza el estado de la tarea y empreza a analizar los documentos
+    :param ruta: ruta al directorio
+    :return: Estado completado de la tarea
+    """
     total = contar_pdf(ruta)
     cont = 1
     current_task.update_state(state='PROGRESS',
@@ -16,6 +22,11 @@ def iterar_pdf(ruta):
 
 
 def contar_pdf(ruta):
+    """
+    Cuenta el número de archivos pdf en el directorio
+    :param ruta: ruta al directorio
+    :return: número de documentos
+    """
     pdfCounter = 0
     for root, dirs, files in os.walk(ruta):
         for file in files:
@@ -25,6 +36,13 @@ def contar_pdf(ruta):
 
 
 def iterate_pdf(extracted, cont, total):
+    """
+    Método recursivo que llama al método pdf_to_csv de analisis_pdf por cada archivo pdf y actualiza el estado de la tarea
+    :param extracted:
+    :param cont:
+    :param total:
+    :return:
+    """
     files = [i for i in os.listdir(extracted) if i.endswith("pdf")]
 
     for file in files:

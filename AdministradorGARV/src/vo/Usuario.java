@@ -1,5 +1,10 @@
 package vo;
 
+/**
+ * Objeto que representa un usuario
+ * @author mmbernal
+ *
+ */
 public class Usuario {
 
     private String usuario;

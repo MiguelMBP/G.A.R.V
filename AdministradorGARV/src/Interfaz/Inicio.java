@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Interfaz inicial de la aplicación
  * @author mmbernal
  */
 public class Inicio extends javax.swing.JFrame {

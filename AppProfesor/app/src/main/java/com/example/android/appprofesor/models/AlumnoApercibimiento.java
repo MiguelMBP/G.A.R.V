@@ -3,6 +3,11 @@ package com.example.android.appprofesor.models;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Objeto que representa un alumno en el módulo de Apercibimientos
+ * @author mmbernal
+ *
+ */
 public class AlumnoApercibimiento implements Serializable {
     private String nombre;
     private List<String> meses;

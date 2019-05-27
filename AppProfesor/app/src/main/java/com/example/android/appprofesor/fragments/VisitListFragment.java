@@ -17,14 +17,9 @@ import com.example.android.appprofesor.activities.RealizarVisitaActivity;
 import com.example.android.appprofesor.adapters.VisitAdapter;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.Settings;
-import com.example.android.appprofesor.models.TutorAlumno;
-import com.example.android.appprofesor.utils.Utils;
-import com.example.android.appprofesor.viewmodels.SettingsViewModel;
-import com.example.android.appprofesor.viewmodels.TutorAlumnoViewModel;
 import com.example.android.appprofesor.viewmodels.VisitaViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +32,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Fragment para mostrar la vista de lista para los objetos Alumno
+ */
 public class VisitListFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;

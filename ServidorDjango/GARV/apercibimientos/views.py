@@ -2,37 +2,38 @@ import datetime
 import os
 import tempfile
 from base64 import b64decode
-from calendar import month
 
 from celery.result import AsyncResult
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
-from django.core.paginator import Paginator
-from django.core.serializers import json
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
-from django.shortcuts import render
-
 from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.timezone import now
-from django.views.decorators.csrf import csrf_exempt
 from weasyprint import HTML
 
-from .models import Document, Apercibimiento, AsignaturasEspeciales
-from .forms import DocumentForm
-from .extraer_zip import extractZip
 from .analisis_pdf import pdf_to_csv
+from .extraer_zip import extractZip
+from .forms import DocumentForm
+from .models import Document, Apercibimiento, AsignaturaEspecial
 from .tasks import iterar_pdf
 
 
 @login_required
 @staff_member_required
 def subir_pdf(request):
+    """
+    Si la petición es POST: Recoge del formulario de la petición el archivo del usuario y llama al método asíncrono de Celery para analizar los documentos y redirige a la misma página GET con el parametro 'job', el id de la tarea
+    Si la petición es GET con el parametro 'job': Muestra la barra de progreso del análisis
+    Si no es ninguna de las dos, muestra la página para subir un documento
+    :param request:
+    :return:
+    """
     if request.method == 'GET' and 'job' in request.GET:
         job_id = request.GET['job']
         job = AsyncResult(job_id)
@@ -52,7 +53,8 @@ def subir_pdf(request):
             file = request.FILES['docfile'].name
 
             if file.endswith('.pdf'):
-                pdf_to_csv(newdoc.docfile.path)
+                job = iterar_pdf.delay(os.path.dirname(newdoc.docfile.path))
+                return HttpResponseRedirect(reverse('list') + '?job=' + job.id)
             elif file.endswith('.zip'):
                 ruta = extractZip(newdoc.docfile.path)
                 job = iterar_pdf.delay(ruta)
@@ -65,6 +67,11 @@ def subir_pdf(request):
 
 
 def get_progress(request):
+    """
+    Recoge el estado de la tarea asincrona con el id pasado por POST y lo envía como JSON
+    :param request:
+    :return: JSON con la información de la tarea
+    """
     if request.is_ajax():
         if 'task_id' in request.POST.keys() and request.POST['task_id']:
             task_id = request.POST['task_id']
@@ -81,6 +88,11 @@ def get_progress(request):
 @login_required
 @staff_member_required
 def subir_pdf_post(request):
+    """
+    Recibe un archivo cifrado en base64 y una extensión por POST, descifra el archivo y lo analiza
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         base64 = request.POST.get('archivo', None)
         extension = request.POST.get('extension', None)
@@ -100,6 +112,11 @@ def subir_pdf_post(request):
 @login_required
 @staff_member_required
 def buscarApercibimiento(request):
+    """
+    Devuelve los periodos académicos de la base de datos
+    :param request:
+    :return:
+    """
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'buscar_apercibimiento.html', {'years': periodo})
 
@@ -107,6 +124,11 @@ def buscarApercibimiento(request):
 @login_required
 @staff_member_required
 def informeApercibimientos(request):
+    """
+    Renderiza la página de menú de informes
+    :param request:
+    :return:
+    """
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'menuInformes.html', {'years': periodo})
 
@@ -114,6 +136,11 @@ def informeApercibimientos(request):
 @login_required
 @staff_member_required
 def informeEstadisticas(request):
+    """
+    Renderiza la página de menú de estadísticas
+    :param request:
+    :return:
+    """
     periodo = Apercibimiento.objects.values("periodo_academico").distinct().order_by("periodo_academico")
     return render(request, 'menuInformeNumeroApercibimientos.html', {'years': periodo})
 
@@ -121,15 +148,25 @@ def informeEstadisticas(request):
 @login_required
 @staff_member_required
 def asignaturasEspeciales(request):
-    lista = AsignaturasEspeciales.objects.all()
+    """
+    Renderiza la página de asignaturas especiales
+    :param request:
+    :return:
+    """
+    lista = AsignaturaEspecial.objects.all()
     return render(request, 'asignaturasEspeciales.html', {'lista': lista})
 
 
 @login_required
 @staff_member_required
 def sacarAsignaturas(request):
+    """
+    Devuelve las asignaturas especiales de la base de datos
+    :param request:
+    :return:
+    """
     if request.is_ajax():
-        lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
+        lista = list(AsignaturaEspecial.objects.values("id", "materia"))
         return JsonResponse(lista, safe=False)
     else:
         return HttpResponse('error')
@@ -138,11 +175,16 @@ def sacarAsignaturas(request):
 @login_required
 @staff_member_required
 def introducirAsignaturas(request):
+    """
+    Introduce una asignatura especial recibida por POST a la base de datos
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         materia = request.GET['materia']
-        asignatura = AsignaturasEspeciales(materia=materia)
+        asignatura = AsignaturaEspecial(materia=materia)
         asignatura.save()
-        lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
+        lista = list(AsignaturaEspecial.objects.values("id", "materia"))
         return JsonResponse(lista, safe=False)
     else:
         return HttpResponse('error')
@@ -151,13 +193,18 @@ def introducirAsignaturas(request):
 @login_required
 @staff_member_required
 def modificarAsignaturas(request):
+    """
+    Modifica una asignatura especial recibida por POST
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         id = request.GET['id']
         materia = request.GET['materia']
-        asignatura = AsignaturasEspeciales.objects.filter(id=id).first()
+        asignatura = AsignaturaEspecial.objects.filter(id=id).first()
         asignatura.materia = materia
         asignatura.save()
-        lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
+        lista = list(AsignaturaEspecial.objects.values("id", "materia"))
         return JsonResponse(lista, safe=False)
     else:
         return HttpResponse('error')
@@ -166,10 +213,15 @@ def modificarAsignaturas(request):
 @login_required
 @staff_member_required
 def eliminarAsignaturas(request):
+    """
+    Elimina una asignatura recibida por POST
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         id = request.GET['id']
-        asignatura = AsignaturasEspeciales.objects.filter(id=id).delete()
-        lista = list(AsignaturasEspeciales.objects.values("id", "materia"))
+        asignatura = AsignaturaEspecial.objects.filter(id=id).delete()
+        lista = list(AsignaturaEspecial.objects.values("id", "materia"))
         return JsonResponse(lista, safe=False)
     else:
         return HttpResponse('error')
@@ -178,6 +230,11 @@ def eliminarAsignaturas(request):
 @login_required
 @staff_member_required
 def sacarCursos(request):
+    """
+    Recoge los cursos dentro de un periodo académico
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
         lista = list(Apercibimiento.objects.values("unidad").distinct().filter(periodo_academico=periodo).order_by('unidad'))
@@ -189,6 +246,11 @@ def sacarCursos(request):
 @login_required
 @staff_member_required
 def sacarAlumnos(request):
+    """
+    Recoge los alumnos de un curso en un periodo académico
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
         curso = request.GET['curso']
@@ -201,6 +263,11 @@ def sacarAlumnos(request):
 @login_required
 @staff_member_required
 def sacarApercibimientos(request):
+    """
+    Recoge los apercibimientos de un alumno en un periodo académico pasados por GET
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
         curso = request.GET['curso']
@@ -215,6 +282,11 @@ def sacarApercibimientos(request):
 @login_required
 @staff_member_required
 def sacarMeses(request):
+    """
+    Recoge los meses de un periodo académico
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
         resultados = list(Apercibimiento.objects.values('fecha_inicio').distinct().filter(periodo_academico=periodo))
@@ -227,6 +299,11 @@ def sacarMeses(request):
 @login_required
 @staff_member_required
 def sacarCursoInformes(request):
+    """
+    Recoge los cursos de un periodo académico
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         periodo = request.GET['periodo']
         mes = request.GET['mes']
@@ -238,6 +315,11 @@ def sacarCursoInformes(request):
 @login_required
 @staff_member_required
 def actualizarApercibimiento(request):
+    """
+    Activa o desactiva un apercibimiento
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax():
         id = request.GET['id']
         apercibimiento = Apercibimiento.objects.filter(id=id).first()
@@ -247,7 +329,7 @@ def actualizarApercibimiento(request):
         periodo = request.GET['periodo']
         curso = request.GET['curso']
         alumno = request.GET['alumno']
-        if (id and periodo and curso and alumno):
+        if id and periodo and curso and alumno:
             lista = list(Apercibimiento.objects.values("id", "alumno", "periodo_academico", "unidad", "materia", "fecha_inicio", "fecha_fin", "activo").distinct().filter(periodo_academico=periodo,
                                                                                unidad=curso, alumno=alumno).order_by('fecha_inicio', 'materia'))
             return JsonResponse(lista, safe=False)
@@ -258,6 +340,15 @@ def actualizarApercibimiento(request):
 @login_required
 @staff_member_required
 def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
+    """
+    Genera el informe de 'Alumnos con N o más apercibimientos' con los datos recibidos de la url
+    :param request:
+    :param anno: Periodo academico
+    :param mes: Mes del informe
+    :param unidad: Unidad de la que realizar el informe
+    :param minimo: Número mínimo de apercibimientos
+    :return:
+    """
     if 9 <= mes <= 12:
         fecha = datetime.datetime(anno, mes, 28)
     else:
@@ -301,6 +392,14 @@ def informeNumeroApercibimiento(request, anno, mes, unidad, minimo):
 @login_required
 @staff_member_required
 def informeApercibimientoIndividual(request, anno, mes, unidad):
+    """
+    Genera el informe de 'Apercibimientos individuales' con los datos recibidos de la url
+    :param request:
+    :param anno: Periodo academico
+    :param mes: Mes del informe
+    :param unidad: Unidad de la que realizar el informe
+    :return:
+    """
     if 9 <= mes <= 12:
         fecha = datetime.datetime(anno, mes, 28)
         fechainicio = datetime.datetime(anno, mes, 1)
@@ -355,6 +454,14 @@ def informeApercibimientoIndividual(request, anno, mes, unidad):
 @login_required
 @staff_member_required
 def informeResumenApercibimiento(request, anno, mes, unidad):
+    """
+    Genera el informe de 'Apercibimientos por materia' con los datos recibidos de la url
+    :param request:
+    :param anno: Periodo academico
+    :param mes: Mes del informe
+    :param unidad: Unidad de la que realizar el informe
+    :return:
+    """
     if 9 <= mes <= 12:
         fecha = datetime.datetime(anno, mes, 28)
     else:
@@ -406,6 +513,14 @@ def informeResumenApercibimiento(request, anno, mes, unidad):
 @login_required
 @staff_member_required
 def estadisticasApercibimientos(request, periodo, inicio, fin):
+    """
+    Genera el informe de 'Estadísticas de apercibimientos' con los datos recibidos por url
+    :param request:
+    :param periodo: Periodo académico
+    :param inicio: Fecha de inicio del informe
+    :param fin: Fecha fin del informe
+    :return:
+    """
     if 9 <= inicio <= 12:
         fechainicio = datetime.datetime(periodo, inicio, 1)
     else:

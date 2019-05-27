@@ -11,12 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import vo.Alumno;
 import vo.Empresa;
 
 /**
- *
+ * Diálogo para añadir alumnos del módulo de visitas
  * @author miguelmbp
  */
 public class AñadirAlumno extends javax.swing.JDialog {

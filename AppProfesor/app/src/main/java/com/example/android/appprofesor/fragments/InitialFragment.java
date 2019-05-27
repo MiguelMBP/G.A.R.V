@@ -16,6 +16,9 @@ import com.example.android.appprofesor.activities.MainActivity;
 import androidx.fragment.app.Fragment;
 
 
+/**
+ * Fragment para el menú de inicio de la aplicación
+ */
 public class InitialFragment extends Fragment {
 
     public InitialFragment() {

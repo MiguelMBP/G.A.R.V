@@ -5,10 +5,14 @@ from .models import Apercibimiento
 
 
 class DocumentForm(forms.Form):
+    """
+    Formulario para subir un archivo
+    """
     docfile = forms.FileField(
-        label='Select a file',
+        label='Seleccione un archivo',
         help_text='max. 42 megabytes'
     )
+
 
 class AuthorForm(ModelForm):
     class Meta:

@@ -11,8 +11,18 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginConnector implements Constants {
+/**
+ * Realiza las peticiones del cliente al servidor multihilos para el módulo de usuarios
+ */
+public class UserConnector implements Constants {
 
+    /**
+     * Comprueba los credenciales del usuario
+     * @param username nombre de usuario
+     * @param password contraseña
+     * @param settings ajustes de conexión al servidor
+     * @return Lista con las cookies de la sesión del usuario
+     */
     public List<String> iniciarSesion(String username, String password, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -56,6 +66,15 @@ public class LoginConnector implements Constants {
 
     }
 
+    /**
+     * Cambia la contraseña del usuario
+     * @param username nombre de usuario
+     * @param password contraseña
+     * @param csrftoken csrfToken de la sesión
+     * @param sessionId sessionId de la sesión
+     * @param settings ajustes de la conexión al servidor
+     * @return booleano indicado si se cambió la contraseña con éxito
+     */
     public boolean cambiarContraseña(String username, String password, String csrftoken, String sessionId, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;

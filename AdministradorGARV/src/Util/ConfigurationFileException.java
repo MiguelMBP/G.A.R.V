@@ -8,7 +8,7 @@ package Util;
 import java.io.FileNotFoundException;
 
 /**
- *
+ * Excepción lanzada al haber un error en el archivo de configuración o si no se encuentra
  * @author mmbernal
  */
 public class ConfigurationFileException extends FileNotFoundException{

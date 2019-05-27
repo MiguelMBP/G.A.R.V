@@ -21,6 +21,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Fragment para mostrar la vista detallada de un objeto TutorAlumno
+ */
 public class TutorDetailFragment extends Fragment {
     TextView curso;
     TextView nombre;
@@ -52,6 +55,10 @@ public class TutorDetailFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Actualiza la interfaz con los datos del alumno
+     * @param alumno
+     */
     public void renderClass(TutorAlumno alumno) {
         asignaturas = alumno.getAsignaturas();
         adapter = new WarningAdapter(asignaturas, R.layout.warning_row, getContext());

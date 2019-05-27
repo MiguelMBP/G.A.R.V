@@ -1,18 +1,12 @@
 import csv
-from datetime import datetime
-import json
 from base64 import b64decode, b64encode
+from datetime import datetime
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.core import serializers
 from django.core.files.base import ContentFile
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-
-# Create your views here.
-from django.views.decorators.csrf import csrf_exempt
 
 from .models import Profesor, Visita, Empresa, Alumno
 
@@ -20,6 +14,11 @@ from .models import Profesor, Visita, Empresa, Alumno
 @login_required
 @staff_member_required
 def sendimage(request):
+    """
+    Envía una la imagen en base64 de la visita recibida por POST
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         id = request.POST.get('id', None)
 
@@ -35,6 +34,11 @@ def sendimage(request):
 
 @login_required
 def registervisit(request):
+    """
+    Registra una visita con los datos recibidos por POST
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         userId = request.POST.get('userId', None)
         date = request.POST.get('date', None)
@@ -54,6 +58,11 @@ def registervisit(request):
 @login_required
 @staff_member_required
 def resumenVisitas(request):
+    """
+    Genera un documento CSV con el importe correspondiente de cada profesor y los kilómetros totales de las visitas
+    :param request:
+    :return:
+    """
     if request.GET and 'valor' in request.GET:
         valor = request.GET['valor']
         response = HttpResponse(content_type='text/csv')
@@ -80,6 +89,11 @@ def resumenVisitas(request):
 @login_required
 @staff_member_required
 def visitas(request):
+    """
+    Renderiza la página de visitas
+    :param request:
+    :return:
+    """
     visitas = list(Visita.objects.values('profesor').distinct())
     profesores = []
     for visita in visitas:
@@ -91,6 +105,11 @@ def visitas(request):
 @login_required
 @staff_member_required
 def empresas(request):
+    """
+    Renderiza la página de empresas
+    :param request:
+    :return:
+    """
     empresas = Empresa.objects.all()
     return render(request, 'empresas.html', {'empresas': empresas})
 
@@ -98,6 +117,12 @@ def empresas(request):
 @login_required
 @staff_member_required
 def editarEmpresa(request, id):
+    """
+    Edita la empresa recibida por POST
+    :param request:
+    :param id:
+    :return:
+    """
     if request.POST and request.is_ajax():
         nombre = request.POST.get('nombre', None)
         cif = request.POST.get('cif', None)
@@ -130,6 +155,12 @@ def editarEmpresa(request, id):
 @login_required
 @staff_member_required
 def editarAlumno(request, id):
+    """
+    Edita el alumno pasado por POST
+    :param request:
+    :param id:
+    :return:
+    """
     if request.POST and request.is_ajax():
         nombre = request.POST.get('nombre', None)
         dni = request.POST.get('dni', None)
@@ -160,6 +191,11 @@ def editarAlumno(request, id):
 @login_required
 @staff_member_required
 def crearEmpresa(request):
+    """
+    Crea la empresa pasada por POST
+    :param request:
+    :return:
+    """
     if request.POST and request.is_ajax():
         nombre = request.POST.get('nombre', None)
         cif = request.POST.get('cif', None)
@@ -182,6 +218,11 @@ def crearEmpresa(request):
 @login_required
 @staff_member_required
 def crearAlumno(request):
+    """
+    Crea el alumno pasado por POST
+    :param request:
+    :return:
+    """
     if request.POST and request.is_ajax():
         nombre = request.POST.get('nombre', None)
         dni = request.POST.get('dni', None)
@@ -204,6 +245,11 @@ def crearAlumno(request):
 @login_required
 @staff_member_required
 def alumnos(request):
+    """
+    Renderiza la página de alumnos
+    :param request:
+    :return:
+    """
     alumnos = Alumno.objects.all()
     return render(request, 'alumnos.html', {'alumnos': alumnos})
 
@@ -211,6 +257,11 @@ def alumnos(request):
 @login_required
 @staff_member_required
 def getVisitas(request):
+    """
+    Recoge las visitas de un profesor
+    :param request:
+    :return:
+    """
     if request.GET and 'profesor' in request.GET:
         profesor = request.GET['profesor']
         visitas = Visita.objects.filter(profesor_id=profesor)
@@ -227,6 +278,11 @@ def getVisitas(request):
 @login_required
 @staff_member_required
 def actualizarVisita(request):
+    """
+    Valida o invalida una visita recibida por GET y ajax
+    :param request:
+    :return:
+    """
     if request.GET and request.is_ajax() and 'profesor' in request.GET and 'visita' in request.GET:
         id = request.GET['visita']
         visita = Visita.objects.filter(id=id).first()
@@ -251,6 +307,11 @@ def actualizarVisita(request):
 @login_required
 @staff_member_required
 def verImagen(request):
+    """
+    Renderiza la página de detalle de una visita con su imagen
+    :param request:
+    :return:
+    """
     if request.GET and 'id' in request.GET:
         id = request.GET['id']
         visita = Visita.objects.get(id=id)

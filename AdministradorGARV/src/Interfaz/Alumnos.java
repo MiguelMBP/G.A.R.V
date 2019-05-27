@@ -9,23 +9,19 @@ import Cliente.ConectorVisitas;
 import Util.ConfigurationFileException;
 import java.awt.Frame;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import vo.Alumno;
-import vo.Apercibimiento;
 
 /**
- *
+ * Diálogo que muestra los alumnos y sus opciones del módulo de visitas
  * @author miguelmbp
  */
 public class Alumnos extends javax.swing.JDialog {
 
     /**
-     * Creates new form Alumnos
+     * 
      */
     private Frame parent;
     public Alumnos(java.awt.Frame parent, boolean modal) {

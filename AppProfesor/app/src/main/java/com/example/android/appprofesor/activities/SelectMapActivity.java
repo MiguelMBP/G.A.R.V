@@ -56,6 +56,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Muestra un mapa para seleccionar una ubicación, recoge los datos de esa ubicación y muestra un dialogo para crear una empresa
+ */
 public class SelectMapActivity extends FragmentActivity implements OnMapReadyCallback, Constants {
 
     private GoogleMap mMap;
@@ -191,7 +194,7 @@ public class SelectMapActivity extends FragmentActivity implements OnMapReadyCal
         dialogEmpresa.dismiss();
     }
 
-    public float getDistance(final double lat1, final double lon1) {
+    private float getDistance(final double lat1, final double lon1) {
 
         Thread thread = new Thread(new Runnable() {
             @Override

@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +25,7 @@ import org.apache.commons.io.FilenameUtils;
 import vo.Apercibimiento;
 
 /**
- *
+ * Interfaz principal del módulo de apercibimientos
  * @author miguelmbp
  */
 public class Apercibimientos extends javax.swing.JFrame {

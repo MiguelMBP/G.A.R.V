@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import vo.Empresa;
 
 /**
- *
+ * Dialogo para añadir empresas del módulo de visitas
  * @author miguelmbp
  */
 public class AñadirEmpresa extends javax.swing.JDialog {

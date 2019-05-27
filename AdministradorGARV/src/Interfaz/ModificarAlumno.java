@@ -15,7 +15,7 @@ import vo.Alumno;
 import vo.Empresa;
 
 /**
- *
+ * Diálogo para modificar un alumno del módulo de visitas
  * @author miguelmbp
  */
 public class ModificarAlumno extends javax.swing.JDialog {

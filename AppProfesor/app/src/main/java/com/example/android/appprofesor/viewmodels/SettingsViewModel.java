@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+/**
+ * Consulta y almacena la información referente a los objetos Empresa
+ */
 public class SettingsViewModel extends AndroidViewModel {
     private static DataBaseRoom db;
 
@@ -21,18 +24,33 @@ public class SettingsViewModel extends AndroidViewModel {
         db = DataBaseRoom.getInstance(application);
     }
 
+    /**
+     * Consulta los objetos de la base de datos
+     * @return
+     */
     public LiveData<List<Settings>> getSettings() {
         return db.settingsDAO().getAll();
     }
 
+    /**
+     * Ejecuta la clase asincrona AsyncAddSettings para insertar un objeto
+     * @param settings
+     */
     public void addSettings(Settings settings) {
         new AsyncAddSettings().execute(settings);
     }
 
+    /**
+     * Ejecuta la clase asincrona AsyncEditSettingsDB para actualizar un objeto
+     * @param settings
+     */
     public void updateSettings(Settings settings){
         new AsyncEditSettingsDB().execute(settings);
     }
 
+    /**
+     * Inserta en la base de datos
+     */
     private class AsyncAddSettings extends AsyncTask<Settings, Void, Long> {
 
         @Override
@@ -60,6 +78,9 @@ public class SettingsViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Actualiza un objeto de la base de datos
+     */
     private class AsyncEditSettingsDB extends AsyncTask<Settings, Void, Integer> {
 
         @Override

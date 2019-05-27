@@ -6,7 +6,7 @@
 package Interfaz;
 
 /**
- *
+ * Diálogo para modificar un apercibimiento
  * @author miguelmbp
  */
 public class ModificarApercibimiento extends javax.swing.JDialog {

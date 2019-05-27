@@ -6,18 +6,23 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.timezone import now
 
+from usuarios.forms import DocumentForm
 from usuarios.models import Document
 from usuarios.usuarios_csv import leercsv
-from usuarios.forms import DocumentForm
 from visitas.models import Profesor
 
 
 def a_login(request):
+    """
+    Realiza un login desde POST
+    :param request:
+    :return:
+    """
     msg = []
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -37,6 +42,11 @@ def a_login(request):
 @login_required
 @staff_member_required
 def createuser(request):
+    """
+    Crea un usuario mediante POST
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         userName = request.POST.get('username', None)
         userPass = request.POST.get('password', None)
@@ -69,6 +79,11 @@ def createuser(request):
 @login_required
 @staff_member_required
 def updateuser(request):
+    """
+    Actualiza un usuario recibido por POST
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         username = request.POST.get('username', None)
         mail = request.POST.get('email', None)
@@ -97,6 +112,11 @@ def updateuser(request):
 
 @login_required
 def is_staff(request):
+    """
+    Comprueba si un usuario es Staff
+    :param request:
+    :return:
+    """
     username = request.POST.get('username', None)
     if username:
         if User.objects.filter(username=username).exists():
@@ -108,6 +128,11 @@ def is_staff(request):
 
 @login_required
 def changePass(request):
+    """
+    Cambia la contraseña de un usuario
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
@@ -127,6 +152,11 @@ def changePass(request):
 @login_required
 @staff_member_required
 def usuarios(request):
+    """
+    Renderiza la página de usuarios
+    :param request:
+    :return:
+    """
     users = User.objects.all()
     usuarios = []
     for user in users:
@@ -138,6 +168,11 @@ def usuarios(request):
 @login_required
 @staff_member_required
 def eliminarusuarios(request):
+    """
+    Elimina un conjunto de usuarios pasados por POST
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         users = request.POST.getlist('users[]', None)
         username = request.POST.get('username', None)
@@ -159,6 +194,12 @@ def eliminarusuarios(request):
 @login_required
 @staff_member_required
 def editarUsuario(request, id):
+    """
+    Edita un usuario recibido del url
+    :param request:
+    :param id:
+    :return:
+    """
     usuario = User.objects.get(id=id)
     profesor = Profesor.objects.filter(usuario=usuario).first()
     return render(request, 'editarUsuarios.html', {'usuario': usuario, 'profesor': profesor})
@@ -167,12 +208,22 @@ def editarUsuario(request, id):
 @login_required
 @staff_member_required
 def crearUsuario(request):
+    """
+    Renderiza la página de crear un usuario
+    :param request:
+    :return:
+    """
     return render(request, 'crearUsuario.html')
 
 
 @login_required
 @staff_member_required
 def importarusuarios(request):
+    """
+    Recibe del formulario un documento csv para analizarlo y registrar los usuarios en su interior
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -194,6 +245,11 @@ def importarusuarios(request):
 @login_required
 @staff_member_required
 def importarPost(request):
+    """
+    Recibe un documento csv cifrado en base64 para analizarlo y registrar los usuarios en su interior
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         base64 = request.POST.get('archivo', None)
         if base64:

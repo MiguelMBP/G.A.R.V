@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import vo.Usuario;
 
 /**
- *
+ * Diálogo para editar un usuario
  * @author miguelmbp
  */
 public class EditarUsuario extends javax.swing.JDialog {

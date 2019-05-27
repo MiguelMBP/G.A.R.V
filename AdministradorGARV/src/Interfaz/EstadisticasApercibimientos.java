@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Diálogo para mostrar el informe de Estadísticas de Apercibimientos
  * @author miguelmbp
  */
 public class EstadisticasApercibimientos extends javax.swing.JDialog {

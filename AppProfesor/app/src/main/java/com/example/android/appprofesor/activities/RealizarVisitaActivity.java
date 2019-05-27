@@ -60,6 +60,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Activity donde se introducen los datos necesarios para realizar una visita, crear un alumno y/o una empresa
+ */
 public class RealizarVisitaActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;

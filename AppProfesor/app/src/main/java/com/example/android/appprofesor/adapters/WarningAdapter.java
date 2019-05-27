@@ -15,6 +15,9 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Realiza la función de puente entre el RecyclerView y los datos a mostrar
+ */
 public class WarningAdapter extends RecyclerView.Adapter<WarningAdapter.ViewHolder> {
     private List<TutorAsignatura> asignaturas;
     private int layout;

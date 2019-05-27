@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Objeto que representa un alumno dentro de un curso
+ * @author mmbernal
+ *
+ */
 public class TutorAlumno implements Serializable {
     private String nombre;
     private List<TutorAsignatura> asignaturas;

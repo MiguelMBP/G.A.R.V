@@ -2,10 +2,16 @@ from django.db import models
 
 
 class Document(models.Model):
+    """
+    Modelo de la tabla Document, guarda la ruta al archivo subido
+    """
     docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
 
 class Apercibimiento(models.Model):
+    """
+    Modelo de la tabla Apercibimiento, guarda todos los datos referente a él
+    """
     alumno = models.CharField(max_length=200)
     periodo_academico = models.IntegerField()
     curso = models.CharField(max_length=200)
@@ -37,7 +43,10 @@ class Apercibimiento(models.Model):
                str(self.fecha_fin) + " " + self.horas_justificadas + " " + str(self.porcentaje_justificado) + " " + self.horas_injustificadas + " " + str(self.porcentaje_injustificado) + " " + self.retrasos
 
 
-class AsignaturasEspeciales(models.Model):
+class AsignaturaEspecial(models.Model):
+    """
+    Modelo de la tabla AsignaturaEspecial
+    """
     materia = models.CharField(max_length=200)
 
     def __eq__(self, other):

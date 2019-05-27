@@ -21,11 +21,19 @@ import com.example.android.appprofesor.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Realiza las peticiones del cliente al servidor multihilos para el módulo de apercibimientos
+ */
 public class WarningConnector implements Constants {
 
     private WarningConnector() {
     }
 
+    /**
+     * Recoge los apercibimientos agrupados por asignatura, curso y alumno
+     * @param settings
+     * @return
+     */
     public static List<ClaseApercibimiento> getMaterias(Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -75,6 +83,12 @@ public class WarningConnector implements Constants {
         return materias;
     }
 
+    /**
+     * Recoge los apercibimientos agrupados por alumno y asignatura del curso tutor del usuario
+     * @param context
+     * @param settings
+     * @return
+     */
     public static List<TutorAlumno> getAlumnosTutor(Context context, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;

@@ -6,7 +6,11 @@ from visitas.models import Profesor
 
 
 def leercsv(filepath):
-    print()
+    """
+    Analiza el archivo csv para sacar los usuarios y registrarlos
+    :param filepath:
+    :return:
+    """
     with open(filepath) as csv_file:
         csv_reader = csv.reader(csv_file)
         for row in csv_reader:
@@ -23,6 +27,17 @@ def leercsv(filepath):
 
 
 def registrar_usuario(nombre, apellidos, usuario, contrasena, correo, dni, cursoTutor):
+    """
+    Registra un usuario sacado del csv
+    :param nombre:
+    :param apellidos:
+    :param usuario:
+    :param contrasena:
+    :param correo:
+    :param dni:
+    :param cursoTutor:
+    :return:
+    """
     if usuario and contrasena and correo and dni and nombre and apellidos:
         if not User.objects.filter(username=usuario).exists() and not Profesor.objects.filter(dni=dni).exists():
             user = User.objects.create_user(username=usuario, email=correo, password=contrasena)

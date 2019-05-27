@@ -6,7 +6,6 @@
 package Cliente;
 
 import Util.ConfigurationFileException;
-import Util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -23,14 +22,21 @@ import java.util.logging.Logger;
 import vo.Apercibimiento;
 
 /**
- *
+ * Realiza las operaciones entre el cliente y el servidor multihilos para el módulo de apercibimientos
  * @author miguelmbp
  */
-public class ConectorApercibimientos implements Constants {
+public class ConectorApercibimientos {
 
     public ConectorApercibimientos() {
     }
 
+    /**
+     * Recoge todos los apercibimientos del servidor
+     * @return Una lista con los apercibimientos
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ConfigurationFileException 
+     */
     public List<Apercibimiento> cargarApercibimientos() throws FileNotFoundException, IOException, ConfigurationFileException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -81,6 +87,13 @@ public class ConectorApercibimientos implements Constants {
         return apercibimientos;
     }
 
+    /**
+     * Recoge las asignaturas especiales del servidor
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> cargarAsignaturas() throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -131,6 +144,14 @@ public class ConectorApercibimientos implements Constants {
         return asignaturas;
     }
 
+    /**
+     * Envía al servidor una asignatura para introducirla en la base de datos
+     * @param materia la asignatura a introducir
+     * @return la lista de asignaturas en la base de datos
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> crearAsignatura(String materia) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -173,6 +194,15 @@ public class ConectorApercibimientos implements Constants {
         return asignaturas;
     }
 
+    /**
+     * Cambia el estado del apercibimientos a activado/descativado
+     * @param id el id del apercibimiento a modificar
+     * @param activo el estado que asignar
+     * @return la lista de apercibimientos de la base de datos
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Apercibimiento> desActivarApercibimiento(int id, boolean activo) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -218,6 +248,13 @@ public class ConectorApercibimientos implements Constants {
 
     }
 
+    /**
+     * Recoge los periodos academicos del servidor
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> cargarAño() throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -260,6 +297,14 @@ public class ConectorApercibimientos implements Constants {
 
     }
 
+    /**
+     * Recoge los meses dentro de un peiodo academico del servidor
+     * @param año
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> cargarMeses(String año) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -303,6 +348,15 @@ public class ConectorApercibimientos implements Constants {
         return meses;
     }
 
+    /**
+     * Recoge los cursos dentro de un periodo academico y un mes del servidor
+     * @param año
+     * @param mes
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> cargarCursos(String año, String mes) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -366,10 +420,20 @@ public class ConectorApercibimientos implements Constants {
             throw new FileNotFoundException();
         } catch (IOException ex) {
             throw new IOException();
+        } catch (Exception e){
+            throw new ConfigurationFileException();
         }
         return parametros;
     }
 
+    /**
+     * Modifica una asignatura 
+     * @param id id de a asgnatura a modificar
+     * @param materia nuevo nombre de la asignatura
+     * @return la lista con las asignaturas de la base de datos
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> modificarAsignatura(int id, String materia) throws FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -414,6 +478,13 @@ public class ConectorApercibimientos implements Constants {
         return asignaturas;
     }
 
+    /**
+     * Elimina una asignatura
+     * @param id id de la asignatura a eliminar
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> eliminarAsignatura(int id) throws FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -456,6 +527,13 @@ public class ConectorApercibimientos implements Constants {
         return asignaturas;
     }
 
+    /**
+     * Recoge los cursos dentro de un periodo académico 
+     * @param año
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> cargarCursosFiltro(String año) throws FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -499,6 +577,14 @@ public class ConectorApercibimientos implements Constants {
         return cursos;
     }
 
+    /**
+     * Recoge los alumnos dentro de un periodo académico y un curso
+     * @param año
+     * @param curso
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> cargarAlumnoFiltro(String año, String curso) throws FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -544,6 +630,13 @@ public class ConectorApercibimientos implements Constants {
         return alumnos;
     }
 
+    /**
+     * Recoge los apercibimientos de un periodo académico
+     * @param año
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Apercibimiento> apercibimientosPorAño(String año) throws FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -587,6 +680,14 @@ public class ConectorApercibimientos implements Constants {
         return apercibimientos;
     }
 
+    /**
+     * Recoge los apercibimientos de un curso en un periodo académico
+     * @param año
+     * @param curso
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Apercibimiento> apercibimientosPorCurso(String año, String curso) throws FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -632,6 +733,15 @@ public class ConectorApercibimientos implements Constants {
         return apercibimientos;
     }
 
+    /**
+     * Recoge los apercibimientos de un alumno por curso en un periodo académico
+     * @param año
+     * @param curso
+     * @param alumno
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Apercibimiento> apercibimientosPorAlumno(String año, String curso, String alumno) throws FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -679,6 +789,15 @@ public class ConectorApercibimientos implements Constants {
         return apercibimientos;
     }
 
+    /**
+     * Envia un archivo zip o pdf codificado en base64 al servidor
+     * @param base64 Archivo codificado
+     * @param extension extensión del archivo
+     * @param csrfToken csrfToken de la sesión del usuario
+     * @param sessionId sessionId de la sesión del usuario
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void enviarArchivo(String base64, String extension, String csrfToken, String sessionId) throws FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;

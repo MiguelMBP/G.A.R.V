@@ -1,7 +1,6 @@
 package com.example.android.appprofesor.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,9 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.android.appprofesor.Connectors.LoginConnector;
+import com.example.android.appprofesor.Connectors.UserConnector;
 import com.example.android.appprofesor.R;
-import com.example.android.appprofesor.activities.MainActivity;
 import com.example.android.appprofesor.models.Settings;
 
 import java.util.List;
@@ -23,6 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Fragment para cambiar la contraseña del usuario
+ */
 public class ChangePassFragment extends Fragment {
 
     private EditText contraseñaActualText;
@@ -51,7 +52,7 @@ public class ChangePassFragment extends Fragment {
                 SharedPreferences prefs =
                         getContext().getSharedPreferences("userData", Context.MODE_PRIVATE);
                 String username = prefs.getString("username", null);
-                LoginConnector lc = new LoginConnector();
+                UserConnector lc = new UserConnector();
 
                 prefs = getContext().getSharedPreferences("serverSettings", Context.MODE_PRIVATE);
                 String address = prefs.getString("address", null);
@@ -103,7 +104,7 @@ public class ChangePassFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            LoginConnector login = new LoginConnector();
+            UserConnector login = new UserConnector();
             List<String> userData = login.iniciarSesion(strings[0], strings[1], settings);
 
 
@@ -138,7 +139,7 @@ public class ChangePassFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            LoginConnector login = new LoginConnector();
+            UserConnector login = new UserConnector();
             boolean cambiado = login.cambiarContraseña(username, strings[0], csrf, sessionId, settings);
             return cambiado;
         }

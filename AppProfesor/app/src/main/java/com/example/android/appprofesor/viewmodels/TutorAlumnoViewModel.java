@@ -16,6 +16,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+/**
+ * Consulta y almacena la información referente a los objetos TutorAlumno
+ */
 public class TutorAlumnoViewModel extends AndroidViewModel {
 
     private static MutableLiveData<List<TutorAlumno>> alumnos;
@@ -26,6 +29,11 @@ public class TutorAlumnoViewModel extends AndroidViewModel {
         this.application = application;
     }
 
+    /**
+     * Ejecuta la clase asincrona ConectarServidor para consultar al servidor
+     * @param settings
+     * @return
+     */
     public LiveData<List<TutorAlumno>> getAlumnos(Context context, Settings settings) {
         if (alumnos == null) {
             alumnos = new MutableLiveData<>();
@@ -35,6 +43,9 @@ public class TutorAlumnoViewModel extends AndroidViewModel {
         return alumnos;
     }
 
+    /**
+     * Consulta los datos al servidor
+     */
     private class ConectarServidor extends AsyncTask<Context, Void, List<TutorAlumno>> {
 
         Empresa empresa;

@@ -9,7 +9,9 @@ import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.fragments.ClassDetailFragment;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
 
-
+/**
+ * Muestra el fragment ClassDetailFragment con la clase pasada por intent
+ */
 public class ClassDetailActivity extends AppCompatActivity {
 
     @Override

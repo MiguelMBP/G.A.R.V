@@ -104,6 +104,10 @@ public class MainActivity extends AppCompatActivity
         changeFragment();
     }
 
+    /**
+     * Realiza u intent a la clase ClassDetailActivity con el objeto ClaseApercibimiento seleccionado
+     * @param clase objeto pasado a la activity
+     */
     @Override
     public void onChange(ClaseApercibimiento clase) {
         Intent intent = new Intent(MainActivity.this, ClassDetailActivity.class);

@@ -18,6 +18,9 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Realiza la función de puente entre el RecyclerView y los datos a mostrar
+ */
 public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> implements Filterable {
     private List<ClaseApercibimiento> clases;
     private List<ClaseApercibimiento> todasClases;

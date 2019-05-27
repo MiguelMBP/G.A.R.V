@@ -3,6 +3,11 @@ import os
 
 
 def extractZip(filepath):
+    """
+    Extrae el fichero zip
+    :param filepath: Ruta al fichero
+    :return: ruta a la carpeta extraida
+    """
     zip_ref = zipfile.ZipFile(filepath, 'r')
 
     extracted = os.path.join(os.path.splitext(filepath)[0])

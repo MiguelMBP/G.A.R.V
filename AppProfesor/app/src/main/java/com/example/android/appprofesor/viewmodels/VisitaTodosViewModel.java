@@ -18,6 +18,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+/**
+ * Consulta y almacena la información referente a los objetos Alumno
+ */
 public class VisitaTodosViewModel extends AndroidViewModel {
     private static MutableLiveData<List<Alumno>> alumnos;
     private Application application;
@@ -27,6 +30,11 @@ public class VisitaTodosViewModel extends AndroidViewModel {
         this.application = application;
     }
 
+    /**
+     * Ejecuta la clase asincrona ConectarServidorTodosAlumnos para consultar al servidor
+     * @param settings
+     * @return
+     */
     public LiveData<List<Alumno>> getTodosAlumnos(Settings settings) {
         if (alumnos == null) {
             alumnos = new MutableLiveData<>();
@@ -35,17 +43,30 @@ public class VisitaTodosViewModel extends AndroidViewModel {
         return alumnos;
     }
 
+    /**
+     * Ejecuta la clase asincrona ConectarServidorAñadirAlumno para añadir un alumno
+     * @param alumno
+     * @param settings
+     */
     public void addAlumno(Alumno alumno, Settings settings) {
 
         new ConectarServidorAñadirAlumno(settings).execute(alumno);
         //new ConectarServidorTodosAlumnos().execute();
     }
 
+    /**
+     * Ejecuta la clase asincrona ConectarServidorAñadirAlumno para registrar una visita
+     * @param visita
+     * @param settings
+     */
     public void addVisita(RegistroVisita visita, Settings settings) {
 
         new ConectarServidorRegistrarVisita(settings).execute(visita);
     }
 
+    /**
+     * Consulta los datos al servidor
+     */
     private class ConectarServidorTodosAlumnos extends AsyncTask<Void, Void, List<Alumno>> {
 
         Alumno alumno;
@@ -67,6 +88,9 @@ public class VisitaTodosViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Inserta un alumno
+     */
     private class ConectarServidorAñadirAlumno extends AsyncTask<Alumno, Void, Integer> {
 
         Alumno alumno;
@@ -102,6 +126,9 @@ public class VisitaTodosViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * Registra una visita
+     */
     private class ConectarServidorRegistrarVisita extends AsyncTask<RegistroVisita, Void, Integer> {
 
         RegistroVisita visita;

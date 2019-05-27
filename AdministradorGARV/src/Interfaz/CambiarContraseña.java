@@ -12,7 +12,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Diálogo para cambiar la contraseña de un usuario
  * @author miguelmbp
  */
 public class CambiarContraseña extends javax.swing.JDialog {

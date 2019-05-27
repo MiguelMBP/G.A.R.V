@@ -9,12 +9,10 @@ import Cliente.ConectorUsuarios;
 import Util.ConfigurationFileException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Interfaz para iniciar sesión
  * @author miguelmbp
  */
 public class Login extends javax.swing.JFrame {

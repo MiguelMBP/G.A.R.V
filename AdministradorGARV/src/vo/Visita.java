@@ -2,6 +2,11 @@ package vo;
 
 import java.util.Date;
 
+/**
+ * Objeto que representa una visita
+ * @author mmbernal
+ *
+ */
 public class Visita {
 		private int id;
 	private String docente;

@@ -6,4 +6,9 @@ from django.shortcuts import render
 @login_required
 @staff_member_required
 def index(request):
+    """
+    Índice de la página web
+    :param request:
+    :return:
+    """
     return render(request, 'index.html')

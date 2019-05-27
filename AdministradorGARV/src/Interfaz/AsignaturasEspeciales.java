@@ -9,13 +9,11 @@ import Cliente.ConectorApercibimientos;
 import Util.ConfigurationFileException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Diálogo que muestra las asignaturas especiales y sus opciones del módulo de apercibimientos
  * @author mmbernal
  */
 public class AsignaturasEspeciales extends javax.swing.JDialog {

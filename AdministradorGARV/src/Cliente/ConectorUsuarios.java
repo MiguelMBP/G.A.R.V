@@ -6,7 +6,6 @@
 package Cliente;
 
 import Util.ConfigurationFileException;
-import Util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -23,11 +22,26 @@ import java.util.logging.Logger;
 import vo.Usuario;
 
 /**
- *
- * @author mmbernal
+ * Clase que realiza las operaciones entre el cliente y el servidor multihilos para el módulo de usuarios
+ * @author miguelmbp
  */
-public class ConectorUsuarios implements Constants {
+public class ConectorUsuarios {
 
+    /**
+     * Envía una petición al servidor para crear un usuario
+     * @param cookies csrfToken y sessionId de la sesión del usuario
+     * @param usuarioCrear Nombre del usuario
+     * @param contraseñaCrear contraseña del usuario
+     * @param correo correo del usuario
+     * @param nombre nombre del usuario
+     * @param apellidos apellidos del usuario
+     * @param curso curso tutor del usuario
+     * @param dni dni del usuario
+     * @return booleano indicando si el usuario se creó con éxito
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ConfigurationFileException 
+     */
     public boolean crearUsuario(List<String> cookies, String usuarioCrear, String contraseñaCrear, String correo, String nombre, String apellidos, String curso, String dni) throws FileNotFoundException, IOException, ConfigurationFileException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -93,6 +107,13 @@ public class ConectorUsuarios implements Constants {
         return usuarios;
     }
 
+    /**
+     * Recoge los usuarios del servidor
+     * @return
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<Usuario> cargarUsuarios() throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -135,6 +156,15 @@ public class ConectorUsuarios implements Constants {
 
     }
 
+    /**
+     * Realiza una petición al servidor para iniciar sesión
+     * @param username
+     * @param password
+     * @return Lista con las cookies de la sesión
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public List<String> iniciarSesion(String username, String password) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -208,10 +238,22 @@ public class ConectorUsuarios implements Constants {
             throw new FileNotFoundException();
         } catch (IOException ex) {
             throw new IOException();
+        } catch (Exception e){
+            throw new ConfigurationFileException();
         }
         return parametros;
     }
 
+    /**
+     * Cambia la contraseña de un usuario
+     * @param cookies cookies de la sesión
+     * @param usuario usuario a cambiar la contraseña
+     * @param contraseña nueva contraseña
+     * @return booleano indicando si la contraseña se cambió con éxito
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public boolean cambiarContraseña(List<String> cookies, String usuario, String contraseña) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -258,6 +300,13 @@ public class ConectorUsuarios implements Constants {
         return cambiado;
     }
 
+    /**
+     * Modifica un usuario
+     * @param usuario el usuario a modificar con los nuevos datos
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void modificarUsuario(Usuario usuario) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -295,6 +344,14 @@ public class ConectorUsuarios implements Constants {
 
     }
 
+    /**
+     * Recoge los datos de un usuario del servidor
+     * @param usuario Nombre dle usuario
+     * @return Los datos del usuario
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public Usuario cargarUsuario(String usuario) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -347,6 +404,14 @@ public class ConectorUsuarios implements Constants {
         return usuario;
     }
 
+    /**
+     * Envía un archivo csv al servidor
+     * @param base64 archivo codificado en base64
+     * @param csrfToken csrfToken de la sesión
+     * @param sessionId sessionId de la sesión
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void enviarArchivo(String base64, String csrfToken, String sessionId) throws FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -386,6 +451,15 @@ public class ConectorUsuarios implements Constants {
         }
     }
     
+    /**
+     * Elimina un usuario 
+     * @param cookies cookies de la sesión
+     * @param usuario nombre del usuario a eliminar
+     * @return booleano indicando si el usuario se eliminó con éxito
+     * @throws ConfigurationFileException
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public boolean eliminarUsuario(List<String> cookies, String usuario) throws ConfigurationFileException, FileNotFoundException, IOException {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;

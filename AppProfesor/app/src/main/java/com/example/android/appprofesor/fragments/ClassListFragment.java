@@ -29,6 +29,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Fragment para mostrar la vista de lista de los objetos ClaseApercibimiento
+ */
 public class ClassListFragment extends Fragment {
 
     private RecyclerView recyclerView;

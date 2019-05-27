@@ -5,7 +5,7 @@ from collections import Counter
 
 import tabula
 
-from .models import Apercibimiento, AsignaturasEspeciales
+from .models import Apercibimiento, AsignaturaEspecial
 
 literal_fecha_hasta = 'Fecha hasta: '
 literal_fecha_desde = 'Fecha desde: '
@@ -23,12 +23,20 @@ RUTA_CSV = '/var/www/output.csv'
 
 
 def pdf_to_csv(filepath):
+    """
+    Convierte un archivo pdf a un csv para luego analizarlo
+    :param filepath: ruta al archivo pdf
+    :return:
+    """
     tabula.convert_into(filepath, RUTA_CSV, pages="all", output_format="csv", guess=False, stream=True)
     leer_csv()
 
 
-
 def leer_csv():
+    """
+    Ejecuta los métodos que se encargan de analizar el pdf
+    :return:
+    """
     cabecera = get_cabecera()
     if comprobar_cabecera(cabecera):
         repetidas = contar_asignaturas()
@@ -36,6 +44,10 @@ def leer_csv():
 
 
 def get_cabecera():
+    """
+    Saca el curso académico, curso, unidad, fecha de incio y fecha fin de la cabecera del documento
+    :return: los datos de la cabecera
+    """
     anno = 'nada'
     curso = 'nada'
     unidad = 'nada'
@@ -86,6 +98,10 @@ def get_cabecera():
 
 
 def contar_asignaturas():
+    """
+    Cuenta el número de veces que se repite cada asignaturas para luego guardar las repetidas con una numeración
+    :return: el número de veces que aparece cada asignatura
+    """
     with open(RUTA_CSV, 'r', encoding='utf-8') as csvFile:
         reader = csv.reader(csvFile)
         materias = []
@@ -104,6 +120,11 @@ def contar_asignaturas():
 
 
 def comprobar_cabecera(cabecera):
+    """
+    Comprobaciones previas al análisis, el documento debe contener todos los datos de la cabecera y el periodo de fehcas debe abarcar el mismo mes
+    :param cabecera: Cabecera del documetno
+    :return: Booleano indicando si la cabecera es correcta
+    """
     if cabecera[0] == 'nada'  or cabecera[1] == 'nada'  or cabecera[2] == 'nada'  or cabecera[3] == 'nada'  or cabecera[4] == 'nada':
         return False
 
@@ -117,6 +138,14 @@ def comprobar_cabecera(cabecera):
 
 
 def get_asignaturas(cabecera, repetidas):
+    """
+    Analiza cada linea del documento buscando coincidencias con las expresiones regulares,
+    si una coincide con la de la asignatura, guarda su nombre en una variable y compureba si está repetida para modificar su nombre,
+    si coincide con la del alumno, llama al método de perisitirlo en la base de datos
+    :param cabecera: Cabecera del documento
+    :param repetidas: Número de veces que aparece cada asignatura en el documento
+    :return:
+    """
     with open(RUTA_CSV, 'r', encoding='utf-8') as csvFile:
         reader = csv.reader(csvFile)
 
@@ -140,6 +169,14 @@ def get_asignaturas(cabecera, repetidas):
 
 
 def persistir_alumno(cabecera, materia, line):
+    """
+    Analiza la linea pasada por parametros y la descompone usando las expresiones regulares. si la asignatura está en la tabla de asignaturas especiales,
+    comprueba el porcentaje correspondiente y, si lo cumple y no existe ya en la base de datos, persiste el apercibimiento en la base de datos
+    :param cabecera: cabeceara del documento
+    :param materia: materia del alumno
+    :param line: Linea que contiene el nombre del alumno, las horas y porcentaje justificado e injustificado y los retrasos
+    :return:
+    """
     nombre = re.findall(expresion_nombre_alumno, line)
     horas = re.findall(expresion_horas_asignatura, line)
     porcentaje = re.findall(expresion_porcentaje_asignatura, line)
@@ -152,7 +189,7 @@ def persistir_alumno(cabecera, materia, line):
 
     apercibimiento = None
 
-    existe = AsignaturasEspeciales.objects.filter(materia=materia[:-1]).exists()
+    existe = AsignaturaEspecial.objects.filter(materia=materia[:-1]).exists()
 
     if (existe and float(porcentaje_injust_float) >= 50) or (not existe and float(porcentaje_injust_float) >= 25):
         apercibimiento = Apercibimiento(alumno=nombre[0][:-1], periodo_academico=cabecera[0],
@@ -169,6 +206,11 @@ def persistir_alumno(cabecera, materia, line):
 
 
 def comprobar_repetido(nuevo_apercibimiento):
+    """
+    Comprueba si el apercibimiento ya existe en la base de datos
+    :param nuevo_apercibimiento: apercibimiento a introducir
+    :return:
+    """
     repetido = False
     apercibimientos = Apercibimiento.objects.all()
 

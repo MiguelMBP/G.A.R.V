@@ -8,13 +8,11 @@ package Interfaz;
 import Cliente.ConectorVisitas;
 import Util.ConfigurationFileException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import vo.Empresa;
 
 /**
- *
+ * Diálogo para modificar una empresa del módulo de visitas
  * @author miguelmbp
  */
 public class ModificarEmpresa extends javax.swing.JDialog {

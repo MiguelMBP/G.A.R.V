@@ -10,6 +10,9 @@ import com.example.android.appprofesor.fragments.VisitDetailFragment;
 import com.example.android.appprofesor.models.Alumno;
 import com.example.android.appprofesor.models.TutorAlumno;
 
+/**
+ * Muestra el fragment VisitDetailFragment con el alumno pasado por intent
+ */
 public class VisitDetailActivity extends AppCompatActivity {
 
     @Override

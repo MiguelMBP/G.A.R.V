@@ -21,8 +21,18 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Realiza las peticiones del cliente al servidor multihilos para el módulo de visitas
+ */
 public class VisitConnector implements Constants {
-    
+
+    /**
+     * Recoge las visitas realizadas por el usuario del servidor
+     * @param context
+     * @param settings
+     * @return
+     */
     public static List<Alumno> getAlumnos(Context context, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -68,6 +78,11 @@ public class VisitConnector implements Constants {
 
     }
 
+    /**
+     * Recoge los alumnos del servidor
+     * @param settings
+     * @return
+     */
     public static List<Alumno> getTodosAlumnos(Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -109,6 +124,11 @@ public class VisitConnector implements Constants {
 
     }
 
+    /**
+     * Recoge las empresas del servidor
+     * @param settings
+     * @return
+     */
     public static List<Empresa> getEmpresas(Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -164,6 +184,12 @@ public class VisitConnector implements Constants {
         return alumnos;
     }
 
+    /**
+     * Añade una empresa
+     * @param empresa
+     * @param settings
+     * @return
+     */
     public static int addEmpresa(Empresa empresa, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -200,6 +226,12 @@ public class VisitConnector implements Constants {
         return id;
     }
 
+    /**
+     * Añade un aluumno
+     * @param alumno
+     * @param settings
+     * @return
+     */
     public static int addAlumno(Alumno alumno, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
@@ -236,6 +268,12 @@ public class VisitConnector implements Constants {
         return id;
     }
 
+    /**
+     * Registra una visita
+     * @param visita
+     * @param settings
+     * @return
+     */
     public static int addVisita(RegistroVisita visita, Settings settings) {
         Socket socketCliente = null;
         ObjectInputStream entrada = null;

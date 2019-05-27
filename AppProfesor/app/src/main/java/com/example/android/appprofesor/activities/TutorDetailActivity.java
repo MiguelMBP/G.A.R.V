@@ -11,6 +11,9 @@ import com.example.android.appprofesor.fragments.TutorDetailFragment;
 import com.example.android.appprofesor.models.ClaseApercibimiento;
 import com.example.android.appprofesor.models.TutorAlumno;
 
+/**
+ * Muestra el fragment TutorDetailFragment con el alumno pasado por intent
+ */
 public class TutorDetailActivity extends AppCompatActivity {
 
     @Override

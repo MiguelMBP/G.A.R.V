@@ -5,7 +5,6 @@
  */
 package Interfaz;
 
-import Cliente.ConectorApercibimientos;
 import Cliente.ConectorUsuarios;
 import Util.ConfigurationFileException;
 import java.io.File;
@@ -19,11 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FilenameUtils;
 import vo.Usuario;
 
 /**
- *
+ * Interfaz principal del módulo de usuarios
  * @author miguelmbp
  */
 public class Usuarios extends javax.swing.JFrame {

@@ -26,6 +26,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Fragment para mostrar la vista detallada de un objeto Alumno
+ */
 public class VisitDetailFragment extends Fragment {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
@@ -73,6 +76,10 @@ public class VisitDetailFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Actualiza la interfaz con los datos del objeto
+     * @param alumno
+     */
     public void renderStudent(Alumno alumno) {
         this.alumno = alumno;
         this.alumnoView.setText(alumno.getNombre() + " " + alumno.getApellidos());

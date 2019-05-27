@@ -10,12 +10,8 @@ import android.widget.Toast;
 
 import com.example.android.appprofesor.R;
 import com.example.android.appprofesor.adapters.TutorAdapter;
-import com.example.android.appprofesor.models.ClaseApercibimiento;
 import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.models.TutorAlumno;
-import com.example.android.appprofesor.utils.Utils;
-import com.example.android.appprofesor.viewmodels.ClaseViewModel;
-import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 import com.example.android.appprofesor.viewmodels.TutorAlumnoViewModel;
 
 import java.util.ArrayList;
@@ -29,6 +25,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Fragment para mostrar la vista de lista para los objetos TutorAlumno
+ */
 public class TutorListFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;

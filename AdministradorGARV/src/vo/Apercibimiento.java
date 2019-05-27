@@ -3,7 +3,11 @@ package vo;
 import java.util.Date;
 
 
-
+/**
+ * Objeto que representa un apercibimiento
+ * @author mmbernal
+ *
+ */
 public class Apercibimiento {
 	private int id;
 	private String alumno;

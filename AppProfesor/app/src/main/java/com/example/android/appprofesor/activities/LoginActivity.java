@@ -11,26 +11,24 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.android.appprofesor.Connectors.LoginConnector;
+import com.example.android.appprofesor.Connectors.UserConnector;
 import com.example.android.appprofesor.R;
-import com.example.android.appprofesor.data.SettingsDAO;
 import com.example.android.appprofesor.models.Settings;
 import com.example.android.appprofesor.viewmodels.SettingsViewModel;
 
 import java.util.List;
 
-
+/**
+ * Clase que maneja el inicio de sesión
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailText;
@@ -190,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            LoginConnector login = new LoginConnector();
+            UserConnector login = new UserConnector();
             List<String> userData = login.iniciarSesion(strings[0], strings[1], settings.get(0));
 
 

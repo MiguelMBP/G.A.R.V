@@ -5,7 +5,6 @@
  */
 package Interfaz;
 
-import Cliente.ConectorApercibimientos;
 import Cliente.ConectorVisitas;
 import Util.ConfigurationFileException;
 import java.awt.Desktop;
@@ -13,7 +12,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,7 +29,7 @@ import org.apache.commons.codec.binary.Base64;
 import vo.Visita;
 
 /**
- *
+ * Interfaz principal del módulo de visitas
  * @author miguelmbp
  */
 public class Visitas extends javax.swing.JFrame {

@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Objeto que representa una asignatura con sus alumnos
+ * @author mmbernal
+ *
+ */
 public class ClaseApercibimiento implements Serializable {
 
     private String materia;

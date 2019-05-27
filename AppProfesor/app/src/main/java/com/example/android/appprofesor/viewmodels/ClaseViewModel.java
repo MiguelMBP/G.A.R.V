@@ -24,6 +24,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+/**
+ * Consulta y almacena la información referente a los objetos ClaseApercibimiento
+ */
 public class ClaseViewModel extends AndroidViewModel {
     private static MutableLiveData<List<ClaseApercibimiento>> clases;
     private Application application;
@@ -33,6 +36,11 @@ public class ClaseViewModel extends AndroidViewModel {
         this.application = application;
     }
 
+    /**
+     * Ejecuta la clase asincrona ConectarServidor para consultar al servidor
+     * @param settings
+     * @return
+     */
     public LiveData<List<ClaseApercibimiento>> getClases(Settings settings) {
 
         if (clases==null){
@@ -42,6 +50,9 @@ public class ClaseViewModel extends AndroidViewModel {
         return clases;
     }
 
+    /**
+     * Consulta los datos al servidor
+     */
     private class ConectarServidor extends AsyncTask<Void, Void, List<ClaseApercibimiento>> {
 
         Settings settings;
