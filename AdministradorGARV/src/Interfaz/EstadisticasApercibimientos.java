@@ -169,6 +169,8 @@ public class EstadisticasApercibimientos extends javax.swing.JDialog {
 
         if (posAño == -1 || posInicio == -1 || posFin == -1) {
 
+        } else if (parametros[0] == null || parametros[1] == null) {
+            JOptionPane.showMessageDialog(this, "Archivo de configuración incompleto");
         } else {
             try {
                 String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/informe/estadisticasApercibimiento/";
@@ -365,9 +367,9 @@ public class EstadisticasApercibimientos extends javax.swing.JDialog {
 
             while ((line = br.readLine()) != null) {
                 String[] parametro = line.split(":");
-                if (parametro[0].equalsIgnoreCase("django_address")) {
+                if (parametro.length == 2 && parametro[0].equalsIgnoreCase("django_address")) {
                     parametros[0] = parametro[1];
-                } else if (parametro[0].equalsIgnoreCase("django_port")) {
+                } else if (parametro.length == 2 && parametro[0].equalsIgnoreCase("django_port")) {
                     parametros[1] = parametro[1];
                 }
             }

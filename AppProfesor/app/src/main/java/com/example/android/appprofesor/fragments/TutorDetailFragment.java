@@ -25,13 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
  * Fragment para mostrar la vista detallada de un objeto TutorAlumno
  */
 public class TutorDetailFragment extends Fragment {
-    TextView curso;
-    TextView nombre;
+    private TextView curso;
+    private TextView nombre;
 
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    WarningAdapter adapter;
-    List<TutorAsignatura> asignaturas = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private WarningAdapter adapter;
+    private List<TutorAsignatura> asignaturas = new ArrayList<>();
 
     public TutorDetailFragment() {
     }

@@ -83,7 +83,7 @@ public class ApercibimientoDAO {
 
                 sql = "select alumno, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento "
                         + "where materia like '" + m.getMateria() + "' and unidad like '" + m.getUnidad()
-                        + "' group by alumno";
+                        + "' and activo = True group by alumno";
                 rsAlumnos = st.executeQuery(sql);
 
                 while (rsAlumnos.next()) {
@@ -181,7 +181,7 @@ public class ApercibimientoDAO {
                 t.setCurso(rs.getString(2));
 
                 sql = "select materia, GROUP_CONCAT(month(fecha_inicio)) meses from apercibimientos_apercibimiento where alumno like ? and unidad like (select P.cursoTutor from visitas_profesor P, auth_user U "
-                        + "where U.username = ? and P.usuario_id = U.id) group by materia";
+                        + "where U.username = ? and P.usuario_id = U.id) and activo = true group by materia";
                 st = conex.getConnection().prepareStatement(sql);
                 st.setString(1, t.getNombre());
                 st.setString(2, username);
@@ -281,7 +281,7 @@ public class ApercibimientoDAO {
      */
     public List<String> getAnnoAcademico() {
         DBConnection db = new DBConnection();
-        String sql = "SELECT distinct(periodo_academico) FROM GARV.apercibimientos_apercibimiento order by periodo_academico";
+        String sql = "SELECT distinct(periodo_academico) FROM apercibimientos_apercibimiento order by periodo_academico";
         List<String> lista = new ArrayList<>();
         try (Statement st = db.getConnection().createStatement(); ResultSet rs = st.executeQuery(sql);) {
 
@@ -308,7 +308,7 @@ public class ApercibimientoDAO {
      */
     public List<String> getMeses(String anno) {
         DBConnection db = new DBConnection();
-        String sql = "SELECT distinct(month(fecha_inicio)) FROM GARV.apercibimientos_apercibimiento where periodo_academico = ?";
+        String sql = "SELECT distinct(month(fecha_inicio)) FROM apercibimientos_apercibimiento where periodo_academico = ?";
         List<String> lista = new ArrayList<>();
         try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
             st.setInt(1, Integer.parseInt(anno));
@@ -336,7 +336,7 @@ public class ApercibimientoDAO {
      */
     public List<String> getCursos(String anno, String mes) {
         DBConnection db = new DBConnection();
-        String sql = "SELECT distinct(unidad) FROM GARV.apercibimientos_apercibimiento where periodo_academico = ? and month(fecha_inicio) = ? order by unidad";
+        String sql = "SELECT distinct(unidad) FROM apercibimientos_apercibimiento where periodo_academico = ? and month(fecha_inicio) = ? order by unidad";
         List<String> lista = new ArrayList<>();
         try (PreparedStatement st = db.getConnection().prepareStatement(sql);) {
             st.setInt(1, Integer.parseInt(anno));

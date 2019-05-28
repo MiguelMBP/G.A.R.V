@@ -5,93 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/config.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorApercibimientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorApercibimientos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorUsuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorUsuarios.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorVisitas.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Cliente/ConectorVisitas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Alumnos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Alumnos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Apercibimientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Apercibimientos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/AsignaturasEspeciales.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/AsignaturasEspeciales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/AñadirAlumno.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/AñadirAlumno.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/AñadirEmpresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/AñadirEmpresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/CambiarContraseña.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/CambiarContraseña.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/CrearUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/CrearUsuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/EditarUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/EditarUsuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Empresas.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Empresas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/EstadisticasApercibimientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/EstadisticasApercibimientos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/InformesApercibimientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/InformesApercibimientos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Inicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Inicio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/ModificarAlumno.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/ModificarAlumno.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/ModificarApercibimiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/ModificarApercibimiento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/ModificarEmpresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/ModificarEmpresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Usuarios.form" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Usuarios.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Usuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Usuarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Visitas.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Interfaz/Visitas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Util/ConfigurationFileException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/Util/ConfigurationFileException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/Util/Constants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Alumno.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Alumno.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Apercibimiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Apercibimiento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Empresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Visita.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AdministradorGARV/src/vo/Visita.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/LoginConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/UserConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/VisitConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/VisitConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/WarningConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/Connectors/WarningConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/ClassDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/ClassDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/MapsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/MapsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/RealizarVisitaActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/RealizarVisitaActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/SelectMapActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/SelectMapActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/TutorDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/TutorDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/VisitDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/activities/VisitDetailActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/ClassAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/ClassAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/ClassStudentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/ClassStudentAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/TutorAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/TutorAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/VisitAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/VisitAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/WarningAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/adapters/WarningAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/data/DataBaseRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/data/DataBaseRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/data/SettingsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/data/SettingsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/ChangePassFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/ChangePassFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/ClassDetailFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/ClassDetailFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/ClassListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/ClassListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/InitialFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/InitialFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/TutorDetailFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/TutorDetailFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/TutorListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/TutorListFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/VisitDetailFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/VisitDetailFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/VisitListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/fragments/VisitListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Alumno.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Alumno.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/AlumnoApercibimiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/AlumnoApercibimiento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/ClaseApercibimiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/ClaseApercibimiento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Empresa.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Empresa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/RegistroVisita.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/RegistroVisita.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/TutorAlumno.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/TutorAlumno.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/TutorAsignatura.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/models/TutorAsignatura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/utils/Utils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/ClaseViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/ClaseViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/EmpresaViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/EmpresaViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/SettingsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/SettingsViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/TutorAlumnoViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/TutorAlumnoViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/VisitaTodosViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/VisitaTodosViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/VisitaViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/java/com/example/android/appprofesor/viewmodels/VisitaViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AppProfesor/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ServidorDjango.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ServidorDjango.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/GARV/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/GARV/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/extraer_zip.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/extraer_zip.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/tasks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/usuarios/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/usuarios/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/usuarios/usuarios_csv.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/usuarios_csv.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/usuarios/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/visitas/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/visitas/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/mysql.cnf" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/mysql.cnf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/visitas/templates/visitas.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/visitas/templates/visitas.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GARV/visitas/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/visitas/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/connection/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/connection/DBConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/connection/DjangoConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/connection/DjangoConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/dao/ApercibimientoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/dao/ApercibimientoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ServidorMultihilo/src/servidor/Servidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../instalacion/GARV.conf" beforeDir="false" afterPath="$PROJECT_DIR$/../instalacion/GARV.conf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -101,26 +40,84 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/progreso.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="53" column="93" selection-start-line="53" selection-start-column="93" selection-end-line="53" selection-end-column="93" />
+              <folding>
+                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
+        <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="308" column="23" selection-start-line="308" selection-start-column="23" selection-end-line="308" selection-end-column="23" />
+              <caret line="97" column="32" lean-forward="true" selection-start-line="97" selection-start-column="32" selection-end-line="97" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#2550#3109#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="296" column="10" selection-start-line="296" selection-start-column="10" selection-end-line="296" selection-end-column="10" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#475#826#0" />
-                <element signature="e#994#1579#0" />
-                <element signature="e#1757#2824#0" />
-                <element signature="e#3057#3363#0" />
-                <element signature="e#3513#3620#0" />
-                <element signature="e#3783#4990#0" />
-                <element signature="e#5173#6246#0" />
-                <element signature="e#6422#7311#0" />
-                <element signature="e#7465#8289#0" />
-                <element signature="e#8441#8536#0" />
-                <element signature="e#8693#9405#0" />
-                <element signature="e#9572#10615#0" />
-                <element signature="e#10793#11025#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/visitas.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
+              <folding>
+                <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/static/js/visitas.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="34" column="27" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/tasks.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="663">
+              <caret line="59" selection-start-line="59" selection-end-line="59" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -151,12 +148,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/asignaturasEspeciales.html" />
         <option value="$PROJECT_DIR$/GARV/static/js/asignaturas.js" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/ApercibimientosPorUnidad.html" />
         <option value="$PROJECT_DIR$/GARV/static/js/filtro.js" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/visitas.html" />
-        <option value="$PROJECT_DIR$/GARV/static/js/visitas.js" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/imagenVisita.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/usuarios.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/editarUsuarios.html" />
@@ -194,14 +189,16 @@
         <option value="$PROJECT_DIR$/GARV/apercibimientos/analisis_pdf.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/tasks.py" />
-        <option value="$PROJECT_DIR$/GARV/apercibimientos/views.py" />
         <option value="$PROJECT_DIR$/GARV/GARV/views.py" />
         <option value="$PROJECT_DIR$/GARV/usuarios/forms.py" />
         <option value="$PROJECT_DIR$/GARV/usuarios/models.py" />
         <option value="$PROJECT_DIR$/GARV/usuarios/usuarios_csv.py" />
         <option value="$PROJECT_DIR$/GARV/visitas/models.py" />
         <option value="$PROJECT_DIR$/GARV/usuarios/views.py" />
+        <option value="$PROJECT_DIR$/GARV/static/js/visitas.js" />
         <option value="$PROJECT_DIR$/GARV/visitas/views.py" />
+        <option value="$PROJECT_DIR$/GARV/visitas/templates/visitas.html" />
+        <option value="$PROJECT_DIR$/GARV/apercibimientos/views.py" />
       </list>
     </option>
   </component>
@@ -227,7 +224,18 @@
             <path>
               <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
               <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="usuarios" type="462c0819:PsiDirectoryNode" />
+              <item name="apercibimientos" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GARV" type="462c0819:PsiDirectoryNode" />
+              <item name="apercibimientos" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GARV" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
@@ -256,17 +264,17 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/GARV/usuarios/templates" />
+      <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\static\js" />
+      <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/GARV/usuarios" />
       <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\visitas\templates" />
       <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\usuarios\templates" />
       <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\usuarios" />
       <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\GARV\templates" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/GARV/usuarios/templates" />
-      <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\static\js" />
-      <recent name="C:\Users\mmbernal\Documents\G.A.R.V\ServidorDjango\GARV\templates" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -296,9 +304,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18282403" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18282403" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -309,7 +316,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32937366" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49980292" visible="true" weight="0.1744312" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49980292" visible="true" weight="0.1744312" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5001971" side_tool="true" weight="0.23229246" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32902467" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -411,13 +418,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/static/js/visitas.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="20" column="129" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="129" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -460,20 +460,6 @@
         <state relative-caret-position="210">
           <caret line="14" column="64" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="64" />
           <folding>
-            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/visitas.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="13" selection-start-line="25" selection-start-column="4" selection-end-line="27" selection-end-column="13" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
           </folding>
         </state>
@@ -568,16 +554,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/progreso.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" column="93" selection-start-line="53" selection-start-column="93" selection-end-line="53" selection-end-column="93" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/admin.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -627,36 +603,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1292">
-          <caret line="514" column="63" selection-start-line="514" selection-start-column="63" selection-end-line="514" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#919#1956#0" />
-            <element signature="e#3190#3762#0" />
-            <element signature="e#3993#4171#0" />
-            <element signature="e#4358#4538#0" />
-            <element signature="e#4702#4898#0" />
-            <element signature="e#5072#5198#0" />
-            <element signature="e#5365#5560#0" />
-            <element signature="e#5746#6085#0" />
-            <element signature="e#6286#6695#0" />
-            <element signature="e#6882#7188#0" />
-            <element signature="e#7351#7705#0" />
-            <element signature="e#7826#8182#0" />
-            <element signature="e#8366#8946#0" />
-            <element signature="e#9145#9509#0" />
-            <element signature="e#9653#9963#0" />
-            <element signature="e#10145#10966#0" />
-            <element signature="e#11171#13091#0" />
-            <element signature="e#13520#16355#0" />
-            <element signature="e#16404#19275#0" />
-            <element signature="e#19389#20522#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/ResumenApercibimientosMateria.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-510" />
@@ -665,13 +611,6 @@
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/informeNumeroApercibimiento.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-357" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/extraer_zip.py">
@@ -690,16 +629,6 @@
           <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -767,25 +696,71 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/static/js/visitas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="34" column="27" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/visitas.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
+          <folding>
+            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="308" column="23" selection-start-line="308" selection-start-column="23" selection-end-line="308" selection-end-column="23" />
+        <state relative-caret-position="527">
+          <caret line="296" column="10" selection-start-line="296" selection-start-column="10" selection-end-line="296" selection-end-column="10" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#475#826#0" />
-            <element signature="e#994#1579#0" />
-            <element signature="e#1757#2824#0" />
-            <element signature="e#3057#3363#0" />
-            <element signature="e#3513#3620#0" />
-            <element signature="e#3783#4990#0" />
-            <element signature="e#5173#6246#0" />
-            <element signature="e#6422#7311#0" />
-            <element signature="e#7465#8289#0" />
-            <element signature="e#8441#8536#0" />
-            <element signature="e#8693#9405#0" />
-            <element signature="e#9572#10615#0" />
-            <element signature="e#10793#11025#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/progreso.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="53" column="93" selection-start-line="53" selection-start-column="93" selection-end-line="53" selection-end-column="93" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="97" column="32" lean-forward="true" selection-start-line="97" selection-start-column="32" selection-end-line="97" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#2550#3109#0" />
           </folding>
         </state>
       </provider>

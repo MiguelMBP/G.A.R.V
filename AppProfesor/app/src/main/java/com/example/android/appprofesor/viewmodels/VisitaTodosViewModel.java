@@ -153,10 +153,10 @@ public class VisitaTodosViewModel extends AndroidViewModel {
         @Override
         protected void onPostExecute(Integer updatedRows) {
             if (updatedRows == -1) {
-                Toast.makeText(getApplication(), "Error añadiendo Alumno", Toast.LENGTH_SHORT)
+                Toast.makeText(getApplication(), "Error registrando visita", Toast.LENGTH_SHORT)
                         .show();
             } else {
-                Toast.makeText(getApplication(), "Alumno añadido", Toast.LENGTH_SHORT)
+                Toast.makeText(getApplication(), "Visita Registrada", Toast.LENGTH_SHORT)
                         .show();
             }
         }

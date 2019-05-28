@@ -17,7 +17,6 @@ from django.urls import reverse
 from django.utils.timezone import now
 from weasyprint import HTML
 
-from .analisis_pdf import pdf_to_csv
 from .extraer_zip import extractZip
 from .forms import DocumentForm
 from .models import Document, Apercibimiento, AsignaturaEspecial
@@ -102,11 +101,14 @@ def subir_pdf_post(request):
             archivo.save()
 
             if archivo.docfile.path.endswith('.pdf'):
-                pdf_to_csv(archivo.docfile.path)
+                job = iterar_pdf.delay(os.path.dirname(archivo.docfile.path))
+                return HttpResponse('success ' + job)
             elif archivo.docfile.path.endswith('.zip'):
-                extractZip(archivo.docfile.path)
+                ruta = extractZip(archivo.docfile.path)
+                job = iterar_pdf.delay(ruta)
+                return HttpResponse('success ' + job)
 
-    return HttpResponse('success')
+    return HttpResponse('failure')
 
 
 @login_required

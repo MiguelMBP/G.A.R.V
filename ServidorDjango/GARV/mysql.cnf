@@ -1,6 +1,16 @@
 [client]
+
+# Nombre de la base de datos, por defecto GARV si se ha usado el script
 database = GARV
+
+# Dirección IP de la base de datos
 host = localhost
+
+# Nombre de usuario con permisos de la base de datos (no root)
 user = miguelmbp
+
+# Contraseña del usuario
 password = pass
+
+# Codificación, no se recomienda modificar
 default-character-set = utf8

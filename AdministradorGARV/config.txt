@@ -1,4 +1,11 @@
+# Dirección IP del servidor multihilos
 address:localhost
+
+# Puerto del servidor multihilos, definido en su propio archivo de configuración
 port:4444
+
+# Dirección IP del servir Django
 django_address:localhost
+
+# Puerto del servidor Django, por defecto el 80 excepto si es https (443)
 django_port:80

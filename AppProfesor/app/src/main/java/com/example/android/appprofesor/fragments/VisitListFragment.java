@@ -36,13 +36,13 @@ import androidx.recyclerview.widget.RecyclerView;
  * Fragment para mostrar la vista de lista para los objetos Alumno
  */
 public class VisitListFragment extends Fragment {
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    VisitAdapter adapter;
-    List<Alumno> alumnos = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private VisitAdapter adapter;
+    private List<Alumno> alumnos = new ArrayList<>();
 
-    OnStudentSelected callback;
-    VisitaViewModel model;
+    private OnStudentSelected callback;
+    private  VisitaViewModel model;
     private List<String> myData;
 
 

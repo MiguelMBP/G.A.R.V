@@ -42,7 +42,22 @@
     </thead>
 
     <tbody>
-
+    {% for visita in visitas %}
+        <tr>
+            <td>{{ visita.profesor.usuario.first_name }} {{ visita.profesor.usuario.last_name }}</td>
+            <td>{{ visita.alumno.nombre }} {{ visita.alumno.apellidos }}</td>
+            <td>{{ visita.alumno.empresa.nombre }}</td>
+            <td>{{ visita.fecha }}</td>
+            <td><a href='/visitas/verImagen?id={{ visita.id }}'>Imagen</a> </td>
+            {% if visita.validada %}
+                <td>Validada</td>
+                <td><input type='checkbox' onclick='inValidar(this)'  checked id='chk_{{ visita.id }}'/> </td>
+            {% else %}
+                <td>Invalidada</td>
+                <td><input type='checkbox' onclick='inValidar(this)'  id='chkd_{{ visita.id }}'/> </td>
+            {% endif  %}
+        </tr>
+    {% endfor %}
     </tbody>
 </table>
 

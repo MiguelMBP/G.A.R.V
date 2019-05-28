@@ -239,8 +239,10 @@ public class InformesApercibimientos extends javax.swing.JDialog {
         String[] parametros = leerConfiguración();
 
         if (posTipo == -1 || posAño == -1 || posMes == -1 || posCurso == -1) {
-
-        } else {
+            
+        } else if (parametros[0] == null || parametros[1] == null) {
+            JOptionPane.showMessageDialog(this, "Archivo de configuración incompleto");
+        }else {
             try {
                 String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/informe/";
                 String año = jComboBoxAño.getItemAt(posAño);
@@ -470,9 +472,9 @@ public class InformesApercibimientos extends javax.swing.JDialog {
 
             while ((line = br.readLine()) != null) {
                 String[] parametro = line.split(":");
-                if (parametro[0].equalsIgnoreCase("django_address")) {
+                if (parametro.length == 2 && parametro[0].equalsIgnoreCase("django_address")) {
                     parametros[0] = parametro[1];
-                } else if (parametro[0].equalsIgnoreCase("django_port")) {
+                } else if (parametro.length == 2 && parametro[0].equalsIgnoreCase("django_port")) {
                     parametros[1] = parametro[1];
                 }
             }

@@ -15,7 +15,7 @@ from .models import Profesor, Visita, Empresa, Alumno
 @staff_member_required
 def sendimage(request):
     """
-    Envía una la imagen en base64 de la visita recibida por POST
+    Envía la imagen en base64 de la visita recibida por POST
     :param request:
     :return:
     """
@@ -81,7 +81,7 @@ def resumenVisitas(request):
                 distancia = empresa[0].distancia
                 distanciaTotal += float(distancia)
             importe = distanciaTotal * float(valor)
-            writer.writerow([profesorObj[0].usuario.first_name + ' ' + profesorObj[0].usuario.last_name, distanciaTotal, importe])
+            writer.writerow([profesorObj[0].usuario.first_name + ' ' + profesorObj[0].usuario.last_name, round(distanciaTotal, 2), round(importe, 2)])
 
         return response
 
@@ -98,7 +98,11 @@ def visitas(request):
     profesores = []
     for visita in visitas:
         profesores.append(Profesor.objects.get(id=visita['profesor']))
-    lista = list(Visita.objects.all())
+    lista = Visita.objects.all().order_by('profesor', 'fecha')
+
+    for visita in lista:
+        fecha = str(datetime.strptime(str(visita.fecha), "%Y-%M-%d").strftime('%d-%m-%Y'))
+        visita.fecha = fecha
     return render(request, 'visitas.html', {'profesores': profesores, 'visitas': lista})
 
 
@@ -283,13 +287,17 @@ def actualizarVisita(request):
     :param request:
     :return:
     """
-    if request.GET and request.is_ajax() and 'profesor' in request.GET and 'visita' in request.GET:
+    if request.GET and request.is_ajax() and 'visita' in request.GET:
         id = request.GET['visita']
         visita = Visita.objects.filter(id=id).first()
         visita.validada = not visita.validada
         visita.save()
         profesor = request.GET['profesor']
-        visitas = Visita.objects.filter(profesor_id=profesor)
+        print(profesor)
+        if profesor.isdigit():
+            visitas = Visita.objects.filter(profesor_id=profesor)
+        else:
+            visitas = Visita.objects.all()
         respuesta = []
         for visita in visitas:
             fecha = datetime.strptime(str(visita.fecha), "%Y-%M-%d").strftime('%d-%m-%Y')

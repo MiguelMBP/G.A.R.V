@@ -72,29 +72,29 @@ public class RealizarVisitaActivity extends AppCompatActivity {
     private AlertDialog dialogAlumno;
     private AlertDialog dialogEmpresa;
 
-    VisitaTodosViewModel model;
+    private VisitaTodosViewModel model;
 
-    List<Alumno> alumnos;
-    Alumno alumnoSeleccionado;
-    EmpresaViewModel empresaModel;
-    List<Empresa> empresas;
-    Empresa empresasSeleccionada;
+    private List<Alumno> alumnos;
+    private Alumno alumnoSeleccionado;
+    private EmpresaViewModel empresaModel;
+    private List<Empresa> empresas;
+    private Empresa empresasSeleccionada;
 
-    Button confirmarVisita;
-    Button verEnMapa;
-    Button añadirAlumno;
-    Spinner spinnerAlumnos;
-    TextView empresaTextView;
-    TextView localizacionTextView;
-    TextView coordenadasTextView;
-    TextView distanciaTextView;
-    EditText fechaVisita;
+    private Button confirmarVisita;
+    private Button verEnMapa;
+    private Button añadirAlumno;
+    private Spinner spinnerAlumnos;
+    private TextView empresaTextView;
+    private TextView localizacionTextView;
+    private TextView coordenadasTextView;
+    private TextView distanciaTextView;
+    private EditText fechaVisita;
 
-    int mYear;
-    int mMonth;
-    int mDay;
-    Uri image;
-    String currentPhotoPath;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private Uri image;
+    private String currentPhotoPath;
 
 
     @Override

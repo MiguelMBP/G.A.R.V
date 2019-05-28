@@ -24,11 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
  * Fragment para mostrar la vista detallada de un objeto ClaseApercibimiento
  */
 public class ClassDetailFragment extends Fragment {
-    TextView clase;
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    ClassStudentAdapter adapter;
-    List<AlumnoApercibimiento> alumnos = new ArrayList<>();
+    private TextView clase;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private ClassStudentAdapter adapter;
+    private List<AlumnoApercibimiento> alumnos = new ArrayList<>();
 
 
     public ClassDetailFragment() {

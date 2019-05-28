@@ -62,11 +62,11 @@ import java.util.Locale;
 public class SelectMapActivity extends FragmentActivity implements OnMapReadyCallback, Constants {
 
     private GoogleMap mMap;
-    AutocompleteFragment autocompleteFragment;
+    private AutocompleteFragment autocompleteFragment;
     private AlertDialog.Builder builder;
     private AlertDialog dialogEmpresa;
-    EmpresaViewModel empresaModel;
-    String parsedDistance;
+    private EmpresaViewModel empresaModel;
+    private String parsedDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -228,9 +228,9 @@ public class ConectorUsuarios {
 
             while ((line = br.readLine()) != null) {
                 String[] parametro = line.split(":");
-                if (parametro[0].equalsIgnoreCase("address")) {
+                if (parametro.length == 2 && parametro[0].equalsIgnoreCase("address")) {
                     parametros[0] = parametro[1];
-                } else if (parametro[0].equalsIgnoreCase("port")) {
+                } else if (parametro.length == 2 && parametro[0].equalsIgnoreCase("port")) {
                     parametros[1] = parametro[1];
                 }
             }

@@ -29,13 +29,13 @@ import androidx.recyclerview.widget.RecyclerView;
  * Fragment para mostrar la vista de lista para los objetos TutorAlumno
  */
 public class TutorListFragment extends Fragment {
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    TutorAdapter adapter;
-    List<TutorAlumno> alumnos = new ArrayList<>();
-    TutorAlumnoViewModel model;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private TutorAdapter adapter;
+    private List<TutorAlumno> alumnos = new ArrayList<>();
+    private TutorAlumnoViewModel model;
 
-    OnStudentSelected callback;
+    private OnStudentSelected callback;
 
     public TutorListFragment() {
     }

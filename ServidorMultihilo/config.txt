@@ -1,7 +1,20 @@
+# Servidor sobre el que correrá este servidor
 this_server_port:4444
+
+# Dirección IP del servidor Django
 django_address:localhost
+
+# Puerto del servidor Django, por defecto el 80 excepto si es https (443)
 django_port:8000
+
+# Nombre de la base de datos, dejar igual si se ha instalado por script
 db_name:GARV
+
+# Nombre de usuario con permisos en la base de datos (no root)
 db_user:miguelmbp
+
+# Contraseña del usuario
 db_password:pass
+
+# Dirección IP de la base de datos
 db_address:localhost

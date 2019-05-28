@@ -33,14 +33,14 @@ public class VisitDetailFragment extends Fragment {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
-    Alumno alumno;
+    private Alumno alumno;
 
-    TextView alumnoView;
-    TextView empresa;
-    TextView localizacion;
-    TextView coordenadas;
-    TextView distancia;
-    Button verEnMapa;
+    private TextView alumnoView;
+    private TextView empresa;
+    private TextView localizacion;
+    private TextView coordenadas;
+    private TextView distancia;
+    private Button verEnMapa;
 
     public VisitDetailFragment() {
     }
