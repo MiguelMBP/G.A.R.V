@@ -50,7 +50,7 @@ class AsignaturaEspecial(models.Model):
     materia = models.CharField(max_length=200)
 
     def __eq__(self, other):
-        if not isinstance(other, AsignaturasEspeciales):
+        if not isinstance(other, AsignaturaEspecial):
             # don't attempt to compare against unrelated types
             return False
 

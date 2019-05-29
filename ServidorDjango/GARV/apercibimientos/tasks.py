@@ -30,7 +30,7 @@ def leer_pdf(ruta):
     :return: Estado completado de la tarea
     """
     current_task.update_state(state='PROGRESS',
-                              meta={'current': 1, 'total': 1, 'percent': 1000})
+                              meta={'current': 1, 'total': 1, 'percent': 100})
     pdf_to_csv(ruta)
     return 'completado'
 
