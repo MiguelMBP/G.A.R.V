@@ -21,6 +21,19 @@ def iterar_pdf(ruta):
     return 'completado'
 
 
+@shared_task
+def leer_pdf(ruta):
+    """
+    Método asincrono ejecutado por celery
+    Lee un solo archivo pdf
+    :param ruta: ruta al directorio
+    :return: Estado completado de la tarea
+    """
+    current_task.update_state(state='PROGRESS',
+                              meta={'current': 1, 'total': 1, 'percent': 1000})
+    pdf_to_csv(ruta)
+    return 'completado'
+
 def contar_pdf(ruta):
     """
     Cuenta el número de archivos pdf en el directorio

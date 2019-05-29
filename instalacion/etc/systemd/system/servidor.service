@@ -3,7 +3,7 @@ Description=Manage Java service
 
 [Service]
 WorkingDirectory=/opt/GARV/Servidor
-ExecStart=/bin/java -Xms128m -Xmx256m -jar servidor.jar
+ExecStart=/opt/GARV/Servidor/servidor.sh
 User=jvmapps
 Type=simple
 Restart=on-failure
@@ -11,4 +11,3 @@ RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
-#https://computingforgeeks.com/how-to-run-java-jar-application-with-systemd-on-linux/

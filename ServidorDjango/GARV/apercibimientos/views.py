@@ -20,7 +20,7 @@ from weasyprint import HTML
 from .extraer_zip import extractZip
 from .forms import DocumentForm
 from .models import Document, Apercibimiento, AsignaturaEspecial
-from .tasks import iterar_pdf
+from .tasks import iterar_pdf, leer_pdf
 
 
 @login_required
@@ -52,7 +52,7 @@ def subir_pdf(request):
             file = request.FILES['docfile'].name
 
             if file.endswith('.pdf'):
-                job = iterar_pdf.delay(os.path.dirname(newdoc.docfile.path))
+                job = leer_pdf.delay(newdoc.docfile.path)
                 return HttpResponseRedirect(reverse('list') + '?job=' + job.id)
             elif file.endswith('.zip'):
                 ruta = extractZip(newdoc.docfile.path)
@@ -101,7 +101,7 @@ def subir_pdf_post(request):
             archivo.save()
 
             if archivo.docfile.path.endswith('.pdf'):
-                job = iterar_pdf.delay(os.path.dirname(archivo.docfile.path))
+                job = leer_pdf.delay(archivo.docfile.path)
                 return HttpResponse('success ' + job)
             elif archivo.docfile.path.endswith('.zip'):
                 ruta = extractZip(archivo.docfile.path)
