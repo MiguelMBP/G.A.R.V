@@ -102,10 +102,6 @@ def subir_pdf_post(request):
         if base64 and extension:
             newdoc = ContentFile(b64decode(base64), name=str(now) + '.' + extension)
             archivo = Document(docfile=newdoc)
-            if archivo.docfile.name.endswith('.pdf'):
-                archivo.docfile.name = str(datetime.datetime.now()) + '.pdf'
-            elif archivo.docfile.name.endswith('.zip'):
-                archivo.docfile.name = str(datetime.datetime.now()) + '.zip'
             archivo.save()
 
             if archivo.docfile.path.endswith('.pdf'):

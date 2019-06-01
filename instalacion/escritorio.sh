@@ -1,1 +1,2 @@
-java -jar AdministradorGARV.jar
+#!/bin/sh
+java -jar /opt/GARV/Escritorio/AdministradorGARV.jar

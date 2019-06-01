@@ -94,12 +94,18 @@ def updateuser(request):
 
         if dni and nombre and apellidos and mail and username:
             user = User.objects.get(username=username)
-            p = Profesor.objects.filter(usuario=user).first()
+
             user.first_name = nombre
             user.last_name = apellidos
             user.email = mail
-            p.dni = dni
-            p.cursoTutor = curso
+
+            if Profesor.objects.filter(usuario=user).exists():
+                p = Profesor.objects.filter(usuario=user).first()
+                p.dni = dni
+                p.cursoTutor = curso
+            else:
+                p = Profesor(dni=dni, cursoTutor=curso, usuario=user)
+
             try:
                 user.save()
                 p.save()
@@ -228,6 +234,7 @@ def importarusuarios(request):
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             newdoc = Document(docfile=request.FILES['docfile'])
+            newdoc.docfile.name = str(now) + '.csv'
             newdoc.save()
 
             file = request.FILES['docfile'].name

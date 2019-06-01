@@ -1,6 +1,6 @@
 [Desktop Entry]
-Version=1.0
-Name=G.A.R.V.
-Type=Application 
-#Icon=/PATH/TO/ICON/studio.png 
+Type=Application
+Terminal=false
+Name=G.A.R.V
+#Icon=/path/to/icon/icon.svg
 Exec=/opt/GARV/Escritorio/escritorio.sh
