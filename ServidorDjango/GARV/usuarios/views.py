@@ -32,7 +32,7 @@ def a_login(request):
         if user is not None:
             if user.is_active:
                 if not Profesor.objects.filter(usuario=user).exists():
-                    Profesor(dni=random.randint(11111111, 99999999), curso="", usuario=user)
+                    Profesor(dni=random.randint(11111111, 99999999), cursoTutor="", usuario=user)
                 login(request, user)
                 msg.append("login successful")
             else:
