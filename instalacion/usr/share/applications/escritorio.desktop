@@ -2,5 +2,5 @@
 Type=Application
 Terminal=false
 Name=G.A.R.V
-#Icon=/path/to/icon/icon.svg
+Path=/opt/GARV/Escritorio
 Exec=/opt/GARV/Escritorio/escritorio.sh

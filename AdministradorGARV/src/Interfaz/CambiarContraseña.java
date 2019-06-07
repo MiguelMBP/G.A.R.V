@@ -133,6 +133,9 @@ public class CambiarContraseña extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (contraseña1.equals("")) {
+            JOptionPane.showMessageDialog(this, "La contraseña no puede estar vacia");
+        }
         ConectorUsuarios cs = new ConectorUsuarios();
         if (cookies != null) {
 

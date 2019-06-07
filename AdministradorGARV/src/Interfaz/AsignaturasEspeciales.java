@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Diálogo que muestra las asignaturas especiales y sus opciones del módulo de apercibimientos
+ * Diálogo que muestra las asignaturas especiales y sus opciones del módulo de
+ * apercibimientos
+ *
  * @author mmbernal
  */
 public class AsignaturasEspeciales extends javax.swing.JDialog {
@@ -117,6 +119,8 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
                 ConectorApercibimientos cs = new ConectorApercibimientos();
                 List<String> lista = cs.crearAsignatura(materia);
                 rellenarTabla(lista);
+            } else {
+                JOptionPane.showMessageDialog(this, "El nombre no puede estar vacio");
             }
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
@@ -137,6 +141,8 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
                     ConectorApercibimientos cs = new ConectorApercibimientos();
                     List<String> lista = cs.modificarAsignatura(Integer.parseInt(jTable1.getValueAt(pos, 0).toString()), materia);
                     rellenarTabla(lista);
+                } else {
+                    JOptionPane.showMessageDialog(this, "El nombre no puede estar vacio");
                 }
             } catch (ConfigurationFileException ex) {
                 JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");

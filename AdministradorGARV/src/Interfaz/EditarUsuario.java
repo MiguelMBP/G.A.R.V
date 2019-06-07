@@ -213,6 +213,10 @@ public class EditarUsuario extends javax.swing.JDialog {
 
         Usuario u = new Usuario(usuario, nombre, apellidos, correo, curso, dni);
         try {
+            if (usuario.equals("") || correo.equals("") || nombre.equals("") || apellidos.equals("") || dni.equals("")) {
+            JOptionPane.showMessageDialog(this, "No pueden haber campos vacios", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
             cs.modificarUsuario(u);
 
             this.setVisible(false);

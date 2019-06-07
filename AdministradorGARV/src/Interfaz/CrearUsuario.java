@@ -234,11 +234,17 @@ public class CrearUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         String correo = jTextField2.getText();
         String nombre = jTextField4.getText();
         String apellidos = jTextField3.getText();
         String curso = jTextField5.getText();
         String dni = jTextField6.getText();
+        
+        if (usuarioCrear.equals("") || contraseña1.equals("") || correo.equals("") || nombre.equals("") || apellidos.equals("") || dni.equals("")) {
+            JOptionPane.showMessageDialog(this, "No pueden haber campos vacios", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         ConectorUsuarios cs = new ConectorUsuarios();
         if (cookies != null) {

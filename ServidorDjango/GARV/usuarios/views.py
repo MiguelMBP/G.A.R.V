@@ -1,3 +1,4 @@
+import random
 from base64 import b64decode
 
 from django.contrib.admin.views.decorators import staff_member_required
@@ -30,6 +31,8 @@ def a_login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
+                if not Profesor.objects.filter(usuario=user).exists():
+                    Profesor(dni=random.randint(11111111, 99999999), curso="", usuario=user)
                 login(request, user)
                 msg.append("login successful")
             else:
