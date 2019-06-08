@@ -11,7 +11,7 @@ def leercsv(filepath):
     :param filepath:
     :return:
     """
-    with open(filepath) as csv_file:
+    with open(filepath, encoding='utf-8') as csv_file:
         csv_reader = csv.reader(csv_file)
         for row in csv_reader:
             nombre = row[0]

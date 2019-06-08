@@ -10,34 +10,38 @@ document.getElementById('botonModificarEmpresa').onclick = function () {
 
     if (nombre != "" && cif != "" && direccion != "" && poblacion != "" && latitud != "" && longitud != "" && distancia != "") {
         if ($.isNumeric(latitud) && $.isNumeric(longitud) && $.isNumeric(distancia)) {
-            var url = $(location).attr('href'),
-            parts = url.split("/"),
-            id = parts[parts.length-2];
+            if (distancia >= 0) {
+                var url = $(location).attr('href'),
+                parts = url.split("/"),
+                id = parts[parts.length-2];
 
-            url = '/visitas/editarEmpresa/' + id + '/'
-            var formData = {
-                'nombre': nombre, 'cif': cif, 'direccion': direccion, 'poblacion': poblacion, 'latitud': latitud, "longitud": longitud, 'distancia': distancia
-            };
-             $.ajaxSetup({
-                headers: { "X-CSRFToken": getCookie("csrftoken") }
-             });
-            $.ajax({
-                url: url,
-                type: "post",
-                data: formData,
-                success: function(respuesta) {
-                    if (respuesta == 'Duplicate cif') {
-                        alert("El CIF ya existe")
-                    } else if (respuesta == 'error'){
-                        alert('Error modificando empresa')
-                    } else {
-                        window.location = '/visitas/empresas'
+                url = '/visitas/editarEmpresa/' + id + '/'
+                var formData = {
+                    'nombre': nombre, 'cif': cif, 'direccion': direccion, 'poblacion': poblacion, 'latitud': latitud, "longitud": longitud, 'distancia': distancia
+                };
+                 $.ajaxSetup({
+                    headers: { "X-CSRFToken": getCookie("csrftoken") }
+                 });
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: formData,
+                    success: function(respuesta) {
+                        if (respuesta == 'Duplicate cif') {
+                            alert("El CIF ya existe")
+                        } else if (respuesta == 'error'){
+                            alert('Error modificando empresa')
+                        } else {
+                            window.location = '/visitas/empresas'
+                        }
+                    },
+                    error: function() {
+                        alert("Error al modificar la empresa");
                     }
-                },
-                error: function() {
-                    alert("Error al modificar la empresa");
-                }
-            });
+                });
+            } else {
+                alert("La distancia debe ser positiva")
+            }
         } else {
             alert("La latitud, longitud y distancia deben ser números")
         }

@@ -277,9 +277,13 @@ public class Visitas extends javax.swing.JFrame {
         try {
             String[] parametros = leerConfiguración();
             double importe = Double.parseDouble(JOptionPane.showInputDialog("Importe por kilometro"));
+            if (importe > 0) {
             String url = "http://" + parametros[0] + ":" + parametros[1] + "/visitas/resumenVisitas?valor=" + importe;
 
             Desktop.getDesktop().browse(new URL(url).toURI());
+            } else {
+                JOptionPane.showMessageDialog(this, "El importe debe de ser positivo");
+            }
         } catch (MalformedURLException ex) {
             Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (URISyntaxException ex) {

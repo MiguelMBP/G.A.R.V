@@ -131,7 +131,9 @@ public class RealizarVisitaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(RealizarVisitaActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                    if (!fechaVisita.getText().toString().equals("")) {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                    }
                 } else {
                     dispatchTakePictureIntent();
                 }
@@ -475,7 +477,13 @@ public class RealizarVisitaActivity extends AppCompatActivity {
                 try {
                     if (!TextUtils.isEmpty(nombre.getText()) && !TextUtils.isEmpty(cif.getText()) && !TextUtils.isEmpty(direccion.getText()) && !TextUtils.isEmpty(poblacion.getText())
                             && !TextUtils.isEmpty(longitud.getText()) && !TextUtils.isEmpty(latitud.getText())) {
-                        añadirEmpresa(nombre.getText().toString(), cif.getText().toString(), direccion.getText().toString(), poblacion.getText().toString(), longitud.getText().toString(), latitud.getText().toString(), distancia.getText().toString());
+
+                        if (Double.parseDouble(distancia.getText().toString()) > 0) {
+                            añadirEmpresa(nombre.getText().toString(), cif.getText().toString(), direccion.getText().toString(), poblacion.getText().toString(), longitud.getText().toString(), latitud.getText().toString(), distancia.getText().toString());
+                        } else {
+                            Toast.makeText(RealizarVisitaActivity.this, "La distancia debe ser positiva", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
                     }
                 } catch (Exception e) {
                     Toast.makeText(RealizarVisitaActivity.this, "Error Añadiendo empresa", Toast.LENGTH_SHORT)

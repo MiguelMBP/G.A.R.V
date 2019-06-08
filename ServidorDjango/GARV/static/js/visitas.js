@@ -42,7 +42,7 @@ function inValidar(chk_activo) {
 document.getElementById('botonInformeVisitas').onclick = function () {
     var importe = parseFloat($("#importe").val());
 
-    if(!isNaN(importe)){
+    if(!isNaN(importe) && importe >= 0){
         url = '/visitas/resumenVisitas?valor=' + importe
         window.location.replace(url);
     }

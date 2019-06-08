@@ -138,7 +138,7 @@ def editarEmpresa(request, id):
 
         if nombre and cif and poblacion and direccion and latitud and longitud and distancia:
             temp = Empresa.objects.filter(cif=cif)
-            if temp.exists() and temp.id != id:
+            if temp.exists() and temp.first().id != id:
                 return HttpResponse('Duplicate cif')
             empresa = Empresa.objects.get(id=id)
             empresa.nombre = nombre
@@ -173,8 +173,8 @@ def editarAlumno(request, id):
         empresa_id = request.POST.get('empresa', None)
 
         if nombre and dni and apellidos and curso and empresa_id:
-            temp =Alumno.objects.filter(dni=dni)
-            if temp.exists() and temp.dni == dni:
+            temp = Alumno.objects.filter(dni=dni)
+            if temp.exists() and temp.first().dni != dni:
                 return HttpResponse('Duplicate dni')
             empresa = Empresa.objects.get(id=empresa_id)
             alumno = Alumno.objects.get(id=id)

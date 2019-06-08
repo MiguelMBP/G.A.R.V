@@ -26,6 +26,7 @@ public class ModificarEmpresa extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         actualizarCampos(empresa);
+        setLocationRelativeTo(parent);
         this.setTitle("G.A.R.V.");
     }
 
@@ -217,6 +218,11 @@ public class ModificarEmpresa extends javax.swing.JDialog {
                 empresa.setLatitud(Float.parseFloat(latitud));
                 empresa.setLongitud(Float.parseFloat(longitud));
                 empresa.setDistancia(Float.parseFloat(distancia));
+                
+                if (empresa.getDistancia() < 0) {
+                    JOptionPane.showMessageDialog(this, "La distancia debe ser positiva");
+                    return;
+                }
 
                 ConectorVisitas cs = new ConectorVisitas();
                 int id = cs.modificarEmpresa(empresa);

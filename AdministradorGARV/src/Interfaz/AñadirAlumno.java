@@ -28,6 +28,7 @@ public class AñadirAlumno extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         rellenarCombo();
+        setLocationRelativeTo(parent);
         this.setTitle("G.A.R.V.");
     }
 

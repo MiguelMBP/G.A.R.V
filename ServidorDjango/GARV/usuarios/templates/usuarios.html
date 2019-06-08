@@ -13,7 +13,7 @@
         <th>Apellidos</th>
         <th>DNI</th>
         <th>Curso</th>
-        <th></th>
+        <th><button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'crearUsuario'  %}'">Crear</button></th>
     </tr>
     {% for u in usuarios %}
     <tr>

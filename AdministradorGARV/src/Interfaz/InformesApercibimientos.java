@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Diálogo para mostrar los informes del módulo de apercibimientos
+ *
  * @author miguelmbp
  */
 public class InformesApercibimientos extends javax.swing.JDialog {
@@ -235,14 +236,14 @@ public class InformesApercibimientos extends javax.swing.JDialog {
         int posAño = jComboBoxAño.getSelectedIndex();
         int posMes = jComboBoxMes.getSelectedIndex();
         int posCurso = jComboBoxCurso.getSelectedIndex();
-        
+
         String[] parametros = leerConfiguración();
 
         if (posTipo == -1 || posAño == -1 || posMes == -1 || posCurso == -1) {
-            
+
         } else if (parametros[0] == null || parametros[1] == null) {
             JOptionPane.showMessageDialog(this, "Archivo de configuración incompleto");
-        }else {
+        } else {
             try {
                 String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/informe/";
                 String año = jComboBoxAño.getItemAt(posAño);
@@ -254,14 +255,23 @@ public class InformesApercibimientos extends javax.swing.JDialog {
                     curso = jComboBoxCurso.getItemAt(posCurso).replace(" ", "_");
                 }
 
-                if (posTipo == 0) {
-                    int num = (Integer) jSpinner1.getValue();
-
-                    url += "informeNumeroApercibimiento/" + año + "/" + mes + "/" + curso + "/" + num;
-                } else if (posTipo == 1) {
-                    url += "informeApercibimientoIndividual/" + año + "/" + mes + "/" + curso;
-                } else if (posTipo == 2) {
-                    url += "informeResumenApercibimiento/" + año + "/" + mes + "/" + curso;
+                switch (posTipo) {
+                    case 0:
+                        int num = (Integer) jSpinner1.getValue();
+                        if (num >= 0) {
+                            url += "informeNumeroApercibimiento/" + año + "/" + mes + "/" + curso + "/" + num;
+                        } else {
+                            JOptionPane.showMessageDialog(this, "El número de apercibimientos debe ser positivo");
+                        }
+                        break;
+                    case 1:
+                        url += "informeApercibimientoIndividual/" + año + "/" + mes + "/" + curso;
+                        break;
+                    case 2:
+                        url += "informeResumenApercibimiento/" + año + "/" + mes + "/" + curso;
+                        break;
+                    default:
+                        break;
                 }
 
                 Desktop.getDesktop().browse(new URL(url).toURI());
@@ -339,7 +349,7 @@ public class InformesApercibimientos extends javax.swing.JDialog {
         try {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<String> año = cs.cargarAño();
-            
+
             for (int i = 0; i < año.size(); i++) {
                 jComboBoxAño.addItem(año.get(i));
             }
@@ -358,7 +368,7 @@ public class InformesApercibimientos extends javax.swing.JDialog {
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<String> meses = cs.cargarMeses(jComboBoxAño.getItemAt(pos));
             meses = numeroAMes(meses);
-            
+
             for (int i = 0; i < meses.size(); i++) {
                 jComboBoxMes.addItem(meses.get(i));
             }
@@ -377,7 +387,7 @@ public class InformesApercibimientos extends javax.swing.JDialog {
             int posMes = jComboBoxMes.getSelectedIndex();
             ConectorApercibimientos cs = new ConectorApercibimientos();
             List<String> cursos = cs.cargarCursos(jComboBoxAño.getItemAt(posAño), mesANumero(jComboBoxMes.getItemAt(posMes)));
-            
+
             for (int i = 0; i < cursos.size(); i++) {
                 jComboBoxCurso.addItem(cursos.get(i));
             }
@@ -463,8 +473,8 @@ public class InformesApercibimientos extends javax.swing.JDialog {
         }
         return "0";
     }
-    
-    private String[] leerConfiguración(){
+
+    private String[] leerConfiguración() {
         String[] parametros = new String[2];
 
         try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {

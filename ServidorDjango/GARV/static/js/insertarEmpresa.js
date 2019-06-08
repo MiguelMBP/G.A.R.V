@@ -10,30 +10,34 @@ document.getElementById('botonCrearEmpresa').onclick = function () {
 
     if (nombre != "" && cif != "" && direccion != "" && poblacion != "" && latitud != "" && longitud != "" && distancia != "") {
         if ($.isNumeric(latitud) && $.isNumeric(longitud) && $.isNumeric(distancia)) {
-            url = '/visitas/crearEmpresa/'
-            var formData = {
-                'nombre': nombre, 'cif': cif, 'direccion': direccion, 'poblacion': poblacion, 'latitud': latitud, "longitud": longitud, 'distancia': distancia
-            };
-             $.ajaxSetup({
-                headers: { "X-CSRFToken": getCookie("csrftoken") }
-             });
-            $.ajax({
-                url: url,
-                type: "post",
-                data: formData,
-                success: function(respuesta) {
-                    if (respuesta == 'Duplicate cif') {
-                        alert("El CIF ya existe")
-                    } else if (respuesta == 'error'){
-                        alert('Error introduciendo empresa')
-                    } else {
-                        window.location = '/visitas/empresas'
+            if (distancia >= 0) {
+                url = '/visitas/crearEmpresa/'
+                var formData = {
+                    'nombre': nombre, 'cif': cif, 'direccion': direccion, 'poblacion': poblacion, 'latitud': latitud, "longitud": longitud, 'distancia': distancia
+                };
+                 $.ajaxSetup({
+                    headers: { "X-CSRFToken": getCookie("csrftoken") }
+                 });
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: formData,
+                    success: function(respuesta) {
+                        if (respuesta == 'Duplicate cif') {
+                            alert("El CIF ya existe")
+                        } else if (respuesta == 'error'){
+                            alert('Error introduciendo empresa')
+                        } else {
+                            window.location = '/visitas/empresas'
+                        }
+                    },
+                    error: function() {
+                        alert("Error al introducir la empresa");
                     }
-                },
-                error: function() {
-                    alert("Error al introducir la empresa");
-                }
-            });
+                });
+            } else {
+                alert("La distancia debe ser positiva")
+            }
         } else {
             alert("La latitud, longitud y distancia deben ser números")
         }

@@ -89,7 +89,7 @@ document.getElementById('botonInformes').onclick = function () {
 
             } else if (tipo == 2) {
                 minimo = $("#minimoApercibimientos").val()
-                if (minimo != null) {
+                if (minimo != null && minimo >= 0) {
                     window.open("informeNumeroApercibimiento/" + periodo + "/" + mes + "/todos/" + minimo, '_blank');
                 }
             } else if (tipo == 3) {
@@ -105,7 +105,7 @@ document.getElementById('botonInformes').onclick = function () {
 
             } else if (tipo == 2) {
                 minimo = $("#minimoApercibimientos").val()
-                if (minimo != null) {
+                if (minimo != null && minimo >= 0) {
                     window.open("informeNumeroApercibimiento/" + periodo + "/" + mes + "/" + curso + "/" + minimo, '_blank');
                 }
             } else if (tipo == 3) {
