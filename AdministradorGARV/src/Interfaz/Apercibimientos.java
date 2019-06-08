@@ -7,9 +7,14 @@ package Interfaz;
 
 import Cliente.ConectorApercibimientos;
 import Util.ConfigurationFileException;
+import java.awt.Desktop;
 import java.awt.Font;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -26,6 +31,7 @@ import vo.Apercibimiento;
 
 /**
  * Interfaz principal del módulo de apercibimientos
+ *
  * @author miguelmbp
  */
 public class Apercibimientos extends javax.swing.JFrame {
@@ -70,6 +76,7 @@ public class Apercibimientos extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -199,6 +206,14 @@ public class Apercibimientos extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem8.setText("Actualizar Vista");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem8);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Visitas");
@@ -292,7 +307,7 @@ public class Apercibimientos extends javax.swing.JFrame {
                 String activoS = t.getValueAt(pos, 7).toString();
                 boolean activo = (activoS.equals("Activo"));
                 ConectorApercibimientos cs = new ConectorApercibimientos();
-                List<Apercibimiento> apercibimientos = cs.desActivarApercibimiento(id, !activo);
+                cs.desActivarApercibimiento(id, !activo);
                 actualizarTabla();
             } catch (ConfigurationFileException ex) {
                 JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
@@ -483,6 +498,10 @@ public class Apercibimientos extends javax.swing.JFrame {
         ea.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        actualizarTabla();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -536,6 +555,7 @@ public class Apercibimientos extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
@@ -653,10 +673,44 @@ public class Apercibimientos extends javax.swing.JFrame {
             byte[] archivo = Files.readAllBytes(selectedFile.toPath());
             String base64 = Base64.encodeBase64String(archivo);
             ConectorApercibimientos cs = new ConectorApercibimientos();
-            cs.enviarArchivo(base64, FilenameUtils.getExtension(selectedFile.getAbsolutePath()), cookies.get(0), cookies.get(1));
+            String job = cs.enviarArchivo(base64, FilenameUtils.getExtension(selectedFile.getAbsolutePath()), cookies.get(0), cookies.get(1));
+            String[] parametros = leerConfiguración();
+
+            if (parametros[0] == null || parametros[1] == null) {
+                JOptionPane.showMessageDialog(this, "Archivo de configuración incompleto");
+            } else if (job.equals("")) {
+                JOptionPane.showMessageDialog(this, "Error al enviar el archivo");
+            } else {
+                String url = "http://" + parametros[0] + ":" + parametros[1] + "/apercibimientos/list?job=" + job;
+                Desktop.getDesktop().browse(new URL(url).toURI());
+            }
         } catch (IOException ex) {
             Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Apercibimientos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private String[] leerConfiguración() {
+        String[] parametros = new String[2];
+
+        try (BufferedReader br = new BufferedReader(new FileReader("config.txt"));) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parametro = line.split(":");
+                if (parametro.length == 2 && parametro[0].equalsIgnoreCase("django_address")) {
+                    parametros[0] = parametro[1];
+                } else if (parametro.length == 2 && parametro[0].equalsIgnoreCase("django_port")) {
+                    parametros[1] = parametro[1];
+                }
+            }
+        } catch (ConfigurationFileException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error en la conexión con el servidor");
+        }
+        return parametros;
     }
 
 }

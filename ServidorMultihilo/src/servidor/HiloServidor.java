@@ -144,7 +144,7 @@ public class HiloServidor extends Thread {
                     modificarUsuario(entrada, salida);
                     break;
                 case 32:
-                    enviarApercibimientos(entrada);
+                    enviarApercibimientos(entrada, salida);
                     break;
                 case 33:
                     importarUsuarios(entrada);
@@ -337,15 +337,16 @@ public class HiloServidor extends Thread {
 
     }
 
-    private void enviarApercibimientos(ObjectInputStream entrada) {
+    private void enviarApercibimientos(ObjectInputStream entrada, ObjectOutputStream salida) {
         try {
             DjangoConnection dc = new DjangoConnection();
             String base64 = (String) entrada.readObject();
             String extension = entrada.readUTF();
             String csrftoken = entrada.readUTF();
             String sessionId = entrada.readUTF();
-            dc.subirApercibimientos(base64, extension, csrftoken, sessionId);
-
+            String job = dc.subirApercibimientos(base64, extension, csrftoken, sessionId);
+            salida.writeUTF(job);
+            salida.flush();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

@@ -106,11 +106,11 @@ def subir_pdf_post(request):
 
             if archivo.docfile.path.endswith('.pdf'):
                 job = leer_pdf.delay(archivo.docfile.path)
-                return HttpResponse('success ' + job)
+                return HttpResponse('success ' + job.id)
             elif archivo.docfile.path.endswith('.zip'):
                 ruta = extractZip(archivo.docfile.path)
                 job = iterar_pdf.delay(ruta)
-                return HttpResponse('success ' + job)
+                return HttpResponse('success ' + job.id)
 
     return HttpResponse('failure')
 

@@ -798,10 +798,11 @@ public class ConectorApercibimientos {
      * @throws FileNotFoundException
      * @throws IOException 
      */
-    public void enviarArchivo(String base64, String extension, String csrfToken, String sessionId) throws FileNotFoundException, IOException{
+    public String enviarArchivo(String base64, String extension, String csrfToken, String sessionId) throws FileNotFoundException, IOException{
         Socket socketCliente = null;
         ObjectInputStream entrada = null;
         ObjectOutputStream salida = null;
+        String job = "";
 
         try {
             String[] parametros = leerConfiguración();
@@ -830,6 +831,7 @@ public class ConectorApercibimientos {
             salida.flush();
             salida.writeUTF(sessionId);
             salida.flush();
+            job = entrada.readUTF();
 
             entrada.close();
             socketCliente.close();
@@ -837,5 +839,6 @@ public class ConectorApercibimientos {
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         }
+        return job;
     }
 }

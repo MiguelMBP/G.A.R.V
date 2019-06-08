@@ -476,12 +476,13 @@ public class DjangoConnection {
      * @param csrfToken
      * @param sessionId
      */
-    public void subirApercibimientos(String base64, String extension, String csrfToken, String sessionId) {
+    public String subirApercibimientos(String base64, String extension, String csrfToken, String sessionId) {
         HttpURLConnection connection = null;
         String[] parametros = leerConfiguracion();
         String cookies = "";
+        String job = "";
         if (parametros[0] == null || parametros[1] == null) {
-            return;
+            return job;
         }
 
         try {
@@ -531,7 +532,7 @@ public class DjangoConnection {
             try (Scanner scanner = new Scanner(response)) {
                 String responseBody = scanner.useDelimiter("\\A").next();
                 if (responseBody.split(" ")[0].equals("success")) {
-
+                    job = responseBody.split(" ")[1];
                 }
             }
         } catch (MalformedURLException e) {
@@ -541,6 +542,7 @@ public class DjangoConnection {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+        return job;
 
     }
 
