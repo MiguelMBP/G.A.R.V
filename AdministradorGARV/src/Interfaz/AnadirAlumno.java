@@ -18,13 +18,13 @@ import vo.Empresa;
  * Diálogo para añadir alumnos del módulo de visitas
  * @author miguelmbp
  */
-public class AñadirAlumno extends javax.swing.JDialog {
+public class AnadirAlumno extends javax.swing.JDialog {
 
     /**
      * Creates new form AñadirAlumno
      */
     private List<Empresa> empresas = new ArrayList<>();
-    public AñadirAlumno(java.awt.Frame parent, boolean modal) {
+    public AnadirAlumno(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         rellenarCombo();
@@ -228,20 +228,21 @@ public class AñadirAlumno extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AñadirAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnadirAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AñadirAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnadirAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AñadirAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnadirAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AñadirAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnadirAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AñadirAlumno dialog = new AñadirAlumno(new javax.swing.JFrame(), true);
+                AnadirAlumno dialog = new AnadirAlumno(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * Diálogo para cambiar la contraseña de un usuario
  * @author miguelmbp
  */
-public class CambiarContraseña extends javax.swing.JDialog {
+public class CambiarContrasena extends javax.swing.JDialog {
 
     /**
      * Creates new form CambiarContraseña
@@ -23,7 +23,7 @@ public class CambiarContraseña extends javax.swing.JDialog {
     private String usuario;
     private List<String> cookies;
     
-    public CambiarContraseña(java.awt.Frame parent, boolean modal, String usuario, List<String> cookies) {
+    public CambiarContrasena(java.awt.Frame parent, boolean modal, String usuario, List<String> cookies) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
@@ -172,20 +172,21 @@ public class CambiarContraseña extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CambiarContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambiarContrasena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CambiarContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambiarContrasena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CambiarContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambiarContrasena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CambiarContraseña.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CambiarContrasena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CambiarContraseña dialog = new CambiarContraseña(new javax.swing.JFrame(), true, null, null);
+                CambiarContrasena dialog = new CambiarContrasena(new javax.swing.JFrame(), true, null, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

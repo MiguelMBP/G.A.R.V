@@ -113,7 +113,7 @@ public class Alumnos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        AñadirAlumno aa = new AñadirAlumno(parent, true);
+        AnadirAlumno aa = new AnadirAlumno(parent, true);
         aa.setVisible(true);
         rellenarTabla();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
