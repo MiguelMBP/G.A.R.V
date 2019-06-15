@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b0769dc-9795-41bb-9372-a103b12cce77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/templates/asignaturasEspeciales.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/templates/asignaturasEspeciales.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GARV/apercibimientos/templates/buscar_apercibimiento.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/apercibimientos/templates/buscar_apercibimiento.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdministradorGARV/dist/AdministradorGARV.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AppProfesor/app/release/app-release.apk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/usuarios/templates/crearUsuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/templates/crearUsuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GARV/visitas/templates/visitas.html" beforeDir="false" afterPath="$PROJECT_DIR$/GARV/visitas/templates/visitas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ServidorMultihilo/dist/ServidorMultihilo.jar" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,40 +22,35 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/buscar_apercibimiento.html">
+        <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/crearAlumno.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/crearUsuario.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="32" column="101" selection-start-line="32" selection-start-column="101" selection-end-line="32" selection-end-column="101" />
+            <state relative-caret-position="450">
+              <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/asignaturasEspeciales.html">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="435">
+              <caret line="29" column="10" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
               <folding>
-                <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#4;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#5;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#6;n#form#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GARV/static/js/informeNumero.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="54" column="24" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GARV/static/js/informes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1365">
-              <caret line="91" column="49" selection-start-line="91" selection-start-column="49" selection-end-line="91" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -94,10 +94,70 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2475">
-              <caret line="175" column="19" selection-start-line="175" selection-start-column="19" selection-end-line="175" selection-end-column="19" />
+            <state relative-caret-position="373">
+              <caret line="107" selection-start-line="107" selection-end-line="107" />
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#470#931#0" />
+                <element signature="e#470#575#1" />
+                <element signature="e#617#931#0" />
+                <element signature="e#679#891#0" />
+                <element signature="e#793#891#0" />
+                <element signature="e#1748#1908#1" />
+                <element signature="e#2598#2765#0" />
+                <element signature="e#3061#3140#1" />
+                <element signature="e#3690#3875#0" />
+                <element signature="e#3690#3770#1" />
+                <element signature="e#3953#5271#0" />
+                <element signature="e#3953#4051#1" />
+                <element signature="e#4103#5138#0" />
+                <element signature="e#4570#5101#0" />
+                <element signature="e#5157#5271#0" />
+                <element signature="e#5348#6530#0" />
+                <element signature="e#5348#5443#1" />
+                <element signature="e#5495#6339#0" />
+                <element signature="e#5819#6302#0" />
+                <element signature="e#6358#6530#0" />
+                <element signature="e#6603#7577#0" />
+                <element signature="e#6603#6683#1" />
+                <element signature="e#6735#7515#0" />
+                <element signature="e#7202#7478#0" />
+                <element signature="e#7649#8550#0" />
+                <element signature="e#7649#7728#1" />
+                <element signature="e#7780#8424#0" />
+                <element signature="e#8104#8387#0" />
+                <element signature="e#8443#8550#0" />
+                <element signature="e#8618#8797#0" />
+                <element signature="e#8618#8697#1" />
+                <element signature="e#8868#9667#0" />
+                <element signature="e#8868#8950#1" />
+                <element signature="e#9009#9620#0" />
+                <element signature="e#9172#9569#0" />
+                <element signature="e#9744#10979#0" />
+                <element signature="e#9744#9845#1" />
+                <element signature="e#9924#10932#0" />
+                <element signature="e#10360#10881#0" />
+                <element signature="e#11049#11393#0" />
+                <element signature="e#11049#11156#1" />
+                <element signature="e#11209#11346#0" />
+                <element signature="e#11419#11885#0" />
+                <element signature="e#11495#11660#0" />
+                <element signature="e#11693#11885#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/visitas.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+              <folding>
+                <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -146,12 +206,10 @@
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/crearUsuario.html" />
         <option value="$PROJECT_DIR$/GARV/GARV/urls.py" />
         <option value="$PROJECT_DIR$/GARV/templates/registration/logged_out.html" />
-        <option value="$PROJECT_DIR$/GARV/usuarios/templates/crearUsuario.html" />
         <option value="$PROJECT_DIR$/GARV/static/js/registro.js" />
         <option value="$PROJECT_DIR$/GARV/static/js/modificarUsuario.js" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/menuInformeNumeroApercibimientos.html" />
         <option value="$PROJECT_DIR$/GARV/visitas/forms.py" />
-        <option value="$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html" />
         <option value="$PROJECT_DIR$/GARV/GARV/wsgi.py" />
         <option value="$PROJECT_DIR$/GARV/templates/index.html" />
         <option value="$PROJECT_DIR$/GARV/templates/navbar.html" />
@@ -175,7 +233,6 @@
         <option value="$PROJECT_DIR$/GARV/usuarios/forms.py" />
         <option value="$PROJECT_DIR$/GARV/usuarios/models.py" />
         <option value="$PROJECT_DIR$/GARV/visitas/models.py" />
-        <option value="$PROJECT_DIR$/GARV/visitas/templates/visitas.html" />
         <option value="$PROJECT_DIR$/GARV/GARV/settings.py" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/models.py" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/tasks.py" />
@@ -192,6 +249,9 @@
         <option value="$PROJECT_DIR$/GARV/apercibimientos/views.py" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/buscar_apercibimiento.html" />
         <option value="$PROJECT_DIR$/GARV/apercibimientos/templates/asignaturasEspeciales.html" />
+        <option value="$PROJECT_DIR$/GARV/usuarios/templates/crearUsuario.html" />
+        <option value="$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html" />
+        <option value="$PROJECT_DIR$/GARV/visitas/templates/visitas.html" />
       </list>
     </option>
   </component>
@@ -213,44 +273,6 @@
             <path>
               <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
               <item name="GARV" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="apercibimientos" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="apercibimientos" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="GARV" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="usuarios" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GARV" type="462c0819:PsiDirectoryNode" />
-              <item name="usuarios" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ServidorDjango" type="b2602c69:ProjectViewProjectNode" />
@@ -323,8 +345,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="387" width="1920" height="987" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="27" width="1920" height="987" extended-state="6" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13600422" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -337,8 +358,8 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32937366" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49980292" visible="true" weight="0.23384254" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5001971" side_tool="true" weight="0.23229246" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49920928" visible="true" weight="0.23384254" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5007907" side_tool="true" weight="0.23384254" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32902467" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -346,26 +367,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/GARV/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="103" selection-start-line="30" selection-start-column="103" selection-end-line="30" selection-end-column="103" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/alumnos.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="121" selection-start-line="14" selection-start-column="121" selection-end-line="14" selection-end-column="121" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/templates/registration/login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -608,24 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="27" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#4;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#5;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#6;n#form#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/modificarEmpresa.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -676,17 +659,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/visitas.html">
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/buscar_apercibimiento.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="480">
+          <caret line="32" column="101" selection-start-line="32" selection-start-column="101" selection-end-line="32" selection-end-column="101" />
         </state>
       </provider>
     </entry>
@@ -701,6 +677,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1365">
           <caret line="91" column="49" selection-start-line="91" selection-start-column="49" selection-end-line="91" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/asignaturasEspeciales.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="14" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/crearAlumno.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/crearUsuario.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/editarUsuarios.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="10" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
+          <folding>
+            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#4;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#5;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#6;n#form#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -732,16 +746,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2475">
-          <caret line="175" column="19" selection-start-line="175" selection-start-column="19" selection-end-line="175" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GARV/usuarios/templates/usuarios.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -752,19 +756,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/buscar_apercibimiento.html">
+    <entry file="file://$PROJECT_DIR$/GARV/visitas/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="32" column="101" selection-start-line="32" selection-start-column="101" selection-end-line="32" selection-end-column="101" />
+        <state relative-caret-position="373">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+          <folding>
+            <element signature="e#470#931#0" />
+            <element signature="e#470#575#1" />
+            <element signature="e#617#931#0" />
+            <element signature="e#679#891#0" />
+            <element signature="e#793#891#0" />
+            <element signature="e#1748#1908#1" />
+            <element signature="e#2598#2765#0" />
+            <element signature="e#3061#3140#1" />
+            <element signature="e#3690#3875#0" />
+            <element signature="e#3690#3770#1" />
+            <element signature="e#3953#5271#0" />
+            <element signature="e#3953#4051#1" />
+            <element signature="e#4103#5138#0" />
+            <element signature="e#4570#5101#0" />
+            <element signature="e#5157#5271#0" />
+            <element signature="e#5348#6530#0" />
+            <element signature="e#5348#5443#1" />
+            <element signature="e#5495#6339#0" />
+            <element signature="e#5819#6302#0" />
+            <element signature="e#6358#6530#0" />
+            <element signature="e#6603#7577#0" />
+            <element signature="e#6603#6683#1" />
+            <element signature="e#6735#7515#0" />
+            <element signature="e#7202#7478#0" />
+            <element signature="e#7649#8550#0" />
+            <element signature="e#7649#7728#1" />
+            <element signature="e#7780#8424#0" />
+            <element signature="e#8104#8387#0" />
+            <element signature="e#8443#8550#0" />
+            <element signature="e#8618#8797#0" />
+            <element signature="e#8618#8697#1" />
+            <element signature="e#8868#9667#0" />
+            <element signature="e#8868#8950#1" />
+            <element signature="e#9009#9620#0" />
+            <element signature="e#9172#9569#0" />
+            <element signature="e#9744#10979#0" />
+            <element signature="e#9744#9845#1" />
+            <element signature="e#9924#10932#0" />
+            <element signature="e#10360#10881#0" />
+            <element signature="e#11049#11393#0" />
+            <element signature="e#11049#11156#1" />
+            <element signature="e#11209#11346#0" />
+            <element signature="e#11419#11885#0" />
+            <element signature="e#11495#11660#0" />
+            <element signature="e#11693#11885#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GARV/apercibimientos/templates/asignaturasEspeciales.html">
+    <entry file="file://$PROJECT_DIR$/GARV/visitas/templates/visitas.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="330">
+          <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
           <folding>
-            <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h1#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

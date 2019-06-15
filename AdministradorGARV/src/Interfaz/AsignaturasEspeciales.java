@@ -61,7 +61,8 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(35);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
         jMenu1.setText("Opciones");
@@ -119,9 +120,7 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
                 ConectorApercibimientos cs = new ConectorApercibimientos();
                 List<String> lista = cs.crearAsignatura(materia);
                 rellenarTabla(lista);
-            } else {
-                JOptionPane.showMessageDialog(this, "El nombre no puede estar vacio");
-            }
+            } 
         } catch (ConfigurationFileException ex) {
             JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
         } catch (IOException ex) {
@@ -141,9 +140,7 @@ public class AsignaturasEspeciales extends javax.swing.JDialog {
                     ConectorApercibimientos cs = new ConectorApercibimientos();
                     List<String> lista = cs.modificarAsignatura(Integer.parseInt(jTable1.getValueAt(pos, 0).toString()), materia);
                     rellenarTabla(lista);
-                } else {
-                    JOptionPane.showMessageDialog(this, "El nombre no puede estar vacio");
-                }
+                } 
             } catch (ConfigurationFileException ex) {
                 JOptionPane.showMessageDialog(this, "Error en el archivo de configuración");
             } catch (IOException ex) {

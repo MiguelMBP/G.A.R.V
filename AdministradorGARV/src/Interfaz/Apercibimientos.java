@@ -500,6 +500,7 @@ public class Apercibimientos extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         actualizarTabla();
+        rellenarAño();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
